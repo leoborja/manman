@@ -501,7 +501,7 @@ function renderModeSheet() {
     b.classList.toggle('active', b.dataset.m === settings.mode));
 }
 function applyTheme() {
-  const pref = settings.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const pref = settings.theme || 'light'; // light é o padrão; dark só se a pessoa escolher
   document.documentElement.dataset.theme = pref;
   $('themebtn').textContent = pref === 'dark' ? '☀️' : '🌙';
 }
