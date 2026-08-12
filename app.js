@@ -1,7 +1,21 @@
-/* Jìzhù 记住 — flashcards de mandarim
+/* Mànmàn 慢慢 — flashcards de mandarim
    Sem build, sem dependências. Cartas: Supabase (leitura) → cache → seed.
    Progresso: localStorage por usuário + sync com Supabase (tabelas progress/review_log). */
 'use strict';
+
+// migração: o app se chamava Jìzhù — mesmo origin (github.io), então dá pra herdar o progresso
+(function migrateFromJizhu() {
+  const olds = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.indexOf('jizhu.') === 0) olds.push(k);
+  }
+  olds.forEach(k => {
+    const nk = 'manman.' + k.slice(6);
+    if (localStorage.getItem(nk) === null) localStorage.setItem(nk, localStorage.getItem(k));
+    localStorage.removeItem(k);
+  });
+})();
 
 // ── constantes ──────────────────────────────────────────────
 const NEW_PER_DAY = 10;          // novas cartas por dia
@@ -9,12 +23,12 @@ const LEARNED_IVL = 21;          // intervalo (dias) p/ considerar "aprendida"
 const EASE_START = 2.5, EASE_MIN = 1.3, EASE_MAX = 2.8;
 const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', convidado: 'Convidado' };
 const K = {                      // chaves do localStorage (as por-usuário ganham sufixo .<user>)
-  cards: 'jizhu.cards.v1',
-  srs: 'jizhu.srs.v1',
-  log: 'jizhu.log.v1',
-  dirty: 'jizhu.dirty.v1',
-  settings: 'jizhu.settings.v1',
-  dayOffset: 'jizhu.dayoffset'
+  cards: 'manman.cards.v1',
+  srs: 'manman.srs.v1',
+  log: 'manman.log.v1',
+  dirty: 'manman.dirty.v1',
+  settings: 'manman.settings.v1',
+  dayOffset: 'manman.dayoffset'
 };
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', geral: 'Geral' };
@@ -26,6 +40,13 @@ const MODES = {
   py_zh:    { front: 'pinyin', staged: false }
 };
 const MIX_POOL = ['zh_all', 'pt_zh', 'py_zh'];
+const MODE_TITLES = {
+  zh_all: '汉字 → pinyin + tradução',
+  zh_py_pt: '汉字 → pinyin → tradução',
+  pt_zh: 'tradução → 汉字',
+  py_zh: 'pinyin → 汉字',
+  mix: '🔀 Aleatório'
+};
 
 // ── estado ──────────────────────────────────────────────────
 let cards = [];                  // deck completo (não deletadas)
@@ -472,6 +493,13 @@ function switchView(v) {
   if (v === 'progresso') renderProgress();
   if (v === 'cartas') renderList();
 }
+function renderModeUI() {
+  $('modecur').textContent = MODE_TITLES[settings.mode] || MODE_TITLES.zh_all;
+}
+function renderModeSheet() {
+  document.querySelectorAll('.modeopt').forEach(b =>
+    b.classList.toggle('active', b.dataset.m === settings.mode));
+}
 function applyTheme() {
   const pref = settings.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.dataset.theme = pref;
@@ -484,10 +512,14 @@ function bindEvents() {
     settings.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     save(K.settings, settings); applyTheme();
   };
-  $('modesel').onchange = () => {
-    settings.mode = $('modesel').value; save(K.settings, settings);
+  $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
+  $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
+  document.querySelectorAll('.modeopt').forEach(b => b.onclick = () => {
+    settings.mode = b.dataset.m; save(K.settings, settings);
+    renderModeUI();
+    $('modesheet').classList.remove('show');
     if (current) showCard(current);
-  };
+  });
   $('fcard').onclick = tapCard;
   $('g-again').onclick = () => grade('again');
   $('g-hard').onclick = () => grade('hard');
@@ -520,7 +552,7 @@ function bindEvents() {
 async function init() {
   applyTheme();
   bindEvents();
-  $('modesel').value = settings.mode;
+  renderModeUI();
   await loadCards();
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');

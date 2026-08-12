@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#c8102e">
-<title>Jìzhù 记住 — Flashcards de Mandarim</title>
+<title>Mànmàn 慢慢 — Flashcards de Mandarim</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Jìzhù">
+<meta name="apple-mobile-web-app-title" content="Mànmàn">
 <style>
 :root{
 --red:#c8102e;--red-d:#a30d26;--gold:#e8b34b;
@@ -38,6 +38,7 @@ padding:12px 16px 8px;max-width:720px;margin:0 auto;}
 .brand{font-weight:800;letter-spacing:-.2px;font-size:15px;color:var(--txt);flex:1;}
 .brand span{color:var(--red);}
 .brand small{color:var(--mut);font-weight:600;font-size:11px;margin-left:6px;}
+@media (max-width:460px){.brand small{display:none;}}
 .userpill{background:var(--surface);border:1px solid var(--line);border-radius:999px;
 padding:7px 14px;font-size:13px;font-weight:700;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);}
 .themebtn{background:var(--surface);border:1px solid var(--line);border-radius:50%;
@@ -70,14 +71,38 @@ main{max-width:720px;margin:0 auto;padding:16px;}
 background:var(--surface);color:var(--pilltx);font-size:13px;font-weight:600;cursor:pointer;}
 .chip.active{background:var(--red);border-color:var(--red);color:#fff;}
 
-/* modo de estudo */
-.modewrap{margin:0 0 10px;}
-select.modesel{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;
-padding:12px 14px;font-size:14.5px;font-weight:700;color:var(--txt);box-shadow:var(--shadow);
-appearance:none;-webkit-appearance:none;
-background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b9098' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-background-repeat:no-repeat;background-position:right 14px center;}
-select.modesel:focus{outline:none;border-color:var(--red);}
+/* modo de estudo: botão + bottom sheet */
+.modebtn{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 10px;
+background:var(--surface);border:1px solid var(--line);border-radius:14px;
+padding:11px 14px;cursor:pointer;box-shadow:var(--shadow);text-align:left;}
+.modebtn .mlabel{flex:0 0 auto;background:var(--pill);color:var(--pilltx);border-radius:8px;
+padding:3px 9px;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;}
+.modebtn .mcur{flex:1;font-size:14.5px;font-weight:700;color:var(--txt);
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.modebtn .marrow{flex:0 0 auto;color:var(--soft);font-size:11px;}
+.sheetwrap{position:fixed;inset:0;z-index:95;display:none;}
+.sheetwrap.show{display:block;}
+.sheetbg{position:absolute;inset:0;background:rgba(10,11,13,.45);animation:fadein .2s ease;}
+@keyframes fadein{from{opacity:0;}to{opacity:1;}}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);
+border-radius:22px 22px 0 0;padding:10px 16px calc(20px + env(safe-area-inset-bottom));
+max-width:720px;margin:0 auto;box-shadow:0 -10px 40px rgba(0,0,0,.25);
+animation:slideup .28s cubic-bezier(.2,.7,.3,1);}
+@keyframes slideup{from{transform:translateY(40%);opacity:.4;}to{transform:none;opacity:1;}}
+.sheet .handle{width:40px;height:4px;border-radius:99px;background:var(--line);margin:4px auto 12px;}
+.sheet h3{margin:0 0 12px;font-size:16px;letter-spacing:-.2px;text-align:center;}
+.modeopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+background:var(--surface2);border:1.5px solid var(--line);border-radius:14px;
+padding:12px 14px;margin:0 0 8px;cursor:pointer;}
+.modeopt .zhx{flex:0 0 44px;font-size:21px;text-align:center;line-height:1.1;}
+.modeopt .info{flex:1;min-width:0;}
+.modeopt .info b{display:block;font-size:14.5px;font-weight:800;color:var(--txt);line-height:1.3;}
+.modeopt .info small{display:block;color:var(--mut);font-size:12px;line-height:1.35;margin-top:1px;}
+.modeopt .check{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);}
+.modeopt.active{border-color:var(--red);background:var(--surface);}
+.modeopt.active .check{border-color:var(--red);background:var(--red);position:relative;}
+.modeopt.active .check:after{content:"";position:absolute;inset:0;margin:auto;width:6px;height:10px;
+border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px);}
 
 .counter{text-align:center;color:var(--mut);font-size:13px;margin:2px 0 10px;}
 .counter b{color:var(--txt);}
@@ -183,7 +208,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <body>
 <header>
   <div class="brandrow">
-    <div class="brand">JÌZHÙ <span class="zh">记住</span><small>flashcards de mandarim</small></div>
+    <div class="brand">MÀNMÀN <span class="zh">慢慢</span><small>flashcards de mandarim</small></div>
     <button class="userpill" id="userbtn">👤</button>
     <button class="themebtn" id="themebtn" title="Tema">🌙</button>
   </div>
@@ -200,15 +225,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
   <div class="chips" id="deckchips"></div>
-  <div class="modewrap">
-    <select class="modesel" id="modesel">
-      <option value="zh_all">汉字 → pinyin + tradução</option>
-      <option value="zh_py_pt">汉字 → pinyin → tradução (2 toques)</option>
-      <option value="pt_zh">tradução → 汉字</option>
-      <option value="py_zh">pinyin → 汉字 + tradução</option>
-      <option value="mix">🔀 aleatório (mistura os modos)</option>
-    </select>
-  </div>
+  <button class="modebtn" id="modebtn">
+    <span class="mlabel">modo</span>
+    <span class="mcur" id="modecur">汉字 → pinyin + tradução</span>
+    <span class="marrow">▼</span>
+  </button>
   <div class="counter" id="counter"></div>
 
   <div class="stage" id="stage">
@@ -283,6 +304,40 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="userbtn" data-u="henrique">Henrique</button>
     <button class="userbtn" data-u="david">David</button>
     <button class="guestbtn" data-u="convidado">só dar uma olhada (convidado)</button>
+  </div>
+</div>
+
+<!-- seletor de modo (bottom sheet) -->
+<div class="sheetwrap" id="modesheet">
+  <div class="sheetbg" id="modesheet-bg"></div>
+  <div class="sheet">
+    <div class="handle"></div>
+    <h3>Como você quer estudar?</h3>
+    <button class="modeopt" data-m="zh_all">
+      <span class="zhx zh">汉</span>
+      <span class="info"><b>汉字 → pinyin + tradução</b><small>vê o ideograma e revela tudo de uma vez</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="zh_py_pt">
+      <span class="zhx zh">汉²</span>
+      <span class="info"><b>汉字 → pinyin → tradução</b><small>2 toques: primeiro a leitura, depois o significado</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="pt_zh">
+      <span class="zhx">PT</span>
+      <span class="info"><b>tradução → 汉字</b><small>vê o português e lembra o ideograma</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="py_zh">
+      <span class="zhx">pīn</span>
+      <span class="info"><b>pinyin → 汉字</b><small>vê o som e lembra o ideograma e o significado</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="mix">
+      <span class="zhx">🔀</span>
+      <span class="info"><b>Aleatório</b><small>mistura as direções a cada carta</small></span>
+      <span class="check"></span>
+    </button>
   </div>
 </div>
 

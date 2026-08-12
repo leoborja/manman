@@ -1,10 +1,11 @@
-# Jìzhù 记住 — Flashcards de Mandarim
+# Mànmàn 慢慢 — Flashcards de Mandarim
 
 App de flashcards pra turma de mandarim do Enrico — Leo, Henrique e David.
 
-**记住 (jìzhù)** = "memorizar, gravar na memória". É exatamente o que flashcards fazem.
+**慢慢 (mànmàn)** = "devagar, com calma" — como em 慢慢来 (mànmàn lái, "vai com calma").
+Um pouquinho todo dia é assim que se aprende mandarim.
 
-🔗 **App:** https://leoborja.github.io/jizhu/
+🔗 **App:** https://leoborja.github.io/manman/
 
 ## Como usar
 
