@@ -33,13 +33,15 @@ padding-bottom:40px;-webkit-font-smoothing:antialiased;}
 
 header{position:sticky;top:0;z-index:50;background:var(--bg);
 backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
-.brandrow{display:flex;align-items:center;justify-content:space-between;
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:10px;
 padding:12px 16px 8px;max-width:720px;margin:0 auto;}
-.brand{font-weight:800;letter-spacing:-.2px;font-size:15px;color:var(--txt);}
+.brand{font-weight:800;letter-spacing:-.2px;font-size:15px;color:var(--txt);flex:1;}
 .brand span{color:var(--red);}
 .brand small{color:var(--mut);font-weight:600;font-size:11px;margin-left:6px;}
+.userpill{background:var(--surface);border:1px solid var(--line);border-radius:999px;
+padding:7px 14px;font-size:13px;font-weight:700;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);}
 .themebtn{background:var(--surface);border:1px solid var(--line);border-radius:50%;
-width:38px;height:38px;font-size:16px;cursor:pointer;line-height:1;box-shadow:var(--shadow);}
+width:38px;height:38px;font-size:16px;cursor:pointer;line-height:1;box-shadow:var(--shadow);flex:0 0 auto;}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 12px;max-width:720px;
 margin:0 auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
@@ -61,18 +63,21 @@ main{max-width:720px;margin:0 auto;padding:16px;}
 .banner.info{background:var(--warn-bg);color:var(--warn);}
 .banner.error{background:var(--err-bg);color:var(--err);}
 
-/* chips de deck */
+/* chips */
 .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;}
 .chips::-webkit-scrollbar{display:none;}
 .chip{flex:0 0 auto;padding:7px 14px;border-radius:999px;border:1px solid var(--line);
 background:var(--surface);color:var(--pilltx);font-size:13px;font-weight:600;cursor:pointer;}
 .chip.active{background:var(--red);border-color:var(--red);color:#fff;}
 
-/* modo */
-.seg{display:flex;background:var(--pill);border-radius:12px;padding:3px;margin:0 0 10px;}
-.seg button{flex:1;border:none;background:transparent;color:var(--mut);font-weight:700;
-font-size:13.5px;padding:9px 6px;border-radius:10px;cursor:pointer;}
-.seg button.active{background:var(--surface);color:var(--txt);box-shadow:var(--shadow);}
+/* modo de estudo */
+.modewrap{margin:0 0 10px;}
+select.modesel{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+padding:12px 14px;font-size:14.5px;font-weight:700;color:var(--txt);box-shadow:var(--shadow);
+appearance:none;-webkit-appearance:none;
+background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b9098' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+background-repeat:no-repeat;background-position:right 14px center;}
+select.modesel:focus{outline:none;border-color:var(--red);}
 
 .counter{text-align:center;color:var(--mut);font-size:13px;margin:2px 0 10px;}
 .counter b{color:var(--txt);}
@@ -93,9 +98,11 @@ padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;}
 .hanzi-lg{font-size:72px;line-height:1.15;font-weight:500;}
 .hanzi-md{font-size:44px;line-height:1.15;font-weight:500;}
 .pt-lg{font-size:30px;font-weight:800;letter-spacing:-.3px;line-height:1.25;}
+.py-lg{font-size:34px;font-weight:800;color:var(--red);letter-spacing:-.2px;}
 .pinyin{color:var(--red);font-size:21px;font-weight:700;}
 .pt-back{font-size:21px;font-weight:700;}
 .nota{color:var(--mut);font-size:13.5px;line-height:1.45;max-width:420px;}
+.stagepy{color:var(--red);font-size:24px;font-weight:800;animation:f .25s ease;}
 
 /* botões de avaliação */
 .grades{display:none;gap:10px;}
@@ -118,34 +125,22 @@ font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px
 .btn{display:inline-block;border:none;border-radius:14px;padding:12px 22px;cursor:pointer;
 font-weight:800;font-size:14.5px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.3);}
 .btn.ghost{background:var(--surface);color:var(--txt);border:1px solid var(--line);box-shadow:var(--shadow);}
+.btn.danger{background:var(--err-bg);color:var(--err);box-shadow:none;}
 
-/* cartas */
+/* cartas (consulta) */
 .search{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;
 padding:12px 14px;font-size:15px;color:var(--txt);margin:0 0 12px;}
 .search:focus{outline:none;border-color:var(--red);}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
 box-shadow:var(--shadow);padding:14px 16px;margin:0 0 10px;}
-.rowline{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.rowline{display:flex;align-items:center;gap:12px;}
 .rowline .h{font-size:26px;flex:0 0 auto;min-width:58px;}
 .rowline .mid{flex:1;min-width:0;}
 .rowline .mid .p{color:var(--red);font-weight:700;font-size:13.5px;}
-.rowline .mid .t{font-size:14.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rowline .mid .t{font-size:14.5px;font-weight:600;}
+.rowline .mid .n{color:var(--mut);font-size:12.5px;line-height:1.4;margin-top:2px;}
 .rowline .pill{background:var(--pill);color:var(--pilltx);padding:4px 10px;border-radius:999px;
-font-size:11px;font-weight:700;flex:0 0 auto;}
-.editbox{display:none;border-top:1px solid var(--line);margin-top:12px;padding-top:12px;}
-.editbox.show{display:block;}
-label{display:block;font-size:12px;font-weight:700;color:var(--soft);margin:10px 0 4px;
-text-transform:uppercase;letter-spacing:.4px;}
-.inp,select.inp{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:11px;
-padding:11px 12px;font-size:15px;color:var(--txt);}
-.inp:focus{outline:none;border-color:var(--red);background:var(--surface);}
-.pyprev{color:var(--red);font-weight:700;font-size:14px;min-height:20px;margin-top:4px;}
-.formrow{display:flex;gap:10px;}
-.formrow>div{flex:1;}
-.actions{display:flex;gap:10px;margin-top:14px;}
-.actions .btn{flex:1;text-align:center;padding:12px 8px;}
-.btn.danger{background:var(--err-bg);color:var(--err);box-shadow:none;}
-.newcard-toggle{width:100%;margin:0 0 12px;}
+font-size:11px;font-weight:700;flex:0 0 auto;align-self:flex-start;margin-top:4px;}
 
 /* progresso */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px;}
@@ -164,19 +159,32 @@ h3.sec{font-size:13px;color:var(--red);margin:20px 0 10px;text-transform:upperca
 .deckrow b{font-weight:700;}
 .deckrow span{color:var(--mut);}
 
+/* login */
+.login{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;
+align-items:center;justify-content:center;padding:24px;}
+.login.show{display:flex;}
+.login-box{width:100%;max-width:340px;text-align:center;}
+.login-box .zh-big{font-size:56px;margin-bottom:4px;}
+.login-box h2{margin:0 0 4px;font-size:22px;letter-spacing:-.3px;}
+.login-box p{color:var(--mut);font-size:13.5px;margin:0 0 22px;}
+.userbtn{display:block;width:100%;margin:0 0 10px;border:1px solid var(--line);border-radius:16px;
+background:var(--surface);color:var(--txt);font-size:17px;font-weight:800;padding:16px;
+cursor:pointer;box-shadow:var(--shadow);}
+.userbtn:active{border-color:var(--red);color:var(--red);}
+.guestbtn{background:none;border:none;color:var(--soft);font-size:13px;font-weight:600;
+cursor:pointer;margin-top:8px;text-decoration:underline;}
+
 #debugbar{display:none;position:fixed;bottom:0;left:0;right:0;background:#111;color:#0f0;
 font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 #debugbar.show{display:flex;}
 #debugbar button{background:#222;color:#0f0;border:1px solid #0f0;border-radius:6px;padding:4px 10px;cursor:pointer;}
-
-footer{text-align:center;color:var(--mut);font-size:12.5px;padding:26px 16px;max-width:720px;margin:0 auto;}
-footer a{color:var(--red);text-decoration:none;font-weight:600;}
 </style>
 </head>
 <body>
 <header>
   <div class="brandrow">
     <div class="brand">JÌZHÙ <span class="zh">记住</span><small>flashcards de mandarim</small></div>
+    <button class="userpill" id="userbtn">👤</button>
     <button class="themebtn" id="themebtn" title="Tema">🌙</button>
   </div>
   <div class="tabs">
@@ -192,9 +200,14 @@ footer a{color:var(--red);text-decoration:none;font-weight:600;}
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
   <div class="chips" id="deckchips"></div>
-  <div class="seg" id="modeseg">
-    <button data-m="zh2pt" class="active"><span class="zh">汉字</span> → PT</button>
-    <button data-m="pt2zh">PT → <span class="zh">汉字</span></button>
+  <div class="modewrap">
+    <select class="modesel" id="modesel">
+      <option value="zh_all">汉字 → pinyin + tradução</option>
+      <option value="zh_py_pt">汉字 → pinyin → tradução (2 toques)</option>
+      <option value="pt_zh">tradução → 汉字</option>
+      <option value="py_zh">pinyin → 汉字 + tradução</option>
+      <option value="mix">🔀 aleatório (mistura os modos)</option>
+    </select>
   </div>
   <div class="counter" id="counter"></div>
 
@@ -203,11 +216,12 @@ footer a{color:var(--red);text-decoration:none;font-weight:600;}
       <div class="face front">
         <span class="deckpill" id="deckpill-f"></span>
         <div id="front-content"></div>
-        <span class="hint">toque para virar</span>
+        <div class="stagepy" id="stagepy" style="display:none"></div>
+        <span class="hint" id="hint-f">toque para virar</span>
       </div>
       <div class="face back">
         <span class="deckpill" id="deckpill-b"></span>
-        <div class="hanzi-md zh" id="back-hanzi"></div>
+        <div class="hanzi-md zh" id="back-hanzi" lang="zh-Hans"></div>
         <div class="pinyin" id="back-pinyin"></div>
         <div class="pt-back" id="back-pt"></div>
         <div class="nota" id="back-nota"></div>
@@ -230,39 +244,9 @@ footer a{color:var(--red);text-decoration:none;font-weight:600;}
   </div>
 </section>
 
-<!-- ══════ CARTAS ══════ -->
+<!-- ══════ CARTAS (consulta) ══════ -->
 <section class="view" id="view-cartas">
-  <button class="btn newcard-toggle" id="newcard-toggle">➕ Nova carta</button>
-  <div class="card" id="newcard-form" style="display:none">
-    <label>Hanzi (ideograma) *</label>
-    <input class="inp zh" id="f-hanzi" placeholder="你好" autocomplete="off">
-    <label>Pinyin * <span style="text-transform:none;font-weight:600">— digite com números: ni3 hao3</span></label>
-    <input class="inp" id="f-pinyin" placeholder="ni3 hao3" autocomplete="off">
-    <div class="pyprev" id="f-pyprev"></div>
-    <label>Tradução (português) *</label>
-    <input class="inp" id="f-pt" placeholder="olá" autocomplete="off">
-    <div class="formrow">
-      <div>
-        <label>Deck</label>
-        <select class="inp" id="f-deck"></select>
-        <input class="inp" id="f-deck-new" placeholder="nome do deck novo" style="display:none;margin-top:8px">
-      </div>
-      <div>
-        <label>Quem criou</label>
-        <select class="inp" id="f-quem">
-          <option value="leo">Leo</option>
-          <option value="henrique">Henrique</option>
-          <option value="david">David</option>
-        </select>
-      </div>
-    </div>
-    <label>Nota (opcional)</label>
-    <input class="inp" id="f-nota" placeholder="dica, radical, contexto…" autocomplete="off">
-    <div class="actions">
-      <button class="btn" id="f-save">Salvar carta</button>
-      <button class="btn ghost" id="f-cancel">Cancelar</button>
-    </div>
-  </div>
+  <div class="chips" id="cartas-chips"></div>
   <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
   <div id="cardlist"></div>
 </section>
@@ -283,15 +267,24 @@ footer a{color:var(--red);text-decoration:none;font-weight:600;}
   <h3 class="sec">Por deck</h3>
   <div class="card" id="deckstats"></div>
   <div style="text-align:center;margin-top:22px">
-    <button class="btn danger" id="resetbtn">Zerar meu progresso neste aparelho</button>
+    <button class="btn danger" id="resetbtn">Zerar meu progresso</button>
   </div>
 </section>
 
 </main>
-<footer>
-  Jìzhù 记住 — feito por Leo, Henrique e David · turma do Enrico<br>
-  <a href="https://github.com/leoborja/jizhu" target="_blank" rel="noopener">github.com/leoborja/jizhu</a>
-</footer>
+
+<!-- login simples -->
+<div class="login" id="login">
+  <div class="login-box">
+    <div class="zh-big zh">你好!</div>
+    <h2>Quem está estudando?</h2>
+    <p>Seu progresso fica salvo no seu nome.</p>
+    <button class="userbtn" data-u="leo">Leo</button>
+    <button class="userbtn" data-u="henrique">Henrique</button>
+    <button class="userbtn" data-u="david">David</button>
+    <button class="guestbtn" data-u="convidado">só dar uma olhada (convidado)</button>
+  </div>
+</div>
 
 <div id="debugbar">
   <span id="debug-date"></span>

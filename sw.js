@@ -1,6 +1,6 @@
 // Jìzhù — service worker network-first: sempre tenta a rede (dados frescos),
 // cai pro cache quando offline. Nada fica preso em versão velha.
-const CACHE = 'jizhu-v1';
+const CACHE = 'jizhu-v2';
 
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(

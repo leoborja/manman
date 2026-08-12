@@ -1,6 +1,6 @@
 # Jìzhù 记住 — Flashcards de Mandarim
 
-App de flashcards pra turma de mandarim do Enrico ([huawen.com.br](https://huawen.com.br)) — Leo, Henrique e David.
+App de flashcards pra turma de mandarim do Enrico — Leo, Henrique e David.
 
 **记住 (jìzhù)** = "memorizar, gravar na memória". É exatamente o que flashcards fazem.
 
@@ -9,30 +9,35 @@ App de flashcards pra turma de mandarim do Enrico ([huawen.com.br](https://huawe
 ## Como usar
 
 1. Abra o link no celular e adicione à tela inicial (funciona como app, inclusive offline)
-2. Aba **学 Estudar**: toque no cartão pra virar, depois marque **Errei / Difícil / Acertei**
-3. O app agenda a próxima revisão automaticamente (repetição espaçada, estilo Anki):
+2. Escolha seu nome no primeiro acesso — o progresso fica salvo no seu nome
+3. Aba **学 Estudar**: escolha o modo, toque no cartão pra revelar, marque **Errei / Difícil / Acertei**
+4. O app agenda a próxima revisão automaticamente (repetição espaçada, estilo Anki):
    - **Errei** → volta ainda nesta sessão
    - **Difícil** → intervalo cresce pouco
    - **Acertei** → 1 dia → 3 dias → e vai multiplicando
-4. Máximo de **10 cartas novas por dia** — o resto é revisão
+5. Máximo de **10 cartas novas por dia** — o resto é revisão
 
-O progresso é individual por aparelho. Cada um tem o seu.
+### Modos de estudo
 
-## Como adicionar cartas
+| Modo | Frente | Revela |
+|---|---|---|
+| 汉字 → pinyin + tradução | ideograma | tudo de uma vez |
+| 汉字 → pinyin → tradução | ideograma | pinyin no 1º toque, tradução no 2º |
+| tradução → 汉字 | português | ideograma + pinyin |
+| pinyin → 汉字 + tradução | pinyin | ideograma + tradução |
+| 🔀 aleatório | mistura os modos acima | |
 
-Aba **卡 Cartas** → **➕ Nova carta**. Preencha hanzi, pinyin e tradução.
+## Cartas
 
-💡 **Pinyin com números**: digite `ni3 hao3` e o app converte pra `nǐ hǎo` sozinho.
-Tons: 1 = ā, 2 = á, 3 = ǎ, 4 = à, 5 = neutro. Pra ü use `v` (ex.: `nv3` → `nǚ`).
-
-A carta é salva no banco (Supabase) e aparece pra todo mundo. Não precisa de GitHub pra isso.
+A aba **卡 Cartas** é pra consulta: busca + filtro por categoria. As cartas vivem no
+Supabase (tabela `cards`) — por enquanto quem adiciona/edita é o Leo.
 
 ## Estrutura
 
 | Arquivo | O quê |
 |---|---|
 | `index.html` | interface (HTML + CSS) |
-| `app.js` | lógica: SRS, conversor de tons, Supabase |
+| `app.js` | lógica: SRS, modos, login, sync Supabase |
 | `config.js` | URL + anon key do Supabase |
 | `seed/seed_cards.json` | deck inicial (fallback offline) |
 | `sw.js` + `manifest.webmanifest` | PWA |
@@ -47,8 +52,7 @@ Debug de datas (testar agendamento): abra com `?debug=1`.
 
 ## Roadmap (V2)
 
+- [ ] Melhorar a aba Progresso
 - [ ] Radical e decomposição no cartão ([makemeahanzi](https://github.com/skishore/makemeahanzi))
 - [ ] Áudio / pronúncia
-- [ ] Autocompletar pinyin/tradução via CC-CEDICT
-- [ ] Progresso sincronizado entre aparelhos (Supabase Auth)
 - [ ] Domínio próprio
