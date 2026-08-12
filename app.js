@@ -51,8 +51,9 @@ const MODE_TITLES = {
 
 // ── estado ──────────────────────────────────────────────────
 let cards = [];                  // deck completo (não deletadas)
-let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', user: null, theme: null });
+let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', user: null, theme: null, autoSpeak: true });
 if (MODES[settings.mode] === undefined && settings.mode !== 'mix') settings.mode = 'zh_all';
+if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 let log = {};                    // 'YYYY-MM-DD' → {rev, new}
 let dirty = [];                  // ids com sync pendente (SRS)
@@ -85,6 +86,38 @@ function todayStr(plusDays) {
 }
 function deckLabel(d) { return DECK_LABELS[d] || (d.charAt(0).toUpperCase() + d.slice(1)); }
 function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ── áudio de pronúncia ──────────────────────────────────────
+// Voz chinesa do próprio aparelho (Web Speech API). Se a carta tiver
+// audio_url (V2, vozes gravadas), o MP3 tem prioridade.
+let zhVoice = null;
+function pickZhVoice() {
+  const voices = speechSynthesis.getVoices().filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().startsWith('zh'));
+  zhVoice = voices.find(v => /tingting|ting-ting/i.test(v.name)) ||
+    voices.find(v => v.lang.replace('_', '-').toLowerCase().startsWith('zh-cn')) ||
+    voices[0] || null;
+}
+if ('speechSynthesis' in window) {
+  pickZhVoice();
+  speechSynthesis.onvoiceschanged = pickZhVoice; // iOS/Chrome carregam vozes async
+}
+let warnedNoVoice = false;
+function speak(card, auto) {
+  if (card.audio_url) { new Audio(card.audio_url).play().catch(() => {}); return; }
+  if (!('speechSynthesis' in window)) return;
+  if (!zhVoice) pickZhVoice();
+  if (!zhVoice) {
+    // no modo automático falha em silêncio; alerta só quando a pessoa toca no 🔊
+    if (!auto && !warnedNoVoice) { warnedNoVoice = true; alert('Seu aparelho não tem voz chinesa instalada (Ajustes → Acessibilidade → Conteúdo Falado → Vozes → Chinês).'); }
+    return;
+  }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(card.hanzi);
+  u.voice = zhVoice;
+  u.lang = zhVoice.lang;
+  u.rate = 0.8; // mais devagar pra aluno — 慢慢!
+  speechSynthesis.speak(u);
+}
 
 // ── conversor de tons: ni3 hao3 → nǐ hǎo ────────────────────
 const TONE_MARKS = {
@@ -460,9 +493,11 @@ function tapCard() {
     $('stagepy').textContent = current.pinyin;
     $('stagepy').style.display = '';
     $('hint-f').textContent = 'toque para ver a tradução';
+    if (settings.autoSpeak) speak(current, true);
     return;
   }
   f.classList.add('flipped');
+  if (settings.autoSpeak && stage === 0) speak(current, true); // staged já falou no 1º toque
   if (freeMode) $('nextbtn').classList.add('show');
   else $('grades').classList.add('show');
 }
@@ -497,9 +532,14 @@ function renderList() {
     '<div class="mid"><div class="p">' + esc(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
     (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') + '</div>' +
     '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
+    '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
     '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
     (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
     '</div></div>').join('') || '<p style="color:var(--mut);text-align:center">Nenhuma carta encontrada.</p>';
+  $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
+    const c = cards.find(x => x.id === bt.dataset.id);
+    if (c) speak(c);
+  });
   $('cardlist').querySelectorAll('.offtgl').forEach(t => t.onchange = () => {
     setOff(t.dataset.id, !t.checked);
     renderCartasChips(); renderList();
@@ -560,8 +600,9 @@ function renderModeUI() {
   $('modecur').textContent = MODE_TITLES[settings.mode] || MODE_TITLES.zh_all;
 }
 function renderModeSheet() {
-  document.querySelectorAll('.modeopt').forEach(b =>
+  document.querySelectorAll('.modeopt[data-m]').forEach(b =>
     b.classList.toggle('active', b.dataset.m === settings.mode));
+  $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
 }
 function applyTheme() {
   const pref = settings.theme || 'light'; // light é o padrão; dark só se a pessoa escolher
@@ -577,12 +618,17 @@ function bindEvents() {
   };
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
-  document.querySelectorAll('.modeopt').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.modeopt[data-m]').forEach(b => b.onclick = () => {
     settings.mode = b.dataset.m; save(K.settings, settings);
     renderModeUI();
     $('modesheet').classList.remove('show');
     if (current) showCard(current);
   });
+  $('autospeak-opt').onclick = () => {
+    settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
+    renderModeSheet();
+  };
+  $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   $('fcard').onclick = tapCard;
   $('g-again').onclick = () => grade('again');
   $('g-hard').onclick = () => grade('hard');
