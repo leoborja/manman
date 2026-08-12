@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<title>Jìzhù 记住 — Flashcards de Mandarim</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Jìzhù">
+<style>
+:root{
+--red:#c8102e;--red-d:#a30d26;--gold:#e8b34b;
+--ok:#2e9e5b;--ok-bg:#e6f5ec;--warn:#d98a00;--warn-bg:#fdf3e0;--err:#c8102e;--err-bg:#fbe9ec;
+--bg:#f4f5f7;--surface:#ffffff;--surface2:#f7f8fa;
+--line:#e7e9ee;--txt:#1b1d21;--mut:#6b7078;--soft:#8b9098;
+--pill:#eef0f4;--pilltx:#4a4f57;
+--shadow:0 1px 2px rgba(20,22,28,.05),0 6px 18px rgba(20,22,28,.06);
+--radius:18px;}
+html[data-theme="dark"]{
+--bg:#0c0d0f;--surface:#17181c;--surface2:#1c1e23;
+--line:#2a2d33;--txt:#eceef2;--mut:#9a9ea6;--soft:#7c828b;
+--pill:#25272d;--pilltx:#c9ccd3;
+--ok-bg:#12291b;--warn-bg:#2c2214;--err-bg:#2c1216;
+--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{margin:0;background:var(--bg);color:var(--txt);
+font:16px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Arial,sans-serif;
+padding-bottom:40px;-webkit-font-smoothing:antialiased;}
+.zh{font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;}
+
+header{position:sticky;top:0;z-index:50;background:var(--bg);
+backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
+.brandrow{display:flex;align-items:center;justify-content:space-between;
+padding:12px 16px 8px;max-width:720px;margin:0 auto;}
+.brand{font-weight:800;letter-spacing:-.2px;font-size:15px;color:var(--txt);}
+.brand span{color:var(--red);}
+.brand small{color:var(--mut);font-weight:600;font-size:11px;margin-left:6px;}
+.themebtn{background:var(--surface);border:1px solid var(--line);border-radius:50%;
+width:38px;height:38px;font-size:16px;cursor:pointer;line-height:1;box-shadow:var(--shadow);}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 12px;max-width:720px;
+margin:0 auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1 1 0;min-width:90px;padding:9px 12px;border:1px solid var(--line);
+border-radius:14px;background:var(--surface);color:var(--mut);text-align:center;
+cursor:pointer;transition:.15s;box-shadow:var(--shadow);}
+.tab b{display:block;font-size:17px;line-height:1.2;color:var(--txt);font-weight:800;}
+.tab small{font-size:10.5px;font-weight:600;letter-spacing:.2px;}
+.tab.active{background:var(--red);border-color:var(--red);box-shadow:0 6px 16px rgba(200,16,46,.35);}
+.tab.active b,.tab.active small{color:#fff;}
+
+main{max-width:720px;margin:0 auto;padding:16px;}
+.view{display:none;}
+.view.active{display:block;animation:f .22s ease;}
+@keyframes f{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.banner{border-radius:12px;padding:10px 14px;font-size:13.5px;margin:0 0 12px;display:none;}
+.banner.show{display:block;}
+.banner.info{background:var(--warn-bg);color:var(--warn);}
+.banner.error{background:var(--err-bg);color:var(--err);}
+
+/* chips de deck */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{flex:0 0 auto;padding:7px 14px;border-radius:999px;border:1px solid var(--line);
+background:var(--surface);color:var(--pilltx);font-size:13px;font-weight:600;cursor:pointer;}
+.chip.active{background:var(--red);border-color:var(--red);color:#fff;}
+
+/* modo */
+.seg{display:flex;background:var(--pill);border-radius:12px;padding:3px;margin:0 0 10px;}
+.seg button{flex:1;border:none;background:transparent;color:var(--mut);font-weight:700;
+font-size:13.5px;padding:9px 6px;border-radius:10px;cursor:pointer;}
+.seg button.active{background:var(--surface);color:var(--txt);box-shadow:var(--shadow);}
+
+.counter{text-align:center;color:var(--mut);font-size:13px;margin:2px 0 10px;}
+.counter b{color:var(--txt);}
+
+/* flashcard */
+.stage{perspective:1200px;margin:0 0 14px;}
+.fcard{position:relative;width:100%;min-height:320px;cursor:pointer;
+transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.7,.3,1);}
+.fcard.flipped{transform:rotateY(180deg);}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;
+justify-content:center;gap:10px;padding:24px;text-align:center;}
+.face.back{transform:rotateY(180deg);}
+.face .deckpill{position:absolute;top:14px;left:14px;background:var(--pill);color:var(--pilltx);
+padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;}
+.face .hint{position:absolute;bottom:12px;color:var(--soft);font-size:12px;}
+.hanzi-lg{font-size:72px;line-height:1.15;font-weight:500;}
+.hanzi-md{font-size:44px;line-height:1.15;font-weight:500;}
+.pt-lg{font-size:30px;font-weight:800;letter-spacing:-.3px;line-height:1.25;}
+.pinyin{color:var(--red);font-size:21px;font-weight:700;}
+.pt-back{font-size:21px;font-weight:700;}
+.nota{color:var(--mut);font-size:13.5px;line-height:1.45;max-width:420px;}
+
+/* botões de avaliação */
+.grades{display:none;gap:10px;}
+.grades.show{display:flex;}
+.grades button{flex:1;border:none;border-radius:16px;padding:13px 6px 11px;cursor:pointer;
+font-weight:800;font-size:15px;box-shadow:var(--shadow);}
+.grades button small{display:block;font-weight:600;font-size:11px;opacity:.75;margin-top:1px;}
+.g-again{background:var(--err-bg);color:var(--err);}
+.g-hard{background:var(--warn-bg);color:var(--warn);}
+.g-good{background:var(--ok-bg);color:var(--ok);}
+.nextbtn{display:none;width:100%;border:none;border-radius:16px;padding:14px;cursor:pointer;
+font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.35);}
+.nextbtn.show{display:block;}
+
+.done{display:none;text-align:center;padding:40px 16px;}
+.done.show{display:block;}
+.done .big{font-size:52px;margin-bottom:8px;}
+.done h2{margin:0 0 6px;font-size:22px;letter-spacing:-.3px;}
+.done p{color:var(--mut);font-size:14px;margin:0 0 18px;}
+.btn{display:inline-block;border:none;border-radius:14px;padding:12px 22px;cursor:pointer;
+font-weight:800;font-size:14.5px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.3);}
+.btn.ghost{background:var(--surface);color:var(--txt);border:1px solid var(--line);box-shadow:var(--shadow);}
+
+/* cartas */
+.search{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+padding:12px 14px;font-size:15px;color:var(--txt);margin:0 0 12px;}
+.search:focus{outline:none;border-color:var(--red);}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+box-shadow:var(--shadow);padding:14px 16px;margin:0 0 10px;}
+.rowline{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.rowline .h{font-size:26px;flex:0 0 auto;min-width:58px;}
+.rowline .mid{flex:1;min-width:0;}
+.rowline .mid .p{color:var(--red);font-weight:700;font-size:13.5px;}
+.rowline .mid .t{font-size:14.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rowline .pill{background:var(--pill);color:var(--pilltx);padding:4px 10px;border-radius:999px;
+font-size:11px;font-weight:700;flex:0 0 auto;}
+.editbox{display:none;border-top:1px solid var(--line);margin-top:12px;padding-top:12px;}
+.editbox.show{display:block;}
+label{display:block;font-size:12px;font-weight:700;color:var(--soft);margin:10px 0 4px;
+text-transform:uppercase;letter-spacing:.4px;}
+.inp,select.inp{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:11px;
+padding:11px 12px;font-size:15px;color:var(--txt);}
+.inp:focus{outline:none;border-color:var(--red);background:var(--surface);}
+.pyprev{color:var(--red);font-weight:700;font-size:14px;min-height:20px;margin-top:4px;}
+.formrow{display:flex;gap:10px;}
+.formrow>div{flex:1;}
+.actions{display:flex;gap:10px;margin-top:14px;}
+.actions .btn{flex:1;text-align:center;padding:12px 8px;}
+.btn.danger{background:var(--err-bg);color:var(--err);box-shadow:none;}
+.newcard-toggle{width:100%;margin:0 0 12px;}
+
+/* progresso */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px;}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+box-shadow:var(--shadow);padding:14px 16px;}
+.stat b{display:block;font-size:26px;letter-spacing:-.5px;}
+.stat small{color:var(--mut);font-size:12px;font-weight:600;}
+.bars{display:flex;align-items:flex-end;gap:5px;height:90px;padding:6px 2px 0;}
+.bars .bar{flex:1;background:var(--red);border-radius:5px 5px 2px 2px;min-height:3px;opacity:.85;}
+.bars .bar.zero{background:var(--pill);}
+.barlabels{display:flex;gap:5px;color:var(--soft);font-size:9px;text-align:center;}
+.barlabels span{flex:1;}
+h3.sec{font-size:13px;color:var(--red);margin:20px 0 10px;text-transform:uppercase;letter-spacing:.4px;}
+.deckrow{display:flex;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--line);font-size:14px;}
+.deckrow:last-child{border-bottom:none;}
+.deckrow b{font-weight:700;}
+.deckrow span{color:var(--mut);}
+
+#debugbar{display:none;position:fixed;bottom:0;left:0;right:0;background:#111;color:#0f0;
+font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
+#debugbar.show{display:flex;}
+#debugbar button{background:#222;color:#0f0;border:1px solid #0f0;border-radius:6px;padding:4px 10px;cursor:pointer;}
+
+footer{text-align:center;color:var(--mut);font-size:12.5px;padding:26px 16px;max-width:720px;margin:0 auto;}
+footer a{color:var(--red);text-decoration:none;font-weight:600;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brandrow">
+    <div class="brand">JÌZHÙ <span class="zh">记住</span><small>flashcards de mandarim</small></div>
+    <button class="themebtn" id="themebtn" title="Tema">🌙</button>
+  </div>
+  <div class="tabs">
+    <div class="tab active" data-v="estudar"><b class="zh">学</b><small>ESTUDAR</small></div>
+    <div class="tab" data-v="cartas"><b class="zh">卡</b><small>CARTAS</small></div>
+    <div class="tab" data-v="progresso"><b>🔥</b><small>PROGRESSO</small></div>
+  </div>
+</header>
+<main>
+
+<div class="banner" id="banner"></div>
+
+<!-- ══════ ESTUDAR ══════ -->
+<section class="view active" id="view-estudar">
+  <div class="chips" id="deckchips"></div>
+  <div class="seg" id="modeseg">
+    <button data-m="zh2pt" class="active"><span class="zh">汉字</span> → PT</button>
+    <button data-m="pt2zh">PT → <span class="zh">汉字</span></button>
+  </div>
+  <div class="counter" id="counter"></div>
+
+  <div class="stage" id="stage">
+    <div class="fcard" id="fcard">
+      <div class="face front">
+        <span class="deckpill" id="deckpill-f"></span>
+        <div id="front-content"></div>
+        <span class="hint">toque para virar</span>
+      </div>
+      <div class="face back">
+        <span class="deckpill" id="deckpill-b"></span>
+        <div class="hanzi-md zh" id="back-hanzi"></div>
+        <div class="pinyin" id="back-pinyin"></div>
+        <div class="pt-back" id="back-pt"></div>
+        <div class="nota" id="back-nota"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grades" id="grades">
+    <button class="g-again" id="g-again">Errei<small id="iv-again"></small></button>
+    <button class="g-hard" id="g-hard">Difícil<small id="iv-hard"></small></button>
+    <button class="g-good" id="g-good">Acertei<small id="iv-good"></small></button>
+  </div>
+  <button class="nextbtn" id="nextbtn">Próximo →</button>
+
+  <div class="done" id="done">
+    <div class="big">🎉</div>
+    <h2>Feito por hoje!</h2>
+    <p id="done-sub">Você revisou tudo que estava agendado. 明天见 (até amanhã)!</p>
+    <button class="btn ghost" id="freebtn">Treino livre (não conta no progresso)</button>
+  </div>
+</section>
+
+<!-- ══════ CARTAS ══════ -->
+<section class="view" id="view-cartas">
+  <button class="btn newcard-toggle" id="newcard-toggle">➕ Nova carta</button>
+  <div class="card" id="newcard-form" style="display:none">
+    <label>Hanzi (ideograma) *</label>
+    <input class="inp zh" id="f-hanzi" placeholder="你好" autocomplete="off">
+    <label>Pinyin * <span style="text-transform:none;font-weight:600">— digite com números: ni3 hao3</span></label>
+    <input class="inp" id="f-pinyin" placeholder="ni3 hao3" autocomplete="off">
+    <div class="pyprev" id="f-pyprev"></div>
+    <label>Tradução (português) *</label>
+    <input class="inp" id="f-pt" placeholder="olá" autocomplete="off">
+    <div class="formrow">
+      <div>
+        <label>Deck</label>
+        <select class="inp" id="f-deck"></select>
+        <input class="inp" id="f-deck-new" placeholder="nome do deck novo" style="display:none;margin-top:8px">
+      </div>
+      <div>
+        <label>Quem criou</label>
+        <select class="inp" id="f-quem">
+          <option value="leo">Leo</option>
+          <option value="henrique">Henrique</option>
+          <option value="david">David</option>
+        </select>
+      </div>
+    </div>
+    <label>Nota (opcional)</label>
+    <input class="inp" id="f-nota" placeholder="dica, radical, contexto…" autocomplete="off">
+    <div class="actions">
+      <button class="btn" id="f-save">Salvar carta</button>
+      <button class="btn ghost" id="f-cancel">Cancelar</button>
+    </div>
+  </div>
+  <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
+  <div id="cardlist"></div>
+</section>
+
+<!-- ══════ PROGRESSO ══════ -->
+<section class="view" id="view-progresso">
+  <div class="stats">
+    <div class="stat"><b id="s-hoje">–</b><small>para revisar hoje</small></div>
+    <div class="stat"><b id="s-novas">–</b><small>novas disponíveis</small></div>
+    <div class="stat"><b id="s-aprendidas">–</b><small>aprendidas (≥21d)</small></div>
+    <div class="stat"><b id="s-streak">–</b><small>dias seguidos 🔥</small></div>
+  </div>
+  <h3 class="sec">Revisões · últimos 14 dias</h3>
+  <div class="card">
+    <div class="bars" id="bars"></div>
+    <div class="barlabels" id="barlabels"></div>
+  </div>
+  <h3 class="sec">Por deck</h3>
+  <div class="card" id="deckstats"></div>
+  <div style="text-align:center;margin-top:22px">
+    <button class="btn danger" id="resetbtn">Zerar meu progresso neste aparelho</button>
+  </div>
+</section>
+
+</main>
+<footer>
+  Jìzhù 记住 — feito por Leo, Henrique e David · turma do Enrico<br>
+  <a href="https://github.com/leoborja/jizhu" target="_blank" rel="noopener">github.com/leoborja/jizhu</a>
+</footer>
+
+<div id="debugbar">
+  <span id="debug-date"></span>
+  <button id="debug-tomorrow">+1 dia</button>
+  <button id="debug-reset">zerar offset</button>
+</div>
+
+<script src="./config.js"></script>
+<script src="./app.js"></script>
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+</body>
+</html>
