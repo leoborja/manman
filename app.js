@@ -629,6 +629,7 @@ function bindEvents() {
     renderModeSheet();
   };
   $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
+  $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   $('fcard').onclick = tapCard;
   $('g-again').onclick = () => grade('again');
   $('g-hard').onclick = () => grade('hard');
