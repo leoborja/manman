@@ -1,6 +1,4 @@
 [
-  {"id":"nihao","hanzi":"你好","pinyin":"nǐ hǎo","pt":"olá","deck":"saudacoes","tags":["aula1"]},
-
   {"id":"num-1","hanzi":"一","pinyin":"yī","pt":"um (1)","deck":"numeros","tags":["aula2"]},
   {"id":"num-2","hanzi":"二","pinyin":"èr","pt":"dois (2)","deck":"numeros","tags":["aula2"]},
   {"id":"num-3","hanzi":"三","pinyin":"sān","pt":"três (3)","deck":"numeros","tags":["aula2"]},
