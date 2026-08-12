@@ -141,6 +141,9 @@ font-weight:800;font-size:15px;box-shadow:var(--shadow);}
 .nextbtn{display:none;width:100%;border:none;border-radius:16px;padding:14px;cursor:pointer;
 font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.35);}
 .nextbtn.show{display:block;}
+.offbtn{display:block;margin:14px auto 0;background:none;border:none;color:var(--soft);
+font-size:12.5px;font-weight:600;cursor:pointer;padding:6px 10px;}
+.offbtn:active{color:var(--err);}
 
 .done{display:none;text-align:center;padding:40px 16px;}
 .done.show{display:block;}
@@ -166,6 +169,14 @@ box-shadow:var(--shadow);padding:14px 16px;margin:0 0 10px;}
 .rowline .mid .n{color:var(--mut);font-size:12.5px;line-height:1.4;margin-top:2px;}
 .rowline .pill{background:var(--pill);color:var(--pilltx);padding:4px 10px;border-radius:999px;
 font-size:11px;font-weight:700;flex:0 0 auto;align-self:flex-start;margin-top:4px;}
+.rowline .switch{position:relative;flex:0 0 auto;width:44px;height:26px;align-self:center;}
+.switch input{opacity:0;width:0;height:0;position:absolute;}
+.switch .knob{position:absolute;inset:0;background:var(--pill);border-radius:99px;transition:.2s;cursor:pointer;}
+.switch .knob:before{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;
+border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s;}
+.switch input:checked + .knob{background:var(--ok);}
+.switch input:checked + .knob:before{transform:translateX(18px);}
+.card.offrow{opacity:.55;}
 
 /* progresso */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px;}
@@ -256,6 +267,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="g-good" id="g-good">Acertei<small id="iv-good"></small></button>
   </div>
   <button class="nextbtn" id="nextbtn">Próximo →</button>
+  <button class="offbtn" id="offbtn" style="display:none">🚫 desligar esta carta</button>
 
   <div class="done" id="done">
     <div class="big">🎉</div>

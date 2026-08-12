@@ -27,6 +27,8 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
   srs: 'manman.srs.v1',
   log: 'manman.log.v1',
   dirty: 'manman.dirty.v1',
+  off: 'manman.off.v1',
+  dirtyOff: 'manman.dirtyoff.v1',
   settings: 'manman.settings.v1',
   dayOffset: 'manman.dayoffset'
 };
@@ -54,7 +56,9 @@ let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', user: null, the
 if (MODES[settings.mode] === undefined && settings.mode !== 'mix') settings.mode = 'zh_all';
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 let log = {};                    // 'YYYY-MM-DD' → {rev, new}
-let dirty = [];                  // ids com sync pendente
+let dirty = [];                  // ids com sync pendente (SRS)
+let off = {};                    // id → {off: bool, u: ms} — cartas desligadas pelo usuário
+let dirtyOff = [];               // ids com sync de desligamento pendente
 let queue = [];                  // fila da sessão (ids)
 let current = null;              // carta atual
 let curMode = 'zh_all';          // modo efetivo da carta atual (p/ aleatório)
@@ -151,9 +155,20 @@ function logToday(field) {
 }
 function gcSrs() { // remove estados de cartas que não existem mais
   const ids = new Set(cards.map(c => c.id));
-  let changed = false;
+  let changed = false, changedOff = false;
   for (const id of Object.keys(srs)) if (!ids.has(id)) { delete srs[id]; changed = true; }
+  for (const id of Object.keys(off)) if (!ids.has(id)) { delete off[id]; changedOff = true; }
   if (changed) save(uk(K.srs), srs);
+  if (changedOff) save(uk(K.off), off);
+}
+
+// ── cartas desligadas ───────────────────────────────────────
+function isOff(id) { return !!(off[id] && off[id].off); }
+function offCount() { return cards.filter(c => isOff(c.id)).length; }
+function setOff(id, val) {
+  off[id] = { off: val, u: Date.now() };
+  save(uk(K.off), off);
+  pushOff(id);
 }
 
 // ── usuário / login ─────────────────────────────────────────
@@ -161,6 +176,8 @@ function loadUserState() {
   srs = load(uk(K.srs), {});
   log = load(uk(K.log), {});
   dirty = load(uk(K.dirty), []);
+  off = load(uk(K.off), {});
+  dirtyOff = load(uk(K.dirtyOff), []);
   // migração: progresso antigo sem usuário vira do primeiro que logar
   if (!Object.keys(srs).length && localStorage.getItem(K.srs)) {
     srs = load(K.srs, {}); log = load(K.log, {});
@@ -232,12 +249,18 @@ async function syncPull() {
     if (pr.ok) {
       for (const row of await pr.json()) {
         const local = srs[row.card_id];
-        if (!local || (row.updated_ms || 0) > (local.u || 0)) {
+        if (row.due !== null && (!local || (row.updated_ms || 0) > (local.u || 0))) {
           srs[row.card_id] = { reps: row.reps, ivl: row.ivl, ease: row.ease, due: row.due, u: row.updated_ms || 0 };
+          changed = true;
+        }
+        const lo = off[row.card_id];
+        if ((row.off_ms || 0) > 0 && (!lo || row.off_ms > lo.u)) {
+          off[row.card_id] = { off: !!row.suspended, u: row.off_ms };
           changed = true;
         }
       }
       save(uk(K.srs), srs);
+      save(uk(K.off), off);
     }
     if (lr.ok) {
       for (const row of await lr.json()) {
@@ -272,9 +295,27 @@ async function syncPush(id) {
     if (!dirty.includes(id)) { dirty.push(id); save(uk(K.dirty), dirty); }
   }
 }
+async function pushOff(id) {
+  if (!syncEnabled()) return;
+  const o = off[id];
+  if (!o) return;
+  try {
+    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
+      method: 'POST',
+      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
+      body: JSON.stringify({ user_name: settings.user, card_id: id, suspended: o.off, off_ms: o.u })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    dirtyOff = dirtyOff.filter(x => x !== id);
+    save(uk(K.dirtyOff), dirtyOff);
+  } catch (e) {
+    if (!dirtyOff.includes(id)) { dirtyOff.push(id); save(uk(K.dirtyOff), dirtyOff); }
+  }
+}
 function flushDirty() {
-  if (!syncEnabled() || !dirty.length) return;
+  if (!syncEnabled()) return;
   [...dirty].forEach(id => { if (srs[id]) syncPush(id); });
+  [...dirtyOff].forEach(id => { if (off[id]) pushOff(id); });
 }
 async function syncReset() { // apaga progresso remoto do usuário
   if (!syncEnabled()) return;
@@ -298,9 +339,10 @@ function hideBanner() { $('banner').className = 'banner'; }
 function filteredCards() {
   return settings.deck === 'todos' ? cards : cards.filter(c => c.deck === settings.deck);
 }
+function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
 function buildQueue() {
   const t = todayStr();
-  const pool = filteredCards();
+  const pool = activePool();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t)
     .sort((a, b) => srs[a.id].due < srs[b.id].due ? -1 : 1);
   const newToday = (log[t] && log[t].new) || 0;
@@ -309,12 +351,12 @@ function buildQueue() {
   freeMode = false;
 }
 function buildFreeQueue() {
-  queue = shuffle(filteredCards().map(c => c.id));
+  queue = shuffle(activePool().map(c => c.id));
   freeMode = true;
 }
 function dueCount() {
   const t = todayStr();
-  const pool = filteredCards();
+  const pool = activePool();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t).length;
   const newToday = (log[t] && log[t].new) || 0;
   const news = Math.min(pool.filter(c => !srs[c.id]).length, Math.max(0, NEW_PER_DAY - newToday));
@@ -365,6 +407,7 @@ function showCard(card) {
   $('grades').classList.remove('show');
   $('nextbtn').classList.remove('show');
   $('stage').style.display = '';
+  $('offbtn').style.display = '';
   $('done').classList.remove('show');
   renderCounter();
 }
@@ -372,7 +415,7 @@ function nextCard() {
   if (!queue.length) { finishSession(); return; }
   const id = queue[0];
   const card = cards.find(c => c.id === id);
-  if (!card) { queue.shift(); nextCard(); return; }
+  if (!card || isOff(id)) { queue.shift(); nextCard(); return; }
   showCard(card);
 }
 function finishSession() {
@@ -380,6 +423,7 @@ function finishSession() {
   $('stage').style.display = 'none';
   $('grades').classList.remove('show');
   $('nextbtn').classList.remove('show');
+  $('offbtn').style.display = 'none';
   $('done').classList.add('show');
   $('done-sub').textContent = freeMode
     ? 'Fim do treino livre. 加油 (jiāyóu — força)!'
@@ -429,9 +473,14 @@ function tapCard() {
 // ── UI: cartas (consulta) ───────────────────────────────────
 function renderCartasChips() {
   const decks = ['todos'].concat([...new Set(cards.map(c => c.deck))]);
-  $('cartas-chips').innerHTML = decks.map(d =>
+  const nOff = offCount();
+  let html = decks.map(d =>
     '<button class="chip' + (cartasDeck === d ? ' active' : '') + '" data-d="' + esc(d) + '">' +
     (d === 'todos' ? 'Todas' : esc(deckLabel(d))) + '</button>').join('');
+  if (nOff > 0 || cartasDeck === '__off__') {
+    html += '<button class="chip' + (cartasDeck === '__off__' ? ' active' : '') + '" data-d="__off__">🚫 Desligadas (' + nOff + ')</button>';
+  }
+  $('cartas-chips').innerHTML = html;
   $('cartas-chips').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cartasDeck = ch.dataset.d;
     renderCartasChips(); renderList();
@@ -440,18 +489,34 @@ function renderCartasChips() {
 function renderList() {
   const q = $('search').value.trim().toLowerCase();
   const list = cards.filter(c =>
-    (cartasDeck === 'todos' || c.deck === cartasDeck) &&
+    (cartasDeck === 'todos' || (cartasDeck === '__off__' ? isOff(c.id) : c.deck === cartasDeck)) &&
     (!q ||
       (c.hanzi || '').toLowerCase().includes(q) ||
       (c.pinyin || '').toLowerCase().includes(q) ||
       (c.pt || '').toLowerCase().includes(q)));
   $('cardlist').innerHTML = list.map(c =>
-    '<div class="card"><div class="rowline">' +
+    '<div class="card' + (isOff(c.id) ? ' offrow' : '') + '"><div class="rowline">' +
     '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
     '<div class="mid"><div class="p">' + esc(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
     (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') + '</div>' +
     '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
+    '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
+    (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
     '</div></div>').join('') || '<p style="color:var(--mut);text-align:center">Nenhuma carta encontrada.</p>';
+  $('cardlist').querySelectorAll('.offtgl').forEach(t => t.onchange = () => {
+    setOff(t.dataset.id, !t.checked);
+    renderCartasChips(); renderList();
+    if (!freeMode) { // realinha a fila de estudo mantendo a carta atual na frente
+      buildQueue();
+      if (current && !isOff(current.id)) {
+        queue = queue.filter(x => x !== current.id);
+        queue.unshift(current.id);
+        renderCounter();
+      } else {
+        nextCard();
+      }
+    }
+  });
 }
 
 // ── UI: progresso ───────────────────────────────────────────
@@ -481,8 +546,9 @@ function renderProgress() {
     const pool = cards.filter(c => c.deck === dk);
     const learned = pool.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
     const seen = pool.filter(c => srs[c.id]).length;
+    const nOff = pool.filter(c => isOff(c.id)).length;
     return '<div class="deckrow"><b>' + esc(deckLabel(dk)) + '</b><span>' + seen + '/' + pool.length +
-      ' vistas · ' + learned + ' aprendidas</span></div>';
+      ' vistas · ' + learned + ' aprendidas' + (nOff ? ' · ' + nOff + ' 🚫' : '') + '</span></div>';
   }).join('');
 }
 
@@ -526,6 +592,15 @@ function bindEvents() {
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
   $('freebtn').onclick = () => { buildFreeQueue(); if (queue.length) nextCard(); };
+  $('offbtn').onclick = () => {
+    if (!current) return;
+    setOff(current.id, true);
+    queue.shift();
+    showBanner('info', '🚫 "' + current.hanzi + '" desligada — religue na aba Cartas.');
+    setTimeout(hideBanner, 3000);
+    renderCartasChips();
+    nextCard();
+  };
   $('search').oninput = renderList;
   // login
   document.querySelectorAll('#login [data-u]').forEach(b => b.onclick = () => selectUser(b.dataset.u));
@@ -558,22 +633,25 @@ async function init() {
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
   else if (dataSource === 'vazio') showBanner('error', 'Não consegui carregar nenhuma carta. Verifique a conexão e recarregue.');
   else hideBanner();
-  renderChips();
-  renderCartasChips();
-  renderList();
-  if (settings.user) {
+  if (settings.user) { // estado do usuário ANTES de qualquer render (off/srs afetam chips e fila)
     renderUserPill();
     loadUserState();
     gcSrs();
-    renderProgress();
+  }
+  renderChips();
+  renderCartasChips();
+  renderList();
+  renderProgress();
+  if (settings.user) {
     startSession();
     const changed = await syncPull();
     flushDirty();
     if (changed && gradedThisSession === 0) startSession();
+    renderCartasChips();
+    renderList();
     renderProgress();
   } else {
     $('login').classList.add('show');
-    renderProgress();
     startSession();
   }
 }
