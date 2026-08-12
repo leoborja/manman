@@ -25,11 +25,13 @@ html[data-theme="dark"]{
 --pill:#25272d;--pilltx:#c9ccd3;
 --ok-bg:#12291b;--warn-bg:#2c2214;--err-bg:#2c1216;
 --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);}
+/* LXGW WenKai (subset) — estilo 楷体/caligráfico, igual à escrita à mão do professor */
+@font-face{font-family:'HanziKai';src:url('./fonts/hanzi.woff2') format('woff2');font-display:swap;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{margin:0;background:var(--bg);color:var(--txt);
 font:16px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Arial,sans-serif;
 padding-bottom:40px;-webkit-font-smoothing:antialiased;}
-.zh{font-family:-apple-system,'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif;}
+.zh{font-family:'HanziKai','Kaiti SC','STKaiti','Kaiti','BiauKai','PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif;}
 
 header{position:sticky;top:0;z-index:50;background:var(--bg);
 backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
