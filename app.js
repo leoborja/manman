@@ -407,8 +407,10 @@ function renderChips() {
 function renderCounter() {
   const { due, news } = dueCount();
   $('counter').innerHTML = freeMode
-    ? '<b>treino livre</b> · ' + queue.length + ' cartas embaralhadas'
+    ? '<b>treino livre</b> · todas as cartas, sem afetar o progresso'
     : '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
+  $('freetoggle').textContent = freeMode ? '← voltar às revisões do dia' : '∞ treino livre com todas';
+  $('freetoggle').classList.toggle('on', freeMode);
 }
 function showCard(card) {
   current = card;
@@ -635,7 +637,11 @@ function bindEvents() {
   $('g-hard').onclick = () => grade('hard');
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
-  $('freebtn').onclick = () => { buildFreeQueue(); if (queue.length) nextCard(); };
+  $('freebtn').onclick = () => { buildFreeQueue(); if (queue.length) nextCard(); else finishSession(); };
+  $('freetoggle').onclick = () => {
+    if (freeMode) { startSession(); }
+    else { buildFreeQueue(); if (queue.length) nextCard(); else finishSession(); }
+  };
   $('offbtn').onclick = () => {
     if (!current) return;
     setOff(current.id, true);
