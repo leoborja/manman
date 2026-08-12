@@ -18,7 +18,6 @@
 })();
 
 // ── constantes ──────────────────────────────────────────────
-const NEW_PER_DAY = 10;          // novas cartas por dia
 const LEARNED_IVL = 21;          // intervalo (dias) p/ considerar "aprendida"
 const EASE_START = 2.5, EASE_MIN = 1.3, EASE_MAX = 2.8;
 const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', convidado: 'Convidado' };
@@ -345,8 +344,7 @@ function buildQueue() {
   const pool = activePool();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t)
     .sort((a, b) => srs[a.id].due < srs[b.id].due ? -1 : 1);
-  const newToday = (log[t] && log[t].new) || 0;
-  const news = shuffle(pool.filter(c => !srs[c.id])).slice(0, Math.max(0, NEW_PER_DAY - newToday));
+  const news = shuffle(pool.filter(c => !srs[c.id])); // sem limite diário: o deck só tem o que a turma já viu
   queue = due.concat(news).map(c => c.id);
   freeMode = false;
 }
@@ -358,8 +356,7 @@ function dueCount() {
   const t = todayStr();
   const pool = activePool();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t).length;
-  const newToday = (log[t] && log[t].new) || 0;
-  const news = Math.min(pool.filter(c => !srs[c.id]).length, Math.max(0, NEW_PER_DAY - newToday));
+  const news = pool.filter(c => !srs[c.id]).length;
   return { due, news };
 }
 

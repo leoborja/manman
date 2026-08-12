@@ -16,7 +16,7 @@ Um pouquinho todo dia é assim que se aprende mandarim.
    - **Errei** → volta ainda nesta sessão
    - **Difícil** → intervalo cresce pouco
    - **Acertei** → 1 dia → 3 dias → e vai multiplicando
-5. Máximo de **10 cartas novas por dia** — o resto é revisão
+5. Todas as palavras do deck entram no jogo — as que você já domina vão espaçando sozinhas (1d → 3d → semanas)
 
 ### Modos de estudo
 
