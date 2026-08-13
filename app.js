@@ -125,9 +125,9 @@ if ('speechSynthesis' in window) {
   pickZhVoice();
   speechSynthesis.onvoiceschanged = pickZhVoice; // iOS/Chrome carregam vozes async
 }
-// Partículas não existem isoladas — o TTS leria com tom errado (吗 → "má").
-// Falamos dentro de uma frase, que é como partícula se aprende.
-const AUDIO_CTX = { 'ma-pergunta': '你好吗？', 'ne': '我很好，你呢？' };
+// Decisão do Leo (12/08): partículas faladas SOZINHAS, mais fácil de identificar.
+// (Por isso cartas de tom neutro ficam fora do quiz de tons — isolado, o TTS
+// fala 吗 com tom cheio, o que contradiria o gabarito "neutro".)
 let warnedNoVoice = false;
 function speak(card, auto) {
   if (card.audio_url) { new Audio(card.audio_url).play().catch(() => {}); return; }
@@ -139,7 +139,7 @@ function speak(card, auto) {
     return;
   }
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(AUDIO_CTX[card.id] || card.hanzi);
+  const u = new SpeechSynthesisUtterance(card.hanzi);
   u.voice = zhVoice;
   u.lang = zhVoice.lang;
   u.rate = 0.8; // mais devagar pra aluno — 慢慢!
@@ -551,8 +551,7 @@ function showCard(card) {
   renderBackHanzi(card);
   $('back-pinyin').innerHTML = pinyinColored(card.pinyin);
   $('back-pt').textContent = card.pt;
-  $('back-nota').textContent = (card.nota || '') +
-    (AUDIO_CTX[card.id] ? (card.nota ? ' — ' : '') + '🔊 o áudio fala a frase inteira: ' + AUDIO_CTX[card.id] : '');
+  $('back-nota').textContent = card.nota || '';
   const s = srs[card.id];
   $('iv-again').textContent = srsPreview(s, 'again');
   $('iv-hard').textContent = srsPreview(s, 'hard');
@@ -599,8 +598,8 @@ function startSession() {
 }
 function startToneQuiz() {
   quizScore = { ok: 0, n: 0 };
-  // só monossílabos por enquanto (o deck inteiro é); não grava SRS
-  queue = shuffle(activePool().filter(c => [...c.hanzi].length === 1).map(c => c.id));
+  // só monossílabos, e sem tom neutro (isolado o TTS fala com tom cheio); não grava SRS
+  queue = shuffle(activePool().filter(c => [...c.hanzi].length === 1 && toneOf(c.pinyin) !== 5).map(c => c.id));
   freeMode = true;
   if (queue.length) nextCard(); else finishSession();
 }
@@ -616,8 +615,7 @@ function answerTone(t) {
     else if (bt_t === t) bt.classList.add('miss');
   });
   $('quizfb').innerHTML = pinyinColored(current.pinyin) + ' · ' + esc(current.pt) +
-    '<small>' + esc(TONE_NAMES[correct]) +
-    (AUDIO_CTX[current.id] ? ' · 🔊 falada na frase ' + esc(AUDIO_CTX[current.id]) : '') + '</small>';
+    '<small>' + esc(TONE_NAMES[correct]) + '</small>';
   $('quizfb').style.display = '';
   speak(current, true); // ouve de novo já sabendo a resposta
   $('nextbtn').classList.add('show');
