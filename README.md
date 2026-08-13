@@ -1,60 +1,101 @@
 # Mànmàn 慢慢 — Flashcards de Mandarim
 
-App de flashcards pra turma de mandarim do Enrico — Leo, Henrique e David.
+App de flashcards pra turma de mandarim do Enrico — **Leo, Henrique e David**.
 
 **慢慢 (mànmàn)** = "devagar, com calma" — como em 慢慢来 (mànmàn lái, "vai com calma").
 Um pouquinho todo dia é assim que se aprende mandarim.
 
 🔗 **App:** https://leoborja.github.io/manman/
 
-## Como usar
+## Instalar no celular
 
-1. Abra o link no celular e adicione à tela inicial (funciona como app, inclusive offline)
-2. Escolha seu nome no primeiro acesso — o progresso fica salvo no seu nome
-3. Aba **学 Estudar**: escolha o modo, toque no cartão pra revelar, marque **Errei / Difícil / Acertei**
-4. O app agenda a próxima revisão automaticamente (repetição espaçada, estilo Anki):
-   - **Errei** → volta ainda nesta sessão
-   - **Difícil** → intervalo cresce pouco
-   - **Acertei** → 1 dia → 3 dias → e vai multiplicando
-5. Todas as palavras do deck entram no jogo — as que você já domina vão espaçando sozinhas (1d → 3d → semanas)
-6. Acabaram as revisões do dia? O app **emenda direto na prática livre** (deck inteiro, sem parar). Na prática, "Errei" ainda reagenda a carta; "Difícil/Acertei" não mexem no cronograma
+- **iPhone:** abrir o link no **Safari** → botão Compartilhar → **Adicionar à Tela de Início**
+- **Android:** abrir no Chrome → menu ⋮ → **Instalar app**
 
-### Modos de estudo
+Vira um app de verdade: ícone 慢, tela cheia, funciona offline. **Atualiza sozinho** — toda vez que abre com internet, busca a versão mais nova (se parecer teimoso, feche o app no multitarefa e abra de novo).
+
+## Primeiro acesso
+
+Escolha seu nome (Leo / Henrique / David). O progresso é individual e **sincroniza entre aparelhos** — estudou no ônibus, continua no computador.
+
+## 学 Estudar — como funciona
+
+A fila é **contínua**: primeiro as revisões vencidas, depois as palavras novas, e quando acaba o agendado o app **emenda direto na prática livre** (deck inteiro embaralhado, infinito). Você só abre e estuda.
+
+Toque no cartão pra revelar, depois marque:
+
+| Botão | Efeito |
+|---|---|
+| **Errei** | volta ainda nesta sessão (e sempre reagenda, até na prática) |
+| **Difícil** | intervalo cresce pouco |
+| **Acertei** | 1 dia → 3 dias → e vai multiplicando (repetição espaçada) |
+
+Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no cronograma — só o "Errei" vale, porque esquecer é informação real.
+
+### Modos (botão MODO)
 
 | Modo | Frente | Revela |
 |---|---|---|
 | 汉字 → pinyin + tradução | ideograma | tudo de uma vez |
 | 汉字 → pinyin → tradução | ideograma | pinyin no 1º toque, tradução no 2º |
 | tradução → 汉字 | português | ideograma + pinyin |
-| pinyin → 汉字 + tradução | pinyin | ideograma + tradução |
-| 🔀 aleatório | mistura os modos acima | |
+| pinyin → 汉字 | pinyin | ideograma + tradução |
+| 🔀 aleatório | mistura as direções | |
+| 🎯 **Quiz de tons** | áudio + ideograma | você escolhe o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
 
-## Cartas
+No seletor de modo também fica o **"Falar ao revelar"** (áudio automático, liga/desliga).
 
-A aba **卡 Cartas** é pra consulta: busca + filtro por categoria. As cartas vivem no
-Supabase (tabela `cards`) — por enquanto quem adiciona/edita é o Leo.
+### Recursos nas cartas
 
-## Estrutura
+- **Traçado animado**: o ideograma se desenha traço a traço na ordem oficial; toque nele pra repetir
+- **🔊 Pronúncia**: voz chinesa do próprio aparelho, na frente e no verso
+- **Pinyin colorido por tom**: 1º vermelho · 2º laranja · 3º verde · 4º azul · neutro cinza
+- **🚫 desligar esta carta**: tira da rotação (religa na aba Cartas) — individual por usuário
+
+## 卡 Cartas
+
+Consulta: busca, filtro por categoria, 🔊 por linha e o switch liga/desliga de cada carta.
+
+**Quem adiciona palavras é o Leo** (direto no banco, após cada aula) — aparecem pra todo mundo sem atualizar nada.
+
+## 🔥 Progresso
+
+Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥 e gráfico das últimas 2 semanas. "Zerar meu progresso" apaga local + nuvem (só o seu).
+
+## Estrutura técnica
 
 | Arquivo | O quê |
 |---|---|
-| `index.html` | interface (HTML + CSS) |
-| `app.js` | lógica: SRS, modos, login, sync Supabase |
-| `config.js` | URL + anon key do Supabase |
-| `seed/seed_cards.json` | deck inicial (fallback offline) |
-| `sw.js` + `manifest.webmanifest` | PWA |
+| `index.html` + `app.js` | app inteiro — HTML/CSS/JS puro, sem build, sem dependências |
+| `config.js` | URL + anon key do Supabase (pública por design; RLS protege) |
+| `seed/seed_cards.json` | espelho do deck (fallback offline e fonte dos scripts) |
+| `supabase/schema.sql` | tabelas `cards` (read-only via anon), `progress`, `review_log` |
+| `supabase/seed.py` | upsert do seed no banco (service key) |
+| `fonts/hanzi.woff2` | fonte caligráfica 楷体 (LXGW WenKai, subset ~7KB) |
+| `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
+| `audio/*.mp3` | vozes ElevenLabs (desativadas — pendente validação com o professor) |
+| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio.py` |
+| `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
 
-Sem build, sem dependências. Pra rodar local:
+### Adicionar palavras novas (fluxo do Leo)
 
-```bash
-python3 -m http.server 8080   # → http://localhost:8080/
-```
+1. Editar `seed/seed_cards.json`
+2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
+3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
+4. Commit + push
 
-Debug de datas (testar agendamento): abra com `?debug=1`.
+Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de datas: `?debug=1`).
 
-## Roadmap (V2)
+## Decisões de produto (histórico)
 
-- [ ] Melhorar a aba Progresso
-- [ ] Radical e decomposição no cartão ([makemeahanzi](https://github.com/skishore/makemeahanzi))
-- [ ] Áudio / pronúncia
-- [ ] Domínio próprio
+- Deck contém **só o que a turma já aprendeu** — sem limite de novas/dia
+- Partículas (吗/呢) faladas **sozinhas** e fora do quiz de tons (isoladas, o TTS falaria tom cheio contradizendo o gabarito neutro)
+- Voz: TTS do aparelho; MP3s ElevenLabs guardados mas desativados até o Enrico validar a pronúncia
+- Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
+
+## Roadmap
+
+- [ ] Ranking da turma (Leo × Henrique × David)
+- [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
+- [ ] Reativar voz gravada (após validação com o Enrico, com conferência por transcrição)
+- [ ] Radical/decomposição nas cartas · domínio próprio
