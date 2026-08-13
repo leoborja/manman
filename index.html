@@ -139,6 +139,8 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
 .pt-back{font-size:21px;font-weight:700;}
 .nota{color:var(--mut);font-size:13.5px;line-height:1.45;max-width:420px;}
 .stagepy{color:var(--red);font-size:24px;font-weight:800;animation:f .25s ease;}
+.strokes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;color:var(--txt);cursor:pointer;}
+.strokes svg{display:block;}
 
 /* botões de avaliação */
 .grades{display:none;gap:10px;}
@@ -267,6 +269,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <div class="face back">
         <span class="deckpill" id="deckpill-b"></span>
         <button class="spk" id="spk-back" title="Ouvir pronúncia">🔊</button>
+        <div class="strokes" id="back-strokes" style="display:none" title="Toque para repetir o traçado"></div>
         <div class="hanzi-md zh" id="back-hanzi" lang="zh-Hans"></div>
         <div class="pinyin" id="back-pinyin"></div>
         <div class="pt-back" id="back-pt"></div>

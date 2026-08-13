@@ -101,6 +101,9 @@ if ('speechSynthesis' in window) {
   pickZhVoice();
   speechSynthesis.onvoiceschanged = pickZhVoice; // iOS/Chrome carregam vozes async
 }
+// Partículas não existem isoladas — o TTS leria com tom errado (吗 → "má").
+// Falamos dentro de uma frase, que é como partícula se aprende.
+const AUDIO_CTX = { 'ma-pergunta': '你好吗？', 'ne': '我很好，你呢？' };
 let warnedNoVoice = false;
 function speak(card, auto) {
   if (card.audio_url) { new Audio(card.audio_url).play().catch(() => {}); return; }
@@ -112,11 +115,91 @@ function speak(card, auto) {
     return;
   }
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(card.hanzi);
+  const u = new SpeechSynthesisUtterance(AUDIO_CTX[card.id] || card.hanzi);
   u.voice = zhVoice;
   u.lang = zhVoice.lang;
   u.rate = 0.8; // mais devagar pra aluno — 慢慢!
   speechSynthesis.speak(u);
+}
+
+// ── traçado animado (dados do makemeahanzi) ─────────────────
+let strokesDB = {};
+let svgUid = 0;
+async function loadStrokes() {
+  try { strokesDB = await (await fetch('./strokes/strokes.json')).json(); }
+  catch (e) { strokesDB = {}; }
+}
+function medianLen(m) {
+  let L = 0;
+  for (let i = 1; i < m.length; i++) L += Math.hypot(m[i][0] - m[i - 1][0], m[i][1] - m[i - 1][1]);
+  return L;
+}
+function buildStrokeSvg(ch, size, startDelay) {
+  const d = strokesDB[ch];
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 1024 1024');
+  svg.setAttribute('width', size); svg.setAttribute('height', size);
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('transform', 'scale(1,-1) translate(0,-900)'); // makemeahanzi tem Y invertido
+  svg.appendChild(g);
+  d.s.forEach(p => { // fantasma do caractere completo
+    const ph = document.createElementNS(NS, 'path');
+    ph.setAttribute('d', p); ph.setAttribute('fill', 'var(--pill)');
+    g.appendChild(ph);
+  });
+  let delay = startDelay;
+  d.s.forEach((p, i) => {
+    const id = 'sk' + (++svgUid);
+    const clip = document.createElementNS(NS, 'clipPath');
+    clip.setAttribute('id', id);
+    const cp = document.createElementNS(NS, 'path');
+    cp.setAttribute('d', p);
+    clip.appendChild(cp);
+    g.appendChild(clip);
+    // linha grossa pela mediana, recortada pelo contorno = pincelada
+    const m = d.m[i];
+    const line = document.createElementNS(NS, 'path');
+    line.setAttribute('d', 'M' + m.map(pt => pt[0] + ' ' + pt[1]).join(' L'));
+    line.setAttribute('clip-path', 'url(#' + id + ')');
+    line.setAttribute('fill', 'none');
+    line.setAttribute('stroke', 'currentColor');
+    line.setAttribute('stroke-width', '200');
+    line.setAttribute('stroke-linecap', 'round');
+    const len = medianLen(m) + 200; // margem pro linecap cobrir as pontas
+    const dur = Math.min(600, Math.max(220, len / 2.5));
+    line.style.strokeDasharray = len;
+    line.style.strokeDashoffset = len;
+    line.style.transition = 'stroke-dashoffset ' + Math.round(dur) + 'ms ease-in-out ' + Math.round(delay) + 'ms';
+    delay += dur + 120;
+    g.appendChild(line);
+  });
+  return { svg, endDelay: delay };
+}
+function renderBackHanzi(card) {
+  const box = $('back-strokes');
+  box.innerHTML = '';
+  const chars = [...card.hanzi];
+  if (chars.length && chars.every(c => strokesDB[c])) {
+    $('back-hanzi').style.display = 'none';
+    box.style.display = '';
+    const size = chars.length > 2 ? 72 : 108;
+    let delay = 150;
+    chars.forEach(c => {
+      const r = buildStrokeSvg(c, size, delay);
+      box.appendChild(r.svg);
+      delay = r.endDelay; // caracteres desenham em sequência
+    });
+  } else { // sem dados de traçado: hanzi em texto mesmo
+    $('back-hanzi').style.display = '';
+    box.style.display = 'none';
+  }
+}
+function animateBackStrokes() {
+  $('back-strokes').querySelectorAll('path[clip-path]').forEach(l => {
+    void l.getBoundingClientRect(); // força reflow pra transição valer
+    l.style.strokeDashoffset = '0';
+  });
 }
 
 // ── conversor de tons: ni3 hao3 → nǐ hǎo ────────────────────
@@ -429,6 +512,7 @@ function showCard(card) {
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
   $('back-hanzi').textContent = card.hanzi;
+  renderBackHanzi(card);
   $('back-pinyin').textContent = card.pinyin;
   $('back-pt').textContent = card.pt;
   $('back-nota').textContent = card.nota || '';
@@ -488,6 +572,7 @@ function tapCard() {
     f.classList.remove('flipped');
     $('grades').classList.remove('show');
     $('nextbtn').classList.remove('show');
+    renderBackHanzi(current); // reseta o traçado pro próximo flip
     return;
   }
   if (m.staged && stage === 0) { // revela pinyin na frente
@@ -499,6 +584,7 @@ function tapCard() {
     return;
   }
   f.classList.add('flipped');
+  setTimeout(animateBackStrokes, 300); // começa a desenhar quando a virada tá terminando
   if (settings.autoSpeak && stage === 0) speak(current, true); // staged já falou no 1º toque
   if (freeMode) $('nextbtn').classList.add('show');
   else $('grades').classList.add('show');
@@ -632,6 +718,12 @@ function bindEvents() {
   };
   $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
+  $('back-strokes').onclick = (e) => { // repetir o traçado sem desvirar a carta
+    e.stopPropagation();
+    if (!current) return;
+    renderBackHanzi(current);
+    animateBackStrokes();
+  };
   $('fcard').onclick = tapCard;
   $('g-again').onclick = () => grade('again');
   $('g-hard').onclick = () => grade('hard');
@@ -678,7 +770,7 @@ async function init() {
   applyTheme();
   bindEvents();
   renderModeUI();
-  await loadCards();
+  await Promise.all([loadCards(), loadStrokes()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
   else if (dataSource === 'vazio') showBanner('error', 'Não consegui carregar nenhuma carta. Verifique a conexão e recarregue.');
