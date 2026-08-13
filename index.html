@@ -142,6 +142,18 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
 .strokes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;color:var(--txt);cursor:pointer;}
 .strokes svg{display:block;}
 
+/* quiz de tons */
+.tones{display:none;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 10px;}
+.tones.show{display:grid;}
+.tones button{border:1px solid var(--line);border-radius:14px;padding:10px 2px 7px;cursor:pointer;
+background:var(--surface);box-shadow:var(--shadow);}
+.tones button b{display:block;font-size:22px;line-height:1.15;font-weight:800;}
+.tones button small{font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.3px;}
+.tones button.hit{background:var(--ok-bg);border-color:var(--ok);}
+.tones button.miss{background:var(--err-bg);border-color:var(--err);}
+.quizfb{font-size:19px;font-weight:700;line-height:1.5;animation:f .25s ease;}
+.quizfb small{display:block;color:var(--mut);font-size:12.5px;font-weight:600;}
+
 /* botões de avaliação */
 .grades{display:none;gap:10px;}
 .grades.show{display:flex;}
@@ -264,6 +276,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <button class="spk" id="spk-front" title="Ouvir pronúncia">🔊</button>
         <div id="front-content"></div>
         <div class="stagepy" id="stagepy" style="display:none"></div>
+        <div class="quizfb" id="quizfb" style="display:none"></div>
         <span class="hint" id="hint-f">toque para virar</span>
       </div>
       <div class="face back">
@@ -276,6 +289,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <div class="nota" id="back-nota"></div>
       </div>
     </div>
+  </div>
+
+  <div class="tones" id="tones">
+    <button data-t="1"><b style="color:#d64541">ā</b><small>1º</small></button>
+    <button data-t="2"><b style="color:#dd8500">á</b><small>2º</small></button>
+    <button data-t="3"><b style="color:#2e9e5b">ǎ</b><small>3º</small></button>
+    <button data-t="4"><b style="color:#3b6fd4">à</b><small>4º</small></button>
+    <button data-t="5"><b style="color:#8b9098">a</b><small>neutro</small></button>
   </div>
 
   <div class="grades" id="grades">
@@ -365,6 +386,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="modeopt" data-m="mix">
       <span class="zhx">🔀</span>
       <span class="info"><b>Aleatório</b><small>mistura as direções a cada carta</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="tons">
+      <span class="zhx">🎯</span>
+      <span class="info"><b>Quiz de tons</b><small>ouve a palavra e escolhe o tom — treino de ouvido puro</small></span>
       <span class="check"></span>
     </button>
     <button class="modeopt" id="autospeak-opt" style="margin-top:12px">

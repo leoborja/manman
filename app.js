@@ -38,7 +38,8 @@ const MODES = {
   zh_all:   { front: 'hanzi', staged: false },
   zh_py_pt: { front: 'hanzi', staged: true },
   pt_zh:    { front: 'pt', staged: false },
-  py_zh:    { front: 'pinyin', staged: false }
+  py_zh:    { front: 'pinyin', staged: false },
+  tons:     { front: 'hanzi', staged: false, quiz: true }
 };
 const MIX_POOL = ['zh_all', 'pt_zh', 'py_zh'];
 const MODE_TITLES = {
@@ -46,8 +47,29 @@ const MODE_TITLES = {
   zh_py_pt: '汉字 → pinyin → tradução',
   pt_zh: 'tradução → 汉字',
   py_zh: 'pinyin → 汉字',
-  mix: '🔀 Aleatório'
+  mix: '🔀 Aleatório',
+  tons: '🎯 Quiz de tons'
 };
+
+// ── tons: detecção e cores ──────────────────────────────────
+// Convenção de cores (estilo MDBG/Pleco): 1º vermelho, 2º laranja, 3º verde, 4º azul, neutro cinza
+const TONE_COLORS = { 1: '#d64541', 2: '#dd8500', 3: '#2e9e5b', 4: '#3b6fd4', 5: '#8b9098' };
+const TONE_NAMES = { 1: '1º tom — alto e constante', 2: '2º tom — subindo', 3: '3º tom — desce e sobe', 4: '4º tom — caindo', 5: 'tom neutro — curto e leve' };
+const TONE_MARK_OF = { 'ā':1,'ē':1,'ī':1,'ō':1,'ū':1,'ǖ':1,'Ā':1,'Ē':1,'Ō':1,
+  'á':2,'é':2,'í':2,'ó':2,'ú':2,'ǘ':2,'Á':2,'É':2,'Ó':2,
+  'ǎ':3,'ě':3,'ǐ':3,'ǒ':3,'ǔ':3,'ǚ':3,'Ǎ':3,'Ě':3,'Ǒ':3,
+  'à':4,'è':4,'ì':4,'ò':4,'ù':4,'ǜ':4,'À':4,'È':4,'Ò':4 };
+function toneOf(syllable) { // 5 = neutro (sem marca)
+  for (const ch of syllable) if (TONE_MARK_OF[ch]) return TONE_MARK_OF[ch];
+  return 5;
+}
+function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom
+  return String(py || '').split(/([\s']+)/).map(tok =>
+    /[a-zA-ZüÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/.test(tok)
+      ? '<span style="color:' + TONE_COLORS[toneOf(tok)] + '">' + esc(tok) + '</span>'
+      : esc(tok)
+  ).join('');
+}
 
 // ── estado ──────────────────────────────────────────────────
 let cards = [];                  // deck completo (não deletadas)
@@ -65,6 +87,8 @@ let curMode = 'zh_all';          // modo efetivo da carta atual (p/ aleatório)
 let stage = 0;                   // 0 = frente, 1 = pinyin revelado (modo 2 toques)
 let freeMode = false;            // treino livre (não grava SRS)
 let gradedThisSession = 0;       // p/ não resetar a fila embaixo do usuário após sync
+let quizScore = { ok: 0, n: 0 }; // placar da sessão do quiz de tons
+let quizAnswered = false;
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
 
@@ -489,15 +513,21 @@ function renderChips() {
 }
 function renderCounter() {
   const { due, news } = dueCount();
-  $('counter').innerHTML = freeMode
-    ? '<b>treino livre</b> · todas as cartas, sem afetar o progresso'
-    : '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
+  if (settings.mode === 'tons') {
+    $('counter').innerHTML = '<b>quiz de tons</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
+  } else {
+    $('counter').innerHTML = freeMode
+      ? '<b>treino livre</b> · todas as cartas, sem afetar o progresso'
+      : '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
+  }
+  $('freetoggle').style.display = settings.mode === 'tons' ? 'none' : '';
   $('freetoggle').textContent = freeMode ? '← voltar às revisões do dia' : '∞ treino livre com todas';
   $('freetoggle').classList.toggle('on', freeMode);
 }
 function showCard(card) {
   current = card;
   stage = 0;
+  quizAnswered = false;
   curMode = settings.mode === 'mix' ? MIX_POOL[Math.floor(Math.random() * MIX_POOL.length)] : settings.mode;
   const m = MODES[curMode];
   const f = $('fcard');
@@ -505,15 +535,21 @@ function showCard(card) {
   const front = $('front-content');
   if (m.front === 'hanzi') front.innerHTML = '<div class="hanzi-lg zh" lang="zh-Hans">' + esc(card.hanzi) + '</div>';
   else if (m.front === 'pt') front.innerHTML = '<div class="pt-lg">' + esc(card.pt) + '</div>';
-  else front.innerHTML = '<div class="py-lg">' + esc(card.pinyin) + '</div>';
+  else front.innerHTML = '<div class="py-lg">' + pinyinColored(card.pinyin) + '</div>';
   $('stagepy').style.display = 'none';
   $('stagepy').textContent = '';
-  $('hint-f').textContent = m.staged ? 'toque para ver o pinyin' : 'toque para virar';
+  $('quizfb').style.display = 'none';
+  $('quizfb').innerHTML = '';
+  $('tones').classList.toggle('show', !!m.quiz);
+  $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
+  $('hint-f').textContent = m.quiz ? 'ouça e escolha o tom · toque na carta pra repetir'
+    : (m.staged ? 'toque para ver o pinyin' : 'toque para virar');
+  if (m.quiz) speak(card, true); // no quiz o áudio É a pergunta
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
   $('back-hanzi').textContent = card.hanzi;
   renderBackHanzi(card);
-  $('back-pinyin').textContent = card.pinyin;
+  $('back-pinyin').innerHTML = pinyinColored(card.pinyin);
   $('back-pt').textContent = card.pt;
   $('back-nota').textContent = card.nota || '';
   const s = srs[card.id];
@@ -538,17 +574,52 @@ function finishSession() {
   current = null;
   $('stage').style.display = 'none';
   $('grades').classList.remove('show');
+  $('tones').classList.remove('show');
   $('nextbtn').classList.remove('show');
   $('offbtn').style.display = 'none';
   $('done').classList.add('show');
-  $('done-sub').textContent = freeMode
-    ? 'Fim do treino livre. 加油 (jiāyóu — força)!'
-    : 'Você revisou tudo que estava agendado. 明天见 (até amanhã)!';
+  if (settings.mode === 'tons') {
+    const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
+    $('done-sub').textContent = 'Quiz de tons: ' + quizScore.ok + '/' + quizScore.n + ' (' + pct + '%). ' +
+      (pct >= 80 ? '厉害 (lìhai — mandou bem)!' : '加油 (jiāyóu — continua treinando o ouvido)!');
+    $('freebtn').textContent = '🎯 Jogar de novo';
+  } else {
+    $('done-sub').textContent = freeMode
+      ? 'Fim do treino livre. 加油 (jiāyóu — força)!'
+      : 'Você revisou tudo que estava agendado. 明天见 (até amanhã)!';
+    $('freebtn').textContent = 'Treino livre (não conta no progresso)';
+  }
   renderCounter();
 }
 function startSession() {
+  if (settings.mode === 'tons') { startToneQuiz(); return; }
   buildQueue();
   if (queue.length) nextCard(); else finishSession();
+}
+function startToneQuiz() {
+  quizScore = { ok: 0, n: 0 };
+  // só monossílabos por enquanto (o deck inteiro é); não grava SRS
+  queue = shuffle(activePool().filter(c => [...c.hanzi].length === 1).map(c => c.id));
+  freeMode = true;
+  if (queue.length) nextCard(); else finishSession();
+}
+function answerTone(t) {
+  if (!current || quizAnswered) return;
+  quizAnswered = true;
+  const correct = toneOf(current.pinyin);
+  quizScore.n++;
+  if (t === correct) quizScore.ok++;
+  $('tones').querySelectorAll('button').forEach(bt => {
+    const bt_t = parseInt(bt.dataset.t, 10);
+    if (bt_t === correct) bt.classList.add('hit');
+    else if (bt_t === t) bt.classList.add('miss');
+  });
+  $('quizfb').innerHTML = pinyinColored(current.pinyin) + ' · ' + esc(current.pt) +
+    '<small>' + esc(TONE_NAMES[correct]) + '</small>';
+  $('quizfb').style.display = '';
+  speak(current, true); // ouve de novo já sabendo a resposta
+  $('nextbtn').classList.add('show');
+  renderCounter();
 }
 function grade(g) {
   if (!current) return;
@@ -575,9 +646,10 @@ function tapCard() {
     renderBackHanzi(current); // reseta o traçado pro próximo flip
     return;
   }
+  if (m.quiz) { speak(current, true); return; } // no quiz, tocar a carta repete o áudio
   if (m.staged && stage === 0) { // revela pinyin na frente
     stage = 1;
-    $('stagepy').textContent = current.pinyin;
+    $('stagepy').innerHTML = pinyinColored(current.pinyin);
     $('stagepy').style.display = '';
     $('hint-f').textContent = 'toque para ver a tradução';
     if (settings.autoSpeak) speak(current, true);
@@ -617,7 +689,7 @@ function renderList() {
   $('cardlist').innerHTML = list.map(c =>
     '<div class="card' + (isOff(c.id) ? ' offrow' : '') + '"><div class="rowline">' +
     '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
-    '<div class="mid"><div class="p">' + esc(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
+    '<div class="mid"><div class="p">' + pinyinColored(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
     (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') + '</div>' +
     '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
     '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
@@ -707,10 +779,13 @@ function bindEvents() {
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
   document.querySelectorAll('.modeopt[data-m]').forEach(b => b.onclick = () => {
+    const wasQuiz = settings.mode === 'tons';
     settings.mode = b.dataset.m; save(K.settings, settings);
     renderModeUI();
     $('modesheet').classList.remove('show');
-    if (current) showCard(current);
+    // entrar/sair do quiz troca o tipo de fila — reconstrói a sessão
+    if (wasQuiz !== (settings.mode === 'tons')) startSession();
+    else if (current) showCard(current);
   });
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
@@ -729,7 +804,11 @@ function bindEvents() {
   $('g-hard').onclick = () => grade('hard');
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
-  $('freebtn').onclick = () => { buildFreeQueue(); if (queue.length) nextCard(); else finishSession(); };
+  $('freebtn').onclick = () => {
+    if (settings.mode === 'tons') { startToneQuiz(); return; }
+    buildFreeQueue(); if (queue.length) nextCard(); else finishSession();
+  };
+  $('tones').querySelectorAll('button').forEach(bt => bt.onclick = () => answerTone(parseInt(bt.dataset.t, 10)));
   $('freetoggle').onclick = () => {
     if (freeMode) { startSession(); }
     else { buildFreeQueue(); if (queue.length) nextCard(); else finishSession(); }
