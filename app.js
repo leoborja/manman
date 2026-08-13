@@ -551,7 +551,8 @@ function showCard(card) {
   renderBackHanzi(card);
   $('back-pinyin').innerHTML = pinyinColored(card.pinyin);
   $('back-pt').textContent = card.pt;
-  $('back-nota').textContent = card.nota || '';
+  $('back-nota').textContent = (card.nota || '') +
+    (AUDIO_CTX[card.id] ? (card.nota ? ' — ' : '') + '🔊 o áudio fala a frase inteira: ' + AUDIO_CTX[card.id] : '');
   const s = srs[card.id];
   $('iv-again').textContent = srsPreview(s, 'again');
   $('iv-hard').textContent = srsPreview(s, 'hard');
@@ -615,7 +616,8 @@ function answerTone(t) {
     else if (bt_t === t) bt.classList.add('miss');
   });
   $('quizfb').innerHTML = pinyinColored(current.pinyin) + ' · ' + esc(current.pt) +
-    '<small>' + esc(TONE_NAMES[correct]) + '</small>';
+    '<small>' + esc(TONE_NAMES[correct]) +
+    (AUDIO_CTX[current.id] ? ' · 🔊 falada na frase ' + esc(AUDIO_CTX[current.id]) : '') + '</small>';
   $('quizfb').style.display = '';
   speak(current, true); // ouve de novo já sabendo a resposta
   $('nextbtn').classList.add('show');
