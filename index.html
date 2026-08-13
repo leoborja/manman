@@ -106,12 +106,8 @@ padding:12px 14px;margin:0 0 8px;cursor:pointer;}
 .modeopt.active .check:after{content:"";position:absolute;inset:0;margin:auto;width:6px;height:10px;
 border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px);}
 
-.counter{text-align:center;color:var(--mut);font-size:13px;margin:2px 0 6px;}
+.counter{text-align:center;color:var(--mut);font-size:13px;margin:2px 0 10px;}
 .counter b{color:var(--txt);}
-.freetoggle{display:block;margin:0 auto 10px;background:none;border:1px solid var(--line);
-border-radius:999px;color:var(--mut);font-size:12px;font-weight:700;cursor:pointer;
-padding:6px 14px;}
-.freetoggle.on{background:var(--red);border-color:var(--red);color:#fff;}
 
 /* flashcard */
 .stage{perspective:1200px;margin:0 0 14px;}
@@ -267,7 +263,6 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <span class="marrow">▼</span>
   </button>
   <div class="counter" id="counter"></div>
-  <button class="freetoggle" id="freetoggle">∞ treino livre com todas</button>
 
   <div class="stage" id="stage">
     <div class="fcard" id="fcard">
@@ -309,7 +304,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
   <div class="done" id="done">
     <div class="big">🎉</div>
-    <h2>Feito por hoje!</h2>
+    <h2 id="done-title">Feito por hoje!</h2>
     <p id="done-sub">Você revisou tudo que estava agendado. 明天见 (até amanhã)!</p>
     <button class="btn ghost" id="freebtn">Treino livre (não conta no progresso)</button>
   </div>

@@ -17,6 +17,7 @@ Um pouquinho todo dia é assim que se aprende mandarim.
    - **Difícil** → intervalo cresce pouco
    - **Acertei** → 1 dia → 3 dias → e vai multiplicando
 5. Todas as palavras do deck entram no jogo — as que você já domina vão espaçando sozinhas (1d → 3d → semanas)
+6. Acabaram as revisões do dia? O app **emenda direto na prática livre** (deck inteiro, sem parar). Na prática, "Errei" ainda reagenda a carta; "Difícil/Acertei" não mexem no cronograma
 
 ### Modos de estudo
 

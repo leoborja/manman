@@ -85,7 +85,7 @@ let queue = [];                  // fila da sessão (ids)
 let current = null;              // carta atual
 let curMode = 'zh_all';          // modo efetivo da carta atual (p/ aleatório)
 let stage = 0;                   // 0 = frente, 1 = pinyin revelado (modo 2 toques)
-let freeMode = false;            // treino livre (não grava SRS)
+let phase = 'sched';             // 'sched' (revisões+novas) | 'practice' (prática infinita) | 'quiz' (tons)
 let gradedThisSession = 0;       // p/ não resetar a fila embaixo do usuário após sync
 let quizScore = { ok: 0, n: 0 }; // placar da sessão do quiz de tons
 let quizAnswered = false;
@@ -486,11 +486,11 @@ function buildQueue() {
     .sort((a, b) => srs[a.id].due < srs[b.id].due ? -1 : 1);
   const news = shuffle(pool.filter(c => !srs[c.id])); // sem limite diário: o deck só tem o que a turma já viu
   queue = due.concat(news).map(c => c.id);
-  freeMode = false;
+  phase = 'sched';
 }
-function buildFreeQueue() {
+function enterPractice() { // prática livre: deck inteiro embaralhado, sem parar
   queue = shuffle(activePool().map(c => c.id));
-  freeMode = true;
+  phase = 'practice';
 }
 function dueCount() {
   const t = todayStr();
@@ -513,16 +513,13 @@ function renderChips() {
 }
 function renderCounter() {
   const { due, news } = dueCount();
-  if (settings.mode === 'tons') {
+  if (phase === 'quiz') {
     $('counter').innerHTML = '<b>quiz de tons</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
+  } else if (phase === 'practice') {
+    $('counter').innerHTML = 'revisões do dia ✅ · <b>prática livre</b> · "Errei" ainda reagenda';
   } else {
-    $('counter').innerHTML = freeMode
-      ? '<b>treino livre</b> · todas as cartas, sem afetar o progresso'
-      : '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
+    $('counter').innerHTML = '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
   }
-  $('freetoggle').style.display = settings.mode === 'tons' ? 'none' : '';
-  $('freetoggle').textContent = freeMode ? '← voltar às revisões do dia' : '∞ treino livre com todas';
-  $('freetoggle').classList.toggle('on', freeMode);
 }
 function showCard(card) {
   current = card;
@@ -554,8 +551,8 @@ function showCard(card) {
   $('back-nota').textContent = card.nota || '';
   const s = srs[card.id];
   $('iv-again').textContent = srsPreview(s, 'again');
-  $('iv-hard').textContent = srsPreview(s, 'hard');
-  $('iv-good').textContent = srsPreview(s, 'good');
+  $('iv-hard').textContent = phase === 'practice' ? 'prática' : srsPreview(s, 'hard');
+  $('iv-good').textContent = phase === 'practice' ? 'prática' : srsPreview(s, 'good');
   $('grades').classList.remove('show');
   $('nextbtn').classList.remove('show');
   $('stage').style.display = '';
@@ -564,7 +561,15 @@ function showCard(card) {
   renderCounter();
 }
 function nextCard() {
-  if (!queue.length) { finishSession(); return; }
+  if (!queue.length) {
+    if (phase === 'quiz' || !activePool().length) { finishSession(); return; }
+    if (phase === 'sched') { // acabaram as revisões → emenda na prática, sem parar
+      showBanner('info', '🎉 Revisões do dia feitas! Emendando na prática livre — só "Errei" mexe no agendamento.');
+      setTimeout(hideBanner, 4500);
+    }
+    enterPractice(); // na prática, fila vazia = embaralha de novo (infinito)
+    if (!queue.length) { finishSession(); return; }
+  }
   const id = queue[0];
   const card = cards.find(c => c.id === id);
   if (!card || isOff(id)) { queue.shift(); nextCard(); return; }
@@ -580,27 +585,28 @@ function finishSession() {
   $('done').classList.add('show');
   if (settings.mode === 'tons') {
     const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
+    $('done-title').textContent = 'Fim do quiz!';
     $('done-sub').textContent = 'Quiz de tons: ' + quizScore.ok + '/' + quizScore.n + ' (' + pct + '%). ' +
       (pct >= 80 ? '厉害 (lìhai — mandou bem)!' : '加油 (jiāyóu — continua treinando o ouvido)!');
     $('freebtn').textContent = '🎯 Jogar de novo';
-  } else {
-    $('done-sub').textContent = freeMode
-      ? 'Fim do treino livre. 加油 (jiāyóu — força)!'
-      : 'Você revisou tudo que estava agendado. 明天见 (até amanhã)!';
-    $('freebtn').textContent = 'Treino livre (não conta no progresso)';
+    $('freebtn').style.display = '';
+  } else { // só acontece sem nenhuma carta ativa no filtro
+    $('done-title').textContent = 'Nada por aqui';
+    $('done-sub').textContent = 'Nenhuma carta ativa neste deck — religue cartas na aba Cartas ou escolha outro filtro.';
+    $('freebtn').style.display = 'none';
   }
   renderCounter();
 }
 function startSession() {
   if (settings.mode === 'tons') { startToneQuiz(); return; }
   buildQueue();
-  if (queue.length) nextCard(); else finishSession();
+  nextCard(); // fila vazia → nextCard emenda na prática sozinho
 }
 function startToneQuiz() {
   quizScore = { ok: 0, n: 0 };
   // só monossílabos, e sem tom neutro (isolado o TTS fala com tom cheio); não grava SRS
   queue = shuffle(activePool().filter(c => [...c.hanzi].length === 1 && toneOf(c.pinyin) !== 5).map(c => c.id));
-  freeMode = true;
+  phase = 'quiz';
   if (queue.length) nextCard(); else finishSession();
 }
 function answerTone(t) {
@@ -625,13 +631,19 @@ function grade(g) {
   if (!current) return;
   queue.shift();
   gradedThisSession++;
-  if (!freeMode) {
+  if (phase === 'sched') {
     const isNew = !srs[current.id];
     srsApply(current.id, g);
     logToday('rev');
     if (isNew) logToday('new');
     syncPush(current.id);
     if (g === 'again') queue.splice(Math.min(3, queue.length), 0, current.id);
+  } else if (phase === 'practice' && g === 'again') {
+    // na prática, "Errei" ainda vale: esqueceu de verdade, o agendamento precisa saber
+    srsApply(current.id, 'again');
+    logToday('rev');
+    syncPush(current.id);
+    queue.splice(Math.min(3, queue.length), 0, current.id);
   }
   nextCard();
 }
@@ -658,8 +670,7 @@ function tapCard() {
   f.classList.add('flipped');
   setTimeout(animateBackStrokes, 300); // começa a desenhar quando a virada tá terminando
   if (settings.autoSpeak && stage === 0) speak(current, true); // staged já falou no 1º toque
-  if (freeMode) $('nextbtn').classList.add('show');
-  else $('grades').classList.add('show');
+  $('grades').classList.add('show');
 }
 
 // ── UI: cartas (consulta) ───────────────────────────────────
@@ -703,8 +714,8 @@ function renderList() {
   $('cardlist').querySelectorAll('.offtgl').forEach(t => t.onchange = () => {
     setOff(t.dataset.id, !t.checked);
     renderCartasChips(); renderList();
-    if (!freeMode) { // realinha a fila de estudo mantendo a carta atual na frente
-      buildQueue();
+    if (phase !== 'quiz') { // realinha a fila de estudo mantendo a carta atual na frente
+      if (phase === 'sched') buildQueue(); else enterPractice();
       if (current && !isOff(current.id)) {
         queue = queue.filter(x => x !== current.id);
         queue.unshift(current.id);
@@ -804,15 +815,8 @@ function bindEvents() {
   $('g-hard').onclick = () => grade('hard');
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
-  $('freebtn').onclick = () => {
-    if (settings.mode === 'tons') { startToneQuiz(); return; }
-    buildFreeQueue(); if (queue.length) nextCard(); else finishSession();
-  };
+  $('freebtn').onclick = () => { if (settings.mode === 'tons') startToneQuiz(); };
   $('tones').querySelectorAll('button').forEach(bt => bt.onclick = () => answerTone(parseInt(bt.dataset.t, 10)));
-  $('freetoggle').onclick = () => {
-    if (freeMode) { startSession(); }
-    else { buildFreeQueue(); if (queue.length) nextCard(); else finishSession(); }
-  };
   $('offbtn').onclick = () => {
     if (!current) return;
     setOff(current.id, true);
