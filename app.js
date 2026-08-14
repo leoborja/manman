@@ -39,6 +39,7 @@ const MODES = {
   zh_py_pt: { front: 'hanzi', staged: true },
   pt_zh:    { front: 'pt', staged: false },
   py_zh:    { front: 'pinyin', staged: false },
+  audio:    { front: 'audio', staged: false },
   tons:     { front: 'hanzi', staged: false, quiz: true }
 };
 const MIX_POOL = ['zh_all', 'pt_zh', 'py_zh'];
@@ -47,6 +48,7 @@ const MODE_TITLES = {
   zh_py_pt: '汉字 → pinyin → tradução',
   pt_zh: 'tradução → 汉字',
   py_zh: 'pinyin → 汉字',
+  audio: '🎧 Só áudio → lembrar tudo',
   mix: '🔀 Aleatório',
   tons: '🎯 Quiz de tons'
 };
@@ -129,6 +131,12 @@ if ('speechSynthesis' in window) {
 // (Por isso cartas de tom neutro ficam fora do quiz de tons — isolado, o TTS
 // fala 吗 com tom cheio, o que contradiria o gabarito "neutro".)
 let warnedNoVoice = false;
+function canSpeak(card) {
+  if (card.audio_url) return true;
+  if (!('speechSynthesis' in window)) return false;
+  if (!zhVoice) pickZhVoice();
+  return !!zhVoice;
+}
 function speak(card, auto) {
   if (card.audio_url) { new Audio(card.audio_url).play().catch(() => {}); return; }
   if (!('speechSynthesis' in window)) return;
@@ -532,6 +540,12 @@ function showCard(card) {
   const front = $('front-content');
   if (m.front === 'hanzi') front.innerHTML = '<div class="hanzi-lg zh" lang="zh-Hans">' + esc(card.hanzi) + '</div>';
   else if (m.front === 'pt') front.innerHTML = '<div class="pt-lg">' + esc(card.pt) + '</div>';
+  else if (m.front === 'audio') {
+    // só áudio: a carta não mostra NADA — a pessoa ouve e tem que lembrar 汉字, pinyin e significado
+    front.innerHTML = '<button class="bigspk" id="bigspk" title="Ouvir de novo">🔊</button>' +
+      '<div class="audiolbl">' + (canSpeak(card) ? 'ouça e lembre de tudo' : 'sem voz chinesa neste aparelho') + '</div>';
+    $('bigspk').onclick = (e) => { e.stopPropagation(); speak(card); };
+  }
   else front.innerHTML = '<div class="py-lg">' + pinyinColored(card.pinyin) + '</div>';
   $('stagepy').style.display = 'none';
   $('stagepy').textContent = '';
@@ -540,8 +554,9 @@ function showCard(card) {
   $('tones').classList.toggle('show', !!m.quiz);
   $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
   $('hint-f').textContent = m.quiz ? 'ouça e escolha o tom · toque na carta pra repetir'
+    : m.front === 'audio' ? '🔊 repete · toque na carta pra virar'
     : (m.staged ? 'toque para ver o pinyin' : 'toque para virar');
-  if (m.quiz) speak(card, true); // no quiz o áudio É a pergunta
+  if (m.quiz || m.front === 'audio') speak(card, true); // aqui o áudio É a pergunta
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
   $('back-hanzi').textContent = card.hanzi;

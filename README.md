@@ -40,6 +40,7 @@ Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no c
 | 汉字 → pinyin → tradução | ideograma | pinyin no 1º toque, tradução no 2º |
 | tradução → 汉字 | português | ideograma + pinyin |
 | pinyin → 汉字 | pinyin | ideograma + tradução |
+| 🎧 **Só áudio** | nada na tela, só o som | ideograma + pinyin + tradução |
 | 🔀 aleatório | mistura as direções | |
 | 🎯 **Quiz de tons** | áudio + ideograma | você escolhe o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
 
@@ -71,7 +72,7 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 | `seed/seed_cards.json` | espelho do deck (fallback offline e fonte dos scripts) |
 | `supabase/schema.sql` | tabelas `cards` (read-only via anon), `progress`, `review_log` |
 | `supabase/seed.py` | upsert do seed no banco (service key) |
-| `fonts/hanzi.woff2` | fonte caligráfica 楷体 (LXGW WenKai, subset ~7KB) |
+| `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~10KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
 | `audio/*.mp3` | vozes ElevenLabs (desativadas — pendente validação com o professor) |
 | `tools/` | `build_font.py`, `build_strokes.py`, `build_audio.py` |
@@ -92,6 +93,8 @@ Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de 
 - Partículas (吗/呢) faladas **sozinhas** e fora do quiz de tons (isoladas, o TTS falaria tom cheio contradizendo o gabarito neutro)
 - Voz: TTS do aparelho; MP3s ElevenLabs guardados mas desativados até o Enrico validar a pronúncia
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
+- Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
+- Modo "só áudio" fora do 🔀 aleatório: sem voz chinesa no aparelho a carta viraria beco sem saída
 
 ## Roadmap
 

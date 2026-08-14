@@ -25,7 +25,7 @@ html[data-theme="dark"]{
 --pill:#25272d;--pilltx:#c9ccd3;
 --ok-bg:#12291b;--warn-bg:#2c2214;--err-bg:#2c1216;
 --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);}
-/* LXGW WenKai (subset) — estilo 楷体/caligráfico, igual à escrita à mão do professor */
+/* AR PL UKai CN (subset) — 楷书 clássico de pincel, igual à escrita à mão do professor */
 @font-face{font-family:'HanziKai';src:url('./fonts/hanzi.woff2') format('woff2');font-display:swap;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{margin:0;background:var(--bg);color:var(--txt);
@@ -121,6 +121,10 @@ justify-content:center;gap:10px;padding:24px;text-align:center;}
 .face.back{transform:rotateY(180deg);}
 .face .deckpill{position:absolute;top:14px;left:14px;background:var(--pill);color:var(--pilltx);
 padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;}
+.bigspk{width:108px;height:108px;border-radius:50%;border:1px solid var(--line);
+background:var(--surface2);font-size:46px;line-height:1;cursor:pointer;box-shadow:var(--shadow);}
+.bigspk:active{background:var(--pill);transform:scale(.97);}
+.audiolbl{color:var(--mut);font-size:13.5px;font-weight:700;margin-top:16px;}
 .spk{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;
 border:1px solid var(--line);background:var(--surface2);font-size:17px;cursor:pointer;line-height:1;}
 .spk:active{background:var(--pill);}
@@ -376,6 +380,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="modeopt" data-m="py_zh">
       <span class="zhx">pīn</span>
       <span class="info"><b>pinyin → 汉字</b><small>vê o som e lembra o ideograma e o significado</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="audio">
+      <span class="zhx">🎧</span>
+      <span class="info"><b>Só áudio</b><small>ouve a palavra e tem que lembrar de tudo: 汉字, pinyin e significado</small></span>
       <span class="check"></span>
     </button>
     <button class="modeopt" data-m="mix">
