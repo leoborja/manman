@@ -32,6 +32,7 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 子 | zǐ | [Zh-zǐ.oga](https://commons.wikimedia.org/wiki/File%3AZh-z%C7%90.oga) | 子 | Yue Tan | CC BY-SA 3.0 us |
 | 木 | mù | [Zh-mù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%B9.ogg) | 目 | Yue Tan | CC BY-SA 3.0 us |
 | 林 | lín | [Zh-lín.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%ADn.ogg) | 临 | Yue Tan | CC BY-SA 3.0 us |
+| 雨 | yǔ | [Zh-yǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C7%94.ogg) | 雨 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 不 | bù | [Zh-bù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C3%B9.ogg) | 不 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 累 | lèi | [Zh-lèi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%A8i.ogg) | 累 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 饿 | è | [Zh-è.ogg](https://commons.wikimedia.org/wiki/File%3AZh-%C3%A8.ogg) | 饿 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

@@ -28,6 +28,7 @@
   {"id":"mu","hanzi":"木","pinyin":"mù","pt":"árvore / madeira","deck":"uteis","data_aula":"2026-08-12","nota":"Dobra e vira bosque 林, triplica e vira floresta 森"},
   {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"uteis","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
   {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},
+  {"id":"yu","hanzi":"雨","pinyin":"yǔ","pt":"chuva","deck":"uteis","data_aula":"2026-08-12","nota":"下雨 xià yǔ = está chovendo. É o 雨 do nome do 陆雨平 (Lù Yǔpíng)"},
 
   {"id":"bu","hanzi":"不","pinyin":"bù","pt":"não","deck":"uteis","data_aula":"2026-08-14","nota":"我不忙 = eu não estou ocupado. Atenção: vira bú (2º tom) quando vem antes de 4º tom — 不是 bú shì"},
 
