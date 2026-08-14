@@ -12,6 +12,7 @@ Rodar sempre que entrar carta com caractere novo:
 O ukai.ttc tem 4 faces (CN, HK, TW, TW MBE) — usamos a CN, de formas simplificadas.
 A fonte completa (~20MB) NÃO vai pro repo — só o subset.
 """
+import datetime
 import re
 import subprocess
 import sys
@@ -48,9 +49,23 @@ if src_font.lower().endswith(".ttc"):
     cmd.append(f"--font-number={FACE_CN}")
 subprocess.run(cmd, check=True)
 
-# avisa se algum caractere do deck não existe na fonte (viraria tofu no app)
 from fontTools.ttLib import TTFont  # noqa: E402  (só precisa aqui, no fim)
-cmap = TTFont(out).getBestCmap()
+fonte = TTFont(out)
+
+# Arphic PL §2a: "You must insert a prominent notice in each modified file stating
+# how and when you changed that file." Vai na tabela name, que viaja junto com o arquivo.
+hoje = datetime.date.today().isoformat()
+aviso = (f"Modificado em {hoje} para o app Manman: subset com apenas os "
+         f"{len(chars)} caracteres do deck, convertido de TrueType para WOFF2. "
+         "Original: AR PL UKai CN, (C) 1999 Arphic Technology Co., Ltd. "
+         "Distribuido sob a Arphic Public License (ver fonts/ARPHICPL.txt).")
+for rec_id in (10,):  # 10 = Description
+    for plat, enc, lang in ((3, 1, 0x409), (1, 0, 0)):
+        fonte["name"].setName(aviso, rec_id, plat, enc, lang)
+fonte.save(out)
+
+# avisa se algum caractere do deck não existe na fonte (viraria tofu no app)
+cmap = fonte.getBestCmap()
 faltando = [c for c in sorted(chars) if ord(c) not in cmap]
 if faltando:
     print("⚠️  sem glifo na fonte: " + " ".join(faltando))

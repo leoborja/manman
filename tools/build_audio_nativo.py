@@ -128,8 +128,13 @@ def main():
     with open(os.path.join(dest, "CREDITS.md"), "w", encoding="utf-8") as f:
         f.write("# Créditos — áudio de falantes nativos\n\n")
         f.write("Gravações do [Wikimedia Commons](https://commons.wikimedia.org) "
-                "(projeto Shtooka), convertidas de .ogg pra .mp3. As licenças exigem "
-                "atribuição; CC BY-SA obriga a manter a mesma licença **no arquivo de áudio**.\n\n")
+                "(projeto Shtooka), convertidas de .ogg pra .mp3 — o Safari do iPhone não toca ogg.\n\n")
+        f.write("**Uso comercial:** permitido pelas duas licenças, exigindo atribuição — "
+                "que o app faz na tela Créditos (aba Progresso). A conversão de formato não "
+                "aciona o share-alike do CC BY-SA: a §3 da licença diz que *\"the above rights "
+                "include the right to make such modifications as are technically necessary to "
+                "exercise the rights in other media and formats\"*, ou seja, mudar de container "
+                "não cria obra derivada.\n\n")
         f.write("Arquivos do Commons são nomeados por pinyin, não por caractere — quando a "
                 "gravação é de um homófono, a coluna 'gravação de' mostra qual.\n\n")
         f.write("| Carta | Pinyin | Arquivo | Gravação de | Autor | Licença |\n")

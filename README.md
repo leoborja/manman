@@ -75,7 +75,7 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 | `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~10KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
-| `audio/*.mp3` | vozes ElevenLabs (desativadas; ficaram de reserva) |
+| `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
 | `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py` |
 | `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
 
@@ -90,6 +90,24 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 Rodou o `schema.sql` antes da V2.3? Ele é idempotente — rodar de novo só adiciona a coluna `data_aula`, não apaga nada.
 
 Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de datas: `?debug=1`).
+
+## Licenças dos ativos de terceiros
+
+Todas permitem **uso comercial**. O que elas exigem está cumprido assim:
+
+| Ativo | Licença | O que a licença exige | Onde está cumprido |
+|---|---|---|---|
+| `fonts/hanzi.woff2` | Arphic PL | manter a licença junto (§1); avisar como e quando foi modificado (§2a); manter a modificação disponível (§2b) | `fonts/ARPHICPL.txt`; aviso na tabela `name` da fonte; repo público + link na tela Créditos |
+| `strokes/strokes.json` | Arphic PL (via makemeahanzi, derivado da AR PL KaitiM GB) | idem | `strokes/ARPHICPL.txt`; aviso na chave `_` do JSON |
+| `audio/nativo/*.mp3` (26) | CC BY 2.0 FR | atribuição | tela Créditos + `audio/nativo/CREDITS.md` |
+| `audio/nativo/*.mp3` (3: 木, 林, 困) | CC BY-SA 3.0 US | atribuição; share-alike **só em obra derivada** | idem — a conversão ogg→mp3 é mudança de formato, permitida pela §3 sem virar derivada |
+
+A Arphic PL **não contamina o app**: a §2 exclui explicitamente as partes que não derivam da fonte
+("mere aggregation ... does not bring the other work under the scope of this License").
+O `index.html` e o `app.js` podem ser fechados.
+
+Os MP3s da ElevenLabs foram apagados em 14/08: não estavam em uso e o direito comercial
+sobre eles depende do plano da conta.
 
 ## Decisões de produto (histórico)
 

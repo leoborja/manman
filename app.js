@@ -738,6 +738,11 @@ function renderList() {
       (c.hanzi || '').toLowerCase().includes(q) ||
       (c.pinyin || '').toLowerCase().includes(q) ||
       (c.pt || '').toLowerCase().includes(q)));
+  // conta o que está na tela; quando há filtro ou busca, mostra também o total do deck
+  const filtrado = list.length !== cards.length;
+  $('cartas-count').innerHTML = filtrado
+    ? '<b>' + list.length + '</b> de ' + cards.length + ' palavras'
+    : '<b>' + cards.length + '</b> palavras no deck';
   $('cardlist').innerHTML = list.map(c =>
     '<div class="card' + (isOff(c.id) ? ' offrow' : '') + '"><div class="rowline">' +
     '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
@@ -772,6 +777,9 @@ function renderList() {
 function renderProgress() {
   const t = todayStr();
   const { due, news } = dueCount();
+  const nOff = offCount();
+  $('s-total').textContent = cards.length;
+  $('s-total-lbl').textContent = 'palavras no deck' + (nOff ? ' · ' + nOff + ' desligada' + (nOff > 1 ? 's' : '') : '');
   $('s-hoje').textContent = due;
   $('s-novas').textContent = news;
   $('s-aprendidas').textContent = cards.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
@@ -830,6 +838,9 @@ function bindEvents() {
   };
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
+  $('credbtn').onclick = () => $('credsheet').classList.add('show');
+  $('credsheet-bg').onclick = () => $('credsheet').classList.remove('show');
+  $('credclose').onclick = () => $('credsheet').classList.remove('show');
   document.querySelectorAll('.modeopt[data-m]').forEach(b => b.onclick = () => {
     const wasQuiz = settings.mode === 'tons';
     settings.mode = b.dataset.m; save(K.settings, settings);

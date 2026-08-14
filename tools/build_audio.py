@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Gera audio/<id>.mp3 pra cada carta do deck com voz nativa (ElevenLabs)
+"""DESATIVADO desde 14/08 — o app usa gravações de falante nativo do Wikimedia
+(tools/build_audio_nativo.py), que ganharam do TTS e da ElevenLabs no teste do 3º tom.
+Os MP3s que este script tinha gerado foram apagados: o direito de uso comercial da
+ElevenLabs depende do plano da conta, e eles não estavam em uso.
+
+CUIDADO: rodar este script sobrescreve o audio_url de TODAS as cartas apontando pra
+./audio/<id>.mp3, desligando as gravações nativas. Mantido só como plano B.
+
+Gera audio/<id>.mp3 pra cada carta do deck com voz sintética (ElevenLabs)
 e atualiza audio_url no Supabase. Roda de novo quando entrarem cartas novas
 (só gera o que falta; --force regenera tudo).
 

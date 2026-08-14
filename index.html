@@ -93,6 +93,16 @@ animation:slideup .28s cubic-bezier(.2,.7,.3,1);}
 @keyframes slideup{from{transform:translateY(40%);opacity:.4;}to{transform:none;opacity:1;}}
 .sheet .handle{width:40px;height:4px;border-radius:99px;background:var(--line);margin:4px auto 12px;}
 .sheet h3{margin:0 0 12px;font-size:16px;letter-spacing:-.2px;text-align:center;}
+.sheet.scroll{max-height:78vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.creditlink{display:inline-block;margin-top:26px;background:none;border:0;color:var(--mut);
+font-size:12.5px;font-weight:600;text-decoration:underline;cursor:pointer;padding:6px;}
+.cred{border-top:1px solid var(--line);padding:12px 2px 2px;font-size:13px;line-height:1.5;
+color:var(--mut);}
+.cred:first-of-type{border-top:0;}
+.cred b{display:block;color:var(--txt);font-size:13.5px;margin-bottom:2px;}
+.cred a{color:var(--red);text-decoration:none;}
+.cred .lic{display:inline-block;background:var(--surface2);border:1px solid var(--line);
+border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700;margin-top:4px;}
 .modeopt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
 background:var(--surface2);border:1.5px solid var(--line);border-radius:14px;
 padding:12px 14px;margin:0 0 8px;cursor:pointer;}
@@ -205,6 +215,7 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 
 /* progresso */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px;}
+.stat.wide{grid-column:1/-1;}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
 box-shadow:var(--shadow);padding:14px 16px;}
 .stat b{display:block;font-size:26px;letter-spacing:-.5px;}
@@ -318,12 +329,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <section class="view" id="view-cartas">
   <div class="chips" id="cartas-chips"></div>
   <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
+  <div class="counter" id="cartas-count"></div>
   <div id="cardlist"></div>
 </section>
 
 <!-- ══════ PROGRESSO ══════ -->
 <section class="view" id="view-progresso">
   <div class="stats">
+    <div class="stat wide"><b id="s-total">–</b><small id="s-total-lbl">palavras no deck</small></div>
     <div class="stat"><b id="s-hoje">–</b><small>para revisar hoje</small></div>
     <div class="stat"><b id="s-novas">–</b><small>novas disponíveis</small></div>
     <div class="stat"><b id="s-aprendidas">–</b><small>aprendidas (≥21d)</small></div>
@@ -338,6 +351,9 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <div class="card" id="deckstats"></div>
   <div style="text-align:center;margin-top:22px">
     <button class="btn danger" id="resetbtn">Zerar meu progresso</button>
+  </div>
+  <div style="text-align:center">
+    <button class="creditlink" id="credbtn">Créditos e licenças</button>
   </div>
 </section>
 
@@ -402,6 +418,50 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <span class="info"><b>Falar ao revelar</b><small>pronuncia a palavra automaticamente quando você vira a carta</small></span>
       <span class="check"></span>
     </button>
+  </div>
+</div>
+
+<!-- créditos: as licenças CC BY e Arphic PL exigem atribuição a quem RECEBE a obra,
+     então precisa estar aqui no app, não só no repositório -->
+<div class="sheetwrap" id="credsheet">
+  <div class="sheetbg" id="credsheet-bg"></div>
+  <div class="sheet scroll">
+    <div class="handle"></div>
+    <h3>Créditos e licenças</h3>
+
+    <div class="cred">
+      <b>🔊 Áudio — falantes nativos</b>
+      Gravações do <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia
+      Commons</a> (projeto Shtooka), convertidas de .ogg pra .mp3.<br>
+      Wei Gao e Vion Nicolas — 26 cartas <span class="lic">CC BY 2.0 FR</span><br>
+      Yue Tan — 木, 林 e 困 <span class="lic">CC BY-SA 3.0 US</span>
+    </div>
+
+    <div class="cred">
+      <b>汉 Fonte — AR PL UKai CN (文鼎PL中楷)</b>
+      © 1999 Arphic Technology Co., Ltd. Usamos um subset com apenas os caracteres do deck.
+      <span class="lic">Arphic Public License</span><br>
+      <a href="./fonts/ARPHICPL.txt" target="_blank" rel="noopener">Ver licença</a> ·
+      <a href="./fonts/hanzi.woff2">baixar a fonte modificada</a>
+    </div>
+
+    <div class="cred">
+      <b>✍️ Traçados dos caracteres</b>
+      <a href="https://github.com/skishore/makemeahanzi" target="_blank" rel="noopener">makemeahanzi</a>,
+      de Shaunak Kishore — derivado da fonte AR PL KaitiM GB da Arphic.
+      <span class="lic">Arphic Public License</span><br>
+      <a href="./strokes/strokes.json">baixar os dados modificados</a>
+    </div>
+
+    <div class="cred">
+      <b>📖 Vocabulário</b>
+      Deck montado à mão pela turma, seguindo o 新实用汉语课本
+      (New Practical Chinese Reader).
+    </div>
+
+    <div class="cred" style="text-align:center">
+      <button class="btn" id="credclose" style="margin-top:6px">Fechar</button>
+    </div>
   </div>
 </div>
 
