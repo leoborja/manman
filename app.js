@@ -156,7 +156,15 @@ function canSpeak(card) {
   return !!zhVoice;
 }
 function speak(card, auto) {
-  if (card.audio_url) { new Audio(card.audio_url).play().catch(() => {}); return; }
+  // MP3 gravado tem prioridade, mas se ele falhar (404, offline, formato) cai pro TTS —
+  // ficar mudo é o pior desfecho num app que ensina tom.
+  if (card.audio_url) {
+    new Audio(card.audio_url).play().catch(() => falaTTS(card, auto));
+    return;
+  }
+  falaTTS(card, auto);
+}
+function falaTTS(card, auto) {
   if (!('speechSynthesis' in window)) return;
   if (!zhVoice) pickZhVoice();
   if (!zhVoice) {

@@ -74,8 +74,9 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 | `supabase/seed.py` | upsert do seed no banco (service key) |
 | `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~10KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
-| `audio/*.mp3` | vozes ElevenLabs (desativadas — pendente validação com o professor) |
-| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio.py` |
+| `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
+| `audio/*.mp3` | vozes ElevenLabs (desativadas; ficaram de reserva) |
+| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py` |
 | `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
 
 ### Adicionar palavras novas (fluxo do Leo)
@@ -83,7 +84,8 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
-4. Commit + push
+4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`)
+5. Commit + push — **os MP3s precisam estar publicados**, senão o `audio_url` aponta pra 404
 
 Rodou o `schema.sql` antes da V2.3? Ele é idempotente — rodar de novo só adiciona a coluna `data_aula`, não apaga nada.
 
@@ -93,7 +95,8 @@ Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de 
 
 - Deck contém **só o que a turma já aprendeu** — sem limite de novas/dia
 - Partículas (吗/呢) faladas **sozinhas** e fora do quiz de tons (isoladas, o TTS falaria tom cheio contradizendo o gabarito neutro)
-- Voz: TTS do aparelho; MP3s ElevenLabs guardados mas desativados até o Enrico validar a pronúncia
+- Voz: **gravação de falante nativo** (Wikimedia/Shtooka) nas cartas que têm; TTS do aparelho no resto. O professor apontou que o TTS não faz o 3º tom completo — só a descida, sem a subida. Teste cego com 好 confirmou: a gravação humana ganhou de todas as opções de TTS (voz, velocidade, pontuação) e da ElevenLabs
+- Gravação de homófono é aceita: os arquivos do Commons são nomeados por pinyin, então 九 jiǔ recebe a gravação de 久 jiǔ. Som idêntico, que é o que importa pra tom e pronúncia — o `CREDITS.md` registra quais são
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
 - Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
 - Modo "só áudio" fora do 🔀 aleatório: sem voz chinesa no aparelho a carta viraria beco sem saída
@@ -103,5 +106,7 @@ Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de 
 
 - [ ] Ranking da turma (Leo × Henrique × David)
 - [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
-- [ ] Reativar voz gravada (após validação com o Enrico, com conferência por transcrição)
+- [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
+- [ ] Áudio das 5 sem gravação (妈, 森 e os 3 nomes) — hoje caem no TTS
+- [ ] Filtro por aula na tela de estudo (a coluna `data_aula` já existe e está preenchida)
 - [ ] Radical/decomposição nas cartas · domínio próprio
