@@ -80,10 +80,12 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 
 ### Adicionar palavras novas (fluxo do Leo)
 
-1. Editar `seed/seed_cards.json`
+1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
 4. Commit + push
+
+Rodou o `schema.sql` antes da V2.3? Ele é idempotente — rodar de novo só adiciona a coluna `data_aula`, não apaga nada.
 
 Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de datas: `?debug=1`).
 
@@ -95,6 +97,7 @@ Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de 
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
 - Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
 - Modo "só áudio" fora do 🔀 aleatório: sem voz chinesa no aparelho a carta viraria beco sem saída
+- Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap
 

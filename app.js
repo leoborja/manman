@@ -32,7 +32,8 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
   dayOffset: 'manman.dayoffset'
 };
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
-  verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', geral: 'Geral' };
+  verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
+  nomes: 'Nomes', geral: 'Geral' };
 // modos: front = o que aparece; staged = revela pinyin antes de virar
 const MODES = {
   zh_all:   { front: 'hanzi', staged: false },
@@ -65,10 +66,27 @@ function toneOf(syllable) { // 5 = neutro (sem marca)
   for (const ch of syllable) if (TONE_MARK_OF[ch]) return TONE_MARK_OF[ch];
   return 5;
 }
+// Palavra de 2+ sílabas ("Lìbō") vem colada, mas cada sílaba tem o SEU tom —
+// então quebra em sílabas antes de pintar. Sílaba = inicial? + vogais + (ng|n|r)?
+const PY_VOGAIS = 'aeiouüāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ';
+const PY_SILABA = new RegExp('(?:zh|ch|sh|[bpmfdtnlgkhjqxrzcsyw])?[' + PY_VOGAIS + ']+(?:ng|n|r)?', 'g');
+function silabas(tok) {
+  const low = tok.toLowerCase();
+  const out = [];
+  let pos = 0, m;
+  PY_SILABA.lastIndex = 0;
+  while ((m = PY_SILABA.exec(low)) !== null) {
+    if (m.index !== pos) return [tok]; // sobrou letra entre sílabas → não é pinyin limpo, não arrisca
+    out.push(tok.slice(pos, pos + m[0].length));
+    pos += m[0].length;
+  }
+  return (pos === tok.length && out.length) ? out : [tok];
+}
 function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom
-  return String(py || '').split(/([\s']+)/).map(tok =>
+  return String(py || '').split(/([\s'’]+)/).map(tok => // ’ curvo também: teclado do iPhone gera
     /[a-zA-ZüÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/.test(tok)
-      ? '<span style="color:' + TONE_COLORS[toneOf(tok)] + '">' + esc(tok) + '</span>'
+      ? silabas(tok).map(s =>
+        '<span style="color:' + TONE_COLORS[toneOf(s)] + '">' + esc(s) + '</span>').join('')
       : esc(tok)
   ).join('');
 }

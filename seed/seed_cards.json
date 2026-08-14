@@ -25,5 +25,17 @@
   {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"uteis","tags":["aula2"],"nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
   {"id":"mu","hanzi":"木","pinyin":"mù","pt":"árvore / madeira","deck":"uteis","tags":["aula2"],"nota":"Dobra e vira bosque 林, triplica e vira floresta 森"},
   {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"uteis","tags":["aula2"],"nota":"Duas árvores: 木 + 木"},
-  {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","tags":["aula2"],"nota":"Três árvores! 森林 sēnlín = floresta"}
+  {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","tags":["aula2"],"nota":"Três árvores! 森林 sēnlín = floresta"},
+
+  {"id":"bu","hanzi":"不","pinyin":"bù","pt":"não","deck":"uteis","data_aula":"2026-08-14","nota":"我不忙 = eu não estou ocupado. Atenção: vira bú (2º tom) quando vem antes de 4º tom — 不是 bú shì"},
+
+  {"id":"lei","hanzi":"累","pinyin":"lèi","pt":"cansado","deck":"estados","data_aula":"2026-08-14","nota":"我很累 = estou cansado. Adjetivo pede 很 na frente, senão soa como comparação"},
+  {"id":"e-fome","hanzi":"饿","pinyin":"è","pt":"com fome","deck":"estados","data_aula":"2026-08-14","nota":"我很饿 = estou com fome. Radical 饣(comida) à esquerda"},
+  {"id":"ke-sede","hanzi":"渴","pinyin":"kě","pt":"com sede","deck":"estados","data_aula":"2026-08-14","nota":"我很渴 = estou com sede. Radical 氵(água) à esquerda — faz sentido!"},
+  {"id":"kun","hanzi":"困","pinyin":"kùn","pt":"com sono","deck":"estados","data_aula":"2026-08-14","nota":"我很困 = estou com sono. É 木 (árvore) presa dentro de 囗 (cercado)"},
+  {"id":"mang","hanzi":"忙","pinyin":"máng","pt":"ocupado","deck":"estados","data_aula":"2026-08-14","nota":"你忙吗? = você está ocupado? Radical 忄(coração) à esquerda"},
+
+  {"id":"libo","hanzi":"力波","pinyin":"Lìbō","pt":"Libo (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"丁力波 Dīng Lìbō — o estudante canadense. 力 = força, 波 = onda"},
+  {"id":"linna","hanzi":"林娜","pinyin":"Lín Nà","pt":"Lin Na (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"A estudante britânica. O sobrenome 林 é o mesmo bosque que você já sabe"},
+  {"id":"luyuping","hanzi":"陆雨平","pinyin":"Lù Yǔpíng","pt":"Lu Yuping (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"O jornalista chinês. 雨 = chuva, 平 = plano/calmo"}
 ]

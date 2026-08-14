@@ -19,7 +19,8 @@ with open(os.path.join(here, "..", "seed", "seed_cards.json")) as f:
     cards = json.load(f)
 
 # PostgREST exige as MESMAS chaves em todos os objetos do lote (PGRST102)
-KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "created_by"]
+# data_aula: 'YYYY-MM-DD' do dia da aula; ausente/null = palavra aprendida por fora
+KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "created_by"]
 cards = [{k: c.get(k, "leo" if k == "created_by" else ([] if k == "tags" else None)) for k in KEYS} for c in cards]
 
 req = urllib.request.Request(
