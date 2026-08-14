@@ -24,6 +24,7 @@
   {"id":"nu","hanzi":"女","pinyin":"nǚ","pt":"mulher","deck":"uteis","data_aula":"2026-08-06","nota":"Radical de 好 (bom) e 妈 (mãe)"},
   {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"uteis","data_aula":"2026-08-06","nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
   {"id":"ma-mae","hanzi":"妈","pinyin":"mā","pt":"mãe","deck":"uteis","data_aula":"2026-08-06","nota":"女 (mulher) + 马 (cavalo, só pelo som mǎ→mā). 妈妈 māma = mamãe"},
+  {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher) + 子 (criança) = bom. 孩子 háizi = criança"},
   {"id":"mu","hanzi":"木","pinyin":"mù","pt":"árvore / madeira","deck":"uteis","data_aula":"2026-08-12","nota":"Dobra e vira bosque 林, triplica e vira floresta 森"},
   {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"uteis","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
   {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},

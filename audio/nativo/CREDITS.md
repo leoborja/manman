@@ -29,6 +29,7 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 人 | rén | [Zh-rén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-r%C3%A9n.ogg) | 人 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 女 | nǚ | [Zh-nǚ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C7%9A.ogg) | 女 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 马 | mǎ | [Zh-mǎ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C7%8E.ogg) | 马 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 子 | zǐ | [Zh-zǐ.oga](https://commons.wikimedia.org/wiki/File%3AZh-z%C7%90.oga) | 子 | Yue Tan | CC BY-SA 3.0 us |
 | 木 | mù | [Zh-mù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%B9.ogg) | 目 | Yue Tan | CC BY-SA 3.0 us |
 | 林 | lín | [Zh-lín.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%ADn.ogg) | 临 | Yue Tan | CC BY-SA 3.0 us |
 | 不 | bù | [Zh-bù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C3%B9.ogg) | 不 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
