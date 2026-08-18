@@ -93,7 +93,10 @@ function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom
 
 // ── estado ──────────────────────────────────────────────────
 let cards = [];                  // deck completo (não deletadas)
-let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', user: null, theme: null, autoSpeak: true });
+let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', filtro: 'tema', aula: 'todas',
+  user: null, theme: null, autoSpeak: true });
+if (settings.filtro !== 'aula') settings.filtro = 'tema'; // quem já usava o app não tem o campo
+if (!settings.aula) settings.aula = 'todas';
 if (MODES[settings.mode] === undefined && settings.mode !== 'mix') settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 let srs = {};                    // id → {reps, ivl, ease, due, u}
@@ -510,8 +513,16 @@ function hideBanner() { $('banner').className = 'banner'; }
 
 // ── fila de estudo ──────────────────────────────────────────
 function filteredCards() {
+  if (settings.filtro === 'aula') {
+    if (settings.aula === 'todas') return cards;
+    if (settings.aula === 'fora') return cards.filter(c => !c.data_aula);
+    return cards.filter(c => c.data_aula === settings.aula);
+  }
   return settings.deck === 'todos' ? cards : cards.filter(c => c.deck === settings.deck);
 }
+// datas de aula presentes no deck, da mais antiga pra mais recente
+function aulas() { return [...new Set(cards.map(c => c.data_aula).filter(Boolean))].sort(); }
+function aulaLabel(d) { const [, m, dia] = d.split('-'); return dia + '/' + m; }
 function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
 function buildQueue() {
   const t = todayStr();
@@ -536,12 +547,28 @@ function dueCount() {
 
 // ── UI: estudar ─────────────────────────────────────────────
 function renderChips() {
-  const decks = ['todos'].concat([...new Set(cards.map(c => c.deck))]);
-  $('deckchips').innerHTML = decks.map(d =>
-    '<button class="chip' + (settings.deck === d ? ' active' : '') + '" data-d="' + esc(d) + '">' +
-    (d === 'todos' ? 'Todos' : esc(deckLabel(d))) + '</button>').join('');
+  const porAula = settings.filtro === 'aula';
+  $('filtertype').querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', (b.dataset.f === 'aula') === porAula));
+
+  let html;
+  if (porAula) {
+    const temFora = cards.some(c => !c.data_aula);
+    const opcoes = ['todas'].concat(aulas(), temFora ? ['fora'] : []);
+    if (!opcoes.includes(settings.aula)) settings.aula = 'todas'; // aula sumiu do deck
+    html = opcoes.map(a =>
+      '<button class="chip' + (settings.aula === a ? ' active' : '') + '" data-a="' + esc(a) + '">' +
+      (a === 'todas' ? 'Todas' : a === 'fora' ? 'Por fora' : aulaLabel(a)) + '</button>').join('');
+  } else {
+    const decks = ['todos'].concat([...new Set(cards.map(c => c.deck))]);
+    html = decks.map(d =>
+      '<button class="chip' + (settings.deck === d ? ' active' : '') + '" data-d="' + esc(d) + '">' +
+      (d === 'todos' ? 'Todos' : esc(deckLabel(d))) + '</button>').join('');
+  }
+  $('deckchips').innerHTML = html;
   $('deckchips').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    settings.deck = ch.dataset.d; save(K.settings, settings);
+    if (porAula) settings.aula = ch.dataset.a; else settings.deck = ch.dataset.d;
+    save(K.settings, settings);
     renderChips(); startSession();
   });
 }
@@ -838,6 +865,10 @@ function bindEvents() {
   };
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
+  $('filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
+    settings.filtro = b.dataset.f; save(K.settings, settings);
+    renderChips(); startSession();
+  });
   $('credbtn').onclick = () => $('credsheet').classList.add('show');
   $('credsheet-bg').onclick = () => $('credsheet').classList.remove('show');
   $('credclose').onclick = () => $('credsheet').classList.remove('show');

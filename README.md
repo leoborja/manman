@@ -32,6 +32,10 @@ Toque no cartão pra revelar, depois marque:
 
 Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no cronograma — só o "Errei" vale, porque esquecer é informação real.
 
+### Filtro (por tema / por aula)
+
+O seletor acima dos chips troca o que a linha filtra: **por tema** (Números, Pronomes, Úteis…) ou **por aula** (a data em que a palavra entrou, de `data_aula`). Uma fileira só, alternando — duas fileiras de chips empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
+
 ### Modos (botão MODO)
 
 | Modo | Frente | Revela |
@@ -126,5 +130,5 @@ sobre eles depende do plano da conta.
 - [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
 - [ ] Áudio das 5 sem gravação (妈, 森 e os 3 nomes) — hoje caem no TTS
-- [ ] Filtro por aula na tela de estudo (a coluna `data_aula` já existe e está preenchida)
+- [x] ~~Filtro por aula na tela de estudo~~ — feito em 17/08
 - [ ] Radical/decomposição nas cartas · domínio próprio

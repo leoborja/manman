@@ -67,6 +67,11 @@ main{max-width:720px;margin:0 auto;padding:16px;}
 .banner.error{background:var(--err-bg);color:var(--err);}
 
 /* chips */
+.segmented{display:inline-flex;background:var(--surface2);border:1px solid var(--line);
+border-radius:999px;padding:3px;gap:2px;margin:0 0 10px;}
+.segmented button{border:0;background:none;border-radius:999px;padding:5px 14px;
+font-size:12.5px;font-weight:700;color:var(--mut);cursor:pointer;}
+.segmented button.active{background:var(--surface);color:var(--txt);box-shadow:var(--shadow);}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;}
 .chips::-webkit-scrollbar{display:none;}
 .chip{flex:0 0 auto;padding:7px 14px;border-radius:999px;border:1px solid var(--line);
@@ -271,6 +276,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
+  <div class="segmented" id="filtertype">
+    <button data-f="tema" class="active">por tema</button>
+    <button data-f="aula">por aula</button>
+  </div>
   <div class="chips" id="deckchips"></div>
   <button class="modebtn" id="modebtn">
     <span class="mlabel">modo</span>
