@@ -19,6 +19,10 @@
 
 // ── constantes ──────────────────────────────────────────────
 const LEARNED_IVL = 21;          // intervalo (dias) p/ considerar "aprendida"
+const META_DIARIA = 20;          // revisões/dia pra fechar o dia — meta, não teto: pode fazer mais
+// A meta nasceu em 18/08. Antes disso a regra do streak era "≥1 revisão", e mudar
+// isso pra trás quebraria sequência de quem cumpriu a regra que existia na época.
+const META_DESDE = '2026-08-18';
 const EASE_START = 2.5, EASE_MIN = 1.3, EASE_MAX = 2.8;
 const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', convidado: 'Convidado' };
 const K = {                      // chaves do localStorage (as por-usuário ganham sufixo .<user>)
@@ -323,6 +327,19 @@ function srsApply(id, grade) {
   save(uk(K.srs), srs);
   return s;
 }
+function revsDoDia(dia, registro) { return ((registro || log)[dia] || {}).rev || 0; }
+function diaFechado(dia, registro) {
+  const n = revsDoDia(dia, registro);
+  return dia >= META_DESDE ? n >= META_DIARIA : n >= 1;
+}
+// sequência de dias fechados; hoje só entra depois de fechado, senão o número
+// cairia sozinho à meia-noite e pareceria que a pessoa perdeu o streak
+function calcStreak(registro) {
+  let streak = 0;
+  let d = diaFechado(todayStr(), registro) ? 0 : 1;
+  while (diaFechado(todayStr(-(d + streak)), registro)) streak++;
+  return streak;
+}
 function logToday(field) {
   const t = todayStr();
   if (!log[t]) log[t] = { rev: 0, new: 0 };
@@ -413,6 +430,19 @@ async function loadCards() {
 
 // ── sync de progresso (Supabase) ────────────────────────────
 function syncEnabled() { return sbConfigured() && settings.user && settings.user !== 'convidado'; }
+// log de TODO mundo, pro gráfico da turma. Só leitura e sem dado sensível —
+// a policy de review_log já é aberta. Falhou? o gráfico some, o resto do app segue.
+let logTurma = null;
+async function loadLogTurma() {
+  if (!sbConfigured()) return;
+  try {
+    const desde = todayStr(-13);
+    const r = await fetch(HW_CONFIG.SUPABASE_URL +
+      '/rest/v1/review_log?select=user_name,day,rev&day=gte.' + desde + '&order=day.asc',
+      { headers: sbHeaders() });
+    if (r.ok) logTurma = await r.json();
+  } catch (e) { logTurma = null; }
+}
 async function syncPull() {
   if (!syncEnabled()) return false;
   let changed = false;
@@ -573,6 +603,7 @@ function renderChips() {
   });
 }
 function renderCounter() {
+  renderStreak();
   const { due, news } = dueCount();
   if (phase === 'quiz') {
     $('counter').innerHTML = '<b>quiz de tons</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
@@ -800,8 +831,54 @@ function renderList() {
   });
 }
 
+function renderStreak() {
+  const hoje = revsDoDia(todayStr());
+  const bateu = hoje >= META_DIARIA;
+  $('streakpill').classList.toggle('hit', bateu);
+  $('streak-n').textContent = calcStreak();
+  // passou da meta? mostra o excedente em vez de travar em 20/20 — a meta é piso, não teto
+  $('streak-meta').textContent = bateu ? '+' + (hoje - META_DIARIA) : hoje + '/' + META_DIARIA;
+  $('streakpill').title = bateu
+    ? 'Meta do dia batida: ' + hoje + ' revisões. Pode seguir o quanto quiser.'
+    : 'Faltam ' + (META_DIARIA - hoje) + ' revisões pra fechar o dia';
+}
+function renderTurma() {
+  if (!logTurma || !logTurma.length) {
+    $('turma').innerHTML = '<p style="color:var(--mut);font-size:13px;margin:0;text-align:center">' +
+      'Sem dados da turma agora (precisa de internet).</p>';
+    return;
+  }
+  const days = [];
+  for (let i = 13; i >= 0; i--) days.push(todayStr(-i));
+  const porUser = {};
+  logTurma.forEach(r => {
+    if (!porUser[r.user_name]) porUser[r.user_name] = {};
+    porUser[r.user_name][r.day] = r.rev || 0;
+  });
+  const max = Math.max(1, ...logTurma.map(r => r.rev || 0));
+  // ordena por total de revisões no período — vira ranking natural
+  const nomes = Object.keys(porUser).sort((a, b) =>
+    days.reduce((s, d) => s + (porUser[b][d] || 0), 0) -
+    days.reduce((s, d) => s + (porUser[a][d] || 0), 0));
+
+  $('turma').innerHTML = nomes.map(u => {
+    const tot = days.reduce((s, d) => s + (porUser[u][d] || 0), 0);
+    const barras = days.map(d => {
+      const v = porUser[u][d] || 0;
+      const cls = v >= META_DIARIA ? ' class="on"' : '';
+      return '<i' + cls + ' style="height:' + Math.max(2, Math.round(v / max * 100)) + '%"' +
+        ' title="' + d.slice(8) + '/' + d.slice(5, 7) + ': ' + v + '"></i>';
+    }).join('');
+    return '<div class="userrow"><span class="nome' + (u === settings.user ? ' eu' : '') + '">' +
+      esc(USERS[u] || u) + '</span><span class="spark">' + barras + '</span>' +
+      '<span class="tot">' + tot + '</span></div>';
+  }).join('') +
+    '<div class="turmalabels">' + days.map(d => '<span>' + d.slice(8) + '</span>').join('') + '</div>';
+}
+
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
+  renderTurma();
   const t = todayStr();
   const { due, news } = dueCount();
   const nOff = offCount();
@@ -810,14 +887,7 @@ function renderProgress() {
   $('s-hoje').textContent = due;
   $('s-novas').textContent = news;
   $('s-aprendidas').textContent = cards.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
-  let streak = 0;
-  let d = (log[t] && log[t].rev) ? 0 : 1; // se hoje ainda não revisou, começa de ontem
-  while (true) {
-    const key = todayStr(-(d + streak));
-    if (log[key] && log[key].rev > 0) streak++;
-    else break;
-  }
-  $('s-streak').textContent = streak;
+  $('s-streak').textContent = calcStreak();
   const days = [];
   for (let i = 13; i >= 0; i--) days.push(todayStr(-i));
   const vals = days.map(k => (log[k] && log[k].rev) || 0);
@@ -840,7 +910,10 @@ function renderProgress() {
 function switchView(v) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.v === v));
   document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v));
-  if (v === 'progresso') renderProgress();
+  if (v === 'progresso') {
+    renderProgress();
+    loadLogTurma().then(renderTurma); // busca a cada visita: o colega pode ter estudado agora
+  }
   if (v === 'cartas') renderList();
 }
 function renderModeUI() {
@@ -950,6 +1023,7 @@ async function init() {
   renderCartasChips();
   renderList();
   renderProgress();
+  renderStreak();
   if (settings.user) {
     startSession();
     const changed = await syncPull();
@@ -958,6 +1032,8 @@ async function init() {
     renderCartasChips();
     renderList();
     renderProgress();
+    renderStreak(); // o syncPull pode ter trazido revisões feitas em outro aparelho
+    loadLogTurma().then(renderTurma);
   } else {
     $('login').classList.add('show');
     startSession();

@@ -251,6 +251,31 @@ cursor:pointer;box-shadow:var(--shadow);}
 .guestbtn{background:none;border:none;color:var(--soft);font-size:13px;font-weight:600;
 cursor:pointer;margin-top:8px;text-decoration:underline;}
 
+/* streak no cabeçalho — meta batida acende o fogo; antes disso ele fica apagado */
+.streakpill{display:flex;align-items:center;gap:5px;flex:0 0 auto;background:var(--surface2);
+border:1px solid var(--line);border-radius:999px;padding:5px 11px 5px 9px;}
+.streakpill .fire{font-size:14px;line-height:1;filter:grayscale(1);opacity:.45;}
+.streakpill.hit .fire{filter:none;opacity:1;}
+.streakpill .n{font-size:14px;font-weight:800;color:var(--txt);line-height:1;}
+.streakpill .meta{font-size:10.5px;font-weight:700;color:var(--mut);line-height:1;
+padding-left:6px;border-left:1px solid var(--line);}
+.streakpill.hit .meta{color:var(--green,#2e9e5b);}
+
+/* uso da turma */
+.userrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);}
+.userrow:first-child{border-top:0;}
+.userrow .nome{flex:0 0 78px;font-size:13px;font-weight:700;color:var(--txt);
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.userrow .nome.eu::after{content:' •';color:var(--red);}
+.userrow .spark{flex:1;display:flex;align-items:flex-end;gap:2px;height:34px;}
+.userrow .spark i{flex:1;border-radius:2px 2px 1px 1px;min-height:2px;background:var(--pill);}
+.userrow .spark i.on{background:var(--red);opacity:.85;}
+.userrow .tot{flex:0 0 auto;font-size:12px;font-weight:800;color:var(--mut);
+min-width:38px;text-align:right;}
+.turmalabels{display:flex;gap:2px;color:var(--soft);font-size:9px;text-align:center;
+padding-left:88px;padding-right:44px;}
+.turmalabels span{flex:1;}
+
 #debugbar{display:none;position:fixed;bottom:0;left:0;right:0;background:#111;color:#0f0;
 font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 #debugbar.show{display:flex;}
@@ -261,6 +286,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <header>
   <div class="brandrow">
     <div class="brand">MÀNMÀN <span class="zh">慢慢</span><small>flashcards de mandarim</small></div>
+    <div class="streakpill" id="streakpill" title="meta: 20 revisões por dia">
+      <span class="fire">🔥</span>
+      <span class="n" id="streak-n">0</span>
+      <span class="meta" id="streak-meta">0/20</span>
+    </div>
     <button class="userpill" id="userbtn">👤</button>
     <button class="themebtn" id="themebtn" title="Tema">🌙</button>
   </div>
@@ -356,6 +386,9 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <div class="bars" id="bars"></div>
     <div class="barlabels" id="barlabels"></div>
   </div>
+  <h3 class="sec">A turma · últimos 14 dias</h3>
+  <div class="card" id="turma"></div>
+
   <h3 class="sec">Por deck</h3>
   <div class="card" id="deckstats"></div>
   <div style="text-align:center;margin-top:22px">

@@ -32,6 +32,12 @@ Toque no cartão pra revelar, depois marque:
 
 Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no cronograma — só o "Errei" vale, porque esquecer é informação real.
 
+### Meta diária e streak
+
+Meta de **20 revisões/dia** — é piso, não teto: passou de 20, o contador mostra o excedente (`+7`) e você segue o quanto quiser. O 🔥 no cabeçalho fica apagado até bater a meta e acende quando fecha o dia.
+
+O streak conta dias fechados. A regra antiga era "≥1 revisão", que era barata demais (um dia de 2 revisões contava igual a um de 39) — a meta passou a valer em **18/08 e só daqui pra frente**, porque quebrar sequência de quem cumpriu a regra vigente na época seria injusto. Está no `META_DESDE` do `app.js`.
+
 ### Filtro (por tema / por aula)
 
 O seletor acima dos chips troca o que a linha filtra: **por tema** (Números, Pronomes, Úteis…) ou **por aula** (a data em que a palavra entrou, de `data_aula`). Uma fileira só, alternando — duas fileiras de chips empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
@@ -126,7 +132,7 @@ sobre eles depende do plano da conta.
 
 ## Roadmap
 
-- [ ] Ranking da turma (Leo × Henrique × David)
+- [x] ~~Ranking da turma~~ — gráfico "A turma · últimos 14 dias" no Progresso, ordenado por total (18/08)
 - [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
 - [ ] Áudio das 5 sem gravação (妈, 森 e os 3 nomes) — hoje caem no TTS
