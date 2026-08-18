@@ -127,7 +127,13 @@ function load(key, fallback) {
 function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 function uk(base) { return base + '.' + (settings.user || 'anon'); }
 function $(id) { return document.getElementById(id); }
-function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+// escapa aspas também: o retorno vai tanto em texto quanto dentro de atributos
+// (data-tip, data-id, title). Em texto, &quot; renderiza como " — não muda nada.
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML.replace(/"/g, '&quot;');
+}
 function dayOffset() { return parseInt(localStorage.getItem(K.dayOffset) || '0', 10); }
 function todayStr(plusDays) {
   const d = new Date();
@@ -326,6 +332,11 @@ function srsApply(id, grade) {
   srs[id] = s;
   save(uk(K.srs), srs);
   return s;
+}
+function diaLabel(d) { return d.slice(8) + '/' + d.slice(5, 7); }
+function rotuloRev(v) {
+  if (!v) return 'não estudou';
+  return v + (v === 1 ? ' revisão' : ' revisões') + (v >= META_DIARIA ? ' ✅' : '');
 }
 function revsDoDia(dia, registro) { return ((registro || log)[dia] || {}).rev || 0; }
 function diaFechado(dia, registro) {
@@ -831,6 +842,45 @@ function renderList() {
   });
 }
 
+// ── tooltip dos gráficos ────────────────────────────────────
+// O title= do navegador demora ~1s pra aparecer e não existe em toque, que é
+// justamente onde o app é usado. Este responde a hover no desktop e a toque no celular.
+let tipAtual = null;
+function hideTip() {
+  if (tipAtual) tipAtual.classList.remove('tipped');
+  tipAtual = null;
+  $('tip').classList.remove('show');
+}
+function showTip(el) {
+  const tip = $('tip');
+  if (tipAtual) tipAtual.classList.remove('tipped');
+  tipAtual = el;
+  el.classList.add('tipped');
+  tip.textContent = el.dataset.tip;
+  tip.classList.add('show');
+  const r = el.getBoundingClientRect();
+  const t = tip.getBoundingClientRect();
+  const margem = 8;
+  let x = r.left + r.width / 2 - t.width / 2;
+  x = Math.max(margem, Math.min(x, window.innerWidth - t.width - margem));
+  let y = r.top - t.height - 8;
+  if (y < margem) y = r.bottom + 8; // barra muito no topo? joga o balão pra baixo
+  tip.style.left = Math.round(x) + 'px';
+  tip.style.top = Math.round(y) + 'px';
+}
+function bindTips() {
+  const alvo = e => e.target.closest('[data-tip]');
+  document.addEventListener('mouseover', e => { const el = alvo(e); if (el) showTip(el); });
+  document.addEventListener('mouseout', e => { if (alvo(e)) hideTip(); });
+  // no toque: abre no elemento tocado, fecha ao tocar em qualquer outro lugar
+  document.addEventListener('click', e => {
+    const el = alvo(e);
+    if (el) { el === tipAtual ? hideTip() : showTip(el); } else hideTip();
+  });
+  window.addEventListener('scroll', hideTip, { passive: true });
+  window.addEventListener('resize', hideTip);
+}
+
 function renderStreak() {
   const hoje = revsDoDia(todayStr());
   const bateu = hoje >= META_DIARIA;
@@ -867,7 +917,7 @@ function renderTurma() {
       const v = porUser[u][d] || 0;
       const cls = v >= META_DIARIA ? ' class="on"' : '';
       return '<i' + cls + ' style="height:' + Math.max(2, Math.round(v / max * 100)) + '%"' +
-        ' title="' + d.slice(8) + '/' + d.slice(5, 7) + ': ' + v + '"></i>';
+        ' data-tip="' + esc((USERS[u] || u) + ' · ' + diaLabel(d) + ' · ' + rotuloRev(v)) + '"></i>';
     }).join('');
     return '<div class="userrow"><span class="nome' + (u === settings.user ? ' eu' : '') + '">' +
       esc(USERS[u] || u) + '</span><span class="spark">' + barras + '</span>' +
@@ -892,8 +942,9 @@ function renderProgress() {
   for (let i = 13; i >= 0; i--) days.push(todayStr(-i));
   const vals = days.map(k => (log[k] && log[k].rev) || 0);
   const max = Math.max(1, ...vals);
-  $('bars').innerHTML = vals.map(v =>
-    '<div class="bar' + (v === 0 ? ' zero' : '') + '" style="height:' + Math.max(3, Math.round(v / max * 100)) + '%" title="' + v + '"></div>').join('');
+  $('bars').innerHTML = vals.map((v, i) =>
+    '<div class="bar' + (v === 0 ? ' zero' : '') + '" style="height:' + Math.max(3, Math.round(v / max * 100)) + '%"' +
+    ' data-tip="' + esc(diaLabel(days[i]) + ' · ' + rotuloRev(v)) + '"></div>').join('');
   $('barlabels').innerHTML = days.map(k => '<span>' + k.slice(8) + '</span>').join('');
   const decks = [...new Set(cards.map(c => c.deck))];
   $('deckstats').innerHTML = decks.map(dk => {
@@ -1008,6 +1059,7 @@ function bindEvents() {
 async function init() {
   applyTheme();
   bindEvents();
+  bindTips();
   renderModeUI();
   await Promise.all([loadCards(), loadStrokes()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
