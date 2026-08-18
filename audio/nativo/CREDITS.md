@@ -39,3 +39,8 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 渴 | kě | [Zh-kě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%9B.ogg) | 渴 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 困 | kùn | [Zh-kùn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C3%B9n.ogg) | 困 | Yue Tan | CC BY-SA 3.0 us |
 | 忙 | máng | [Zh-máng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A1ng.ogg) | 忙 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 他 | tā | [Zh-tā.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%81.ogg) | 她 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 她 | tā | [Zh-tā.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%81.ogg) | 她 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 火 | huǒ | [Zh-huǒ.oga](https://commons.wikimedia.org/wiki/File%3AZh-hu%C7%92.oga) | 伙 | Yue Tan | CC BY-SA 3.0 us |
+| 力 | lì | [Zh-lì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%AC.ogg) | 力 | Yue Tan | CC BY-SA 3.0 us |
+| 门 | mén | [Zh-mén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A9n.ogg) | 门 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

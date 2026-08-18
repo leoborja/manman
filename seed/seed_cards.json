@@ -25,7 +25,7 @@
   {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"uteis","data_aula":"2026-08-06","nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
   {"id":"ma-mae","hanzi":"妈","pinyin":"mā","pt":"mãe","deck":"uteis","data_aula":"2026-08-06","nota":"女 (mulher) + 马 (cavalo, só pelo som mǎ→mā). 妈妈 māma = mamãe"},
   {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher) + 子 (criança) = bom. 孩子 háizi = criança"},
-  {"id":"mu","hanzi":"木","pinyin":"mù","pt":"árvore / madeira","deck":"uteis","data_aula":"2026-08-12","nota":"Dobra e vira bosque 林, triplica e vira floresta 森"},
+  {"id":"mu","hanzi":"木","pinyin":"mù","pt":"madeira","deck":"uteis","data_aula":"2026-08-12","nota":"Como radical carrega o sentido de árvore: dobra e vira bosque 林, triplica e vira floresta 森"},
   {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"uteis","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
   {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},
   {"id":"yu","hanzi":"雨","pinyin":"yǔ","pt":"chuva","deck":"uteis","data_aula":"2026-08-12","nota":"下雨 xià yǔ = está chovendo. É o 雨 do nome do 陆雨平 (Lù Yǔpíng)"},
@@ -40,5 +40,11 @@
 
   {"id":"libo","hanzi":"力波","pinyin":"Lìbō","pt":"Libo (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"丁力波 Dīng Lìbō — o estudante canadense. 力 = força, 波 = onda"},
   {"id":"linna","hanzi":"林娜","pinyin":"Lín Nà","pt":"Lin Na (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"A estudante britânica. O sobrenome 林 é o mesmo bosque que você já sabe"},
-  {"id":"luyuping","hanzi":"陆雨平","pinyin":"Lù Yǔpíng","pt":"Lu Yuping (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"O jornalista chinês. 雨 = chuva, 平 = plano/calmo"}
+  {"id":"luyuping","hanzi":"陆雨平","pinyin":"Lù Yǔpíng","pt":"Lu Yuping (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"O jornalista chinês. 雨 = chuva, 平 = plano/calmo"},
+
+  {"id":"ta-ele","hanzi":"他","pinyin":"tā","pt":"ele","deck":"pronomes","data_aula":"2026-08-17","nota":"亻(pessoa) + 也 (também). 他们 tāmen = eles"},
+  {"id":"ta-ela","hanzi":"她","pinyin":"tā","pt":"ela","deck":"pronomes","data_aula":"2026-08-17","nota":"女 (mulher) + 也. Som idêntico ao 他 (ele) — só a escrita distingue, nunca a fala"},
+  {"id":"huo","hanzi":"火","pinyin":"huǒ","pt":"fogo","deck":"uteis","data_aula":"2026-08-17","nota":"Pictograma de uma chama com as fagulhas dos lados"},
+  {"id":"li","hanzi":"力","pinyin":"lì","pt":"força","deck":"uteis","data_aula":"2026-08-17","nota":"É o 力 do 力波 (Lìbō) que você já conhece"},
+  {"id":"men","hanzi":"门","pinyin":"mén","pt":"porta","deck":"uteis","data_aula":"2026-08-17","nota":"Pictograma das duas folhas de uma porta. 门口 ménkǒu = entrada"}
 ]
