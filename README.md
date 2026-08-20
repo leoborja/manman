@@ -69,11 +69,11 @@ No seletor de modo também fica o **"Falar ao revelar"** (áudio automático, li
 
 Consulta: busca, filtro por categoria, 🔊 por linha e o switch liga/desliga de cada carta.
 
-**Quem adiciona palavras é o Leo** (direto no banco, após cada aula) — aparecem pra todo mundo sem atualizar nada.
+Palavras novas entram pelo `seed/seed_cards.json` e são publicadas pelo `seed.py` — aparecem pra todo mundo sem ninguém atualizar nada.
 
 ## 🔥 Progresso
 
-Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥 e gráfico das últimas 2 semanas. "Zerar meu progresso" apaga local + nuvem (só o seu).
+Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥, gráfico das suas últimas 2 semanas e o **gráfico da turma** (uma linha por pessoa, ordenado por total — barra cheia = dia em que bateu a meta). Toque ou passe o mouse nas barras pra ver o número. "Zerar meu progresso" apaga local + nuvem (só o seu).
 
 ## Estrutura técnica
 
@@ -81,15 +81,38 @@ Revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequ
 |---|---|
 | `index.html` + `app.js` | app inteiro — HTML/CSS/JS puro, sem build, sem dependências |
 | `config.js` | URL + anon key do Supabase (pública por design; RLS protege) |
-| `seed/seed_cards.json` | espelho do deck (fallback offline e fonte dos scripts) |
+| `seed/seed_cards.json` | **a fonte de verdade do deck** — editado à mão; o banco é a cópia (ver o fluxo abaixo) |
 | `supabase/schema.sql` | tabelas `cards` (read-only via anon), `progress`, `review_log` |
 | `supabase/seed.py` | upsert do seed no banco (service key) |
-| `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~10KB; licença em `fonts/ARPHICPL.txt`) |
+| `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~24KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
 | `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py` |
 | `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
+
+### Por onde o conteúdo anda
+
+O sentido é único, e o nome do arquivo engana: apesar de se chamar "seed", o JSON **não é cópia do banco** — é o original.
+
+```
+seed/seed_cards.json  ──(supabase/seed.py)──▶  Supabase  ──(fetch)──▶  app
+        ↑                                                                 │
+   editado à mão                        cai de volta no JSON só se o banco falhar
+```
+
+Três consequências:
+
+- **Editar pelo painel do Supabase é perda de tempo.** O próximo `seed.py` sobrescreve com o que está no JSON.
+- **Nem toda coluna é do JSON.** O `seed.py` manda 9 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, created_by`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
+- **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. A coluna `deleted` existe no schema e o app já filtra por ela, mas o `seed.py` ainda não a marca — hoje some só editando o banco à mão.
+
+### Trabalhando junto (Leo + Henrique)
+
+- **Conteúdo entra por pull request no `seed_cards.json`**, não direto no banco. Quem roda o `seed.py` é quem tem a service key.
+- **A `SUPABASE_SERVICE_KEY` ignora o RLS por completo** — quem a tem pode apagar o deck e sobrescrever o progresso de todo mundo. Ela não é necessária pra mexer no app, só pra `seed.py` e pro passo final do `build_audio_nativo.py`. A anon key do `config.js` é outra coisa: pública por design.
+- **Não rode `tools/build_audio.py`.** É o da ElevenLabs, desativado — ele sobrescreve o `audio_url` de todas as cartas e desliga as gravações nativas.
+- **Nada de PDF no git.** O `.gitignore` barra `*.pdf` porque o livro do professor fica na pasta do projeto e o repositório é público.
 
 ### Adicionar palavras novas (fluxo do Leo)
 
@@ -111,8 +134,8 @@ Todas permitem **uso comercial**. O que elas exigem está cumprido assim:
 |---|---|---|---|
 | `fonts/hanzi.woff2` | Arphic PL | manter a licença junto (§1); avisar como e quando foi modificado (§2a); manter a modificação disponível (§2b) | `fonts/ARPHICPL.txt`; aviso na tabela `name` da fonte; repo público + link na tela Créditos |
 | `strokes/strokes.json` | Arphic PL (via makemeahanzi, derivado da AR PL KaitiM GB) | idem | `strokes/ARPHICPL.txt`; aviso na chave `_` do JSON |
-| `audio/nativo/*.mp3` (26) | CC BY 2.0 FR | atribuição | tela Créditos + `audio/nativo/CREDITS.md` |
-| `audio/nativo/*.mp3` (3: 木, 林, 困) | CC BY-SA 3.0 US | atribuição; share-alike **só em obra derivada** | idem — a conversão ogg→mp3 é mudança de formato, permitida pela §3 sem virar derivada |
+| `audio/nativo/*.mp3` (45) | CC BY 2.0 FR | atribuição | tela Créditos + `audio/nativo/CREDITS.md` |
+| `audio/nativo/*.mp3` (7) | CC BY-SA 3.0 US | atribuição; share-alike **só em obra derivada** | idem — a conversão ogg→mp3 é mudança de formato, permitida pela §3 sem virar derivada |
 
 A Arphic PL **não contamina o app**: a §2 exclui explicitamente as partes que não derivam da fonte
 ("mere aggregation ... does not bring the other work under the scope of this License").
@@ -137,6 +160,6 @@ sobre eles depende do plano da conta.
 - [x] ~~Ranking da turma~~ — gráfico "A turma · últimos 14 dias" no Progresso, ordenado por total (18/08)
 - [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
-- [ ] Áudio das 5 sem gravação (妈, 森 e os 3 nomes) — hoje caem no TTS
+- [ ] Áudio das 6 sem gravação (妈, 森, 丁 e os 3 nomes) — caem no TTS. Provavelmente **fechar sem fazer nada**: o problema do TTS é 3º tom isolado, e nenhuma das seis é esse caso
 - [x] ~~Filtro por aula na tela de estudo~~ — feito em 17/08
 - [ ] Radical/decomposição nas cartas · domínio próprio
