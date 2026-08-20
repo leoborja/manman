@@ -29,6 +29,7 @@ const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', convidado: 'Co
 const K = {                      // chaves do localStorage (as por-usuário ganham sufixo .<user>)
   cards: 'manman.cards.v1',
   srs: 'manman.srs.v1',
+  stats: 'manman.stats.v1',
   log: 'manman.log.v1',
   dirty: 'manman.dirty.v1',
   off: 'manman.off.v1',
@@ -105,6 +106,10 @@ if (!settings.aula) settings.aula = 'todas';
 if (MODES[settings.mode] === undefined && settings.mode !== 'mix') settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 let srs = {};                    // id → {reps, ivl, ease, due, u}
+// id → {g, h, a} — quantas vezes acertou, marcou difícil e errou, desde sempre.
+// Fica FORA do srs de propósito: na prática livre você avalia carta que nunca foi
+// agendada, e criar estado de srs pra ela a tiraria da fila de novas.
+let stats = {};
 let log = {};                    // 'YYYY-MM-DD' → {rev, new}
 let dirty = [];                  // ids com sync pendente (SRS)
 let off = {};                    // id → {off: bool, u: ms} — cartas desligadas pelo usuário
@@ -352,6 +357,19 @@ function calcStreak(registro) {
   while (diaFechado(todayStr(-(d + streak)), registro)) streak++;
   return streak;
 }
+// conta no grade() e não no srsApply(): na prática livre o srsApply só roda no
+// "Errei", e contar por lá daria um retrato só dos erros — o mesmo defeito que
+// o contador do dia tinha até 20/08.
+const GRADE_KEY = { good: 'g', hard: 'h', again: 'a' };
+function bumpStat(id, grade) {
+  const k = GRADE_KEY[grade];
+  if (!k) return;
+  const s = stats[id] || { g: 0, h: 0, a: 0 };
+  s[k] = (s[k] || 0) + 1;
+  stats[id] = s;
+  save(uk(K.stats), stats);
+}
+function statOf(id) { return stats[id] || { g: 0, h: 0, a: 0 }; }
 function logToday(field) {
   const t = todayStr();
   if (!log[t]) log[t] = { rev: 0, new: 0 };
@@ -361,10 +379,13 @@ function logToday(field) {
 function gcSrs() { // remove estados de cartas que não existem mais
   const ids = new Set(cards.map(c => c.id));
   let changed = false, changedOff = false;
+  let changedStats = false;
   for (const id of Object.keys(srs)) if (!ids.has(id)) { delete srs[id]; changed = true; }
   for (const id of Object.keys(off)) if (!ids.has(id)) { delete off[id]; changedOff = true; }
+  for (const id of Object.keys(stats)) if (!ids.has(id)) { delete stats[id]; changedStats = true; }
   if (changed) save(uk(K.srs), srs);
   if (changedOff) save(uk(K.off), off);
+  if (changedStats) save(uk(K.stats), stats);
 }
 
 // ── cartas desligadas ───────────────────────────────────────
@@ -379,6 +400,7 @@ function setOff(id, val) {
 // ── usuário / login ─────────────────────────────────────────
 function loadUserState() {
   srs = load(uk(K.srs), {});
+  stats = load(uk(K.stats), {});
   log = load(uk(K.log), {});
   dirty = load(uk(K.dirty), []);
   off = load(uk(K.off), {});
@@ -476,9 +498,19 @@ async function syncPull() {
           off[row.card_id] = { off: !!row.suspended, u: row.off_ms };
           changed = true;
         }
+        // contagens só crescem, então o maior lado vence — sem timestamp e sem
+        // risco de um aparelho desatualizado zerar o que o outro somou
+        const rem = { g: row.n_good || 0, h: row.n_hard || 0, a: row.n_again || 0 };
+        if (rem.g || rem.h || rem.a) {
+          const loc = stats[row.card_id] || { g: 0, h: 0, a: 0 };
+          stats[row.card_id] = {
+            g: Math.max(loc.g || 0, rem.g), h: Math.max(loc.h || 0, rem.h), a: Math.max(loc.a || 0, rem.a)
+          };
+        }
       }
       save(uk(K.srs), srs);
       save(uk(K.off), off);
+      save(uk(K.stats), stats);
     }
     if (lr.ok) {
       for (const row of await lr.json()) {
@@ -495,35 +527,31 @@ async function syncPush(id) {
   const s = srs[id];
   const t = todayStr();
   const l = log[t] || { rev: 0, new: 0 };
-  try {
-    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
-      method: 'POST',
-      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-      body: JSON.stringify({ user_name: settings.user, card_id: id, reps: s.reps, ivl: s.ivl, ease: s.ease, due: s.due, updated_ms: s.u })
-    });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/review_log?on_conflict=user_name,day', {
-      method: 'POST',
-      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-      body: JSON.stringify({ user_name: settings.user, day: t, rev: l.rev, new_cnt: l.new })
-    }).catch(() => {});
-    dirty = dirty.filter(x => x !== id);
-    save(uk(K.dirty), dirty);
-  } catch (e) {
-    if (!dirty.includes(id)) { dirty.push(id); save(uk(K.dirty), dirty); }
-  }
-}
-// só o contador do dia, sem tocar no agendamento — é o caso da prática livre,
-// onde a carta foi revisada mas o intervalo dela não muda
-async function syncLog() {
-  if (!syncEnabled()) return;
-  const t = todayStr();
-  const l = log[t] || { rev: 0, new: 0 };
+  // a linha pode ter só contagem e nenhum agendamento (carta avaliada na prática
+  // livre sem nunca ter entrado na fila) — por isso os campos de srs são opcionais
+  const linha = { user_name: settings.user, card_id: id };
+  if (s) Object.assign(linha, { reps: s.reps, ivl: s.ivl, ease: s.ease, due: s.due, updated_ms: s.u });
+  if (stats[id]) Object.assign(linha, { n_good: stats[id].g, n_hard: stats[id].h, n_again: stats[id].a });
+  // o total do dia vai ANTES e por conta própria: são dados independentes, e uma
+  // falha no progress (schema desatualizado, por exemplo) não pode levar junto
+  // o contador que alimenta a meta e o gráfico da turma
   fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/review_log?on_conflict=user_name,day', {
     method: 'POST',
     headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
     body: JSON.stringify({ user_name: settings.user, day: t, rev: l.rev, new_cnt: l.new })
   }).catch(() => {});
+  try {
+    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
+      method: 'POST',
+      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
+      body: JSON.stringify(linha)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    dirty = dirty.filter(x => x !== id);
+    save(uk(K.dirty), dirty);
+  } catch (e) {
+    if (!dirty.includes(id)) { dirty.push(id); save(uk(K.dirty), dirty); }
+  }
 }
 async function pushOff(id) {
   if (!syncEnabled()) return;
@@ -544,7 +572,7 @@ async function pushOff(id) {
 }
 function flushDirty() {
   if (!syncEnabled()) return;
-  [...dirty].forEach(id => { if (srs[id]) syncPush(id); });
+  [...dirty].forEach(id => { if (srs[id] || stats[id]) syncPush(id); });
   [...dirtyOff].forEach(id => { if (off[id]) pushOff(id); });
 }
 async function syncReset() { // apaga progresso remoto do usuário
@@ -758,6 +786,7 @@ function grade(g) {
   // da prática registrava, o que fazia acertar valer zero e só o erro contar — inofensivo
   // enquanto era estatística, perverso depois que o streak passou a depender da meta.
   logToday('rev');
+  bumpStat(current.id, g);
   if (phase === 'sched') {
     const isNew = !srs[current.id];
     srsApply(current.id, g);
@@ -770,7 +799,9 @@ function grade(g) {
     syncPush(current.id);
     queue.splice(Math.min(3, queue.length), 0, current.id);
   } else {
-    syncLog(); // acerto na prática: nada muda no agendamento, mas o dia contabiliza
+    // acerto na prática: o agendamento não muda, mas a contagem da palavra e o
+    // total do dia mudam — o syncPush já lida com linha sem estado de srs
+    syncPush(current.id);
   }
   nextCard();
 }
@@ -909,6 +940,46 @@ function renderStreak() {
     ? 'Meta do dia batida: ' + hoje + ' revisões. Pode seguir o quanto quiser.'
     : 'Faltam ' + (META_DIARIA - hoje) + ' revisões pra fechar o dia';
 }
+let statOrder = 'erros'; // 'erros' | 'acertos' | 'total' | 'deck'
+function renderWordStats() {
+  const pool = cards.filter(c => !isOff(c.id));
+  const linhas = pool.map(c => {
+    const s = statOf(c.id);
+    return { c, ...s, total: s.g + s.h + s.a };
+  });
+  const semDado = linhas.every(l => !l.total);
+
+  $('statsort').innerHTML = [['erros', 'mais erro'], ['acertos', 'mais acerto'],
+    ['total', 'mais vistas'], ['deck', 'por tema']]
+    .map(([k, t]) => '<button class="chip' + (statOrder === k ? ' active' : '') +
+      '" data-s="' + k + '">' + t + '</button>').join('');
+  $('statsort').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    statOrder = ch.dataset.s; renderWordStats();
+  });
+
+  if (semDado) {
+    $('wordstats').innerHTML = '<p class="wempty">Ainda sem contagem. Ela começou a ser gravada em ' +
+      '20/08 — as revisões anteriores a essa data não foram registradas por carta.</p>';
+    return;
+  }
+  const ordem = {
+    erros: (a, b) => (b.a + b.h) - (a.a + a.h) || b.total - a.total,
+    acertos: (a, b) => b.g - a.g || b.total - a.total,
+    total: (a, b) => b.total - a.total,
+    deck: (a, b) => a.c.deck.localeCompare(b.c.deck) || b.total - a.total
+  }[statOrder];
+  linhas.sort(ordem);
+
+  $('wordstats').innerHTML = linhas.map(l => {
+    const pill = (n, cls) => '<span class="' + (n ? cls : 'zero') + '">' + n + '</span>';
+    return '<div class="wrow"><span class="hz zh" lang="zh-Hans">' + esc(l.c.hanzi) + '</span>' +
+      '<span class="info"><b>' + esc(l.c.pt) + '</b><small>' + pinyinColored(l.c.pinyin) +
+      ' · ' + esc(deckLabel(l.c.deck)) + '</small></span>' +
+      '<span class="tally" data-tip="' + esc(l.c.hanzi + ': ' + l.g + ' acertos, ' + l.h +
+        ' difícil, ' + l.a + ' erros') + '">' +
+      pill(l.g, 'g') + pill(l.h, 'h') + pill(l.a, 'a') + '</span></div>';
+  }).join('');
+}
 function renderTurma() {
   if (!logTurma || !logTurma.length) {
     $('turma').innerHTML = '<p style="color:var(--mut);font-size:13px;margin:0;text-align:center">' +
@@ -946,6 +1017,7 @@ function renderTurma() {
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
   renderTurma();
+  renderWordStats();
   const t = todayStr();
   const { due, news } = dueCount();
   const nOff = offCount();
@@ -1057,8 +1129,9 @@ function bindEvents() {
   // progresso
   $('resetbtn').onclick = () => {
     if (!confirm('Zerar TODO o seu progresso de estudo (' + (USERS[settings.user] || '') + ')? As cartas não são apagadas.')) return;
-    srs = {}; log = {}; dirty = [];
-    localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log)); localStorage.removeItem(uk(K.dirty));
+    srs = {}; log = {}; dirty = []; stats = {};
+    localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log));
+    localStorage.removeItem(uk(K.dirty)); localStorage.removeItem(uk(K.stats));
     syncReset();
     renderProgress(); startSession();
   };

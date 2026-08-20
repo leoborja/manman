@@ -37,8 +37,15 @@ create table if not exists progress (
   updated_ms bigint default 0,
   suspended boolean not null default false,
   off_ms bigint default 0,
+  n_good int not null default 0,    -- V2.6: quantas vezes acertou esta carta
+  n_hard int not null default 0,    -- ...marcou "Difícil"
+  n_again int not null default 0,   -- ...errou. Contam nas duas fases, agendado e prática
   primary key (user_name, card_id)
 );
+-- tabela já existia antes da V2.6?
+alter table progress add column if not exists n_good int not null default 0;
+alter table progress add column if not exists n_hard int not null default 0;
+alter table progress add column if not exists n_again int not null default 0;
 alter table progress enable row level security;
 drop policy if exists "progress_all" on progress;
 create policy "progress_all" on progress for all using (true) with check (true);
