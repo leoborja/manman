@@ -19,10 +19,11 @@
 
 // ── constantes ──────────────────────────────────────────────
 const LEARNED_IVL = 21;          // intervalo (dias) p/ considerar "aprendida"
-const META_DIARIA = 20;          // revisões/dia pra fechar o dia — meta, não teto: pode fazer mais
-// A meta nasceu em 18/08. Antes disso a regra do streak era "≥1 revisão", e mudar
-// isso pra trás quebraria sequência de quem cumpriu a regra que existia na época.
-const META_DESDE = '2026-08-18';
+const META_DIARIA = 30;          // revisões/dia pra fechar o dia — meta, não teto: pode fazer mais
+// 20/08 é o primeiro dia em que o contador funciona: até 19/08 a prática livre só
+// registrava os erros, então aqueles números estão subestimados e não dá pra julgá-los
+// por meta nenhuma. Antes dessa data vale a regra antiga, "≥1 revisão no dia".
+const META_DESDE = '2026-08-20';
 const EASE_START = 2.5, EASE_MIN = 1.3, EASE_MAX = 2.8;
 const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', convidado: 'Convidado' };
 const K = {                      // chaves do localStorage (as por-usuário ganham sufixo .<user>)

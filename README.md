@@ -34,9 +34,11 @@ Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no c
 
 ### Meta diária e streak
 
-Meta de **20 revisões/dia** — é piso, não teto: passou de 20, o contador mostra o excedente (`+7`) e você segue o quanto quiser. O 🔥 no cabeçalho fica apagado até bater a meta e acende quando fecha o dia.
+Meta de **30 revisões/dia** — é piso, não teto: passou de 30, o contador mostra o excedente (`+7`) e você segue o quanto quiser. O 🔥 no cabeçalho fica apagado até bater a meta e acende quando fecha o dia.
 
-O streak conta dias fechados. A regra antiga era "≥1 revisão", que era barata demais (um dia de 2 revisões contava igual a um de 39) — a meta passou a valer em **18/08 e só daqui pra frente**, porque quebrar sequência de quem cumpriu a regra vigente na época seria injusto. Está no `META_DESDE` do `app.js`.
+O streak conta dias fechados. A regra antiga era "≥1 revisão", barata demais (um dia de 2 revisões contava igual a um de 39). A meta vale a partir de **20/08**, que é o primeiro dia com o contador correto — até 19/08 a prática livre só registrava erros, então aqueles números estão subestimados e não podem ser julgados por meta nenhuma. Antes dessa data vale a regra antiga. Está no `META_DESDE` do `app.js`.
+
+A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 20 tinham sido calibrados em números que ignoravam a prática livre.
 
 ### Filtro (por tema / por aula)
 
