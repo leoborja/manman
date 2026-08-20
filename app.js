@@ -999,7 +999,10 @@ function renderTurma() {
     days.reduce((s, d) => s + (porUser[b][d] || 0), 0) -
     days.reduce((s, d) => s + (porUser[a][d] || 0), 0));
 
-  $('turma').innerHTML = nomes.map(u => {
+  const cabecalho = '<div class="turmalabels">' +
+    days.map(d => '<span>' + diaLabel(d) + '</span>').join('') + '</div>';
+
+  $('turma').innerHTML = cabecalho + nomes.map(u => {
     const tot = days.reduce((s, d) => s + (porUser[u][d] || 0), 0);
     const celulas = days.map(d => {
       const v = porUser[u][d] || 0;
@@ -1010,7 +1013,6 @@ function renderTurma() {
       esc(USERS[u] || u) + '</span><span class="dias">' + celulas + '</span>' +
       '<span class="tot">' + tot + '</span></div>';
   }).join('') +
-    '<div class="turmalabels">' + days.map(d => '<span>' + diaLabel(d) + '</span>').join('') + '</div>' +
     '<p class="turmaleg">últimos 7 dias · <i></i> meta de ' + META_DIARIA + ' batida</p>';
 }
 
