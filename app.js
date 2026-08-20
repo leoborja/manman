@@ -986,32 +986,32 @@ function renderTurma() {
       'Sem dados da turma agora (precisa de internet).</p>';
     return;
   }
+  // 7 dias e não 14: com 14 colunas o número não cabe, e sem número só sobra
+  // a barra — que num celular é fina demais pra ler ou tocar
   const days = [];
-  for (let i = 13; i >= 0; i--) days.push(todayStr(-i));
+  for (let i = 6; i >= 0; i--) days.push(todayStr(-i));
   const porUser = {};
   logTurma.forEach(r => {
     if (!porUser[r.user_name]) porUser[r.user_name] = {};
     porUser[r.user_name][r.day] = r.rev || 0;
   });
-  const max = Math.max(1, ...logTurma.map(r => r.rev || 0));
-  // ordena por total de revisões no período — vira ranking natural
   const nomes = Object.keys(porUser).sort((a, b) =>
     days.reduce((s, d) => s + (porUser[b][d] || 0), 0) -
     days.reduce((s, d) => s + (porUser[a][d] || 0), 0));
 
   $('turma').innerHTML = nomes.map(u => {
     const tot = days.reduce((s, d) => s + (porUser[u][d] || 0), 0);
-    const barras = days.map(d => {
+    const celulas = days.map(d => {
       const v = porUser[u][d] || 0;
-      const cls = v >= META_DIARIA ? ' class="on"' : '';
-      return '<i' + cls + ' style="height:' + Math.max(2, Math.round(v / max * 100)) + '%"' +
-        ' data-tip="' + esc((USERS[u] || u) + ' · ' + diaLabel(d) + ' · ' + rotuloRev(v)) + '"></i>';
+      const cls = v >= META_DIARIA ? 'bateu' : v > 0 ? 'fez' : '';
+      return '<b class="' + cls + '">' + (v || '–') + '</b>';
     }).join('');
     return '<div class="userrow"><span class="nome' + (u === settings.user ? ' eu' : '') + '">' +
-      esc(USERS[u] || u) + '</span><span class="spark">' + barras + '</span>' +
+      esc(USERS[u] || u) + '</span><span class="dias">' + celulas + '</span>' +
       '<span class="tot">' + tot + '</span></div>';
   }).join('') +
-    '<div class="turmalabels">' + days.map(d => '<span>' + d.slice(8) + '</span>').join('') + '</div>';
+    '<div class="turmalabels">' + days.map(d => '<span>' + diaLabel(d) + '</span>').join('') + '</div>' +
+    '<p class="turmaleg">últimos 7 dias · <i></i> meta de ' + META_DIARIA + ' batida</p>';
 }
 
 // ── UI: progresso ───────────────────────────────────────────
