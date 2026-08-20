@@ -954,7 +954,9 @@ function renderWordStats() {
     .map(([k, t]) => '<button class="chip' + (statOrder === k ? ' active' : '') +
       '" data-s="' + k + '">' + t + '</button>').join('');
   $('statsort').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    statOrder = ch.dataset.s; renderWordStats();
+    statOrder = ch.dataset.s;
+    renderWordStats();
+    $('wordstats').scrollTop = 0; // reordenou: volta pro topo, senão a nova ordem começa no meio
   });
 
   if (semDado) {
@@ -970,7 +972,13 @@ function renderWordStats() {
   }[statOrder];
   linhas.sort(ordem);
 
-  $('wordstats').innerHTML = linhas.map(l => {
+  const vistas = linhas.filter(l => l.total).length;
+  // legenda uma vez no topo: os três números são coloridos mas não rotulados, e
+  // explicar via tooltip obrigaria a tocar em cada linha pra entender a tela
+  $('wordstats').innerHTML = '<p class="wcount">' + linhas.length + ' palavras · ' +
+    vistas + ' já com contagem &nbsp;·&nbsp; <span class="tally">' +
+    '<span class="g">acertos</span><span class="h">difícil</span><span class="a">erros</span>' +
+    '</span></p>' + linhas.map(l => {
     const pill = (n, cls) => '<span class="' + (n ? cls : 'zero') + '">' + n + '</span>';
     return '<div class="wrow"><span class="hz zh" lang="zh-Hans">' + esc(l.c.hanzi) + '</span>' +
       '<span class="info"><b>' + esc(l.c.pt) + '</b><small>' + pinyinColored(l.c.pinyin) +
