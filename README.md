@@ -30,7 +30,7 @@ Toque no cartão pra revelar, depois marque:
 | **Difícil** | intervalo cresce pouco |
 | **Acertei** | 1 dia → 3 dias → e vai multiplicando (repetição espaçada) |
 
-Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no cronograma — só o "Errei" vale, porque esquecer é informação real.
+Na fase de prática, "Difícil/Acertei" mostram **"prática"** e não mexem no cronograma — só o "Errei" vale, porque esquecer é informação real. Mas **toda** carta avaliada conta no contador do dia, nas duas fases: até 20/08 a prática só registrava os erros, o que fazia acertar valer zero pra meta e pro streak.
 
 ### Meta diária e streak
 

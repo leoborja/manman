@@ -512,6 +512,18 @@ async function syncPush(id) {
     if (!dirty.includes(id)) { dirty.push(id); save(uk(K.dirty), dirty); }
   }
 }
+// só o contador do dia, sem tocar no agendamento — é o caso da prática livre,
+// onde a carta foi revisada mas o intervalo dela não muda
+async function syncLog() {
+  if (!syncEnabled()) return;
+  const t = todayStr();
+  const l = log[t] || { rev: 0, new: 0 };
+  fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/review_log?on_conflict=user_name,day', {
+    method: 'POST',
+    headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
+    body: JSON.stringify({ user_name: settings.user, day: t, rev: l.rev, new_cnt: l.new })
+  }).catch(() => {});
+}
 async function pushOff(id) {
   if (!syncEnabled()) return;
   const o = off[id];
@@ -741,19 +753,23 @@ function grade(g) {
   if (!current) return;
   queue.shift();
   gradedThisSession++;
+  // TODA carta avaliada conta no dia, inclusive na prática livre. Antes só o "Errei"
+  // da prática registrava, o que fazia acertar valer zero e só o erro contar — inofensivo
+  // enquanto era estatística, perverso depois que o streak passou a depender da meta.
+  logToday('rev');
   if (phase === 'sched') {
     const isNew = !srs[current.id];
     srsApply(current.id, g);
-    logToday('rev');
     if (isNew) logToday('new');
     syncPush(current.id);
     if (g === 'again') queue.splice(Math.min(3, queue.length), 0, current.id);
   } else if (phase === 'practice' && g === 'again') {
     // na prática, "Errei" ainda vale: esqueceu de verdade, o agendamento precisa saber
     srsApply(current.id, 'again');
-    logToday('rev');
     syncPush(current.id);
     queue.splice(Math.min(3, queue.length), 0, current.id);
+  } else {
+    syncLog(); // acerto na prática: nada muda no agendamento, mas o dia contabiliza
   }
   nextCard();
 }
