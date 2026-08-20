@@ -107,13 +107,6 @@ Três consequências:
 - **Nem toda coluna é do JSON.** O `seed.py` manda 9 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, created_by`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
 - **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. A coluna `deleted` existe no schema e o app já filtra por ela, mas o `seed.py` ainda não a marca — hoje some só editando o banco à mão.
 
-### Trabalhando junto (Leo + Henrique)
-
-- **Conteúdo entra por pull request no `seed_cards.json`**, não direto no banco. Quem roda o `seed.py` é quem tem a service key.
-- **A `SUPABASE_SERVICE_KEY` ignora o RLS por completo** — quem a tem pode apagar o deck e sobrescrever o progresso de todo mundo. Ela não é necessária pra mexer no app, só pra `seed.py` e pro passo final do `build_audio_nativo.py`. A anon key do `config.js` é outra coisa: pública por design.
-- **Não rode `tools/build_audio.py`.** É o da ElevenLabs, desativado — ele sobrescreve o `audio_url` de todas as cartas e desliga as gravações nativas.
-- **Nada de PDF no git.** O `.gitignore` barra `*.pdf` porque o livro do professor fica na pasta do projeto e o repositório é público.
-
 ### Adicionar palavras novas (fluxo do Leo)
 
 1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula
@@ -125,6 +118,41 @@ Três consequências:
 Rodou o `schema.sql` antes da V2.3? Ele é idempotente — rodar de novo só adiciona a coluna `data_aula`, não apaga nada.
 
 Rodar local: `python3 -m http.server 8080` → http://localhost:8080/ (debug de datas: `?debug=1`).
+
+## Trabalhando junto — leia antes do primeiro commit
+
+Rodar local não exige nada: é HTML/JS puro, sem build e sem dependências.
+
+```bash
+git clone https://github.com/leoborja/manman.git && cd manman
+python3 -m http.server 8080     # → http://localhost:8080/  (datas: ?debug=1)
+```
+
+### Funcionalidade (`app.js`, `index.html`) → branch + PR
+
+```bash
+git checkout -b henrique/nome-da-melhoria
+# edita, commita
+git push -u origin henrique/nome-da-melhoria
+gh pr create --base main
+```
+
+Merge no PR e o GitHub Pages publica sozinho — **`main` é o que está no ar**, então ele nunca pode ficar quebrado.
+
+- **Branches curtas.** O `app.js` muda quase todo dia; branch parada duas semanas vira merge desagradável. Entregue de pouco em pouco e rode `git pull --rebase origin main` com frequência.
+- **Não commite arquivo gerado**: `fonts/hanzi.woff2`, `strokes/strokes.json`, `audio/nativo/*.mp3`. Quem mexe em funcionalidade não precisa gerar nenhum deles — se aparecerem no seu `git status`, você rodou um script à toa. São binário (ou JSON de linha única), que o git não sabe fazer merge: dois PRs que os regerem conflitam de um jeito que ninguém resolve à mão.
+
+### Conteúdo (palavras novas) → direto no `main`
+
+Vai direto porque editar o JSON é só metade: em seguida tem que rodar o pipeline (seed, fonte, traçado, áudio) e publicar junto, senão o `audio_url` aponta pra 404. O passo a passo está em "Adicionar palavras novas" acima.
+
+Se for mandar palavra por PR, mande **só o `seed_cards.json`** — o resto é reconstruído no `main` depois do merge.
+
+### Três avisos
+
+- **A `SUPABASE_SERVICE_KEY` ignora o RLS por completo** — quem a tem pode apagar o deck e sobrescrever o progresso de todo mundo, e não dá pra revogar de uma pessoa só. Ela não é necessária pra mexer no app: só o `seed.py` e o passo final do `build_audio_nativo.py` usam. A anon key do `config.js` é outra coisa, pública por design.
+- **Não rode `tools/build_audio.py`.** É o da ElevenLabs, desativado — ele sobrescreve o `audio_url` de **todas** as cartas e desliga as 51 gravações nativas de uma vez.
+- **Nada de PDF no git.** O `.gitignore` barra `*.pdf` porque o livro do professor fica na pasta do projeto e o repositório é público.
 
 ## Licenças dos ativos de terceiros
 
@@ -162,4 +190,8 @@ sobre eles depende do plano da conta.
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
 - [ ] Áudio das 6 sem gravação (妈, 森, 丁 e os 3 nomes) — caem no TTS. Provavelmente **fechar sem fazer nada**: o problema do TTS é 3º tom isolado, e nenhuma das seis é esse caso
 - [x] ~~Filtro por aula na tela de estudo~~ — feito em 17/08
-- [ ] Radical/decomposição nas cartas · domínio próprio
+- [ ] Radical/decomposição nas cartas
+- [ ] **Domínio próprio** — `manman.com.br` já registrado (Cloud Arbitration). Ordem: DNS primeiro (4 registros `A` da raiz pra `185.199.108.153`, `.109.153`, `.110.153`, `.111.153` e `CNAME` do `www` pra `leoborja.github.io`), depois o domínio em Settings → Pages, depois **Enforce HTTPS** (sem isso o PWA não instala). Três detalhes:
+  - Se o DNS for pela Cloudflare, mantenha a **nuvem cinza** até o GitHub emitir o certificado — com o proxy ligado ele não valida o domínio. Só depois, se quiser proxy, use SSL **Full (strict)**: no Flexible dá loop de redirecionamento.
+  - Com proxy ligado, exclua `app.js`, `index.html` e `config.js` do cache. O service worker é network-first e conta com o servidor devolver a versão nova.
+  - `localStorage` é por origem: no domínio novo o app abre com progresso zerado, mas **recupera** ao escolher o nome — o `syncPull` aceita o que vem do Supabase quando não há estado local. Só as preferências de tela (modo, tema, filtro) voltam ao padrão. Avisar os três pra reinstalar o atalho na tela de início.
