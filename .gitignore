@@ -1,3 +1,8 @@
+# o livro NÃO vai pro git: o repo é público e serve o GitHub Pages —
+# commitar isso publicaria os 270 páginas do livro inteiro pra qualquer um
+book-1.pdf
+*.pdf
+
 __pycache__/
 *.pyc
 .DS_Store

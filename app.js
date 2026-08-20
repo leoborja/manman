@@ -37,7 +37,7 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
 };
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
-  nomes: 'Nomes', geral: 'Geral' };
+  nomes: 'Nomes', familia: 'Família', geral: 'Geral' };
 // modos: front = o que aparece; staged = revela pinyin antes de virar
 const MODES = {
   zh_all:   { front: 'hanzi', staged: false },

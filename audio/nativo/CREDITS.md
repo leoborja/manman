@@ -44,3 +44,18 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 火 | huǒ | [Zh-huǒ.oga](https://commons.wikimedia.org/wiki/File%3AZh-hu%C7%92.oga) | 伙 | Yue Tan | CC BY-SA 3.0 us |
 | 力 | lì | [Zh-lì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%AC.ogg) | 力 | Yue Tan | CC BY-SA 3.0 us |
 | 门 | mén | [Zh-mén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A9n.ogg) | 门 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 爸爸 | bàba | [Zh-bàba.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C3%A0ba.ogg) | 爸爸 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 妈妈 | māma | [Zh-māma.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C4%81ma.ogg) | 妈妈 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 哥哥 | gēge | [Zh-gēge.ogg](https://commons.wikimedia.org/wiki/File%3AZh-g%C4%93ge.ogg) | 哥哥 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 弟弟 | dìdi | [Zh-dìdi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%ACdi.ogg) | 弟弟 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 姐姐 | jiějie | [Zh-jiějie.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C4%9Bjie.ogg) | 姐姐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 妹妹 | mèimei | [Zh-mèimei.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A8imei.ogg) | 妹妹 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 我们 | wǒmen | [Zh-wǒmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C7%92men.ogg) | 我们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 你们 | nǐmen | [Zh-nǐmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C7%90men.ogg) | 你们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 他们 | tāmen | [Zh-tāmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%81men.ogg) | 它们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 都 | dōu | [Zh-dōu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C5%8Du.ogg) | 都 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 男 | nán | [Zh-nán.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C3%A1n.ogg) | 难 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 朋友 | péngyou | [Zh-péngyou.ogg](https://commons.wikimedia.org/wiki/File%3AZh-p%C3%A9ngyou.ogg) | 朋友 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 咖啡 | kāfēi | [Zh-kāfēi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%81f%C4%93i.ogg) | 咖啡 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 要 | yào | [Zh-yào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A0o.ogg) | 药 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 喝 | hē | [Zh-hē.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C4%93.ogg) | 喝 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
