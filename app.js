@@ -530,42 +530,70 @@ function limpaDesenho() {
   drawInk = []; drawTrecho = null;
   repintaPad(); renderDrawTools();
 }
-// Só o começo do traço nasce no canvas. O resto (acompanhar o dedo, soltar e, sobretudo,
-// impedir a rolagem) fica no DOCUMENTO de propósito:
+// No DEDO o desenho é feito com eventos de toque, não com Pointer Events. Duas tentativas
+// de segurar a rolagem no iOS falharam antes desta, e as duas pelo mesmo motivo de fundo:
+// o preventDefault chegava tarde ou não chegava.
 //
-//   1. setPointerCapture parecia a escolha óbvia pra seguir o dedo fora do quadrado, mas
-//      no iOS a captura desvia o fluxo de eventos de toque e o `touchmove` deixa de ser
-//      entregue no canvas — era por isso que o traço de cima pra baixo continuava rolando
-//      a página mesmo com touch-action:none E com o preventDefault no elemento.
-//   2. Sem captura, quem enxerga o gesto inteiro é o documento.
-//   3. O touchmove PRECISA de passive:false. Listener de touchmove no documento nasce
-//      passivo nos navegadores modernos, e em listener passivo o preventDefault é
-//      ignorado sem erro nenhum no console — falha silenciosa.
+//   1ª — touch-action:none no CSS mais preventDefault no touchmove do canvas. O
+//        setPointerCapture desviava o fluxo de toque e o listener nem rodava.
+//   2ª — tirei a captura e levei o bloqueio pro documento. Continuou rolando, porque o
+//        bloqueio só valia com traço em andamento e quem criava o traço era o pointerdown:
+//        se o primeiro touchmove chega antes do pointerdown (e no WebKit os eventos de
+//        ponteiro são derivados dos de toque, então chega), a rolagem já começou. Depois
+//        que o iOS decide que o gesto é rolagem, preventDefault nenhum a traz de volta.
+//
+// Com touchstart o traço nasce e a rolagem é cancelada no MESMO evento, antes de existir
+// gesto pra interpretar. Eventos de toque também vão sempre pro elemento onde o dedo
+// encostou, do começo ao fim, então seguir o dedo pra fora do quadrado não precisa de
+// captura nenhuma. Mouse e caneta seguem nos Pointer Events, que ali funcionam bem.
+// Os dois listeners de toque precisam de passive:false: sem isso o preventDefault é
+// ignorado sem erro no console — falha silenciosa, que foi o que escondeu tudo isso.
 function bindPad() {
   const pad = $('drawpad');
-  pad.addEventListener('pointerdown', (e) => {
-    if (!drawOn() || drawScore || !current) return;
-    e.preventDefault(); e.stopPropagation();
-    drawTrecho = [padXY(e)];
+  const podeDesenhar = () => drawOn() && !drawScore && !!current;
+  function comecaTraco(p) {
+    drawTrecho = [p];
     drawInk.push(drawTrecho);
     repintaPad(); renderDrawTools();
-  });
-  document.addEventListener('pointermove', (e) => {
-    if (!drawTrecho) return;
-    e.preventDefault();
-    const p = padXY(e), u = drawTrecho[drawTrecho.length - 1];
+  }
+  function continuaTraco(p) {
+    const u = drawTrecho[drawTrecho.length - 1];
     if (Math.hypot(p[0] - u[0], p[1] - u[1]) < 6) return; // ponto colado no anterior não acrescenta nada
     drawTrecho.push(p);
     repintaPad();
+  }
+  // ── dedo ──
+  pad.addEventListener('touchstart', (e) => {
+    if (!podeDesenhar()) return;
+    e.preventDefault(); // aqui, e não no touchmove: é o que impede a rolagem de nascer
+    if (drawTrecho) return; // segundo dedo no meio do traço: ignora, não recomeça
+    comecaTraco(padXY(e.changedTouches[0]));
+  }, { passive: false });
+  pad.addEventListener('touchmove', (e) => {
+    if (!drawTrecho) return;
+    e.preventDefault();
+    continuaTraco(padXY(e.changedTouches[0]));
+  }, { passive: false });
+  const largou = () => { drawTrecho = null; };
+  pad.addEventListener('touchend', largou);
+  pad.addEventListener('touchcancel', largou);
+  // ── mouse e caneta ──
+  pad.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'touch' || !podeDesenhar()) return; // o dedo já foi tratado acima
+    e.preventDefault(); e.stopPropagation();
+    comecaTraco(padXY(e));
   });
-  // com traço em andamento a página não rola, ponto. Fora dele o listener sai na hora e
-  // a rolagem do app segue normal — inclusive na própria grade depois de validar.
-  document.addEventListener('touchmove', (e) => { if (drawTrecho) e.preventDefault(); }, { passive: false });
-  const solta = () => { drawTrecho = null; };
-  document.addEventListener('pointerup', solta);
-  document.addEventListener('pointercancel', solta);
-  // sem isto o toque na grade viraria a carta e entregaria a resposta
-  pad.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch' || !drawTrecho) return;
+    e.preventDefault();
+    continuaTraco(padXY(e));
+  });
+  document.addEventListener('pointerup', largou);
+  document.addEventListener('pointercancel', largou);
+  // Enquanto não validou, o toque na grade não pode virar a carta — entregaria a
+  // resposta. Depois de validar pode: a grade é o maior alvo da tela e a dica manda
+  // tocar na carta pra ver o traçado.
+  pad.addEventListener('click', (e) => { if (!drawScore) e.stopPropagation(); });
 }
 
 // ── conversor de tons: ni3 hao3 → nǐ hǎo ────────────────────
