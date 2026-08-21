@@ -530,35 +530,40 @@ function limpaDesenho() {
   drawInk = []; drawTrecho = null;
   repintaPad(); renderDrawTools();
 }
+// Só o começo do traço nasce no canvas. O resto (acompanhar o dedo, soltar e, sobretudo,
+// impedir a rolagem) fica no DOCUMENTO de propósito:
+//
+//   1. setPointerCapture parecia a escolha óbvia pra seguir o dedo fora do quadrado, mas
+//      no iOS a captura desvia o fluxo de eventos de toque e o `touchmove` deixa de ser
+//      entregue no canvas — era por isso que o traço de cima pra baixo continuava rolando
+//      a página mesmo com touch-action:none E com o preventDefault no elemento.
+//   2. Sem captura, quem enxerga o gesto inteiro é o documento.
+//   3. O touchmove PRECISA de passive:false. Listener de touchmove no documento nasce
+//      passivo nos navegadores modernos, e em listener passivo o preventDefault é
+//      ignorado sem erro nenhum no console — falha silenciosa.
 function bindPad() {
   const pad = $('drawpad');
   pad.addEventListener('pointerdown', (e) => {
     if (!drawOn() || drawScore || !current) return;
     e.preventDefault(); e.stopPropagation();
-    try { pad.setPointerCapture(e.pointerId); } catch (err) { /* navegador antigo */ }
     drawTrecho = [padXY(e)];
     drawInk.push(drawTrecho);
     repintaPad(); renderDrawTools();
   });
-  pad.addEventListener('pointermove', (e) => {
+  document.addEventListener('pointermove', (e) => {
     if (!drawTrecho) return;
-    e.preventDefault(); e.stopPropagation();
+    e.preventDefault();
     const p = padXY(e), u = drawTrecho[drawTrecho.length - 1];
     if (Math.hypot(p[0] - u[0], p[1] - u[1]) < 6) return; // ponto colado no anterior não acrescenta nada
     drawTrecho.push(p);
     repintaPad();
   });
-  // sem pointerleave: com o ponteiro capturado o dedo pode passar da borda e voltar,
-  // e terminar o traço ali cortaria o caractere no meio. Quem termina é soltar o dedo.
-  // O touch-action:none do CSS não basta no iOS: um traço de cima pra baixo ainda rola
-  // a página junto. Quem segura de verdade é cancelar o touchmove — e o listener PRECISA
-  // ser passive:false, senão o preventDefault é ignorado em silêncio.
-  // Só cancela com traço em andamento: depois de validar a grade fica inerte e arrastar
-  // o dedo ali deve rolar a página como em qualquer outro lugar da carta.
-  pad.addEventListener('touchmove', (e) => { if (drawTrecho) e.preventDefault(); }, { passive: false });
-  const solta = (e) => { if (drawTrecho) { drawTrecho = null; e.stopPropagation(); } };
-  pad.addEventListener('pointerup', solta);
-  pad.addEventListener('pointercancel', solta);
+  // com traço em andamento a página não rola, ponto. Fora dele o listener sai na hora e
+  // a rolagem do app segue normal — inclusive na própria grade depois de validar.
+  document.addEventListener('touchmove', (e) => { if (drawTrecho) e.preventDefault(); }, { passive: false });
+  const solta = () => { drawTrecho = null; };
+  document.addEventListener('pointerup', solta);
+  document.addEventListener('pointercancel', solta);
   // sem isto o toque na grade viraria a carta e entregaria a resposta
   pad.addEventListener('click', (e) => e.stopPropagation());
 }
@@ -972,6 +977,10 @@ function showCard(card) {
   f.classList.remove('flipped');
   f.classList.toggle('draw', desenho);
   $('drawwrap').classList.toggle('show', desenho);
+  // carta nova zera tinta e nota SEMPRE, mesmo saindo do desenho: sem isto os botões
+  // ↶ ✕ ✓ continuavam na tela depois de trocar pra um modo que não desenha nada
+  drawInk = []; drawTrecho = null; drawScore = null;
+  renderDrawTools();
   const front = $('front-content');
   front.style.display = desenho ? 'none' : ''; // no desenho a pergunta mora na grade
   if (desenho) front.innerHTML = '';
