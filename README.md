@@ -55,8 +55,33 @@ O seletor acima dos chips troca o que a linha filtra: **por tema** (Números, Pr
 | 🎧 **Só áudio** | nada na tela, só o som | ideograma + pinyin + tradução |
 | 🔀 aleatório | mistura as direções | |
 | 🎯 **Quiz de tons** | áudio + ideograma | você escolhe o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
+| ✍️ **Desenhar** (3 modos) | português, pinyin **ou** só o áudio | você escreve o ideograma na grade |
 
 No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio automático) e o **"⚡ Relâmpago"**, abaixo.
+
+### ✍️ Desenhar
+
+Os outros modos perguntam se você **reconhece** a palavra. Este pergunta se você sabe **escrever** — que é outra coisa, e bem mais difícil.
+
+A carta vira uma **grade 田字格**: um quadrado com uma cruz pontilhada no meio, dividindo em quatro quadrantes. É a grade em que se aprende a escrever chinês no papel, e ela está ali pra ensinar onde cada parte do caractere mora dentro do quadrado. Você escreve com o dedo, apaga o último traço no **↶** ou tudo no **✕**, e toca em **✓ Validar**.
+
+São três modos, que mudam só a pergunta — o exercício é o mesmo:
+
+| Pergunta | Você escreve |
+|---|---|
+| a palavra em **português** | o ideograma |
+| o **pinyin** | o ideograma |
+| só o **áudio** | o ideograma |
+
+**A nota.** Validou, o app compara o seu traço com o traçado oficial e dá uma porcentagem de proximidade. **90% ou mais conta como certo.** O caractere certo aparece em cinza por baixo do seu desenho, então dá pra ver exatamente onde saiu do lugar ou o que faltou — e tocar na carta vira pro traçado animado, na ordem certa.
+
+A nota já vem com um dos botões sugerido (≥90% → Acertei, 75–89% → Difícil, abaixo → Errei), mas **quem decide é você**: é uma revisão normal, conta na meta de 30 e mexe no agendamento como qualquer outra.
+
+Como funciona por dentro: o app reamostra as **medianas** do caractere (o esqueleto, do makemeahanzi) e os seus traços em pontos igualmente espaçados, e mede os dois lados — quanto do caractere você cobriu **e** quanto do que você desenhou é caractere. Só o primeiro premiaria o rabisco que passa por tudo; só o segundo premiaria o traço caprichado que esquece metade. Antes de comparar, corrige **um pouco** de tamanho e de posição (até ±12% e ±7% do quadro), porque escrever com o dedo nunca cai no lugar exato — mas com trava, senão desenhar minúsculo num canto valeria 100%.
+
+A tolerância não é chute: o `tools/test_nota.js` roda a nota contra os 57 caracteres do deck deformados de três jeitos (aluno caprichado, médio e desengonçado) e contra todos os pares de caracteres trocados. Com a tolerância atual nenhum caractere errado passa dos 90% — o mais perigoso é 吗 na carta de 喝, que dá 88 porque dividem o 口 e quase toda a estrutura. A primeira tolerância que testei era três vezes mais frouxa e aprovava **38%** dos caracteres errados.
+
+**Só palavras de um caractere.** A grade é uma só, então 你好 e 谢谢 ficam de fora — o modo usa 43 das 57 palavras. O contador no alto já mostra só o que a sessão vai perguntar. O ⚡ Relâmpago fica apagado aqui: responder já é escrever.
 
 ### ⚡ Relâmpago
 
@@ -112,7 +137,7 @@ Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (ag
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
-| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py` |
+| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
 | `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
 
 ### Por onde o conteúdo anda

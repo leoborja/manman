@@ -158,17 +158,24 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
 .strokes svg{display:block;}
 
 /* modo desenho: grade de quatro quadrantes + tinta do dedo */
-.fcard.draw{min-height:428px;}
-.fcard.draw .face.front{padding:18px 16px 30px;gap:8px;justify-content:flex-start;}
-.drawwrap{display:none;flex-direction:column;align-items:center;gap:8px;}
+.fcard.draw{min-height:440px;}
+/* topo folgado porque a pergunta divide a linha com a etiqueta do tema e o 🔊 */
+.fcard.draw .face.front{padding:44px 16px 28px;gap:8px;justify-content:flex-start;}
+.fcard.draw .face.front .hint{bottom:8px;}
+/* align-self:stretch porque a .face centraliza os filhos — sem isso a largura da
+   grade sairia do tamanho do texto da pergunta, não do tamanho da carta */
+.drawwrap{display:none;flex-direction:column;align-items:center;gap:8px;align-self:stretch;}
 .drawwrap.show{display:flex;}
-.drawask{font-size:22px;font-weight:800;line-height:1.2;min-height:27px;}
+/* altura fixa: a carta não muda de tamanho, então a pergunta do modo áudio (um botão
+   redondo) não pode ser mais alta que a de texto — empurraria o resultado por cima da dica */
+.drawask{height:48px;display:flex;align-items:center;justify-content:center;
+font-size:22px;font-weight:800;line-height:1.2;}
 .drawask.py{color:var(--red);font-size:25px;}
-.drawask .spkbig{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);
-background:var(--surface2);font-size:23px;line-height:1;cursor:pointer;color:var(--txt);}
+.drawask .spkbig{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+background:var(--surface2);font-size:20px;line-height:1;cursor:pointer;color:var(--txt);}
 .drawask .spkbig:active{background:var(--pill);}
 .drawpad{display:block;touch-action:none;cursor:crosshair;}
-.drawfb{font-size:14.5px;font-weight:800;min-height:17px;line-height:1.3;animation:f .25s ease;}
+.drawfb{font-size:14.5px;font-weight:800;min-height:34px;line-height:1.3;animation:f .25s ease;}
 .drawfb small{display:block;font-weight:600;font-size:11.5px;color:var(--mut);margin-top:2px;}
 .drawfb.ok{color:var(--ok);}
 .drawfb.quase{color:var(--warn);}

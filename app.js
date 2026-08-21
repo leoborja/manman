@@ -313,6 +313,250 @@ function animateBackStrokes() {
   });
 }
 
+// ── desenho: a nota do traço ────────────────────────────────
+// Compara ESQUELETO com ESQUELETO: reamostra as medianas do caractere e os traços do
+// dedo em pontos igualmente espaçados e mede, dos DOIS lados, o quanto um cobre o outro.
+// Só cobertura premiaria o rabisco que passa por tudo; só precisão premiaria o traço
+// caprichado que esquece metade do caractere. A média harmônica exige os dois juntos.
+const DRAW_BOX = 1024;      // o quadro do makemeahanzi; a grade na tela é esse quadro
+const DRAW_PASSO = 12;      // reamostragem: um ponto a cada 12 unidades de traço
+// Tolerância calibrada contra os 57 caracteres do deck (tools/test_nota.js): com 25/90
+// um traço trêmulo mas certo passa dos 90 e NENHUM par de caracteres diferentes passa —
+// o pior é 吗 contra 喝, que dá 88 porque dividem o 口 e quase toda a estrutura.
+// Afrouxar pra 58/200 fazia 38% dos caracteres errados "acertarem".
+const DRAW_PERTO = 25;      // até aqui o ponto vale 1
+const DRAW_LONGE = 90;      // daqui pra fora vale 0, e no meio decai reto
+const DRAW_ESC = [0.9, 1.12];  // o quanto o tamanho do desenho pode ser corrigido
+const DRAW_DESLOC = 70;     // ...e o quanto a posição pode (7% do quadro)
+const DRAW_OK = 90;         // a partir daqui é acerto
+const DRAW_QUASE = 75;      // ...e daqui, "quase"
+function reamostra(pts, passo) { // polilinha → pontos igualmente espaçados
+  if (pts.length < 2) return pts.slice();
+  const out = [pts[0].slice()];
+  let falta = passo;
+  for (let i = 1; i < pts.length; i++) {
+    let x = pts[i - 1][0], y = pts[i - 1][1];
+    const x1 = pts[i][0], y1 = pts[i][1];
+    let resto = Math.hypot(x1 - x, y1 - y);
+    while (resto >= falta && resto > 0) {
+      const t = falta / resto;
+      x += (x1 - x) * t; y += (y1 - y) * t;
+      out.push([x, y]);
+      resto -= falta;
+      falta = passo;
+    }
+    falta -= resto;
+  }
+  return out;
+}
+function nuvemAlvo(ch) { // esqueleto oficial do caractere, já com o Y virado pra tela
+  const d = strokesDB[ch];
+  if (!d || !d.m) return null;
+  const out = [];
+  d.m.forEach(m => reamostra(m.map(p => [p[0], 900 - p[1]]), DRAW_PASSO).forEach(p => out.push(p)));
+  return out.length ? out : null;
+}
+function centroRaio(pts) {
+  let sx = 0, sy = 0;
+  pts.forEach(p => { sx += p[0]; sy += p[1]; });
+  const cx = sx / pts.length, cy = sy / pts.length;
+  let s = 0;
+  pts.forEach(p => { s += (p[0] - cx) * (p[0] - cx) + (p[1] - cy) * (p[1] - cy); });
+  return { cx, cy, r: Math.sqrt(s / pts.length) };
+}
+// Encaixe com trava: corrige um pouco de tamanho e de posição, porque escrever com o dedo
+// nunca cai no lugar exato. A trava é o que impede desenhar minúsculo num canto e tirar 100
+// — a grade está ali justamente pra ensinar proporção e lugar.
+function encaixa(tinta, alvo) {
+  const a = centroRaio(tinta), b = centroRaio(alvo);
+  const s = Math.min(DRAW_ESC[1], Math.max(DRAW_ESC[0], a.r > 1 ? b.r / a.r : 1));
+  const dx = Math.max(-DRAW_DESLOC, Math.min(DRAW_DESLOC, b.cx - a.cx));
+  const dy = Math.max(-DRAW_DESLOC, Math.min(DRAW_DESLOC, b.cy - a.cy));
+  return tinta.map(p => [(p[0] - a.cx) * s + a.cx + dx, (p[1] - a.cy) * s + a.cy + dy]);
+}
+function proximidade(a, b) { // média do crédito de cada ponto de `a` ao vizinho mais perto em `b`
+  let soma = 0;
+  for (let i = 0; i < a.length; i++) {
+    let melhor = Infinity;
+    for (let j = 0; j < b.length; j++) {
+      const dx = a[i][0] - b[j][0], dy = a[i][1] - b[j][1];
+      const d2 = dx * dx + dy * dy;
+      if (d2 < melhor) melhor = d2;
+    }
+    const d = Math.sqrt(melhor);
+    soma += d <= DRAW_PERTO ? 1 : d >= DRAW_LONGE ? 0 : (DRAW_LONGE - d) / (DRAW_LONGE - DRAW_PERTO);
+  }
+  return a.length ? soma / a.length : 0;
+}
+function notaDesenho(ch, tracos) { // tracos: lista de polilinhas já em 0–1024
+  const alvo = nuvemAlvo(ch);
+  if (!alvo || !tracos || !tracos.length) return null;
+  let tinta = [];
+  tracos.forEach(t => reamostra(t, DRAW_PASSO).forEach(p => tinta.push(p)));
+  if (tinta.length < 2) return null;
+  tinta = encaixa(tinta, alvo);
+  const cobertura = proximidade(alvo, tinta); // quanto do caractere você desenhou
+  const precisao = proximidade(tinta, alvo);  // quanto do que você desenhou é o caractere
+  const soma = cobertura + precisao;
+  return {
+    nota: Math.round(soma ? 2 * cobertura * precisao / soma * 100 : 0),
+    cobertura, precisao,
+    tracos: tracos.length,
+    oficial: strokesDB[ch].m.length
+  };
+}
+
+// ── desenho: a grade e a tinta ──────────────────────────────
+function corVar(nome, alt) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+  return v || alt;
+}
+function montaPad() { // canvas quadrado, do tamanho que a carta deixar
+  const cv = $('drawpad');
+  const larg = $('drawwrap').clientWidth || $('fcard').clientWidth - 32;
+  const L = Math.max(160, Math.min(Math.round(larg), 252)); // o teto é o que sobra de altura na carta
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(L * dpr); cv.height = Math.round(L * dpr);
+  cv.style.width = L + 'px'; cv.style.height = L + 'px';
+  drawCtx = cv.getContext('2d');
+  drawCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  drawPx = L;
+  repintaPad();
+}
+function repintaPad() {
+  if (!drawCtx || !drawPx) return;
+  const c = drawCtx, L = drawPx, k = L / DRAW_BOX;
+  c.clearRect(0, 0, L, L);
+  // 田字格: moldura e a cruz pontilhada que divide em quatro quadrantes — é ela que
+  // ensina onde cada parte do caractere mora dentro do quadrado
+  c.save();
+  c.strokeStyle = corVar('--line', '#e7e9ee');
+  c.lineWidth = 1.5;
+  c.strokeRect(0.75, 0.75, L - 1.5, L - 1.5);
+  c.setLineDash([4, 6]);
+  c.beginPath();
+  c.moveTo(L / 2, 3); c.lineTo(L / 2, L - 3);
+  c.moveTo(3, L / 2); c.lineTo(L - 3, L / 2);
+  c.stroke();
+  c.restore();
+  // depois de validar, o caractere certo aparece por baixo: dá pra ver onde saiu do lugar
+  if (drawScore && current && strokesDB[current.hanzi]) {
+    c.save();
+    // cinza translúcido, não --pill: o fantasma tem que aparecer POR BAIXO da tinta,
+    // senão a parte que você acertou o esconde e some justamente a comparação
+    c.globalAlpha = 0.22;
+    c.fillStyle = corVar('--txt', '#1b1d21');
+    c.scale(k, k); c.translate(0, 900); c.scale(1, -1); // o Y do makemeahanzi é invertido
+    strokesDB[current.hanzi].s.forEach(p => c.fill(new Path2D(p)));
+    c.restore();
+  }
+  // a tinta do dedo
+  c.save();
+  c.lineWidth = Math.max(7, L * 0.05);
+  c.lineCap = 'round'; c.lineJoin = 'round';
+  c.strokeStyle = c.fillStyle = !drawScore ? corVar('--txt', '#1b1d21')
+    : drawScore.nota >= DRAW_OK ? corVar('--ok', '#2e9e5b')
+    : drawScore.nota >= DRAW_QUASE ? corVar('--warn', '#d98a00')
+    : corVar('--err', '#c8102e');
+  drawInk.forEach(t => {
+    if (t.length === 1) { // toque seco: um ponto (o 、 é isso mesmo)
+      c.beginPath();
+      c.arc(t[0][0] * k, t[0][1] * k, c.lineWidth / 2, 0, Math.PI * 2);
+      c.fill();
+      return;
+    }
+    c.beginPath();
+    t.forEach((p, i) => i ? c.lineTo(p[0] * k, p[1] * k) : c.moveTo(p[0] * k, p[1] * k));
+    c.stroke();
+  });
+  c.restore();
+}
+function padXY(e) { // px da tela → o quadro 0–1024, que é onde a tinta é guardada
+  const r = $('drawpad').getBoundingClientRect();
+  const k = DRAW_BOX / (r.width || 1);
+  // gruda na borda em vez de sair do quadro: assim o que aparece na tela é exatamente
+  // o que vai ser medido (fora do quadro o traço some, mas continuaria contando)
+  const preso = (v) => Math.max(0, Math.min(DRAW_BOX, v));
+  return [preso((e.clientX - r.left) * k), preso((e.clientY - r.top) * k)];
+}
+function montaDesenho(card, m) {
+  drawInk = []; drawTrecho = null; drawScore = null;
+  const ask = $('drawask');
+  if (m.front === 'pt') { ask.className = 'drawask'; ask.textContent = card.pt; }
+  else if (m.front === 'pinyin') { ask.className = 'drawask py'; ask.innerHTML = pinyinColored(card.pinyin); }
+  else { // só áudio: a pergunta é o som, a tela não entrega nada
+    ask.className = 'drawask';
+    ask.innerHTML = '<button class="spkbig" id="drawspk" title="Ouvir de novo">🔊</button>';
+    $('drawspk').onclick = (e) => { e.stopPropagation(); speak(card); };
+  }
+  $('drawfb').className = 'drawfb';
+  $('drawfb').innerHTML = '';
+  montaPad();
+  renderDrawTools();
+}
+function renderDrawTools() {
+  const vale = drawOn() && !!current && !drawScore;
+  $('drawtools').classList.toggle('show', vale);
+  const vazio = !drawInk.length;
+  $('draw-undo').disabled = vazio;
+  $('draw-clear').disabled = vazio;
+  $('draw-check').disabled = vazio;
+}
+function validaDesenho() {
+  if (!current || drawScore || !drawInk.length) return;
+  const r = notaDesenho(current.hanzi, drawInk);
+  if (!r) return;
+  drawScore = r;
+  repintaPad();
+  const g = r.nota >= DRAW_OK ? 'good' : r.nota >= DRAW_QUASE ? 'hard' : 'again';
+  const fb = $('drawfb');
+  fb.className = 'drawfb ' + (g === 'good' ? 'ok' : g === 'hard' ? 'quase' : 'ruim');
+  fb.innerHTML = (g === 'good' ? '对! ' : g === 'hard' ? 'Quase — ' : '') + r.nota + '% de proximidade' +
+    '<small>' + esc(current.hanzi) + ' · ' + r.tracos + ' traço' + (r.tracos > 1 ? 's' : '') +
+    ' seus, ' + r.oficial + ' no ideograma</small>';
+  $('hint-f').textContent = 'toque na carta pra ver o traçado certo';
+  $('grades').classList.add('show');
+  $('g-' + g).classList.add('sugerido'); // sugestão da nota; quem decide ainda é você
+  renderDrawTools();
+  if (settings.autoSpeak) speak(current, true);
+}
+function desfazTraco() {
+  if (drawScore || !drawInk.length) return;
+  drawInk.pop();
+  repintaPad(); renderDrawTools();
+}
+function limpaDesenho() {
+  if (drawScore) return;
+  drawInk = []; drawTrecho = null;
+  repintaPad(); renderDrawTools();
+}
+function bindPad() {
+  const pad = $('drawpad');
+  pad.addEventListener('pointerdown', (e) => {
+    if (!drawOn() || drawScore || !current) return;
+    e.preventDefault(); e.stopPropagation();
+    try { pad.setPointerCapture(e.pointerId); } catch (err) { /* navegador antigo */ }
+    drawTrecho = [padXY(e)];
+    drawInk.push(drawTrecho);
+    repintaPad(); renderDrawTools();
+  });
+  pad.addEventListener('pointermove', (e) => {
+    if (!drawTrecho) return;
+    e.preventDefault(); e.stopPropagation();
+    const p = padXY(e), u = drawTrecho[drawTrecho.length - 1];
+    if (Math.hypot(p[0] - u[0], p[1] - u[1]) < 6) return; // ponto colado no anterior não acrescenta nada
+    drawTrecho.push(p);
+    repintaPad();
+  });
+  // sem pointerleave: com o ponteiro capturado o dedo pode passar da borda e voltar,
+  // e terminar o traço ali cortaria o caractere no meio. Quem termina é soltar o dedo.
+  const solta = (e) => { if (drawTrecho) { drawTrecho = null; e.stopPropagation(); } };
+  pad.addEventListener('pointerup', solta);
+  pad.addEventListener('pointercancel', solta);
+  // sem isto o toque na grade viraria a carta e entregaria a resposta
+  pad.addEventListener('click', (e) => e.stopPropagation());
+}
+
 // ── conversor de tons: ni3 hao3 → nǐ hǎo ────────────────────
 const TONE_MARKS = {
   a: ['ā', 'á', 'ǎ', 'à', 'a'], e: ['ē', 'é', 'ě', 'è', 'e'], i: ['ī', 'í', 'ǐ', 'ì', 'i'],
@@ -640,9 +884,15 @@ function filteredCards() {
 function aulas() { return [...new Set(cards.map(c => c.data_aula).filter(Boolean))].sort(); }
 function aulaLabel(d) { const [, m, dia] = d.split('-'); return dia + '/' + m; }
 function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
+// O que a SESSÃO pode mostrar. Só difere do pool ativo no modo desenho: a grade é uma
+// só, então palavra de dois caracteres (你好, 谢谢) fica de fora — igual ao quiz de tons,
+// que também escolhe o que consegue perguntar.
+function poolSessao() {
+  return drawOn() ? activePool().filter(c => [...c.hanzi].length === 1) : activePool();
+}
 function buildQueue() {
   const t = todayStr();
-  const pool = activePool();
+  const pool = poolSessao();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t)
     .sort((a, b) => srs[a.id].due < srs[b.id].due ? -1 : 1);
   const news = shuffle(pool.filter(c => !srs[c.id])); // sem limite diário: o deck só tem o que a turma já viu
@@ -650,12 +900,13 @@ function buildQueue() {
   phase = 'sched';
 }
 function enterPractice() { // prática livre: deck inteiro embaralhado, sem parar
-  queue = shuffle(activePool().map(c => c.id));
+  queue = shuffle(poolSessao().map(c => c.id));
   phase = 'practice';
 }
-function dueCount() {
+// sem pool = o deck todo (é o que a aba Progresso quer); com pool = o da sessão
+function dueCount(pool) {
   const t = todayStr();
-  const pool = activePool();
+  pool = pool || activePool();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t).length;
   const news = pool.filter(c => !srs[c.id]).length;
   return { due, news };
@@ -690,7 +941,7 @@ function renderChips() {
 }
 function renderCounter() {
   renderStreak();
-  const { due, news } = dueCount();
+  const { due, news } = dueCount(poolSessao()); // o contador conta o que a sessão vai mostrar
   if (phase === 'quiz') {
     $('counter').innerHTML = '<b>quiz de tons</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
   } else if (phase === 'flash') {
@@ -710,10 +961,15 @@ function showCard(card) {
   curMode = settings.mode === 'mix' ? MIX_POOL[Math.floor(Math.random() * MIX_POOL.length)] : settings.mode;
   const m = MODES[curMode];
   const relampago = flashOn();
+  const desenho = !!m.draw;
   const f = $('fcard');
   f.classList.remove('flipped');
+  f.classList.toggle('draw', desenho);
+  $('drawwrap').classList.toggle('show', desenho);
   const front = $('front-content');
-  if (m.front === 'hanzi') front.innerHTML = '<div class="hanzi-lg zh" lang="zh-Hans">' + esc(card.hanzi) + '</div>';
+  front.style.display = desenho ? 'none' : ''; // no desenho a pergunta mora na grade
+  if (desenho) front.innerHTML = '';
+  else if (m.front === 'hanzi') front.innerHTML = '<div class="hanzi-lg zh" lang="zh-Hans">' + esc(card.hanzi) + '</div>';
   else if (m.front === 'pt') front.innerHTML = '<div class="pt-lg">' + esc(card.pt) + '</div>';
   else if (m.front === 'audio') {
     // só áudio: a carta não mostra NADA — a pessoa ouve e tem que lembrar 汉字, pinyin e significado
@@ -728,10 +984,12 @@ function showCard(card) {
   $('quizfb').innerHTML = '';
   $('tones').classList.toggle('show', !!m.quiz);
   $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
-  $('hint-f').textContent = m.quiz ? 'ouça e escolha o tom · toque na carta pra repetir'
+  $('hint-f').textContent = desenho ? 'escreva o ideograma na grade e toque em Validar'
+    : m.quiz ? 'ouça e escolha o tom · toque na carta pra repetir'
     : relampago ? 'toque assim que reconhecer'
     : m.front === 'audio' ? '🔊 repete · toque na carta pra virar'
     : (m.staged ? 'toque para ver o pinyin' : 'toque para virar');
+  if (desenho) montaDesenho(card, m);
   if (m.quiz || m.front === 'audio') speak(card, true); // aqui o áudio É a pergunta
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
@@ -745,6 +1003,7 @@ function showCard(card) {
   $('iv-hard').textContent = phase === 'practice' ? 'prática' : srsPreview(s, 'hard');
   $('iv-good').textContent = phase === 'practice' ? 'prática' : srsPreview(s, 'good');
   $('grades').classList.remove('show');
+  $('grades').querySelectorAll('button').forEach(bt => bt.classList.remove('sugerido'));
   $('nextbtn').classList.remove('show');
   $('stage').style.display = '';
   $('offbtn').style.display = '';
@@ -755,7 +1014,7 @@ function showCard(card) {
 function nextCard() {
   if (!queue.length) {
     // quiz e relâmpago são rodadas fechadas: acabou o baralho, mostra o placar
-    if (phase === 'quiz' || phase === 'flash' || !activePool().length) { finishSession(); return; }
+    if (phase === 'quiz' || phase === 'flash' || !poolSessao().length) { finishSession(); return; }
     if (phase === 'sched') { // acabaram as revisões → emenda na prática, sem parar
       showBanner('info', '🎉 Revisões do dia feitas! Emendando na prática livre — só "Errei" mexe no agendamento.');
       setTimeout(hideBanner, 4500);
@@ -774,6 +1033,8 @@ function finishSession() {
   $('stage').style.display = 'none';
   $('grades').classList.remove('show');
   $('tones').classList.remove('show');
+  $('drawtools').classList.remove('show');
+  $('drawwrap').classList.remove('show');
   $('nextbtn').classList.remove('show');
   $('offbtn').style.display = 'none';
   $('done').classList.add('show');
@@ -799,6 +1060,12 @@ function finishSession() {
       (pct >= 80 ? '厉害 (lìhai — mandou bem)!' : '加油 (jiāyóu — continua treinando o ouvido)!');
     $('freebtn').textContent = '🎯 Jogar de novo';
     $('freebtn').style.display = '';
+  } else if (drawOn() && activePool().length) {
+    // tem carta no filtro, mas nenhuma de um caractere só — a grade é uma só
+    $('done-title').textContent = 'Nada pra desenhar aqui';
+    $('done-sub').textContent = 'O modo desenho usa uma grade por caractere, então só entram palavras ' +
+      'de um caractere — e não sobrou nenhuma neste filtro. Escolha outro tema/aula ou troque de modo.';
+    $('freebtn').style.display = 'none';
   } else { // só acontece sem nenhuma carta ativa no filtro
     $('done-title').textContent = 'Nada por aqui';
     $('done-sub').textContent = 'Nenhuma carta ativa neste deck — religue cartas na aba Cartas ou escolha outro filtro.';
@@ -1002,6 +1269,14 @@ function tapCard() {
     // já reconheceu antes do tempo? o toque adianta a explicação — quem pontua são os
     // botões da etapa 2, então adiantar não dá nem tira ponto de ninguém
     if (!flashPausa && flashState === 'correndo') revealFlash();
+    return;
+  }
+  if (m.draw) {
+    // antes de validar, tocar não faz nada: virar a carta entregaria justamente o que
+    // se está tentando lembrar. Depois da nota, vira pra ver o traçado na ordem certa.
+    if (!drawScore) return;
+    if (f.classList.contains('flipped')) { f.classList.remove('flipped'); renderBackHanzi(current); }
+    else { f.classList.add('flipped'); setTimeout(animateBackStrokes, 300); }
     return;
   }
   if (f.classList.contains('flipped')) { // desvirar
@@ -1261,12 +1536,18 @@ function switchView(v) {
   }
   if (v === 'cartas') renderList();
   if (v === 'estudar') resumeFlash(); else pauseFlash();
+  // desligar uma carta na aba Cartas pode trocar a carta atual com a aba Estudar
+  // escondida — e aí a grade nasceu sem largura pra medir. Volta, remede.
+  if (v === 'estudar' && drawOn() && current) montaPad();
 }
 function renderModeUI() {
   $('modecur').textContent = (flashOn() ? '⚡ ' : '') + (MODE_TITLES[settings.mode] || MODE_TITLES.zh_all);
 }
 // que tipo de fila a combinação pede: cada uma monta a sessão de um jeito diferente
-function queueKind() { return settings.mode === 'tons' ? 'tons' : flashOn() ? 'flash' : 'normal'; }
+// (o desenho é fila normal, mas só com palavra de um caractere — daí ser um tipo à parte)
+function queueKind() {
+  return settings.mode === 'tons' ? 'tons' : drawOn() ? 'draw' : flashOn() ? 'flash' : 'normal';
+}
 function renderModeSheet() {
   document.querySelectorAll('.modeopt[data-m]').forEach(b =>
     b.classList.toggle('active', b.dataset.m === settings.mode));
@@ -1274,8 +1555,8 @@ function renderModeSheet() {
   $('flash-opt').classList.toggle('active', !!settings.flash);
   $('flashtime').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
-  // no quiz de tons responder já é escolher um botão de tom: a chave fica visivelmente sem efeito
-  const semEfeito = settings.mode === 'tons';
+  // no quiz de tons e no desenho responder já é outra coisa: a chave fica visivelmente sem efeito
+  const semEfeito = settings.mode === 'tons' || drawOn();
   $('flash-opt').classList.toggle('disabled', semEfeito);
   $('flashtime').classList.toggle('disabled', semEfeito || !settings.flash);
 }
@@ -1310,7 +1591,7 @@ function bindEvents() {
     else if (current) showCard(current);
   });
   $('flash-opt').onclick = () => { // a chave do relâmpago: liga por cima do modo atual
-    if (settings.mode === 'tons') return;
+    if (settings.mode === 'tons' || drawOn()) return;
     settings.flash = !settings.flash; save(K.settings, settings);
     renderModeSheet(); renderModeUI();
     startSession(); // ligar ou desligar troca o tipo de fila
@@ -1326,6 +1607,12 @@ function bindEvents() {
   };
   $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
+  bindPad();
+  $('draw-undo').onclick = (e) => { e.stopPropagation(); desfazTraco(); };
+  $('draw-clear').onclick = (e) => { e.stopPropagation(); limpaDesenho(); };
+  $('draw-check').onclick = (e) => { e.stopPropagation(); validaDesenho(); };
+  // a grade é medida em px: mudou o tamanho da tela, redesenha (a tinta vive em 0–1024)
+  window.addEventListener('resize', () => { if (drawOn() && current) montaPad(); });
   $('back-strokes').onclick = (e) => { // repetir o traçado sem desvirar a carta
     e.stopPropagation();
     if (!current) return;
