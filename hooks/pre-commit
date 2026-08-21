@@ -1,0 +1,47 @@
+#!/bin/sh
+# Barra commit que carregue chave do Supabase. Agora que somos dois com a service
+# key na máquina, a chance de uma colar num script "só pra testar" e ir junto no
+# git add -A deixou de ser teórica. Segredo em repositório público não se apaga:
+# mesmo removido depois, fica no histórico e nos forks.
+#
+# Instalado por: git config core.hooksPath hooks
+# Pular num caso legítimo: git commit --no-verify
+
+achado=""
+
+# service_role: JWT do Supabase com "role":"service_role" no payload.
+# Procura o prefixo do JWT e decodifica só o que parece chave.
+for arq in $(git diff --cached --name-only --diff-filter=ACM); do
+  [ -f "$arq" ] || continue
+  case "$arq" in config.js) continua_anon=1 ;; *) continua_anon=0 ;; esac
+
+  # chaves do formato novo
+  if git show ":$arq" 2>/dev/null | grep -qE 'sb_secret_[A-Za-z0-9_-]{20,}'; then
+    achado="$achado\n  $arq — chave secreta (sb_secret_…)"
+  fi
+
+  # JWT: pega cada token eyJ… e olha o payload
+  for tok in $(git show ":$arq" 2>/dev/null | grep -oE 'eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}'); do
+    corpo=$(printf '%s' "$tok" | cut -d. -f2)
+    # base64url → base64, com padding
+    corpo=$(printf '%s' "$corpo" | tr '_-' '/+')
+    case $(( ${#corpo} % 4 )) in 2) corpo="$corpo==" ;; 3) corpo="$corpo=" ;; esac
+    json=$(printf '%s' "$corpo" | base64 -d 2>/dev/null)
+    case "$json" in
+      *service_role*) achado="$achado\n  $arq — JWT com role service_role" ;;
+      *anon*) [ "$continua_anon" = "1" ] || achado="$achado\n  $arq — JWT anon fora do config.js" ;;
+    esac
+  done
+done
+
+if [ -n "$achado" ]; then
+  printf '\n🛑 Commit barrado: parece ter chave do Supabase dentro.\n'
+  printf "$achado\n"
+  printf '\nA service key ignora o RLS: quem a tem apaga o deck e reescreve o progresso\n'
+  printf 'de todo mundo. E este repositório é PÚBLICO — uma vez publicada, some do\n'
+  printf 'arquivo mas fica no histórico e em qualquer fork.\n\n'
+  printf 'Guarde a chave fora do repositório (ex.: ~/.config/manman.env) e use source.\n'
+  printf 'Se for falso positivo: git commit --no-verify\n\n'
+  exit 1
+fi
+exit 0

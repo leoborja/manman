@@ -199,6 +199,20 @@ Se for mandar palavra por PR, mande **só o `seed_cards.json`** — o resto é r
 
 ### Três avisos
 
+### A chave do Supabase
+
+A `SUPABASE_SERVICE_KEY` fica **fora do repositório** — por exemplo `~/.config/manman.env` — e entra por `source` antes dos scripts. Nunca dentro da pasta do projeto: o `.gitignore` cobre o que a gente previu, não o que ninguém imaginou.
+
+Um **hook de pre-commit** barra commit que carregue chave do Supabase (JWT `service_role`, `sb_secret_…`, ou a anon key fora do `config.js`). Ele vem no repositório, mas o git não instala hook sozinho — **cada clone precisa rodar uma vez**:
+
+```bash
+git config core.hooksPath hooks
+```
+
+Falso positivo legítimo passa com `git commit --no-verify`.
+
+Por que a trava: este repositório é **público**. Segredo publicado não se apaga — sai do arquivo mas fica no histórico e em qualquer fork ou clone que já exista. A recuperação é rotacionar a chave no Supabase, não editar o commit.
+
 - **A `SUPABASE_SERVICE_KEY` ignora o RLS por completo** — quem a tem pode apagar o deck e sobrescrever o progresso de todo mundo, e não dá pra revogar de uma pessoa só. Ela não é necessária pra mexer no app: só o `seed.py` e o passo final do `build_audio_nativo.py` usam. A anon key do `config.js` é outra coisa, pública por design.
 - **Não rode `tools/build_audio.py`.** É o da ElevenLabs, desativado — ele sobrescreve o `audio_url` de **todas** as cartas e desliga as 51 gravações nativas de uma vez.
 - **Nada de PDF no git.** O `.gitignore` barra `*.pdf` porque o livro do professor fica na pasta do projeto e o repositório é público.
