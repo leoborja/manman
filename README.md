@@ -62,12 +62,23 @@ No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio aut
 
 Não é um modo, é uma **chave que liga por cima do modo escolhido** — 汉字 → pinyin, tradução → 汉字, só áudio, aleatório, qualquer um. Ligada, o MODO mostra o raio na frente do nome.
 
-A carta aparece com uma **barra de tempo correndo**. Toque assim que reconhecer: conta **"⚡ na hora"**. Deixou a barra acabar: **"⏱ passou batido"** e a resposta fica na tela um pouco mais, porque é aí que você precisa aprender. Ninguém julga se você "acertou" — o app só mede se veio na hora ou não. A ideia é sair do pensar e entrar no reconhecer.
+São **duas etapas por carta**, cada uma com o seu relógio na barra:
 
-- **Tempo**: 1s / 2s / 3s, escolhido ali mesmo. Padrão 2s — 1s é bem duro com duas semanas de mandarim, e 3s já dá pra *pensar*, que é justamente o que a chave quer evitar.
-- **⏸ Pausa** ao lado da barra. Segura o relógio da pergunta **e** o tempo da resposta na tela — pausar só a pergunta deixaria a resposta fugindo bem quando você quis parar. Pausado, tocar na carta não vale como resposta: é pra poder olhar à vontade.
-- **Não mexe em nada.** Não grava agendamento, não conta pra meta de 30, não sobe pro Supabase. É treino de reflexo, e "não deu tempo" não é a mesma coisa que não saber a palavra. Sair da aba ou bloquear o celular congela o relógio — senão a rodada passava sozinha no bolso.
-- É uma **rodada fechada** do deck filtrado, embaralhada, com placar no fim. Não emenda na prática livre.
+| Etapa | O quê | Tempo |
+|---|---|---|
+| 1 · exposição | a carta aparece e some — só olhar, nada a fazer | 1s (ou 2s / 3s) |
+| 2 · pergunta | a explicação entra e você diz **Errei** ou **Acertei** | 3s |
+
+Quem pontua é a etapa 2. A etapa 1 é só o flash: tempo curto demais pra raciocinar, que é o ponto — a ideia é sair do *pensar* e entrar no *reconhecer*. Se já reconheceu antes de acabar, toque na carta pra adiantar a explicação; isso não dá nem tira ponto.
+
+Deixar os 3s da pergunta acabarem sem responder **conta como erro** e o app registra quantas foram assim, pra você saber se é dificuldade ou se está só devagar no botão.
+
+No fim da rodada: *"Você acertou 41 de 57 — 72%"*. A nota é sobre o **deck inteiro** da rodada, não só sobre o que você respondeu — deixar o tempo acabar é resultado, não carta que não existiu.
+
+- **Tempo da exposição**: 1s / 2s / 3s, escolhido ali mesmo. Padrão 1s.
+- **⏸ Pausa** ao lado da barra, vale nas **duas** etapas — pausar só a exposição deixaria a pergunta expirando sozinha bem quando você parou pra ler a explicação com calma.
+- **Não mexe em nada.** Não grava agendamento, não conta pra meta de 30, não sobe pro Supabase. É auto-avaliação rápida pra saber se está indo bem ou mal, não pra remexer no cronograma. Sair da aba ou bloquear o celular congela o relógio — senão a rodada passava sozinha no bolso; ao voltar, a carta recomeça da exposição, que é mais justo do que cobrar a resposta de uma explicação que você não viu.
+- É uma **rodada fechada** do deck filtrado, embaralhada, com a nota no fim. Não emenda na prática livre.
 - **Fora do quiz de tons**: lá responder já é escolher um botão de tom, então a chave aparece apagada.
 - Nessa chave o ideograma do verso vem **em texto, sem o traçado animado** — o traçado leva ~1s pra desenhar e apareceria pela metade.
 

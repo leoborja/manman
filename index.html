@@ -157,6 +157,31 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
 .strokes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;color:var(--txt);cursor:pointer;}
 .strokes svg{display:block;}
 
+/* modo desenho: grade de quatro quadrantes + tinta do dedo */
+.fcard.draw{min-height:428px;}
+.fcard.draw .face.front{padding:18px 16px 30px;gap:8px;justify-content:flex-start;}
+.drawwrap{display:none;flex-direction:column;align-items:center;gap:8px;}
+.drawwrap.show{display:flex;}
+.drawask{font-size:22px;font-weight:800;line-height:1.2;min-height:27px;}
+.drawask.py{color:var(--red);font-size:25px;}
+.drawask .spkbig{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);
+background:var(--surface2);font-size:23px;line-height:1;cursor:pointer;color:var(--txt);}
+.drawask .spkbig:active{background:var(--pill);}
+.drawpad{display:block;touch-action:none;cursor:crosshair;}
+.drawfb{font-size:14.5px;font-weight:800;min-height:17px;line-height:1.3;animation:f .25s ease;}
+.drawfb small{display:block;font-weight:600;font-size:11.5px;color:var(--mut);margin-top:2px;}
+.drawfb.ok{color:var(--ok);}
+.drawfb.quase{color:var(--warn);}
+.drawfb.ruim{color:var(--err);}
+.drawtools{display:none;gap:8px;margin:0 0 10px;}
+.drawtools.show{display:flex;}
+.drawtools button{border:1px solid var(--line);background:var(--surface);border-radius:14px;
+padding:12px 14px;font-weight:800;font-size:14px;cursor:pointer;color:var(--txt);box-shadow:var(--shadow);}
+.drawtools button.val{flex:1;background:var(--red);border-color:var(--red);color:#fff;}
+.drawtools button:disabled{opacity:.4;cursor:default;}
+/* a nota sugere um botão, mas quem decide é você */
+.grades button.sugerido{box-shadow:inset 0 0 0 2px currentColor,var(--shadow);}
+
 /* relâmpago: barra de tempo + pausa + selo de resultado */
 .flashrow{display:none;align-items:center;gap:10px;margin:0 0 10px;}
 .flashrow.show{display:flex;}
@@ -169,9 +194,15 @@ background:var(--surface2);font-size:13px;line-height:1;cursor:pointer;color:var
 .flashpause.paused{background:var(--red);border-color:var(--red);color:#fff;}
 .flashbar.hit i{background:var(--ok);}
 .flashbar.miss i{background:var(--err);}
+.flashbar.asking i{background:var(--warn);} /* etapa 2: o relógio agora é o da resposta */
 .flashtag{position:absolute;bottom:12px;font-size:12.5px;font-weight:800;}
-.flashtag.hit{color:var(--ok);}
-.flashtag.miss{color:var(--err);}
+.flashtag.ask{color:var(--mut);}
+.flashask{display:none;gap:10px;margin:0 0 10px;}
+.flashask.show{display:flex;}
+.flashask button{flex:1;border:none;border-radius:16px;padding:13px 6px;cursor:pointer;
+font-weight:800;font-size:15px;box-shadow:var(--shadow);}
+.fa-miss{background:var(--err-bg);color:var(--err);}
+.fa-hit{background:var(--ok-bg);color:var(--ok);}
 .flashtime{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:16px;
 display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .flashtime b{font-size:14px;}
@@ -394,6 +425,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <span class="deckpill" id="deckpill-f"></span>
         <button class="spk" id="spk-front" title="Ouvir pronúncia">🔊</button>
         <div id="front-content"></div>
+        <div class="drawwrap" id="drawwrap">
+          <div class="drawask" id="drawask"></div>
+          <canvas class="drawpad" id="drawpad"></canvas>
+          <div class="drawfb" id="drawfb"></div>
+        </div>
         <div class="stagepy" id="stagepy" style="display:none"></div>
         <div class="quizfb" id="quizfb" style="display:none"></div>
         <span class="hint" id="hint-f">toque para virar</span>
@@ -409,6 +445,19 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <span class="flashtag" id="flashtag" style="display:none"></span>
       </div>
     </div>
+  </div>
+
+  <!-- etapa 2 do relâmpago: a explicação está na tela e ele diz se acertou -->
+  <div class="flashask" id="flashask">
+    <button class="fa-miss" id="fa-miss">Errei</button>
+    <button class="fa-hit" id="fa-hit">Acertei</button>
+  </div>
+
+  <!-- modo desenho: enquanto não validou, é aqui que se apaga e se confere -->
+  <div class="drawtools" id="drawtools">
+    <button id="draw-undo" title="Apagar o último traço">↶</button>
+    <button id="draw-clear" title="Apagar tudo">✕</button>
+    <button class="val" id="draw-check">✓ Validar</button>
   </div>
 
   <div class="tones" id="tones">
@@ -530,6 +579,22 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="modeopt" data-m="tons">
       <span class="zhx">🎯</span>
       <span class="info"><b>Quiz de tons</b><small>ouve a palavra e escolhe o tom — treino de ouvido puro</small></span>
+      <span class="check"></span>
+    </button>
+    <!-- desenho: três portas de entrada pro mesmo exercício, escrever o ideograma -->
+    <button class="modeopt" data-m="draw_pt">
+      <span class="zhx">✍️</span>
+      <span class="info"><b>Desenhar: tradução → 汉字</b><small>vê o português e escreve o ideograma na grade</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="draw_py">
+      <span class="zhx">✍️</span>
+      <span class="info"><b>Desenhar: pinyin → 汉字</b><small>vê o som e escreve o ideograma na grade</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="draw_audio">
+      <span class="zhx">✍️</span>
+      <span class="info"><b>Desenhar: áudio → 汉字</b><small>só ouve a palavra e escreve o ideograma na grade</small></span>
       <span class="check"></span>
     </button>
     <!-- não é um modo, é uma chave: vale por cima de qualquer um dos modos acima -->
