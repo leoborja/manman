@@ -39,7 +39,8 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
 };
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
-  nomes: 'Nomes', familia: 'Família', geral: 'Geral' };
+  nomes: 'Nomes', familia: 'Família', geral: 'Geral', comida: 'Comida',
+  paises: 'Países', escola: 'Escola' };
 // modos: front = o que aparece; staged = revela pinyin antes de virar
 // draw = em vez de virar a carta, você escreve o ideograma na grade e pede a nota
 const MODES = {

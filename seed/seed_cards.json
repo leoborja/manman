@@ -64,12 +64,60 @@
   {"id":"nan","hanzi":"男","pinyin":"nán","pt":"masculino","deck":"uteis","data_aula":"2026-08-19","nota":"É atributo, não pessoa: homem é 男人 nánrén. 田 (campo) + 力 (força). 男朋友 nán péngyou = namorado"},
   {"id":"nanren","hanzi":"男人","pinyin":"nánrén","pt":"homem","deck":"uteis","data_aula":"2026-08-19","nota":"男 (homem/masculino) + 人 (pessoa). Par de 女人 nǚrén (mulher)"},
   {"id":"pengyou","hanzi":"朋友","pinyin":"péngyou","pt":"amigo","deck":"uteis","data_aula":"2026-08-19","nota":"朋 são duas luas 月 lado a lado. Segunda sílaba em tom neutro: péngyou"},
-  {"id":"kafei","hanzi":"咖啡","pinyin":"kāfēi","pt":"café","deck":"uteis","data_aula":"2026-08-19","nota":"Transliteração do som estrangeiro — os dois caracteres levam 口 (boca) e valem só pelo som"},
+  {"id":"kafei","hanzi":"咖啡","pinyin":"kāfēi","pt":"café","deck":"comida","data_aula":"2026-08-19","nota":"Transliteração do som estrangeiro — os dois caracteres levam 口 (boca) e valem só pelo som"},
 
   {"id":"yao","hanzi":"要","pinyin":"yào","pt":"querer","deck":"verbos","data_aula":"2026-08-19","nota":"你要咖啡吗? = você quer café?"},
   {"id":"he-beber","hanzi":"喝","pinyin":"hē","pt":"beber","deck":"verbos","data_aula":"2026-08-19","nota":"Radical 口 (boca) à esquerda — como 吗, 呢 e 叫"},
 
-  {"id":"mifan","hanzi":"米饭","pinyin":"mǐfàn","pt":"arroz (cozido)","deck":"uteis","fonte":"duolingo","nota":"米 mǐ é o grão cru, 饭 fàn é a comida pronta — 米饭 é o arroz do prato. O 饣de 饭 é o mesmo radical de comida do 饿 (com fome)"},
+  {"id":"ding","hanzi":"丁","pinyin":"Dīng","pt":"Ding (sobrenome)","deck":"nomes","data_aula":"2026-08-19","nota":"O sobrenome do 丁力波 — o 力波 que você já tem no deck. Só 2 traços"},
 
-  {"id":"ding","hanzi":"丁","pinyin":"Dīng","pt":"Ding (sobrenome)","deck":"nomes","data_aula":"2026-08-19","nota":"O sobrenome do 丁力波 — o 力波 que você já tem no deck. Só 2 traços"}
+  {"id":"dakai","hanzi":"打开","pinyin":"dǎkāi","pt":"abrir","deck":"verbos","data_aula":"2026-08-19","nota":"打开书 = abra o livro. 打 (bater, com o radical 扌 mão) + 开 — é a forma do dia a dia pra livro, caixa, garrafa"},
+  {"id":"kai","hanzi":"开","pinyin":"kāi","pt":"abrir (o caractere sozinho)","deck":"verbos","data_aula":"2026-08-19","nota":"A metade do 打开. Sozinho vale pra porta — 开门 kāi mén, com o 门 que você já tem — e também pra ligar a luz ou dirigir o carro"},
+  {"id":"shu","hanzi":"书","pinyin":"shū","pt":"livro","deck":"escola","data_aula":"2026-08-19","nota":"打开书 = abra o livro. Simplificação de 書, que trazia um pincel 聿 desenhado em cima"},
+  {"id":"ye-pagina","hanzi":"页","pinyin":"yè","pt":"página","deck":"escola","data_aula":"2026-08-19","nota":"第一页 dì-yī yè = primeira página. Cuidado pra não confundir com 也 yě (também), que você já tem — parecidos na escrita, tons diferentes"},
+  {"id":"num-100","hanzi":"百","pinyin":"bǎi","pt":"cem (100)","deck":"numeros","data_aula":"2026-08-19","nota":"Depois do 十 (dez) vem o 百: 一百 yìbǎi = cem — repare que o 一 troca de tom antes do 3º tom de bǎi. Pra página cem: 第一百页"},
+  {"id":"nupengyou","hanzi":"女朋友","pinyin":"nǚpéngyou","pt":"namorada","deck":"familia","data_aula":"2026-08-19","nota":"女 (feminino) + 朋友 (amigo): os dois você já tem separados. Sem o 女, 朋友 volta a ser só amigo"},
+  {"id":"nanpengyou","hanzi":"男朋友","pinyin":"nánpéngyou","pt":"namorado","deck":"familia","data_aula":"2026-08-19","nota":"男 (masculino) + 朋友, o par de 女朋友. Já aparecia citado na nota do 男"},
+
+  {"id":"mifan","hanzi":"米饭","pinyin":"mǐfàn","pt":"arroz (cozido)","deck":"comida","fonte":"duolingo","nota":"米 mǐ é o grão cru, 饭 fàn é a comida pronta — 米饭 é o arroz do prato. O 饣de 饭 é o mesmo radical de comida do 饿 (com fome)"},
+  {"id":"shui","hanzi":"水","pinyin":"shuǐ","pt":"água","deck":"comida","fonte":"duolingo","nota":"Pictograma de um rio correndo. Espremido à esquerda vira 氵— o radical de 渴 (com sede) que você já tem"},
+  {"id":"cha","hanzi":"茶","pinyin":"chá","pt":"chá","deck":"comida","fonte":"duolingo","nota":"艹 (grama) em cima: é folha. 我要喝茶 = eu quero beber chá, com o 要 e o 喝 que você já sabe"},
+  {"id":"zhou","hanzi":"粥","pinyin":"zhōu","pt":"mingau (de arroz)","deck":"comida","fonte":"duolingo","nota":"米 (arroz, o do 米饭) espremido entre dois 弓 (arco). Mingau se bebe: 喝粥, nunca 吃粥"},
+  {"id":"tang","hanzi":"汤","pinyin":"tāng","pt":"sopa","deck":"comida","fonte":"duolingo","nota":"氵(água) + 昜. Sopa também se bebe: 喝汤"},
+  {"id":"doufu","hanzi":"豆腐","pinyin":"dòufu","pt":"tofu","deck":"comida","fonte":"duolingo","nota":"豆 é o feijão de soja, 腐 é fermentado — \"coalhada de soja\", ao pé da letra. Segunda sílaba em tom neutro: dòufu"},
+  {"id":"pijiu","hanzi":"啤酒","pinyin":"píjiǔ","pt":"cerveja","deck":"comida","fonte":"duolingo","nota":"啤 vale só pelo som de \"beer\", com 口 (boca) à esquerda como em 咖啡. 酒 jiǔ é bebida alcoólica em geral"},
+
+  {"id":"re","hanzi":"热","pinyin":"rè","pt":"quente / com calor","deck":"estados","fonte":"duolingo","nota":"我很热 = estou com calor. As quatro gotinhas embaixo (灬) são o 火 (fogo) achatado. Serve pra coisa quente também: 热茶"},
+
+  {"id":"weihunqi","hanzi":"未婚妻","pinyin":"wèihūnqī","pt":"noiva (prometida)","deck":"familia","fonte":"duolingo","nota":"未 (ainda não) + 婚 (casar) + 妻 (esposa) = esposa ainda não casada. O 未 é o mesmo do 妹妹, a irmã que ainda não cresceu"},
+  {"id":"qizi","hanzi":"妻子","pinyin":"qīzi","pt":"esposa","deck":"familia","fonte":"duolingo","nota":"O termo padrão e neutro, serve em qualquer contexto. O 子 aqui só fecha a palavra, sem o sentido de criança"},
+  {"id":"laopo","hanzi":"老婆","pinyin":"lǎopo","pt":"esposa (coloquial)","deck":"familia","fonte":"duolingo","nota":"Afetuoso e o mais usado no dia a dia — 妻子 é o de formulário. 婆 leva 女 embaixo. O par masculino é 老公 lǎogōng (marido)"},
+
+  {"id":"shi","hanzi":"是","pinyin":"shì","pt":"ser / sou","deck":"verbos","fonte":"duolingo","nota":"我是律师 = eu sou advogado. Só liga substantivo a substantivo: com adjetivo o certo é 很 (我很累, nunca 我是累). Negativa: 不是 bú shì"},
+  {"id":"ai","hanzi":"爱","pinyin":"ài","pt":"amar","deck":"verbos","fonte":"duolingo","nota":"我爱你 = eu te amo. Na forma tradicional 愛 havia um 心 (coração) no meio; a simplificação trocou pelo 友 do 朋友"},
+  {"id":"xihuan","hanzi":"喜欢","pinyin":"xǐhuan","pt":"gostar","deck":"verbos","fonte":"duolingo","nota":"我喜欢咖啡 = eu gosto de café. 喜欢 serve pra qualquer coisa; 爱 guarda-se pra pessoa ou pra ênfase forte"},
+  {"id":"shuo","hanzi":"说","pinyin":"shuō","pt":"falar","deck":"verbos","fonte":"duolingo","nota":"我说中文 = eu falo chinês. Radical 讠(fala) à esquerda — o mesmo do 课 (aula)"},
+
+  {"id":"hai","hanzi":"嗨","pinyin":"hāi","pt":"oi","deck":"saudacoes","fonte":"duolingo","nota":"Empréstimo do inglês \"hi\": o 口 (boca) à esquerda marca caractere que vale pelo som, como em 咖啡. Informal — o padrão continua 你好"},
+  {"id":"xiexie","hanzi":"谢谢","pinyin":"xièxie","pt":"obrigado","deck":"saudacoes","fonte":"duolingo","nota":"Dobrado como 妈妈 e 哥哥, e a segunda sílaba perde o tom: xièxie. O 讠(fala) à esquerda é o mesmo de 说 e 课. Responde-se 不客气 bú kèqi (de nada)"},
+
+  {"id":"zhongguo","hanzi":"中国","pinyin":"Zhōngguó","pt":"China","deck":"paises","fonte":"duolingo","nota":"中 (meio) + 国 (país): o país do meio. O 中 é um traço vertical cortando um quadrado bem no meio"},
+  {"id":"meiguo","hanzi":"美国","pinyin":"Měiguó","pt":"Estados Unidos","deck":"paises","fonte":"duolingo","nota":"美 (belo) + 国 (país), mas é transcrição do som de a-MÉ-rica, não elogio"},
+  {"id":"riben","hanzi":"日本","pinyin":"Rìběn","pt":"Japão","deck":"paises","fonte":"duolingo","nota":"日 (sol) + 本 (origem): a origem do sol. Repare que não leva 国. O 本 é o 木 (madeira) com um traço marcando a raiz"},
+  {"id":"hanguo","hanzi":"韩国","pinyin":"Hánguó","pt":"Coreia (do Sul)","deck":"paises","fonte":"duolingo","nota":"韩 + 国. A do Norte tem nome próprio, 朝鲜 Cháoxiǎn — não é 韩国 com prefixo"},
+  {"id":"zhongguoren","hanzi":"中国人","pinyin":"Zhōngguórén","pt":"chinês (pessoa)","deck":"paises","fonte":"duolingo","nota":"país + 人 (pessoa) — a receita vale pra todos. 我是中国人. O idioma é outra palavra: 中文 Zhōngwén"},
+  {"id":"meiguoren","hanzi":"美国人","pinyin":"Měiguórén","pt":"americano (pessoa)","deck":"paises","fonte":"duolingo","nota":"美国 + 人. Aqui não existe 美文: o idioma é 英文 Yīngwén (inglês)"},
+  {"id":"ribenren","hanzi":"日本人","pinyin":"Rìběnrén","pt":"japonês (pessoa)","deck":"paises","fonte":"duolingo","nota":"日本 + 人. Idioma: 日文 Rìwén"},
+  {"id":"hanguoren","hanzi":"韩国人","pinyin":"Hánguórén","pt":"coreano (pessoa)","deck":"paises","fonte":"duolingo","nota":"韩国 + 人. Idioma: 韩文 Hánwén"},
+
+  {"id":"laoshi","hanzi":"老师","pinyin":"lǎoshī","pt":"professor","deck":"escola","fonte":"duolingo","nota":"老 (velho, aqui de respeito e não de idade) + 师, o mesmo sufixo de mestre num ofício do 律师 (advogado). É como se chama a pessoa na sala: 老师！"},
+  {"id":"xuesheng","hanzi":"学生","pinyin":"xuésheng","pt":"estudante","deck":"escola","fonte":"duolingo","nota":"学 (estudar) + 生 (nascer/vida). Segunda sílaba em tom neutro, como em 朋友 péngyou"},
+  {"id":"daxuesheng","hanzi":"大学生","pinyin":"dàxuéshēng","pt":"universitário","deck":"escola","fonte":"duolingo","nota":"大 (grande) + 学生: o estudante da escola grande, a universidade 大学 dàxué"},
+  {"id":"ke-aula","hanzi":"课","pinyin":"kè","pt":"aula","deck":"escola","fonte":"duolingo","nota":"讠(fala) + 果 pelo som. 上课 shàng kè = ter aula. Não confunda com 渴 kě (com sede), que leva 氵água"},
+  {"id":"shuxue","hanzi":"数学","pinyin":"shùxué","pt":"matemática","deck":"escola","fonte":"duolingo","nota":"数 (número) + 学 (estudo), o mesmo 学 de 学生. A receita repete: 文学 wénxué = literatura"},
+  {"id":"yinyue","hanzi":"音乐","pinyin":"yīnyuè","pt":"música","deck":"escola","fonte":"duolingo","nota":"音 (som) + 乐. Cuidado: sozinho 乐 é lè (alegre); dentro de 音乐 vira yuè"},
+
+  {"id":"lushi","hanzi":"律师","pinyin":"lǜshī","pt":"advogado","deck":"uteis","fonte":"duolingo","nota":"我是律师, com o 是 novo. 师 é o sufixo de mestre num ofício — aparece também em 老师 lǎoshī (professor)"},
+  {"id":"dui","hanzi":"对","pinyin":"duì","pt":"certo","deck":"uteis","fonte":"duolingo","nota":"Sozinho já responde \"isso mesmo\". Negativa: 不对 bú duì — o 不 vira 2º tom antes de 4º, como em 不是"},
+  {"id":"duibudui","hanzi":"对不对","pinyin":"duì bu duì","pt":"é, não é? / certo?","deck":"uteis","fonte":"duolingo","nota":"Afirma + nega na mesma frase e dispensa o 吗. O 不 do meio fica em tom neutro. Mesmo padrão de 好不好 e 是不是"}
 ]

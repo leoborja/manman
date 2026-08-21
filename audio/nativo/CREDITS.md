@@ -60,4 +60,26 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 咖啡 | kāfēi | [Zh-kāfēi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%81f%C4%93i.ogg) | 咖啡 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 要 | yào | [Zh-yào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A0o.ogg) | 药 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 喝 | hē | [Zh-hē.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C4%93.ogg) | 喝 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 开 | kāi | [Zh-kāi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%81i.ogg) | 开 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 书 | shū | [Zh-shū.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C5%AB.ogg) | 书 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 页 | yè | [Zh-yè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A8.ogg) | 夜 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 百 | bǎi | [Zh-bǎi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C7%8Ei.ogg) | 百 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 米饭 | mǐfàn | [Zh-mǐfàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C7%90f%C3%A0n.ogg) | 米饭 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 水 | shuǐ | [Zh-shuǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-shu%C7%90.ogg) | 水 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 茶 | chá | [Zh-chá.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C3%A1.ogg) | 茶 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 粥 | zhōu | [Zh-zhōu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C5%8Du.ogg) | 周 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 汤 | tāng | [Zh-tāng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%81ng.ogg) | 汤 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 豆腐 | dòufu | [Zh-dòufu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%B2ufu.ogg) | 豆腐 | Yue Tan | CC BY-SA 3.0 us |
+| 啤酒 | píjiǔ | [Zh-píjiǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-p%C3%ADji%C7%94.ogg) | 啤酒 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 热 | rè | [Zh-rè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-r%C3%A8.ogg) | 热 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 是 | shì | [Zh-shì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%AC.ogg) | 试 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 爱 | ài | [Zh-ài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-%C3%A0i.ogg) | 爱 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 喜欢 | xǐhuan | [Zh-xǐhuan.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C7%90huan.ogg) | 喜欢 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 说 | shuō | [Zh-shuō.ogg](https://commons.wikimedia.org/wiki/File%3AZh-shu%C5%8D.ogg) | 说 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 谢谢 | xièxie | [Zh-xièxie.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C3%A8xie.ogg) | 谢谢 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 老师 | lǎoshī | [Zh-lǎoshī.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C7%8Eosh%C4%AB.ogg) | 老师 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 学生 | xuésheng | [Zh-xuésheng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9sheng.ogg) | 学生 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 课 | kè | [Zh-kè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C3%A8.ogg) | 课 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 数学 | shùxué | [Zh-shùxué.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%B9xu%C3%A9.ogg) | 数学 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 音乐 | yīnyuè | [Zh-yīnyuè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%ABnyu%C3%A8.ogg) | 音乐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 对 | duì | [Zh-duì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-du%C3%AC.ogg) | 对 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
