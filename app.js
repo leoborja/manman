@@ -550,6 +550,12 @@ function bindPad() {
   });
   // sem pointerleave: com o ponteiro capturado o dedo pode passar da borda e voltar,
   // e terminar o traço ali cortaria o caractere no meio. Quem termina é soltar o dedo.
+  // O touch-action:none do CSS não basta no iOS: um traço de cima pra baixo ainda rola
+  // a página junto. Quem segura de verdade é cancelar o touchmove — e o listener PRECISA
+  // ser passive:false, senão o preventDefault é ignorado em silêncio.
+  // Só cancela com traço em andamento: depois de validar a grade fica inerte e arrastar
+  // o dedo ali deve rolar a página como em qualquer outro lugar da carta.
+  pad.addEventListener('touchmove', (e) => { if (drawTrecho) e.preventDefault(); }, { passive: false });
   const solta = (e) => { if (drawTrecho) { drawTrecho = null; e.stopPropagation(); } };
   pad.addEventListener('pointerup', solta);
   pad.addEventListener('pointercancel', solta);
@@ -1558,7 +1564,9 @@ function renderModeSheet() {
   // no quiz de tons e no desenho responder já é outra coisa: a chave fica visivelmente sem efeito
   const semEfeito = settings.mode === 'tons' || drawOn();
   $('flash-opt').classList.toggle('disabled', semEfeito);
-  $('flashtime').classList.toggle('disabled', semEfeito || !settings.flash);
+  // só apaga o tempo quando o modo não aceita relâmpago; com a chave desligada ele
+  // continua clicável, e tocar num tempo liga a chave
+  $('flashtime').classList.toggle('disabled', semEfeito);
 }
 function applyTheme() {
   const pref = settings.theme || 'light'; // light é o padrão; dark só se a pessoa escolher
@@ -1597,9 +1605,11 @@ function bindEvents() {
     startSession(); // ligar ou desligar troca o tipo de fila
   };
   $('flashtime').querySelectorAll('button').forEach(b => b.onclick = () => {
-    settings.flashMs = parseInt(b.dataset.ms, 10); save(K.settings, settings);
-    renderModeSheet();
-    if (flashOn()) startSession(); // tempo novo, rodada nova: o placar velho não vale mais
+    settings.flashMs = parseInt(b.dataset.ms, 10);
+    settings.flash = true; // escolher o tempo é dizer que quer relâmpago — antes o
+    save(K.settings, settings); // seletor ficava morto com a chave desligada e parecia quebrado
+    renderModeSheet(); renderModeUI();
+    startSession(); // tempo novo, rodada nova: o placar velho não vale mais
   });
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);

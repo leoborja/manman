@@ -174,7 +174,11 @@ font-size:22px;font-weight:800;line-height:1.2;}
 .drawask .spkbig{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
 background:var(--surface2);font-size:20px;line-height:1;cursor:pointer;color:var(--txt);}
 .drawask .spkbig:active{background:var(--pill);}
-.drawpad{display:block;touch-action:none;cursor:crosshair;}
+/* touch-action segura a rolagem onde o navegador respeita; no iOS quem segura é o
+   preventDefault do touchmove, no app.js. user-select/touch-callout tiram a lupa de
+   seleção que o iOS abre quando o dedo demora parado no meio de um traço. */
+.drawpad{display:block;touch-action:none;cursor:crosshair;
+user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
 .drawfb{font-size:14.5px;font-weight:800;min-height:34px;line-height:1.3;animation:f .25s ease;}
 .drawfb small{display:block;font-weight:600;font-size:11.5px;color:var(--mut);margin-top:2px;}
 .drawfb.ok{color:var(--ok);}
@@ -219,6 +223,9 @@ display:flex;align-items:center;justify-content:space-between;gap:10px;}
 padding:8px 12px;font-weight:800;font-size:13.5px;cursor:pointer;color:var(--txt);}
 .flashtime button.active{background:var(--red);border-color:var(--red);color:#fff;}
 .flashtime.disabled,.modeopt.disabled{opacity:.4;pointer-events:none;}
+.sheetsep{display:flex;align-items:center;gap:10px;margin:16px 0 10px;color:var(--soft);
+font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+.sheetsep:before,.sheetsep:after{content:"";flex:1;height:1px;background:var(--line);}
 
 /* quiz de tons */
 .tones{display:none;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 10px;}
@@ -553,6 +560,23 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <div class="sheet scroll">
     <div class="handle"></div>
     <h3>Como você quer estudar?</h3>
+    <!-- Não é um modo, é uma chave: vale por cima de qualquer modo da lista abaixo.
+         Fica no TOPO de propósito — com 10 modos, embaixo ela caía fora da área
+         visível do celular e só se chegava nela rolando por dentro da folha. -->
+    <button class="modeopt" id="flash-opt">
+      <span class="zhx">⚡</span>
+      <span class="info"><b>Relâmpago</b><small>vale pro modo escolhido: a carta pisca e some, e você diz se acertou (não vale no quiz de tons nem em desenhar)</small></span>
+      <span class="check"></span>
+    </button>
+    <div class="flashtime" id="flashtime">
+      <span><b>⏱ Tempo do relâmpago</b><small>quanto a carta fica na tela antes de passar</small></span>
+      <div>
+        <button data-ms="1000">1s</button>
+        <button data-ms="2000">2s</button>
+        <button data-ms="3000">3s</button>
+      </div>
+    </div>
+    <div class="sheetsep">ou escolha o modo</div>
     <button class="modeopt" data-m="zh_all">
       <span class="zhx zh">汉</span>
       <span class="info"><b>汉字 → pinyin + tradução</b><small>vê o ideograma e revela tudo de uma vez</small></span>
@@ -604,20 +628,6 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <span class="info"><b>Desenhar: áudio → 汉字</b><small>só ouve a palavra e escreve o ideograma na grade</small></span>
       <span class="check"></span>
     </button>
-    <!-- não é um modo, é uma chave: vale por cima de qualquer um dos modos acima -->
-    <button class="modeopt" id="flash-opt" style="margin-top:12px">
-      <span class="zhx">⚡</span>
-      <span class="info"><b>Relâmpago</b><small>vale pro modo escolhido: a carta some sozinha e você toca assim que reconhecer (não vale no quiz de tons)</small></span>
-      <span class="check"></span>
-    </button>
-    <div class="flashtime" id="flashtime">
-      <span><b>⏱ Tempo do relâmpago</b><small>quanto a carta fica na tela antes de passar</small></span>
-      <div>
-        <button data-ms="1000">1s</button>
-        <button data-ms="2000">2s</button>
-        <button data-ms="3000">3s</button>
-      </div>
-    </div>
     <button class="modeopt" id="autospeak-opt" style="margin-top:12px">
       <span class="zhx">🔊</span>
       <span class="info"><b>Falar ao revelar</b><small>pronuncia a palavra automaticamente quando você vira a carta</small></span>
