@@ -7,12 +7,17 @@ Rodar quando entrar carta com caractere novo:
 
 Baixa graphics.txt (~14MB) pra /tmp na primeira vez.
 """
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sync_guard import exigir_atualizado  # noqa: E402
 import datetime
 import json
-import os
 import re
 import shutil
 import urllib.request
+
+exigir_atualizado()
 
 GRAPHICS = "/tmp/makemeahanzi-graphics.txt"
 URL = "https://raw.githubusercontent.com/skishore/makemeahanzi/master/graphics.txt"

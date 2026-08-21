@@ -12,11 +12,15 @@ Rodar sempre que entrar carta com caractere novo:
 O ukai.ttc tem 4 faces (CN, HK, TW, TW MBE) — usamos a CN, de formas simplificadas.
 A fonte completa (~20MB) NÃO vai pro repo — só o subset.
 """
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sync_guard import exigir_atualizado  # noqa: E402
 import datetime
 import re
 import subprocess
-import sys
-import os
+
+exigir_atualizado()
 
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.join(here, "..")

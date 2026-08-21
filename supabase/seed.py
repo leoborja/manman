@@ -4,10 +4,14 @@
 Uso:
   SUPABASE_URL=https://xxx.supabase.co SUPABASE_SERVICE_KEY=eyJ... python3 supabase/seed.py
 """
-import json
 import os
 import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tools'))
+from sync_guard import exigir_atualizado  # noqa: E402
+import json
 import urllib.request
+
+exigir_atualizado()
 
 URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
 KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")

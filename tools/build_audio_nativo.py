@@ -13,15 +13,19 @@ pode receber a gravação de um homófono (九 jiǔ recebe a gravação de 久 j
 idêntico; o script registra o caractere real de cada arquivo no CREDITS pra ficar honesto.
 Precisa de ffmpeg no PATH.
 """
-import json
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sync_guard import exigir_atualizado  # noqa: E402
+import json
 import re
 import shutil
 import subprocess
-import sys
 import time
 import urllib.parse
 import urllib.request
+
+exigir_atualizado()
 
 API = "https://commons.wikimedia.org/w/api.php"
 UA = "manman-flashcards/1.0 (leo@cloudarbitration.com)"
