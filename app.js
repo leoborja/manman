@@ -49,6 +49,14 @@ const MODES = {
   audio:    { front: 'audio', staged: false },
   tons:     { front: 'hanzi', staged: false, quiz: true }
 };
+// O relâmpago NÃO é um modo: é uma chave que liga por cima do modo escolhido. Vale pra
+// todos menos o quiz de tons, onde responder já é escolher um botão de tom.
+// Tempo que a carta fica na tela: 1s é duro pra quem tem duas semanas de mandarim,
+// 3s já dá pra "pensar" — que é justamente o que o relâmpago quer evitar.
+const FLASH_MS = [1000, 2000, 3000];
+const FLASH_MS_PADRAO = 2000;
+const FLASH_VER_OK = 900;    // quanto a resposta fica na tela quando acertou
+const FLASH_VER_MISS = 1600; // ...e quando passou batido: aqui ele PRECISA aprender
 const MIX_POOL = ['zh_all', 'pt_zh', 'py_zh'];
 const MODE_TITLES = {
   zh_all: '汉字 → pinyin + tradução',
@@ -100,11 +108,15 @@ function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom
 // ── estado ──────────────────────────────────────────────────
 let cards = [];                  // deck completo (não deletadas)
 let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', filtro: 'tema', aula: 'todas',
-  user: null, theme: null, autoSpeak: true });
+  user: null, theme: null, autoSpeak: true, flash: false, flashMs: FLASH_MS_PADRAO });
 if (settings.filtro !== 'aula') settings.filtro = 'tema'; // quem já usava o app não tem o campo
 if (!settings.aula) settings.aula = 'todas';
 if (MODES[settings.mode] === undefined && settings.mode !== 'mix') settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
+if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
+settings.flash = !!settings.flash;
+// o relâmpago vale por cima de qualquer modo, menos o quiz de tons
+function flashOn() { return settings.flash && settings.mode !== 'tons'; }
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 // id → {g, h, a} — quantas vezes acertou, marcou difícil e errou, desde sempre.
 // Fica FORA do srs de propósito: na prática livre você avalia carta que nunca foi
@@ -118,10 +130,17 @@ let queue = [];                  // fila da sessão (ids)
 let current = null;              // carta atual
 let curMode = 'zh_all';          // modo efetivo da carta atual (p/ aleatório)
 let stage = 0;                   // 0 = frente, 1 = pinyin revelado (modo 2 toques)
-let phase = 'sched';             // 'sched' (revisões+novas) | 'practice' (prática infinita) | 'quiz' (tons)
+let phase = 'sched';             // 'sched' (revisões+novas) | 'practice' (infinita) | 'quiz' (tons) | 'flash' (relâmpago)
 let gradedThisSession = 0;       // p/ não resetar a fila embaixo do usuário após sync
 let quizScore = { ok: 0, n: 0 }; // placar da sessão do quiz de tons
 let quizAnswered = false;
+let flashScore = { ok: 0, n: 0 };// placar da rodada de relâmpago
+let flashState = 'off';          // 'off' | 'correndo' (relógio na tela) | 'revelado' (resposta à mostra)
+let flashTimer = null;           // o relógio da carta
+let flashNextTimer = null;       // o intervalo em que a resposta fica na tela
+let flashPausa = false;          // pausa pedida pelo usuário (o ⏸)
+let flashInicio = 0;             // quando o relógio da carta começou (performance.now)
+let flashRestante = 0;           // o que sobrava do relógio quando pausou
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
 
@@ -253,11 +272,13 @@ function buildStrokeSvg(ch, size, startDelay) {
   });
   return { svg, endDelay: delay };
 }
-function renderBackHanzi(card) {
+// plain = hanzi em texto, sem traçado. É o caso do relâmpago: o traçado leva ~1s pra
+// desenhar e a resposta fica menos que isso na tela — apareceria pela metade.
+function renderBackHanzi(card, plain) {
   const box = $('back-strokes');
   box.innerHTML = '';
   const chars = [...card.hanzi];
-  if (chars.length && chars.every(c => strokesDB[c])) {
+  if (!plain && chars.length && chars.every(c => strokesDB[c])) {
     $('back-hanzi').style.display = 'none';
     box.style.display = '';
     const size = chars.length > 2 ? 72 : 108;
@@ -659,6 +680,9 @@ function renderCounter() {
   const { due, news } = dueCount();
   if (phase === 'quiz') {
     $('counter').innerHTML = '<b>quiz de tons</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
+  } else if (phase === 'flash') {
+    $('counter').innerHTML = '<b>relâmpago ' + (settings.flashMs / 1000) + 's</b> · ' +
+      flashScore.ok + '/' + flashScore.n + ' na hora · ' + queue.length + ' restantes';
   } else if (phase === 'practice') {
     $('counter').innerHTML = 'revisões do dia ✅ · <b>prática livre</b> · "Errei" ainda reagenda';
   } else {
@@ -666,11 +690,13 @@ function renderCounter() {
   }
 }
 function showCard(card) {
+  clearFlash(); // carta nova: mata relógio e resposta pendentes da anterior
   current = card;
   stage = 0;
   quizAnswered = false;
   curMode = settings.mode === 'mix' ? MIX_POOL[Math.floor(Math.random() * MIX_POOL.length)] : settings.mode;
   const m = MODES[curMode];
+  const relampago = flashOn();
   const f = $('fcard');
   f.classList.remove('flipped');
   const front = $('front-content');
@@ -690,13 +716,14 @@ function showCard(card) {
   $('tones').classList.toggle('show', !!m.quiz);
   $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
   $('hint-f').textContent = m.quiz ? 'ouça e escolha o tom · toque na carta pra repetir'
+    : relampago ? 'toque assim que reconhecer'
     : m.front === 'audio' ? '🔊 repete · toque na carta pra virar'
     : (m.staged ? 'toque para ver o pinyin' : 'toque para virar');
   if (m.quiz || m.front === 'audio') speak(card, true); // aqui o áudio É a pergunta
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
   $('back-hanzi').textContent = card.hanzi;
-  renderBackHanzi(card);
+  renderBackHanzi(card, relampago);
   $('back-pinyin').innerHTML = pinyinColored(card.pinyin);
   $('back-pt').textContent = card.pt;
   $('back-nota').textContent = card.nota || '';
@@ -710,10 +737,12 @@ function showCard(card) {
   $('offbtn').style.display = '';
   $('done').classList.remove('show');
   renderCounter();
+  if (relampago) { runFlashClock(); renderPausa(); } // por último: relógio com a carta já montada
 }
 function nextCard() {
   if (!queue.length) {
-    if (phase === 'quiz' || !activePool().length) { finishSession(); return; }
+    // quiz e relâmpago são rodadas fechadas: acabou o baralho, mostra o placar
+    if (phase === 'quiz' || phase === 'flash' || !activePool().length) { finishSession(); return; }
     if (phase === 'sched') { // acabaram as revisões → emenda na prática, sem parar
       showBanner('info', '🎉 Revisões do dia feitas! Emendando na prática livre — só "Errei" mexe no agendamento.');
       setTimeout(hideBanner, 4500);
@@ -727,6 +756,7 @@ function nextCard() {
   showCard(card);
 }
 function finishSession() {
+  clearFlash();
   current = null;
   $('stage').style.display = 'none';
   $('grades').classList.remove('show');
@@ -734,7 +764,15 @@ function finishSession() {
   $('nextbtn').classList.remove('show');
   $('offbtn').style.display = 'none';
   $('done').classList.add('show');
-  if (settings.mode === 'tons') {
+  if (flashOn() && flashScore.n) {
+    const pct = Math.round(flashScore.ok / flashScore.n * 100);
+    $('done-title').textContent = 'Fim do relâmpago!';
+    $('done-sub').textContent = 'Reconheceu na hora: ' + flashScore.ok + '/' + flashScore.n +
+      ' (' + pct + '%), com ' + (settings.flashMs / 1000) + 's por carta. ' +
+      (pct >= 80 ? '快 (kuài — que rapidez)! Tenta com menos tempo.' : '加油 (jiāyóu — de novo, sem pressa de acertar tudo)!');
+    $('freebtn').textContent = '⚡ Jogar de novo';
+    $('freebtn').style.display = '';
+  } else if (settings.mode === 'tons') {
     const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
     $('done-title').textContent = 'Fim do quiz!';
     $('done-sub').textContent = 'Quiz de tons: ' + quizScore.ok + '/' + quizScore.n + ' (' + pct + '%). ' +
@@ -749,7 +787,9 @@ function finishSession() {
   renderCounter();
 }
 function startSession() {
+  clearFlash();
   if (settings.mode === 'tons') { startToneQuiz(); return; }
+  if (flashOn()) { startFlash(); return; }
   buildQueue();
   nextCard(); // fila vazia → nextCard emenda na prática sozinho
 }
@@ -777,6 +817,131 @@ function answerTone(t) {
   speak(current, true); // ouve de novo já sabendo a resposta
   $('nextbtn').classList.add('show');
   renderCounter();
+}
+// ── relâmpago ───────────────────────────────────────────────
+// Chave que liga por cima do modo escolhido: a carta aparece e o relógio corre. Tocou
+// dentro do tempo = reconheceu na hora; não tocou = passou batido. Não grava SRS nem
+// conta pra meta — é treino de reflexo, e "não deu tempo" não é o mesmo que não saber.
+function clearFlash() {
+  clearTimeout(flashTimer); clearTimeout(flashNextTimer);
+  flashTimer = flashNextTimer = null;
+  flashState = 'off';
+  flashRestante = 0;
+  $('flashrow').classList.remove('show');
+  $('flashbar').className = 'flashbar';
+  $('flashtag').style.display = 'none';
+}
+function startFlash() {
+  flashScore = { ok: 0, n: 0 };
+  clearFlash();
+  flashPausa = false;
+  queue = shuffle(activePool().map(c => c.id));
+  phase = 'flash';
+  if (queue.length) nextCard(); else finishSession();
+}
+function escalaAtual() { // quanto da barra ainda está cheio, no meio da animação
+  const m = new DOMMatrixReadOnly(getComputedStyle($('flashfill')).transform);
+  return Math.max(0, Math.min(1, m.a));
+}
+function correBarra(ms, de) { // anima a barra de `de` (0–1) até vazia, em ms
+  const fill = $('flashfill');
+  fill.style.transition = 'none';
+  fill.style.transform = 'scaleX(' + de + ')';
+  void fill.getBoundingClientRect(); // reflow: sem isso o navegador junta as duas mudanças
+  fill.style.transition = 'transform ' + ms + 'ms linear';
+  fill.style.transform = 'scaleX(0)';
+}
+function runFlashClock() {
+  $('flashrow').classList.add('show');
+  $('flashbar').className = 'flashbar';
+  flashState = 'correndo';
+  flashRestante = settings.flashMs;
+  if (flashPausa) { congelaBarra(1); return; } // entrou pausado: mostra a barra cheia e espera
+  flashInicio = performance.now();
+  correBarra(settings.flashMs, 1);
+  flashTimer = setTimeout(() => revealFlash(false), settings.flashMs);
+}
+function congelaBarra(escala) {
+  const fill = $('flashfill');
+  fill.style.transition = 'none';
+  fill.style.transform = 'scaleX(' + escala + ')';
+}
+function revealFlash(acertou) {
+  if (flashState !== 'correndo') return;
+  clearTimeout(flashTimer); flashTimer = null;
+  flashState = 'revelado';
+  flashScore.n++;
+  if (acertou) flashScore.ok++;
+
+  congelaBarra(1);                       // barra cheia, pintada do resultado
+  $('flashbar').className = 'flashbar ' + (acertou ? 'hit' : 'miss');
+  const tag = $('flashtag');
+  tag.className = 'flashtag ' + (acertou ? 'hit' : 'miss');
+  tag.textContent = acertou ? '⚡ na hora' : '⏱ passou batido';
+  tag.style.display = '';
+
+  $('fcard').classList.add('flipped');
+  if (settings.autoSpeak) speak(current, true);
+  renderCounter();
+  if (!flashPausa) flashNextTimer = setTimeout(nextFlashCard, acertou ? FLASH_VER_OK : FLASH_VER_MISS);
+}
+function nextFlashCard() {
+  if (flashState !== 'revelado') return;
+  clearFlash();
+  queue.shift();
+  nextCard();
+}
+
+// ── pausa ───────────────────────────────────────────────────
+// Vale pro relógio da pergunta E pro tempo em que a resposta fica na tela: pausar só a
+// pergunta deixaria a resposta fugindo antes de você ler, que é justo quando quer parar.
+function togglePausa() {
+  if (phase !== 'flash' || flashState === 'off') return;
+  flashPausa ? despausar() : pausar();
+  renderPausa();
+}
+function pausar() {
+  flashPausa = true;
+  if (flashState === 'correndo') {
+    flashRestante = Math.max(0, settings.flashMs - (performance.now() - flashInicio));
+    congelaBarra(escalaAtual());
+    clearTimeout(flashTimer); flashTimer = null;
+  } else { // 'revelado': segura a resposta na tela até mandar seguir
+    clearTimeout(flashNextTimer); flashNextTimer = null;
+  }
+}
+function despausar() {
+  flashPausa = false;
+  if (flashState === 'correndo') {
+    flashInicio = performance.now() - (settings.flashMs - flashRestante);
+    correBarra(flashRestante, escalaAtual());
+    flashTimer = setTimeout(() => revealFlash(false), flashRestante);
+  } else if (flashState === 'revelado') {
+    flashNextTimer = setTimeout(nextFlashCard, FLASH_VER_OK);
+  }
+}
+function renderPausa() {
+  const b = $('flashpause');
+  b.textContent = flashPausa ? '▶' : '⏸';
+  b.title = flashPausa ? 'Continuar' : 'Pausar';
+  b.classList.toggle('paused', flashPausa);
+}
+
+// Sair da aba ou bloquear o celular não pode deixar o relógio correndo: a rodada inteira
+// passaria sozinha no bolso. Congela ao sair e retoma a mesma carta ao voltar.
+let flashSuspenso = null;
+function pauseFlash() {
+  if (phase !== 'flash' || flashState === 'off') return;
+  flashSuspenso = flashState;
+  clearFlash();
+}
+function resumeFlash() {
+  if (!flashSuspenso || !$('view-estudar').classList.contains('active')) return;
+  const antes = flashSuspenso;
+  flashSuspenso = null;
+  // já viu a resposta, ou desligou a carta enquanto estava fora → segue pra próxima
+  if (antes === 'revelado' || !current || isOff(current.id)) { queue.shift(); nextCard(); }
+  else showCard(current); // não chegou a responder: a carta recomeça do zero
 }
 function grade(g) {
   if (!current) return;
@@ -809,6 +974,12 @@ function tapCard() {
   if (!current) return;
   const m = MODES[curMode];
   const f = $('fcard');
+  if (flashOn()) { // reconheceu → conta o acerto; já revelada → pula a espera
+    if (flashPausa) return; // pausado, o toque não vale: é pra poder olhar a carta à vontade
+    if (flashState === 'correndo') revealFlash(true);
+    else if (flashState === 'revelado') nextFlashCard();
+    return;
+  }
   if (f.classList.contains('flipped')) { // desvirar
     f.classList.remove('flipped');
     $('grades').classList.remove('show');
@@ -1065,14 +1236,24 @@ function switchView(v) {
     loadLogTurma().then(renderTurma); // busca a cada visita: o colega pode ter estudado agora
   }
   if (v === 'cartas') renderList();
+  if (v === 'estudar') resumeFlash(); else pauseFlash();
 }
 function renderModeUI() {
-  $('modecur').textContent = MODE_TITLES[settings.mode] || MODE_TITLES.zh_all;
+  $('modecur').textContent = (flashOn() ? '⚡ ' : '') + (MODE_TITLES[settings.mode] || MODE_TITLES.zh_all);
 }
+// que tipo de fila a combinação pede: cada uma monta a sessão de um jeito diferente
+function queueKind() { return settings.mode === 'tons' ? 'tons' : flashOn() ? 'flash' : 'normal'; }
 function renderModeSheet() {
   document.querySelectorAll('.modeopt[data-m]').forEach(b =>
     b.classList.toggle('active', b.dataset.m === settings.mode));
   $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
+  $('flash-opt').classList.toggle('active', !!settings.flash);
+  $('flashtime').querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
+  // no quiz de tons responder já é escolher um botão de tom: a chave fica visivelmente sem efeito
+  const semEfeito = settings.mode === 'tons';
+  $('flash-opt').classList.toggle('disabled', semEfeito);
+  $('flashtime').classList.toggle('disabled', semEfeito || !settings.flash);
 }
 function applyTheme() {
   const pref = settings.theme || 'light'; // light é o padrão; dark só se a pessoa escolher
@@ -1096,13 +1277,24 @@ function bindEvents() {
   $('credsheet-bg').onclick = () => $('credsheet').classList.remove('show');
   $('credclose').onclick = () => $('credsheet').classList.remove('show');
   document.querySelectorAll('.modeopt[data-m]').forEach(b => b.onclick = () => {
-    const wasQuiz = settings.mode === 'tons';
+    const antes = queueKind();
     settings.mode = b.dataset.m; save(K.settings, settings);
     renderModeUI();
     $('modesheet').classList.remove('show');
-    // entrar/sair do quiz troca o tipo de fila — reconstrói a sessão
-    if (wasQuiz !== (settings.mode === 'tons')) startSession();
+    // quiz e relâmpago montam a fila do seu jeito — trocar de família reconstrói a sessão
+    if (antes !== queueKind()) startSession();
     else if (current) showCard(current);
+  });
+  $('flash-opt').onclick = () => { // a chave do relâmpago: liga por cima do modo atual
+    if (settings.mode === 'tons') return;
+    settings.flash = !settings.flash; save(K.settings, settings);
+    renderModeSheet(); renderModeUI();
+    startSession(); // ligar ou desligar troca o tipo de fila
+  };
+  $('flashtime').querySelectorAll('button').forEach(b => b.onclick = () => {
+    settings.flashMs = parseInt(b.dataset.ms, 10); save(K.settings, settings);
+    renderModeSheet();
+    if (flashOn()) startSession(); // tempo novo, rodada nova: o placar velho não vale mais
   });
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
@@ -1121,7 +1313,14 @@ function bindEvents() {
   $('g-hard').onclick = () => grade('hard');
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
-  $('freebtn').onclick = () => { if (settings.mode === 'tons') startToneQuiz(); };
+  $('freebtn').onclick = () => {
+    if (settings.mode === 'tons') startToneQuiz();
+    else if (flashOn()) startFlash();
+  };
+  $('flashpause').onclick = togglePausa;
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pauseFlash(); else resumeFlash();
+  });
   $('tones').querySelectorAll('button').forEach(bt => bt.onclick = () => answerTone(parseInt(bt.dataset.t, 10)));
   $('offbtn').onclick = () => {
     if (!current) return;

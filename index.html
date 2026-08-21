@@ -157,6 +157,31 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
 .strokes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;color:var(--txt);cursor:pointer;}
 .strokes svg{display:block;}
 
+/* relâmpago: barra de tempo + pausa + selo de resultado */
+.flashrow{display:none;align-items:center;gap:10px;margin:0 0 10px;}
+.flashrow.show{display:flex;}
+.flashbar{flex:1;height:6px;border-radius:999px;background:var(--pill);overflow:hidden;}
+.flashbar i{display:block;height:100%;width:100%;border-radius:999px;
+background:var(--red);transform-origin:left center;}
+.flashpause{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+background:var(--surface2);font-size:13px;line-height:1;cursor:pointer;color:var(--txt);}
+.flashpause:active{background:var(--pill);}
+.flashpause.paused{background:var(--red);border-color:var(--red);color:#fff;}
+.flashbar.hit i{background:var(--ok);}
+.flashbar.miss i{background:var(--err);}
+.flashtag{position:absolute;bottom:12px;font-size:12.5px;font-weight:800;}
+.flashtag.hit{color:var(--ok);}
+.flashtag.miss{color:var(--err);}
+.flashtime{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:16px;
+display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.flashtime b{font-size:14px;}
+.flashtime small{display:block;color:var(--mut);font-size:11.5px;font-weight:600;margin-top:2px;}
+.flashtime div{display:flex;gap:6px;flex:0 0 auto;}
+.flashtime button{border:1px solid var(--line);background:var(--surface2);border-radius:12px;
+padding:8px 12px;font-weight:800;font-size:13.5px;cursor:pointer;color:var(--txt);}
+.flashtime button.active{background:var(--red);border-color:var(--red);color:#fff;}
+.flashtime.disabled,.modeopt.disabled{opacity:.4;pointer-events:none;}
+
 /* quiz de tons */
 .tones{display:none;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 10px;}
 .tones.show{display:grid;}
@@ -358,6 +383,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <span class="marrow">▼</span>
   </button>
   <div class="counter" id="counter"></div>
+  <div class="flashrow" id="flashrow">
+    <div class="flashbar" id="flashbar"><i id="flashfill"></i></div>
+    <button class="flashpause" id="flashpause" title="Pausar">⏸</button>
+  </div>
 
   <div class="stage" id="stage">
     <div class="fcard" id="fcard">
@@ -377,6 +406,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <div class="pinyin" id="back-pinyin"></div>
         <div class="pt-back" id="back-pt"></div>
         <div class="nota" id="back-nota"></div>
+        <span class="flashtag" id="flashtag" style="display:none"></span>
       </div>
     </div>
   </div>
@@ -462,7 +492,9 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <!-- seletor de modo (bottom sheet) -->
 <div class="sheetwrap" id="modesheet">
   <div class="sheetbg" id="modesheet-bg"></div>
-  <div class="sheet">
+  <!-- scroll: com 8 modos a folha passa da altura da tela no celular, e sem rolagem
+       os últimos modos ficariam inalcançáveis (a folha é ancorada embaixo) -->
+  <div class="sheet scroll">
     <div class="handle"></div>
     <h3>Como você quer estudar?</h3>
     <button class="modeopt" data-m="zh_all">
@@ -500,6 +532,20 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <span class="info"><b>Quiz de tons</b><small>ouve a palavra e escolhe o tom — treino de ouvido puro</small></span>
       <span class="check"></span>
     </button>
+    <!-- não é um modo, é uma chave: vale por cima de qualquer um dos modos acima -->
+    <button class="modeopt" id="flash-opt" style="margin-top:12px">
+      <span class="zhx">⚡</span>
+      <span class="info"><b>Relâmpago</b><small>vale pro modo escolhido: a carta some sozinha e você toca assim que reconhecer (não vale no quiz de tons)</small></span>
+      <span class="check"></span>
+    </button>
+    <div class="flashtime" id="flashtime">
+      <span><b>⏱ Tempo do relâmpago</b><small>quanto a carta fica na tela antes de passar</small></span>
+      <div>
+        <button data-ms="1000">1s</button>
+        <button data-ms="2000">2s</button>
+        <button data-ms="3000">3s</button>
+      </div>
+    </div>
     <button class="modeopt" id="autospeak-opt" style="margin-top:12px">
       <span class="zhx">🔊</span>
       <span class="info"><b>Falar ao revelar</b><small>pronuncia a palavra automaticamente quando você vira a carta</small></span>

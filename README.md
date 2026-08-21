@@ -56,7 +56,20 @@ O seletor acima dos chips troca o que a linha filtra: **por tema** (Números, Pr
 | 🔀 aleatório | mistura as direções | |
 | 🎯 **Quiz de tons** | áudio + ideograma | você escolhe o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
 
-No seletor de modo também fica o **"Falar ao revelar"** (áudio automático, liga/desliga).
+No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio automático) e o **"⚡ Relâmpago"**, abaixo.
+
+### ⚡ Relâmpago
+
+Não é um modo, é uma **chave que liga por cima do modo escolhido** — 汉字 → pinyin, tradução → 汉字, só áudio, aleatório, qualquer um. Ligada, o MODO mostra o raio na frente do nome.
+
+A carta aparece com uma **barra de tempo correndo**. Toque assim que reconhecer: conta **"⚡ na hora"**. Deixou a barra acabar: **"⏱ passou batido"** e a resposta fica na tela um pouco mais, porque é aí que você precisa aprender. Ninguém julga se você "acertou" — o app só mede se veio na hora ou não. A ideia é sair do pensar e entrar no reconhecer.
+
+- **Tempo**: 1s / 2s / 3s, escolhido ali mesmo. Padrão 2s — 1s é bem duro com duas semanas de mandarim, e 3s já dá pra *pensar*, que é justamente o que a chave quer evitar.
+- **⏸ Pausa** ao lado da barra. Segura o relógio da pergunta **e** o tempo da resposta na tela — pausar só a pergunta deixaria a resposta fugindo bem quando você quis parar. Pausado, tocar na carta não vale como resposta: é pra poder olhar à vontade.
+- **Não mexe em nada.** Não grava agendamento, não conta pra meta de 30, não sobe pro Supabase. É treino de reflexo, e "não deu tempo" não é a mesma coisa que não saber a palavra. Sair da aba ou bloquear o celular congela o relógio — senão a rodada passava sozinha no bolso.
+- É uma **rodada fechada** do deck filtrado, embaralhada, com placar no fim. Não emenda na prática livre.
+- **Fora do quiz de tons**: lá responder já é escolher um botão de tom, então a chave aparece apagada.
+- Nessa chave o ideograma do verso vem **em texto, sem o traçado animado** — o traçado leva ~1s pra desenhar e apareceria pela metade.
 
 ### Recursos nas cartas
 
@@ -190,6 +203,7 @@ sobre eles depende do plano da conta.
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
 - [ ] Áudio das 6 sem gravação (妈, 森, 丁 e os 3 nomes) — caem no TTS. Provavelmente **fechar sem fazer nada**: o problema do TTS é 3º tom isolado, e nenhuma das seis é esse caso
 - [x] ~~Filtro por aula na tela de estudo~~ — feito em 17/08
+- [x] ~~Treino de reconhecimento rápido~~ — chave **⚡ Relâmpago** por cima de qualquer modo, com pausa (21/08)
 - [ ] Radical/decomposição nas cartas
 - [ ] **Domínio próprio** — `manman.com.br` já registrado (Cloud Arbitration). Ordem: DNS primeiro (4 registros `A` da raiz pra `185.199.108.153`, `.109.153`, `.110.153`, `.111.153` e `CNAME` do `www` pra `leoborja.github.io`), depois o domínio em Settings → Pages, depois **Enforce HTTPS** (sem isso o PWA não instala). Três detalhes:
   - Se o DNS for pela Cloudflare, mantenha a **nuvem cinza** até o GitHub emitir o certificado — com o proxy ligado ele não valida o domínio. Só depois, se quiser proxy, use SSL **Full (strict)**: no Flexible dá loop de redirecionamento.
