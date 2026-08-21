@@ -55,7 +55,9 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 他们 | tāmen | [Zh-tāmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%81men.ogg) | 它们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 都 | dōu | [Zh-dōu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C5%8Du.ogg) | 都 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 男 | nán | [Zh-nán.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C3%A1n.ogg) | 难 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 男人 | nánrén | [Zh-nánrén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C3%A1nr%C3%A9n.ogg) | 男人 | Yue Tan | CC BY-SA 3.0 us |
 | 朋友 | péngyou | [Zh-péngyou.ogg](https://commons.wikimedia.org/wiki/File%3AZh-p%C3%A9ngyou.ogg) | 朋友 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 咖啡 | kāfēi | [Zh-kāfēi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%81f%C4%93i.ogg) | 咖啡 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 要 | yào | [Zh-yào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A0o.ogg) | 药 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 喝 | hē | [Zh-hē.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C4%93.ogg) | 喝 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 米饭 | mǐfàn | [Zh-mǐfàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C7%90f%C3%A0n.ogg) | 米饭 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

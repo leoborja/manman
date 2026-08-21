@@ -15,16 +15,17 @@
 
   {"id":"jiao","hanzi":"叫","pinyin":"jiào","pt":"chamar-se","deck":"verbos","data_aula":"2026-08-06","nota":"我叫… = eu me chamo… (radical 口 boca)"},
 
-  {"id":"hao","hanzi":"好","pinyin":"hǎo","pt":"bom / bem","deck":"uteis","data_aula":"2026-08-06","nota":"Ideograma composto: 女 (mulher) + 子 (criança)"},
+  {"id":"hao","hanzi":"好","pinyin":"hǎo","pt":"bom / bem","deck":"uteis","data_aula":"2026-08-06","nota":"Ideograma composto: 女 (mulher/feminino) + 子 (criança)"},
   {"id":"hen","hanzi":"很","pinyin":"hěn","pt":"muito","deck":"uteis","data_aula":"2026-08-12","nota":"我很好 = eu estou muito bem"},
   {"id":"ye","hanzi":"也","pinyin":"yě","pt":"também","deck":"uteis","data_aula":"2026-08-12","nota":"我也很好 = eu também estou muito bem"},
   {"id":"ma-pergunta","hanzi":"吗","pinyin":"ma","pt":"partícula de pergunta","deck":"uteis","data_aula":"2026-08-12","nota":"你好吗? = como vai? (口 boca + 马 cavalo como som)"},
   {"id":"ne","hanzi":"呢","pinyin":"ne","pt":"partícula \"e…?\"","deck":"uteis","data_aula":"2026-08-12","nota":"我很好，你呢? = eu estou bem, e você?"},
   {"id":"ren","hanzi":"人","pinyin":"rén","pt":"pessoa","deck":"uteis","data_aula":"2026-08-12","nota":"Como radical à esquerda vira 亻(ex.: 你)"},
-  {"id":"nu","hanzi":"女","pinyin":"nǚ","pt":"mulher","deck":"uteis","data_aula":"2026-08-06","nota":"Radical de 好 (bom) e 妈 (mãe)"},
+  {"id":"nu","hanzi":"女","pinyin":"nǚ","pt":"feminino","deck":"uteis","data_aula":"2026-08-06","nota":"É atributo, não pessoa: mulher é 女人 nǚrén. Radical de 好 (bom) e 妈 (mãe)"},
+  {"id":"nuren","hanzi":"女人","pinyin":"nǚrén","pt":"mulher","deck":"uteis","data_aula":"2026-08-06","nota":"女 (mulher/feminino) + 人 (pessoa) — os dois você já sabia separados"},
   {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"uteis","data_aula":"2026-08-06","nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
-  {"id":"ma-mae","hanzi":"妈","pinyin":"mā","pt":"mãe (o caractere sozinho)","deck":"familia","data_aula":"2026-08-06","nota":"女 (mulher) + 马 (cavalo, só pelo som mǎ→mā). Sozinho serve pra chamar — 妈！No dia a dia usa-se dobrado: 妈妈"},
-  {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher) + 子 (criança) = bom. 孩子 háizi = criança"},
+  {"id":"ma-mae","hanzi":"妈","pinyin":"mā","pt":"mãe (o caractere sozinho)","deck":"familia","data_aula":"2026-08-06","nota":"女 (mulher/feminino) + 马 (cavalo, só pelo som mǎ→mā). Sozinho serve pra chamar — 妈！No dia a dia usa-se dobrado: 妈妈"},
+  {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher/feminino) + 子 (criança) = bom. 孩子 háizi = criança"},
   {"id":"mu","hanzi":"木","pinyin":"mù","pt":"madeira","deck":"uteis","data_aula":"2026-08-12","nota":"Como radical carrega o sentido de árvore: dobra e vira bosque 林, triplica e vira floresta 森"},
   {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"uteis","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
   {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},
@@ -43,7 +44,7 @@
   {"id":"luyuping","hanzi":"陆雨平","pinyin":"Lù Yǔpíng","pt":"Lu Yuping (personagem do livro)","deck":"nomes","data_aula":"2026-08-14","nota":"O jornalista chinês. 雨 = chuva, 平 = plano/calmo"},
 
   {"id":"ta-ele","hanzi":"他","pinyin":"tā","pt":"ele","deck":"pronomes","data_aula":"2026-08-17","nota":"亻(pessoa) + 也 (também). 他们 tāmen = eles"},
-  {"id":"ta-ela","hanzi":"她","pinyin":"tā","pt":"ela","deck":"pronomes","data_aula":"2026-08-17","nota":"女 (mulher) + 也. Som idêntico ao 他 (ele) — só a escrita distingue, nunca a fala"},
+  {"id":"ta-ela","hanzi":"她","pinyin":"tā","pt":"ela","deck":"pronomes","data_aula":"2026-08-17","nota":"女 (mulher/feminino) + 也. Som idêntico ao 他 (ele) — só a escrita distingue, nunca a fala"},
   {"id":"huo","hanzi":"火","pinyin":"huǒ","pt":"fogo","deck":"uteis","data_aula":"2026-08-17","nota":"Pictograma de uma chama com as fagulhas dos lados"},
   {"id":"li","hanzi":"力","pinyin":"lì","pt":"força","deck":"uteis","data_aula":"2026-08-17","nota":"É o 力 do 力波 (Lìbō) que você já conhece"},
   {"id":"men","hanzi":"门","pinyin":"mén","pt":"porta","deck":"uteis","data_aula":"2026-08-17","nota":"Pictograma das duas folhas de uma porta. 门口 ménkǒu = entrada"},
@@ -52,20 +53,23 @@
   {"id":"mama","hanzi":"妈妈","pinyin":"māma","pt":"mãe","deck":"familia","data_aula":"2026-08-19","nota":"O 妈 dobrado — é assim que se fala e se escreve no dia a dia. O formal e escrito é 母亲 mǔqīn"},
   {"id":"gege","hanzi":"哥哥","pinyin":"gēge","pt":"irmão mais velho","deck":"familia","data_aula":"2026-08-19","nota":"Em chinês não existe \"irmão\" genérico: a idade relativa vem embutida na palavra"},
   {"id":"didi","hanzi":"弟弟","pinyin":"dìdi","pt":"irmão mais novo","deck":"familia","data_aula":"2026-08-19","nota":"Par do 哥哥. Repare que a segunda sílaba perde o tom nos dois: gēge, dìdi"},
-  {"id":"jiejie","hanzi":"姐姐","pinyin":"jiějie","pt":"irmã mais velha","deck":"familia","data_aula":"2026-08-19","nota":"女 (mulher) + 且. É o 哥哥 no feminino"},
-  {"id":"meimei","hanzi":"妹妹","pinyin":"mèimei","pt":"irmã mais nova","deck":"familia","data_aula":"2026-08-19","nota":"女 (mulher) + 未 (ainda não) — a que ainda não cresceu. É o 弟弟 no feminino"},
+  {"id":"jiejie","hanzi":"姐姐","pinyin":"jiějie","pt":"irmã mais velha","deck":"familia","data_aula":"2026-08-19","nota":"女 (mulher/feminino) + 且. É o 哥哥 no feminino"},
+  {"id":"meimei","hanzi":"妹妹","pinyin":"mèimei","pt":"irmã mais nova","deck":"familia","data_aula":"2026-08-19","nota":"女 (mulher/feminino) + 未 (ainda não) — a que ainda não cresceu. É o 弟弟 no feminino"},
 
   {"id":"women","hanzi":"我们","pinyin":"wǒmen","pt":"nós","deck":"pronomes","data_aula":"2026-08-19","nota":"我 + 们, o sufixo de plural. 们 nunca aparece sozinho"},
   {"id":"nimen","hanzi":"你们","pinyin":"nǐmen","pt":"vocês","deck":"pronomes","data_aula":"2026-08-19","nota":"你 + 们. Mesmo padrão de 我们 e 他们"},
   {"id":"tamen","hanzi":"他们","pinyin":"tāmen","pt":"eles","deck":"pronomes","data_aula":"2026-08-19","nota":"他 + 们. Grupo com pelo menos um homem usa 他们; só mulheres, 她们 — mesmo som"},
 
   {"id":"dou","hanzi":"都","pinyin":"dōu","pt":"todos / ambos","deck":"uteis","data_aula":"2026-08-19","nota":"我们都喝咖啡 = nós todos bebemos café. Vem antes do verbo, nunca depois"},
-  {"id":"nan","hanzi":"男","pinyin":"nán","pt":"masculino","deck":"uteis","data_aula":"2026-08-19","nota":"田 (campo) + 力 (força) — o 力 que você já sabe. 男朋友 nán péngyou = namorado"},
+  {"id":"nan","hanzi":"男","pinyin":"nán","pt":"masculino","deck":"uteis","data_aula":"2026-08-19","nota":"É atributo, não pessoa: homem é 男人 nánrén. 田 (campo) + 力 (força). 男朋友 nán péngyou = namorado"},
+  {"id":"nanren","hanzi":"男人","pinyin":"nánrén","pt":"homem","deck":"uteis","data_aula":"2026-08-19","nota":"男 (homem/masculino) + 人 (pessoa). Par de 女人 nǚrén (mulher)"},
   {"id":"pengyou","hanzi":"朋友","pinyin":"péngyou","pt":"amigo","deck":"uteis","data_aula":"2026-08-19","nota":"朋 são duas luas 月 lado a lado. Segunda sílaba em tom neutro: péngyou"},
   {"id":"kafei","hanzi":"咖啡","pinyin":"kāfēi","pt":"café","deck":"uteis","data_aula":"2026-08-19","nota":"Transliteração do som estrangeiro — os dois caracteres levam 口 (boca) e valem só pelo som"},
 
   {"id":"yao","hanzi":"要","pinyin":"yào","pt":"querer","deck":"verbos","data_aula":"2026-08-19","nota":"你要咖啡吗? = você quer café?"},
   {"id":"he-beber","hanzi":"喝","pinyin":"hē","pt":"beber","deck":"verbos","data_aula":"2026-08-19","nota":"Radical 口 (boca) à esquerda — como 吗, 呢 e 叫"},
+
+  {"id":"mifan","hanzi":"米饭","pinyin":"mǐfàn","pt":"arroz (cozido)","deck":"uteis","fonte":"duolingo","nota":"米 mǐ é o grão cru, 饭 fàn é a comida pronta — 米饭 é o arroz do prato. O 饣de 饭 é o mesmo radical de comida do 饿 (com fome)"},
 
   {"id":"ding","hanzi":"丁","pinyin":"Dīng","pt":"Ding (sobrenome)","deck":"nomes","data_aula":"2026-08-19","nota":"O sobrenome do 丁力波 — o 力波 que você já tem no deck. Só 2 traços"}
 ]

@@ -156,6 +156,7 @@ let drawCtx = null;              // contexto 2d da grade
 let drawPx = 0;                  // lado da grade em px de CSS
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
+let cartasFiltro = 'tema';       // 'tema' | 'aula' — mesma ideia do filtro de estudo
 
 // ── helpers ─────────────────────────────────────────────────
 function load(key, fallback) {
@@ -914,14 +915,34 @@ function hideBanner() { $('banner').className = 'banner'; }
 function filteredCards() {
   if (settings.filtro === 'aula') {
     if (settings.aula === 'todas') return cards;
-    if (settings.aula === 'fora') return cards.filter(c => !c.data_aula);
+    // fonte:x = veio de fora da aula (Duolingo, etc); 'fora' = sem procedência nenhuma
+    if (settings.aula.indexOf('fonte:') === 0) {
+      const f = settings.aula.slice(6);
+      return cards.filter(c => c.fonte === f);
+    }
+    if (settings.aula === 'fora') return cards.filter(c => !c.data_aula && !c.fonte);
     return cards.filter(c => c.data_aula === settings.aula);
   }
   return settings.deck === 'todos' ? cards : cards.filter(c => c.deck === settings.deck);
 }
 // datas de aula presentes no deck, da mais antiga pra mais recente
 function aulas() { return [...new Set(cards.map(c => c.data_aula).filter(Boolean))].sort(); }
-function aulaLabel(d) { const [, m, dia] = d.split('-'); return dia + '/' + m; }
+function fontes() { return [...new Set(cards.map(c => c.fonte).filter(Boolean))].sort(); }
+// opções do filtro "por aula": as datas em ordem, depois as fontes de fora da aula
+function opcoesAula() {
+  const fora = cards.some(c => !c.data_aula && !c.fonte);
+  return ['todas'].concat(aulas(), fontes().map(f => 'fonte:' + f), fora ? ['fora'] : []);
+}
+function aulaLabel(a) {
+  if (a === 'todas') return 'Todas';
+  if (a === 'fora') return 'Sem origem';
+  if (a.indexOf('fonte:') === 0) {
+    const f = a.slice(6);
+    return f.charAt(0).toUpperCase() + f.slice(1);
+  }
+  const [, m, dia] = a.split('-');
+  return dia + '/' + m;
+}
 function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
 // O que a SESSÃO pode mostrar. Só difere do pool ativo no modo desenho: a grade é uma
 // só, então palavra de dois caracteres (你好, 谢谢) fica de fora — igual ao quiz de tons,
@@ -959,12 +980,11 @@ function renderChips() {
 
   let html;
   if (porAula) {
-    const temFora = cards.some(c => !c.data_aula);
-    const opcoes = ['todas'].concat(aulas(), temFora ? ['fora'] : []);
+    const opcoes = opcoesAula();
     if (!opcoes.includes(settings.aula)) settings.aula = 'todas'; // aula sumiu do deck
     html = opcoes.map(a =>
       '<button class="chip' + (settings.aula === a ? ' active' : '') + '" data-a="' + esc(a) + '">' +
-      (a === 'todas' ? 'Todas' : a === 'fora' ? 'Por fora' : aulaLabel(a)) + '</button>').join('');
+      esc(aulaLabel(a)) + '</button>').join('');
   } else {
     const decks = ['todos'].concat([...new Set(cards.map(c => c.deck))]);
     html = decks.map(d =>
@@ -1346,11 +1366,16 @@ function tapCard() {
 
 // ── UI: cartas (consulta) ───────────────────────────────────
 function renderCartasChips() {
-  const decks = ['todos'].concat([...new Set(cards.map(c => c.deck))]);
+  const porAula = cartasFiltro === 'aula';
+  $('cartas-filtertype').querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', (b.dataset.f === 'aula') === porAula));
+
   const nOff = offCount();
-  let html = decks.map(d =>
-    '<button class="chip' + (cartasDeck === d ? ' active' : '') + '" data-d="' + esc(d) + '">' +
-    (d === 'todos' ? 'Todas' : esc(deckLabel(d))) + '</button>').join('');
+  const opcoes = porAula ? opcoesAula() : ['todos'].concat([...new Set(cards.map(c => c.deck))]);
+  if (!opcoes.includes(cartasDeck) && cartasDeck !== '__off__') cartasDeck = opcoes[0];
+  let html = opcoes.map(o =>
+    '<button class="chip' + (cartasDeck === o ? ' active' : '') + '" data-d="' + esc(o) + '">' +
+    (porAula ? esc(aulaLabel(o)) : o === 'todos' ? 'Todas' : esc(deckLabel(o))) + '</button>').join('');
   if (nOff > 0 || cartasDeck === '__off__') {
     html += '<button class="chip' + (cartasDeck === '__off__' ? ' active' : '') + '" data-d="__off__">🚫 Desligadas (' + nOff + ')</button>';
   }
@@ -1360,15 +1385,48 @@ function renderCartasChips() {
     renderCartasChips(); renderList();
   });
 }
+// as cartas que o filtro da aba Cartas está mostrando, ignorando a busca por texto
+function cartasFiltradas() {
+  if (cartasDeck === '__off__') return cards.filter(c => isOff(c.id));
+  if (cartasFiltro === 'aula') {
+    if (cartasDeck === 'todas') return cards;
+    if (cartasDeck.indexOf('fonte:') === 0) {
+      const f = cartasDeck.slice(6);
+      return cards.filter(c => c.fonte === f);
+    }
+    if (cartasDeck === 'fora') return cards.filter(c => !c.data_aula && !c.fonte);
+    return cards.filter(c => c.data_aula === cartasDeck);
+  }
+  return cartasDeck === 'todos' ? cards : cards.filter(c => c.deck === cartasDeck);
+}
+// botão de ligar/desligar em bloco — só aparece com um filtro específico escolhido,
+// porque "desligar todas" com o filtro em Todas é um tiro no pé sem querer
+function renderBulk() {
+  const grupo = cartasFiltradas();
+  const generico = cartasDeck === 'todos' || cartasDeck === 'todas' || cartasDeck === '__off__';
+  if (generico || !grupo.length) { $('bulkbar').innerHTML = ''; return; }
+  const ligadas = grupo.filter(c => !isOff(c.id)).length;
+  const desligar = ligadas > 0;
+  const rotulo = cartasFiltro === 'aula' ? aulaLabel(cartasDeck) : deckLabel(cartasDeck);
+  $('bulkbar').innerHTML = '<button class="bulkbtn' + (desligar ? '' : ' on') + '" id="bulkbtn">' +
+    (desligar ? '🚫 Desligar as ' + ligadas + ' de ' + esc(rotulo)
+      : '↩︎ Religar as ' + grupo.length + ' de ' + esc(rotulo)) + '</button>';
+  $('bulkbtn').onclick = () => {
+    if (desligar && !confirm('Tirar da rotação as ' + ligadas + ' cartas de ' + rotulo +
+      '? Elas somem do estudo até você religar. O progresso delas fica guardado.')) return;
+    grupo.forEach(c => { if (isOff(c.id) === desligar) setOff(c.id, desligar); });
+    renderCartasChips(); renderList(); startSession();
+  };
+}
 function renderList() {
   const q = $('search').value.trim().toLowerCase();
-  const list = cards.filter(c =>
-    (cartasDeck === 'todos' || (cartasDeck === '__off__' ? isOff(c.id) : c.deck === cartasDeck)) &&
+  const list = cartasFiltradas().filter(c =>
     (!q ||
       (c.hanzi || '').toLowerCase().includes(q) ||
       (c.pinyin || '').toLowerCase().includes(q) ||
       (c.pt || '').toLowerCase().includes(q)));
   // conta o que está na tela; quando há filtro ou busca, mostra também o total do deck
+  renderBulk();
   const filtrado = list.length !== cards.length;
   $('cartas-count').innerHTML = filtrado
     ? '<b>' + list.length + '</b> de ' + cards.length + ' palavras'
@@ -1622,6 +1680,11 @@ function bindEvents() {
   $('filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
     settings.filtro = b.dataset.f; save(K.settings, settings);
     renderChips(); startSession();
+  });
+  $('cartas-filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
+    cartasFiltro = b.dataset.f;
+    cartasDeck = cartasFiltro === 'aula' ? 'todas' : 'todos';
+    renderCartasChips(); renderList();
   });
   $('credbtn').onclick = () => $('credsheet').classList.add('show');
   $('credsheet-bg').onclick = () => $('credsheet').classList.remove('show');

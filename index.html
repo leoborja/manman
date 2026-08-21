@@ -336,6 +336,13 @@ padding-left:6px;border-left:1px solid var(--line);}
    quando a lista chega ao fim. */
 #wordstats{max-height:46vh;overflow-y:auto;overscroll-behavior:contain;
 -webkit-overflow-scrolling:touch;padding-top:4px;}
+/* ligar/desligar em bloco na aba Cartas */
+.bulkbtn{width:100%;margin:0 0 10px;border:1px dashed var(--line);border-radius:12px;
+background:var(--surface);color:var(--mut);font-size:13px;font-weight:700;
+padding:10px;cursor:pointer;}
+.bulkbtn:active{background:var(--surface2);}
+.bulkbtn.on{border-style:solid;border-color:var(--red);color:var(--red);}
+
 .wcount{color:var(--mut);font-size:11.5px;font-weight:600;margin:-4px 0 8px;padding-left:2px;
 display:flex;align-items:center;flex-wrap:wrap;gap:2px;}
 .wcount .tally span{min-width:0;font-size:10px;padding:2px 5px;}
@@ -500,9 +507,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ CARTAS (consulta) ══════ -->
 <section class="view" id="view-cartas">
+  <div class="segmented" id="cartas-filtertype">
+    <button data-f="tema" class="active">por tema</button>
+    <button data-f="aula">por aula</button>
+  </div>
   <div class="chips" id="cartas-chips"></div>
   <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
   <div class="counter" id="cartas-count"></div>
+  <div id="bulkbar"></div>
   <div id="cardlist"></div>
 </section>
 

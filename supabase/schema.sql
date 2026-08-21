@@ -12,14 +12,17 @@ create table if not exists cards (
   nota text,
   radical text,           -- V2
   audio_url text,         -- V2
-  data_aula date,         -- V2.3: dia da aula em que a palavra entrou; null = aprendida por fora
+  data_aula date,         -- V2.3: dia da aula em que a palavra entrou; null = veio de fora da aula
+  fonte text,             -- V2.7: de onde veio quando não foi da aula ('duolingo', etc). null = aula
   created_by text,
   deleted boolean not null default false,
   created_at timestamptz default now()
 );
 -- tabela já existia antes da V2.3? o create table acima não roda de novo, então:
 alter table cards add column if not exists data_aula date;
+alter table cards add column if not exists fonte text;
 create index if not exists cards_data_aula_idx on cards (data_aula);
+create index if not exists cards_fonte_idx on cards (fonte);
 
 alter table cards enable row level security;
 drop policy if exists "cards_read" on cards;
