@@ -197,6 +197,11 @@ git clone https://github.com/leoborja/manman.git && cd manman
 python3 -m http.server 8080     # → http://localhost:8080/  (datas: ?debug=1)
 ```
 
+Quem usa o Claude Code não precisa nem disso: o `.claude/launch.json` já sobe o mesmo
+servidor na 8777 (porta diferente da 8080 de propósito, pra não brigar com um servidor
+que você já tenha aberto à mão). O resto do `.claude/` é local de cada máquina e está no
+`.gitignore`.
+
 ### Funcionalidade (`app.js`, `index.html`) → branch + PR
 
 ```bash

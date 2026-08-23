@@ -7,3 +7,9 @@ __pycache__/
 *.pyc
 .DS_Store
 teste-tom3/
+
+# Claude Code: o launch.json VAI pro git (é a config do servidor de preview, igual pros
+# três e sem segredo nenhum). O resto é de cada máquina — permissões concedidas, estado
+# de sessão — e não tem por que viajar no repositório.
+.claude/*
+!.claude/launch.json
