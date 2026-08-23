@@ -148,12 +148,9 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
 .face .hint{position:absolute;bottom:12px;color:var(--soft);font-size:12px;}
 .hanzi-lg{font-size:72px;line-height:1.15;font-weight:500;}
 .hanzi-md{font-size:44px;line-height:1.15;font-weight:500;}
-.pt-lg{font-size:30px;font-weight:800;letter-spacing:-.3px;line-height:1.25;}
-.py-lg{font-size:34px;font-weight:800;color:var(--red);letter-spacing:-.2px;}
 .pinyin{color:var(--red);font-size:21px;font-weight:700;}
 .pt-back{font-size:21px;font-weight:700;}
 .nota{color:var(--mut);font-size:13.5px;line-height:1.45;max-width:420px;}
-.stagepy{color:var(--red);font-size:24px;font-weight:800;animation:f .25s ease;}
 .strokes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;color:var(--txt);cursor:pointer;}
 .strokes svg{display:block;}
 
@@ -166,12 +163,16 @@ background:var(--surface2);font-size:15px;cursor:pointer;line-height:1;align-sel
    grade sairia do tamanho do texto da pergunta, não do tamanho da carta */
 .drawwrap{display:none;flex-direction:column;align-items:center;gap:8px;align-self:stretch;}
 .drawwrap.show{display:flex;}
-/* altura fixa: a carta não muda de tamanho, então a pergunta do modo áudio (um botão
-   redondo) não pode ser mais alta que a de texto — empurraria o resultado por cima da dica */
-.drawask{height:48px;display:flex;align-items:center;justify-content:center;
-font-size:22px;font-weight:800;line-height:1.2;}
-.drawask.py{color:var(--red);font-size:25px;}
-.drawask .spkbig{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+/* A pergunta é o som (escrito e falado) e o significado, os três na mesma linha. Altura
+   fixa porque a carta não muda de tamanho: uma segunda linha empurraria o resultado por
+   cima da dica. Daí o pt cortar com reticências em vez de quebrar. */
+.drawask{height:48px;display:flex;align-items:center;justify-content:center;gap:10px;
+font-weight:800;line-height:1.2;max-width:100%;}
+.drawask .py{color:var(--red);font-size:23px;flex:0 1 auto;min-width:0;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.drawask .pt{font-size:17px;flex:0 1 auto;min-width:0;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.drawask .spkbig{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
 background:var(--surface2);font-size:20px;line-height:1;cursor:pointer;color:var(--txt);}
 .drawask .spkbig:active{background:var(--pill);}
 /* touch-action segura a rolagem onde o navegador respeita; no iOS quem segura é o
@@ -192,6 +193,41 @@ padding:12px 14px;font-weight:800;font-size:14px;cursor:pointer;color:var(--txt)
 .drawtools button:disabled{opacity:.4;cursor:default;}
 /* a nota sugere um botão, mas quem decide é você */
 .grades button.sugerido{box-shadow:inset 0 0 0 2px currentColor,var(--shadow);}
+
+/* modo teclado: campo de pinyin + fileira de candidatos, como num IME de celular */
+.fcard.type{min-height:400px;}
+.fcard.type .face.front{padding:44px 16px 28px;gap:12px;justify-content:flex-start;}
+.fcard.type .face.front .hint{bottom:8px;}
+.typewrap{display:none;flex-direction:column;align-items:stretch;gap:12px;align-self:stretch;}
+.typewrap.show{display:flex;}
+.typeask{font-size:27px;font-weight:800;letter-spacing:-.3px;line-height:1.25;min-height:34px;}
+.typerow{display:flex;gap:8px;align-items:center;}
+/* font:inherit antes do font-size senão o iOS usa a fonte de formulário dele. E o campo
+   precisa de 16px pra cima: abaixo disso o Safari dá zoom na página ao focar. */
+.typein{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface2);
+border-radius:14px;padding:13px 14px;font:inherit;font-size:19px;font-weight:800;
+color:var(--red);text-align:center;letter-spacing:1px;}
+.typein::placeholder{color:var(--soft);font-size:14px;font-weight:700;letter-spacing:0;}
+.typein:disabled{opacity:.55;}
+.typeskip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:14px;
+padding:13px 12px;font-weight:800;font-size:13px;cursor:pointer;color:var(--mut);}
+.typeskip:disabled{opacity:.4;cursor:default;}
+/* rola na horizontal e começa pela esquerda, como a barra de candidatos de um teclado
+   de verdade — centralizado, o começo da fila ficaria fora de alcance quando enche */
+.typecands{display:flex;gap:8px;min-height:64px;align-items:center;
+overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.typecands .cand{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;
+border:1px solid var(--line);background:var(--surface2);border-radius:14px;
+padding:6px 12px 4px;cursor:pointer;color:var(--txt);}
+.typecands .cand:active{background:var(--pill);}
+.typecands .cand b{font-size:30px;font-weight:500;line-height:1.1;}
+.typecands .cand small{font-size:10px;color:var(--soft);font-weight:700;}
+.candvazio{color:var(--soft);font-size:13px;font-weight:700;}
+.typefb{font-size:15px;font-weight:800;min-height:44px;line-height:1.35;animation:f .25s ease;}
+.typefb b{font-size:26px;font-weight:500;vertical-align:-3px;}
+.typefb small{display:block;font-weight:700;font-size:13px;margin-top:2px;}
+.typefb.ok{color:var(--ok);}
+.typefb.ruim{color:var(--err);}
 
 /* relâmpago: barra de tempo + pausa + selo de resultado */
 .flashrow{display:none;align-items:center;gap:10px;margin:0 0 10px;}
@@ -451,7 +487,20 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
           <canvas class="drawpad" id="drawpad"></canvas>
           <div class="drawfb" id="drawfb"></div>
         </div>
-        <div class="stagepy" id="stagepy" style="display:none"></div>
+        <!-- modo teclado: um IME de mentirinha — digita o som, escolhe o ideograma.
+             autocorrect/autocapitalize desligados: o corretor do celular acha que
+             "hao" é erro de português e troca a palavra embaixo do dedo. -->
+        <div class="typewrap" id="typewrap">
+          <div class="typeask" id="typeask"></div>
+          <div class="typerow">
+            <input class="typein" id="typein" type="text" inputmode="latin" enterkeyhint="done"
+              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+              placeholder="digite o pinyin, sem tom">
+            <button class="typeskip" id="type-skip" title="Desistir e ver a resposta">não lembro</button>
+          </div>
+          <div class="typecands" id="typecands"></div>
+          <div class="typefb" id="typefb"></div>
+        </div>
         <div class="quizfb" id="quizfb" style="display:none"></div>
         <span class="hint" id="hint-f">toque para virar</span>
       </div>
@@ -572,12 +621,12 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <div class="sheet scroll">
     <div class="handle"></div>
     <h3>Como você quer estudar?</h3>
-    <!-- Não é um modo, é uma chave: vale por cima de qualquer modo da lista abaixo.
-         Fica no TOPO de propósito — com 10 modos, embaixo ela caía fora da área
-         visível do celular e só se chegava nela rolando por dentro da folha. -->
+    <!-- Não é um modo, é uma chave: liga por cima do modo escolhido. Fica no TOPO de
+         propósito — embaixo da lista de modos ela caía fora da área visível do celular
+         e só se chegava nela rolando por dentro da folha. -->
     <button class="modeopt" id="flash-opt">
       <span class="zhx">⚡</span>
-      <span class="info"><b>Relâmpago</b><small>vale pro modo escolhido: a carta pisca e some, e você diz se acertou (não vale no quiz de tons nem em desenhar)</small></span>
+      <span class="info"><b>Relâmpago</b><small>a carta pisca e some, e você diz se acertou — só vale no 汉字 → pinyin + tradução, o único modo em que responder é virar a carta</small></span>
       <span class="check"></span>
     </button>
     <div class="flashtime" id="flashtime">
@@ -589,55 +638,29 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       </div>
     </div>
     <div class="sheetsep">ou escolha o modo</div>
+    <button class="modeopt" data-m="pt_type">
+      <span class="zhx">⌨️</span>
+      <span class="info"><b>tradução → escrever no teclado</b><small>vê o português, digita o pinyin e escolhe o ideograma na fileira de candidatos</small></span>
+      <span class="check"></span>
+    </button>
     <button class="modeopt" data-m="zh_all">
       <span class="zhx zh">汉</span>
       <span class="info"><b>汉字 → pinyin + tradução</b><small>vê o ideograma e revela tudo de uma vez</small></span>
       <span class="check"></span>
     </button>
-    <button class="modeopt" data-m="zh_py_pt">
-      <span class="zhx zh">汉²</span>
-      <span class="info"><b>汉字 → pinyin → tradução</b><small>2 toques: primeiro a leitura, depois o significado</small></span>
+    <button class="modeopt" data-m="draw">
+      <span class="zhx">✍️</span>
+      <span class="info"><b>pinyin + tradução + áudio → desenhar 汉字</b><small>ouve e lê a palavra, e escreve o ideograma na grade</small></span>
       <span class="check"></span>
     </button>
-    <button class="modeopt" data-m="pt_zh">
-      <span class="zhx">PT</span>
-      <span class="info"><b>tradução → 汉字</b><small>vê o português e lembra o ideograma</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-m="py_zh">
-      <span class="zhx">pīn</span>
-      <span class="info"><b>pinyin → 汉字</b><small>vê o som e lembra o ideograma e o significado</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-m="audio">
-      <span class="zhx">🎧</span>
-      <span class="info"><b>Só áudio</b><small>ouve a palavra e tem que lembrar de tudo: 汉字, pinyin e significado</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-m="mix">
-      <span class="zhx">🔀</span>
-      <span class="info"><b>Aleatório</b><small>mistura as direções a cada carta</small></span>
+    <button class="modeopt" data-m="zh_tom">
+      <span class="zhx zh">汉</span>
+      <span class="info"><b>汉字 → tom</b><small>vê o ideograma e marca o tom — de memória, sem ouvir</small></span>
       <span class="check"></span>
     </button>
     <button class="modeopt" data-m="tons">
-      <span class="zhx">🎯</span>
-      <span class="info"><b>Quiz de tons</b><small>ouve a palavra e escolhe o tom — treino de ouvido puro</small></span>
-      <span class="check"></span>
-    </button>
-    <!-- desenho: três portas de entrada pro mesmo exercício, escrever o ideograma -->
-    <button class="modeopt" data-m="draw_pt">
-      <span class="zhx">✍️</span>
-      <span class="info"><b>Desenhar: tradução → 汉字</b><small>vê o português e escreve o ideograma na grade</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-m="draw_py">
-      <span class="zhx">✍️</span>
-      <span class="info"><b>Desenhar: pinyin → 汉字</b><small>vê o som e escreve o ideograma na grade</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-m="draw_audio">
-      <span class="zhx">✍️</span>
-      <span class="info"><b>Desenhar: áudio → 汉字</b><small>só ouve a palavra e escreve o ideograma na grade</small></span>
+      <span class="zhx">🎧</span>
+      <span class="info"><b>áudio → tom</b><small>ouve a palavra e marca o tom — treino de ouvido puro</small></span>
       <span class="check"></span>
     </button>
     <button class="modeopt" id="autospeak-opt" style="margin-top:12px">

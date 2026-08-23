@@ -41,39 +41,36 @@ const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: '
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
   nomes: 'Nomes', familia: 'Família', geral: 'Geral', comida: 'Comida',
   paises: 'Países', escola: 'Escola' };
-// modos: front = o que aparece; staged = revela pinyin antes de virar
-// draw = em vez de virar a carta, você escreve o ideograma na grade e pede a nota
+// Cinco modos, e só um deles vira a carta. Nos outros quatro a resposta é uma AÇÃO —
+// digitar, desenhar, marcar o tom — e o campo que diz qual delas é:
+//   type = digita o pinyin num teclado chinês de mentirinha e escolhe o ideograma
+//   draw = escreve o ideograma na grade e pede a nota
+//   quiz = marca o tom nos cinco botões
+// front = o que a carta mostra enquanto a pergunta está de pé.
 const MODES = {
-  zh_all:   { front: 'hanzi', staged: false },
-  zh_py_pt: { front: 'hanzi', staged: true },
-  pt_zh:    { front: 'pt', staged: false },
-  py_zh:    { front: 'pinyin', staged: false },
-  audio:    { front: 'audio', staged: false },
-  tons:     { front: 'hanzi', staged: false, quiz: true },
-  // três portas de entrada pro mesmo exercício: o que muda é só a pergunta
-  draw_pt:    { front: 'pt', staged: false, draw: true },
-  draw_py:    { front: 'pinyin', staged: false, draw: true },
-  draw_audio: { front: 'audio', staged: false, draw: true }
+  pt_type: { front: 'type',  type: true },
+  zh_all:  { front: 'hanzi' },
+  draw:    { front: 'draw',  draw: true },
+  zh_tom:  { front: 'hanzi', quiz: true },
+  tons:    { front: 'audio', quiz: true }
 };
-// O relâmpago NÃO é um modo: é uma chave que liga por cima do modo escolhido. Vale pra
-// todos menos o quiz de tons, onde responder já é escolher um botão de tom.
+// Modos que existiram e saíram da lista. Quem tinha um deles salvo não pode abrir o app
+// num modo que não existe mais — cai no equivalente mais próximo.
+const MODES_VELHOS = { zh_py_pt: 'zh_all', pt_zh: 'zh_all', py_zh: 'zh_all', audio: 'zh_all',
+  mix: 'zh_all', draw_pt: 'draw', draw_py: 'draw', draw_audio: 'draw' };
+// O relâmpago NÃO é um modo: é uma chave que liga por cima do modo escolhido. Só vale
+// no 汉字 → pinyin + tradução, que é o único em que responder é virar a carta.
 // Tempo que a carta fica na tela: 1s é duro pra quem tem duas semanas de mandarim,
 // 3s já dá pra "pensar" — que é justamente o que o relâmpago quer evitar.
 const FLASH_MS = [1000, 2000, 3000];
 const FLASH_MS_PADRAO = 1000; // a exposição é só exposição: quem responde é a etapa 2
 const FLASH_RESP_MS = 3000;   // tempo pra dizer se acertou, com a explicação na tela
-const MIX_POOL = ['zh_all', 'pt_zh', 'py_zh'];
 const MODE_TITLES = {
+  pt_type: '⌨️ tradução → escrever no teclado',
   zh_all: '汉字 → pinyin + tradução',
-  zh_py_pt: '汉字 → pinyin → tradução',
-  pt_zh: 'tradução → 汉字',
-  py_zh: 'pinyin → 汉字',
-  audio: '🎧 Só áudio → lembrar tudo',
-  mix: '🔀 Aleatório',
-  tons: '🎯 Quiz de tons',
-  draw_pt: '✍️ tradução → desenhar 汉字',
-  draw_py: '✍️ pinyin → desenhar 汉字',
-  draw_audio: '✍️ áudio → desenhar 汉字'
+  draw: '✍️ pinyin + tradução + áudio → desenhar 汉字',
+  zh_tom: '🎯 汉字 → tom',
+  tons: '🎧 áudio → tom'
 };
 
 // ── tons: detecção e cores ──────────────────────────────────
@@ -119,14 +116,18 @@ let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', filtro: 'tema',
   user: null, theme: null, autoSpeak: true, flash: false, flashMs: FLASH_MS_PADRAO });
 if (settings.filtro !== 'aula') settings.filtro = 'tema'; // quem já usava o app não tem o campo
 if (!settings.aula) settings.aula = 'todas';
-if (MODES[settings.mode] === undefined && settings.mode !== 'mix') settings.mode = 'zh_all';
+if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
+if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
 settings.flash = !!settings.flash;
-// o relâmpago vale por cima de qualquer modo, menos o quiz de tons e o desenho —
-// nos dois responder já é outra coisa (escolher um tom, escrever o ideograma)
-function drawOn() { return !!(MODES[settings.mode] && MODES[settings.mode].draw); }
-function flashOn() { return settings.flash && settings.mode !== 'tons' && !drawOn(); }
+function modo() { return MODES[settings.mode] || MODES.zh_all; }
+function drawOn() { return !!modo().draw; }
+function typeOn() { return !!modo().type; }
+function quizOn() { return !!modo().quiz; }
+// O relâmpago só vale onde responder é virar a carta. Nos outros quatro modos responder
+// já é outra coisa — digitar, desenhar, marcar o tom — e o raio não teria o que cronometrar.
+function flashOn() { return settings.flash && !quizOn() && !drawOn() && !typeOn(); }
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 // id → {g, h, a} — quantas vezes acertou, marcou difícil e errou, desde sempre.
 // Fica FORA do srs de propósito: na prática livre você avalia carta que nunca foi
@@ -138,8 +139,6 @@ let off = {};                    // id → {off: bool, u: ms} — cartas desliga
 let dirtyOff = [];               // ids com sync de desligamento pendente
 let queue = [];                  // fila da sessão (ids)
 let current = null;              // carta atual
-let curMode = 'zh_all';          // modo efetivo da carta atual (p/ aleatório)
-let stage = 0;                   // 0 = frente, 1 = pinyin revelado (modo 2 toques)
 let phase = 'sched';             // 'sched' (revisões+novas) | 'practice' (infinita) | 'quiz' (tons) | 'flash' (relâmpago)
 let gradedThisSession = 0;       // p/ não resetar a fila embaixo do usuário após sync
 let quizScore = { ok: 0, n: 0 }; // placar da sessão do quiz de tons
@@ -155,6 +154,7 @@ let drawTrecho = null;           // traço em andamento (o dedo ainda na tela)
 let drawScore = null;            // nota da carta atual; null = ainda não validou
 let drawCtx = null;              // contexto 2d da grade
 let drawPx = 0;                  // lado da grade em px de CSS
+let typeResult = null;           // {ok, escolhido} da carta atual no teclado; null = não respondeu
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
 let cartasFiltro = 'tema';       // 'tema' | 'aula' — mesma ideia do filtro de estudo
@@ -481,16 +481,17 @@ function padXY(e) { // px da tela → o quadro 0–1024, que é onde a tinta é 
   const preso = (v) => Math.max(0, Math.min(DRAW_BOX, v));
   return [preso((e.clientX - r.left) * k), preso((e.clientY - r.top) * k)];
 }
-function montaDesenho(card, m) {
+// A pergunta do desenho é a palavra inteira menos o ideograma: o som (pinyin escrito e
+// falado) e o significado. Já foram três modos separados, um por pista — mas escrever é
+// difícil o bastante sem também ter que adivinhar de que palavra se está falando.
+function montaDesenho(card) {
   drawInk = []; drawTrecho = null; drawScore = null;
   const ask = $('drawask');
-  if (m.front === 'pt') { ask.className = 'drawask'; ask.textContent = card.pt; }
-  else if (m.front === 'pinyin') { ask.className = 'drawask py'; ask.innerHTML = pinyinColored(card.pinyin); }
-  else { // só áudio: a pergunta é o som, a tela não entrega nada
-    ask.className = 'drawask';
-    ask.innerHTML = '<button class="spkbig" id="drawspk" title="Ouvir de novo">🔊</button>';
-    $('drawspk').onclick = (e) => { e.stopPropagation(); speak(card); };
-  }
+  ask.className = 'drawask';
+  ask.innerHTML = '<span class="py">' + pinyinColored(card.pinyin) + '</span>' +
+    '<span class="pt">' + esc(card.pt) + '</span>' +
+    '<button class="spkbig" id="drawspk" title="Ouvir de novo">🔊</button>';
+  $('drawspk').onclick = (e) => { e.stopPropagation(); speak(card); };
   $('drawfb').className = 'drawfb';
   $('drawfb').innerHTML = '';
   montaPad();
@@ -596,6 +597,83 @@ function bindPad() {
   // resposta. Depois de validar pode: a grade é o maior alvo da tela e a dica manda
   // tocar na carta pra ver o traçado.
   pad.addEventListener('click', (e) => { if (!drawScore) e.stopPropagation(); });
+}
+
+// ── teclado: um IME chinês de mentirinha ────────────────────
+// É assim que se escreve chinês num celular: você digita o SOM em letras latinas, sem
+// tom, e o teclado oferece os ideogramas que se leem daquele jeito — quem escolhe é você.
+// Aqui a carta mostra o português e a pessoa refaz esse caminho inteiro: lembrar o som,
+// escrever o som, reconhecer o ideograma no meio dos homófonos.
+const TYPE_MAX_CAND = 9;         // uma fileira de candidatos, como num teclado de verdade
+// pinyin → só as letras do som: sem marca de tom, sem espaço, sem apóstrofo. O ü vira u
+// e o v também, então "lu", "lv" e "lǜ" caem todos no mesmo lugar — nenhum teclado de
+// celular tem ü, e cobrar o trema de quem tem duas semanas de mandarim seria maldade.
+function pyPlano(py) {
+  return String(py || '').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '') // marcas de tom são acentos combinantes
+    .replace(/v/g, 'u')
+    .replace(/[^a-z]/g, '');
+}
+// Os candidatos saem do deck INTEIRO, não do filtro da sessão: tirados do filtro, uma
+// aula com uma palavra só em "hao" entregaria a resposta antes de a pessoa pensar.
+function candidatos(txt) {
+  if (!txt) return [];
+  const exatos = [], comeca = [];
+  cards.forEach(c => {
+    const p = pyPlano(c.pinyin);
+    if (p === txt) exatos.push(c);
+    else if (p.indexOf(txt) === 0) comeca.push(c);
+  });
+  const vistos = new Set(); // 的 pode estar em duas cartas e viraria dois candidatos iguais
+  return exatos.concat(comeca).filter(c => {
+    if (vistos.has(c.hanzi)) return false;
+    vistos.add(c.hanzi);
+    return true;
+  }).slice(0, TYPE_MAX_CAND);
+}
+function montaTeclado(card) {
+  typeResult = null;
+  $('typeask').textContent = card.pt;
+  const inp = $('typein');
+  inp.value = '';
+  inp.disabled = false;
+  $('typefb').className = 'typefb';
+  $('typefb').innerHTML = '';
+  $('type-skip').disabled = false;
+  renderCandidatos();
+}
+function renderCandidatos() {
+  const box = $('typecands');
+  if (typeResult) { box.innerHTML = ''; return; }
+  const txt = pyPlano($('typein').value);
+  const cs = candidatos(txt);
+  box.innerHTML = cs.length
+    ? cs.map((c, i) => '<button class="cand" data-h="' + esc(c.hanzi) + '">' +
+        '<b class="zh" lang="zh-Hans">' + esc(c.hanzi) + '</b><small>' + (i + 1) + '</small></button>').join('')
+    : txt ? '<span class="candvazio">nenhum ideograma do deck se lê assim</span>' : '';
+  box.querySelectorAll('.cand').forEach(b =>
+    b.onclick = (e) => { e.stopPropagation(); respondeTeclado(b.dataset.h); });
+}
+// hanzi = o ideograma escolhido; null = tocou em "não lembro"
+function respondeTeclado(hanzi) {
+  if (!current || typeResult) return;
+  const ok = hanzi === current.hanzi;
+  typeResult = { ok: ok, escolhido: hanzi };
+  $('typein').disabled = true;
+  $('type-skip').disabled = true;
+  $('typecands').innerHTML = '';
+  const zh = (h) => '<b class="zh" lang="zh-Hans">' + esc(h) + '</b>';
+  const fb = $('typefb');
+  fb.className = 'typefb ' + (ok ? 'ok' : 'ruim');
+  fb.innerHTML = (ok ? '对! ' + zh(current.hanzi)
+      : hanzi ? 'era ' + zh(current.hanzi) + ', não ' + zh(hanzi)
+      : 'era ' + zh(current.hanzi)) +
+    '<small>' + pinyinColored(current.pinyin) + '</small>';
+  $('hint-f').textContent = 'toque na carta pra ver tudo';
+  // sugestão da nota; quem decide ainda é você, igual ao desenho
+  $('grades').classList.add('show');
+  $('g-' + (ok ? 'good' : 'again')).classList.add('sugerido');
+  if (settings.autoSpeak) speak(current, true);
 }
 
 // ── conversor de tons: ni3 hao3 → nǐ hǎo ────────────────────
@@ -945,12 +1023,19 @@ function aulaLabel(a) {
   return dia + '/' + m;
 }
 function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
-// O que a SESSÃO pode mostrar. Só difere do pool ativo no modo desenho: a grade é uma
-// só, então palavra de dois caracteres (你好, 谢谢) fica de fora — igual ao quiz de tons,
-// que também escolhe o que consegue perguntar.
-function poolSessao() {
-  return drawOn() ? activePool().filter(c => [...c.hanzi].length === 1) : activePool();
+// Nem todo modo consegue perguntar de toda palavra:
+//   desenho — a grade é uma só, então 你好 e 谢谢 ficam de fora
+//   tom     — o tom é de uma sílaba, mesma restrição de um caractere
+//   áudio → tom — e ainda tira o tom neutro: isolado, o TTS o fala com tom cheio, então
+//                 a pergunta não teria resposta pelo ouvido. No 汉字 → tom o neutro entra:
+//                 ali a resposta é o que a palavra É, não o que o alto-falante disse.
+function podePerguntar(c) {
+  if ((drawOn() || quizOn()) && [...c.hanzi].length !== 1) return false;
+  if (settings.mode === 'tons' && toneOf(c.pinyin) === 5) return false;
+  return true;
 }
+// O que a SESSÃO pode mostrar — é isso que o contador do alto conta, não o pool inteiro
+function poolSessao() { return activePool().filter(podePerguntar); }
 function buildQueue() {
   const t = todayStr();
   const pool = poolSessao();
@@ -1003,7 +1088,8 @@ function renderCounter() {
   renderStreak();
   const { due, news } = dueCount(poolSessao()); // o contador conta o que a sessão vai mostrar
   if (phase === 'quiz') {
-    $('counter').innerHTML = '<b>quiz de tons</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
+    $('counter').innerHTML = '<b>quiz de tons · ' + (settings.mode === 'tons' ? 'áudio' : '汉字') +
+      '</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
   } else if (phase === 'flash') {
     $('counter').innerHTML = '<b>relâmpago ' + (settings.flashMs / 1000) + 's</b> · ' +
       flashScore.ok + '/' + flashScore.n + ' certas · ' + queue.length + ' restantes';
@@ -1016,45 +1102,52 @@ function renderCounter() {
 function showCard(card) {
   clearFlash(); // carta nova: mata relógio e resposta pendentes da anterior
   current = card;
-  stage = 0;
   quizAnswered = false;
-  curMode = settings.mode === 'mix' ? MIX_POOL[Math.floor(Math.random() * MIX_POOL.length)] : settings.mode;
-  const m = MODES[curMode];
+  const m = modo();
   const relampago = flashOn();
   const desenho = !!m.draw;
+  const teclado = !!m.type;
   const f = $('fcard');
   f.classList.remove('flipped');
   f.classList.toggle('draw', desenho);
+  f.classList.toggle('type', teclado);
   $('drawwrap').classList.toggle('show', desenho);
-  // carta nova zera tinta e nota SEMPRE, mesmo saindo do desenho: sem isto os botões
-  // ↶ ✕ ✓ continuavam na tela depois de trocar pra um modo que não desenha nada
+  $('typewrap').classList.toggle('show', teclado);
+  // carta nova zera tinta, nota e resposta do teclado SEMPRE, mesmo saindo do modo: sem
+  // isto os botões ↶ ✕ ✓ continuavam na tela depois de trocar pra um modo que não desenha
   drawInk = []; drawTrecho = null; drawScore = null;
+  typeResult = null;
   renderDrawTools();
   const front = $('front-content');
-  front.style.display = desenho ? 'none' : ''; // no desenho a pergunta mora na grade
-  if (desenho) front.innerHTML = '';
+  // no desenho e no teclado a pergunta mora dentro do próprio exercício, não aqui
+  front.style.display = (desenho || teclado) ? 'none' : '';
+  if (desenho || teclado) front.innerHTML = '';
   else if (m.front === 'hanzi') front.innerHTML = '<div class="hanzi-lg zh" lang="zh-Hans">' + esc(card.hanzi) + '</div>';
-  else if (m.front === 'pt') front.innerHTML = '<div class="pt-lg">' + esc(card.pt) + '</div>';
-  else if (m.front === 'audio') {
-    // só áudio: a carta não mostra NADA — a pessoa ouve e tem que lembrar 汉字, pinyin e significado
+  else { // áudio → tom: a carta não mostra nada, o som é a pergunta inteira
     front.innerHTML = '<button class="bigspk" id="bigspk" title="Ouvir de novo">🔊</button>' +
-      '<div class="audiolbl">' + (canSpeak(card) ? 'ouça e lembre de tudo' : 'sem voz chinesa neste aparelho') + '</div>';
+      '<div class="audiolbl">' + (canSpeak(card) ? 'ouça e escolha o tom' : 'sem voz chinesa neste aparelho') + '</div>';
     $('bigspk').onclick = (e) => { e.stopPropagation(); speak(card); };
   }
-  else front.innerHTML = '<div class="py-lg">' + pinyinColored(card.pinyin) + '</div>';
-  $('stagepy').style.display = 'none';
-  $('stagepy').textContent = '';
+  // O 🔊 do canto some em três modos, por dois motivos diferentes. No teclado e no
+  // 汉字 → tom ele seria um botão de resposta — dita o que digitar, canta o tom; quem não
+  // lembra sai pelo "não lembro", que conta como erro. No desenho ele é só repetido: a
+  // pergunta já tem o seu, e os dois ficavam colados na mesma quina.
+  $('spk-front').style.display = (m.quiz || m.type || m.draw) ? 'none' : '';
   $('quizfb').style.display = 'none';
   $('quizfb').innerHTML = '';
   $('tones').classList.toggle('show', !!m.quiz);
   $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
   $('hint-f').textContent = desenho ? 'escreva o ideograma na grade e toque em Validar'
-    : m.quiz ? 'ouça e escolha o tom · toque na carta pra repetir'
+    : teclado ? 'digite o som e toque no ideograma certo'
+    : m.quiz ? (m.front === 'audio' ? 'ouça e escolha o tom · toque na carta pra repetir'
+                                    : 'olhe o ideograma e escolha o tom')
     : relampago ? 'toque assim que reconhecer'
-    : m.front === 'audio' ? '🔊 repete · toque na carta pra virar'
-    : (m.staged ? 'toque para ver o pinyin' : 'toque para virar');
-  if (desenho) montaDesenho(card, m);
-  if (m.quiz || m.front === 'audio') speak(card, true); // aqui o áudio É a pergunta
+    : 'toque para virar';
+  if (desenho) montaDesenho(card);
+  if (teclado) montaTeclado(card);
+  // o áudio só toca sozinho onde ele É a pergunta (áudio → tom) ou parte dela (desenho).
+  // No 汉字 → tom ouvir entregaria a resposta, então ali fica quieto até responder.
+  if (m.front === 'audio' || desenho) speak(card, true);
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
   $('back-hanzi').textContent = card.hanzi;
@@ -1099,6 +1192,7 @@ function finishSession() {
   $('tones').classList.remove('show');
   $('drawtools').classList.remove('show');
   $('drawwrap').classList.remove('show');
+  $('typewrap').classList.remove('show');
   $('nextbtn').classList.remove('show');
   $('offbtn').style.display = 'none';
   $('done').classList.add('show');
@@ -1117,19 +1211,23 @@ function finishSession() {
        : '慢慢来 (mànmàn lái — com calma, tenta com mais tempo).');
     $('freebtn').textContent = '⚡ Jogar de novo';
     $('freebtn').style.display = '';
-  } else if (settings.mode === 'tons') {
+  } else if (!poolSessao().length && activePool().length) {
+    // tem carta no filtro, mas nenhuma que ESTE modo consiga perguntar
+    $('done-title').textContent = 'Nada pra perguntar aqui';
+    $('done-sub').textContent = (drawOn()
+      ? 'O modo desenho usa uma grade por caractere, então só entram palavras de um caractere.'
+      : 'O tom é de uma sílaba só, então só entram palavras de um caractere' +
+        (settings.mode === 'tons' ? ', e sem tom neutro, que o alto-falante não consegue perguntar.' : '.')) +
+      ' Não sobrou nenhuma neste filtro — escolha outro tema/aula ou troque de modo.';
+    $('freebtn').style.display = 'none';
+  } else if (quizOn()) {
     const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
     $('done-title').textContent = 'Fim do quiz!';
-    $('done-sub').textContent = 'Quiz de tons: ' + quizScore.ok + '/' + quizScore.n + ' (' + pct + '%). ' +
-      (pct >= 80 ? '厉害 (lìhai — mandou bem)!' : '加油 (jiāyóu — continua treinando o ouvido)!');
+    $('done-sub').textContent = MODE_TITLES[settings.mode] + ': ' + quizScore.ok + '/' + quizScore.n +
+      ' (' + pct + '%). ' + (pct >= 80 ? '厉害 (lìhai — mandou bem)!'
+        : '加油 (jiāyóu — continua treinando ' + (settings.mode === 'tons' ? 'o ouvido' : 'a memória') + ')!');
     $('freebtn').textContent = '🎯 Jogar de novo';
     $('freebtn').style.display = '';
-  } else if (drawOn() && activePool().length) {
-    // tem carta no filtro, mas nenhuma de um caractere só — a grade é uma só
-    $('done-title').textContent = 'Nada pra desenhar aqui';
-    $('done-sub').textContent = 'O modo desenho usa uma grade por caractere, então só entram palavras ' +
-      'de um caractere — e não sobrou nenhuma neste filtro. Escolha outro tema/aula ou troque de modo.';
-    $('freebtn').style.display = 'none';
   } else { // só acontece sem nenhuma carta ativa no filtro
     $('done-title').textContent = 'Nada por aqui';
     $('done-sub').textContent = 'Nenhuma carta ativa neste deck — religue cartas na aba Cartas ou escolha outro filtro.';
@@ -1139,15 +1237,16 @@ function finishSession() {
 }
 function startSession() {
   clearFlash();
-  if (settings.mode === 'tons') { startToneQuiz(); return; }
+  if (quizOn()) { startToneQuiz(); return; }
   if (flashOn()) { startFlash(); return; }
   buildQueue();
   nextCard(); // fila vazia → nextCard emenda na prática sozinho
 }
 function startToneQuiz() {
   quizScore = { ok: 0, n: 0 };
-  // só monossílabos, e sem tom neutro (isolado o TTS fala com tom cheio); não grava SRS
-  queue = shuffle(activePool().filter(c => [...c.hanzi].length === 1 && toneOf(c.pinyin) !== 5).map(c => c.id));
+  // rodada fechada, como o relâmpago: o placar é o resultado e nada disso mexe no SRS.
+  // Quem escolhe o que dá pra perguntar é o podePerguntar, dentro do poolSessao.
+  queue = shuffle(poolSessao().map(c => c.id));
   phase = 'quiz';
   if (queue.length) nextCard(); else finishSession();
 }
@@ -1327,7 +1426,7 @@ function grade(g) {
 }
 function tapCard() {
   if (!current) return;
-  const m = MODES[curMode];
+  const m = modo();
   const f = $('fcard');
   if (flashOn()) {
     // já reconheceu antes do tempo? o toque adianta a explicação — quem pontua são os
@@ -1335,10 +1434,10 @@ function tapCard() {
     if (!flashPausa && flashState === 'correndo') revealFlash();
     return;
   }
-  if (m.draw) {
-    // antes de validar, tocar não faz nada: virar a carta entregaria justamente o que
-    // se está tentando lembrar. Depois da nota, vira pra ver o traçado na ordem certa.
-    if (!drawScore) return;
+  // Desenho e teclado: antes de responder, tocar não faz nada — virar a carta entregaria
+  // justamente o que se está tentando lembrar. Depois de responder, vira normalmente.
+  if (m.draw || m.type) {
+    if (m.draw ? !drawScore : !typeResult) return;
     if (f.classList.contains('flipped')) { f.classList.remove('flipped'); renderBackHanzi(current); }
     else { f.classList.add('flipped'); setTimeout(animateBackStrokes, 300); }
     return;
@@ -1350,18 +1449,11 @@ function tapCard() {
     renderBackHanzi(current); // reseta o traçado pro próximo flip
     return;
   }
-  if (m.quiz) { speak(current, true); return; } // no quiz, tocar a carta repete o áudio
-  if (m.staged && stage === 0) { // revela pinyin na frente
-    stage = 1;
-    $('stagepy').innerHTML = pinyinColored(current.pinyin);
-    $('stagepy').style.display = '';
-    $('hint-f').textContent = 'toque para ver a tradução';
-    if (settings.autoSpeak) speak(current, true);
-    return;
-  }
+  // no quiz de ouvido tocar repete o som; no de ideograma o som é a resposta, então cala
+  if (m.quiz) { if (m.front === 'audio') speak(current, true); return; }
   f.classList.add('flipped');
   setTimeout(animateBackStrokes, 300); // começa a desenhar quando a virada tá terminando
-  if (settings.autoSpeak && stage === 0) speak(current, true); // staged já falou no 1º toque
+  if (settings.autoSpeak) speak(current, true);
   $('grades').classList.add('show');
 }
 
@@ -1645,10 +1737,11 @@ function switchView(v) {
 function renderModeUI() {
   $('modecur').textContent = (flashOn() ? '⚡ ' : '') + (MODE_TITLES[settings.mode] || MODE_TITLES.zh_all);
 }
-// que tipo de fila a combinação pede: cada uma monta a sessão de um jeito diferente
-// (o desenho é fila normal, mas só com palavra de um caractere — daí ser um tipo à parte)
+// Que tipo de fila a combinação pede: cada uma monta a sessão de um jeito diferente.
+// Os dois quizzes de tom viram tipos distintos porque o pool não é o mesmo — o de áudio
+// tira os neutros. O teclado é fila normal: mesmo pool, só a pergunta muda.
 function queueKind() {
-  return settings.mode === 'tons' ? 'tons' : drawOn() ? 'draw' : flashOn() ? 'flash' : 'normal';
+  return quizOn() ? 'quiz:' + settings.mode : drawOn() ? 'draw' : flashOn() ? 'flash' : 'normal';
 }
 function renderModeSheet() {
   document.querySelectorAll('.modeopt[data-m]').forEach(b =>
@@ -1657,8 +1750,9 @@ function renderModeSheet() {
   $('flash-opt').classList.toggle('active', !!settings.flash);
   $('flashtime').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
-  // no quiz de tons e no desenho responder já é outra coisa: a chave fica visivelmente sem efeito
-  const semEfeito = settings.mode === 'tons' || drawOn();
+  // só um modo vira a carta; nos outros responder já é outra coisa (digitar, desenhar,
+  // marcar o tom) e a chave do relâmpago fica visivelmente sem efeito
+  const semEfeito = quizOn() || drawOn() || typeOn();
   $('flash-opt').classList.toggle('disabled', semEfeito);
   // só apaga o tempo quando o modo não aceita relâmpago; com a chave desligada ele
   // continua clicável, e tocar num tempo liga a chave
@@ -1700,7 +1794,7 @@ function bindEvents() {
     else if (current) showCard(current);
   });
   $('flash-opt').onclick = () => { // a chave do relâmpago: liga por cima do modo atual
-    if (settings.mode === 'tons' || drawOn()) return;
+    if (quizOn() || drawOn() || typeOn()) return;
     settings.flash = !settings.flash; save(K.settings, settings);
     renderModeSheet(); renderModeUI();
     startSession(); // ligar ou desligar troca o tipo de fila
@@ -1719,6 +1813,19 @@ function bindEvents() {
   $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   bindPad();
+  // Enquanto não respondeu, o toque no teclado não pode virar a carta — o campo e os
+  // candidatos ocupam quase toda a frente, e virar entregaria a resposta. Depois de
+  // responder o clique passa: a dica manda tocar na carta pra ver tudo.
+  $('typewrap').onclick = (e) => { if (!typeResult) e.stopPropagation(); };
+  $('typein').oninput = renderCandidatos;
+  $('typein').onkeydown = (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault(); // Enter escolhe o primeiro candidato, como a barra de espaço num IME
+    const c = candidatos(pyPlano($('typein').value))[0];
+    if (c) respondeTeclado(c.hanzi);
+  };
+  // sem esta saída, quem não lembra o som fica preso: sem pinyin não há candidato nenhum
+  $('type-skip').onclick = (e) => { e.stopPropagation(); respondeTeclado(null); };
   $('draw-undo').onclick = (e) => { e.stopPropagation(); desfazTraco(); };
   $('draw-clear').onclick = (e) => { e.stopPropagation(); limpaDesenho(); };
   $('draw-check').onclick = (e) => { e.stopPropagation(); validaDesenho(); };
@@ -1736,7 +1843,7 @@ function bindEvents() {
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
   $('freebtn').onclick = () => {
-    if (settings.mode === 'tons') startToneQuiz();
+    if (quizOn()) startToneQuiz();
     else if (flashOn()) startFlash();
   };
   $('flashpause').onclick = togglePausa;

@@ -46,18 +46,27 @@ O seletor acima dos chips troca o que a linha filtra: **por tema** (Números, Pr
 
 ### Modos (botão MODO)
 
-| Modo | Frente | Revela |
+São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder é uma **ação** — digitar, desenhar, marcar o tom:
+
+| Modo | Frente | Como se responde |
 |---|---|---|
-| 汉字 → pinyin + tradução | ideograma | tudo de uma vez |
-| 汉字 → pinyin → tradução | ideograma | pinyin no 1º toque, tradução no 2º |
-| tradução → 汉字 | português | ideograma + pinyin |
-| pinyin → 汉字 | pinyin | ideograma + tradução |
-| 🎧 **Só áudio** | nada na tela, só o som | ideograma + pinyin + tradução |
-| 🔀 aleatório | mistura as direções | |
-| 🎯 **Quiz de tons** | áudio + ideograma | você escolhe o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
-| ✍️ **Desenhar** (3 modos) | português, pinyin **ou** só o áudio | você escreve o ideograma na grade |
+| ⌨️ **tradução → escrever no teclado** | português | digita o pinyin e escolhe o ideograma na fileira de candidatos |
+| **汉字 → pinyin + tradução** | ideograma | toca na carta e ela vira, revelando tudo de uma vez |
+| ✍️ **pinyin + tradução + áudio → desenhar 汉字** | o som (escrito e falado) e o significado | escreve o ideograma na grade |
+| 🎯 **汉字 → tom** | ideograma, em silêncio | marca o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
+| 🎧 **áudio → tom** | nada na tela, só o som | marca o tom |
+
+Os dois quizzes de tom são a mesma pergunta por duas portas: o de áudio é ouvido puro, o de 汉字 é memória — a carta fica muda de propósito, e o 🔊 do canto some pra não virar botão de resposta.
 
 No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio automático) e o **"⚡ Relâmpago"**, abaixo.
+
+### ⌨️ Escrever no teclado
+
+É assim que se escreve chinês num celular de verdade: você digita o **som** em letras latinas e o teclado oferece os ideogramas que se leem daquele jeito — quem escolhe é você. A carta mostra o português e a pessoa refaz esse caminho inteiro: lembrar o som, escrever o som, reconhecer o ideograma no meio dos homófonos.
+
+O pinyin se digita **sem tom** e sem espaço: `nihao`, `laoshi`. `ü` e `v` valem por `u` (nenhum teclado de celular tem trema), Enter escolhe o primeiro candidato. Os candidatos saem do **deck inteiro**, não do filtro da sessão — tirados do filtro, uma aula com uma palavra só em "hao" entregaria a resposta antes de a pessoa pensar.
+
+Quem não lembra o som fica sem candidato nenhum, então existe o **"não lembro"**: mostra a resposta e sugere *Errei*. Acertar sugere *Acertei*, errar o candidato sugere *Errei* — mas, como no desenho, **quem decide é você**, e é uma revisão normal que conta na meta e mexe no agendamento.
 
 ### ✍️ Desenhar
 
@@ -65,13 +74,7 @@ Os outros modos perguntam se você **reconhece** a palavra. Este pergunta se voc
 
 A carta vira uma **grade 田字格**: um quadrado com uma cruz pontilhada no meio, dividindo em quatro quadrantes. É a grade em que se aprende a escrever chinês no papel, e ela está ali pra ensinar onde cada parte do caractere mora dentro do quadrado. Você escreve com o dedo, apaga o último traço no **↶** ou tudo no **✕**, e toca em **✓ Validar**.
 
-São três modos, que mudam só a pergunta — o exercício é o mesmo:
-
-| Pergunta | Você escreve |
-|---|---|
-| a palavra em **português** | o ideograma |
-| o **pinyin** | o ideograma |
-| só o **áudio** | o ideograma |
+A pergunta é a palavra inteira **menos o ideograma**: o pinyin, a tradução e o áudio, os três juntos na mesma linha. Já foram três modos separados, um por pista — mas escrever é difícil o bastante sem também ter que adivinhar de que palavra se está falando.
 
 **A nota.** Validou, o app compara o seu traço com o traçado oficial e dá uma porcentagem de proximidade. **90% ou mais conta como certo.** O caractere certo aparece em cinza por baixo do seu desenho, então dá pra ver exatamente onde saiu do lugar ou o que faltou — e tocar na carta vira pro traçado animado, na ordem certa.
 
@@ -81,11 +84,11 @@ Como funciona por dentro: o app reamostra as **medianas** do caractere (o esquel
 
 A tolerância não é chute: o `tools/test_nota.js` roda a nota contra os 57 caracteres do deck deformados de três jeitos (aluno caprichado, médio e desengonçado) e contra todos os pares de caracteres trocados. Com a tolerância atual nenhum caractere errado passa dos 90% — o mais perigoso é 吗 na carta de 喝, que dá 88 porque dividem o 口 e quase toda a estrutura. A primeira tolerância que testei era três vezes mais frouxa e aprovava **38%** dos caracteres errados.
 
-**Só palavras de um caractere.** A grade é uma só, então 你好 e 谢谢 ficam de fora — o modo usa 43 das 57 palavras. O contador no alto já mostra só o que a sessão vai perguntar. O ⚡ Relâmpago fica apagado aqui: responder já é escrever.
+**Só palavras de um caractere.** A grade é uma só, então 你好 e 谢谢 ficam de fora. Os dois quizzes de tom têm a mesma restrição, por outro motivo — o tom é de uma sílaba — e o de áudio ainda tira o tom neutro, que o TTS fala com tom cheio quando isolado. O contador no alto já mostra só o que a sessão vai perguntar, e quando o filtro não sobra nada o app diz qual é a restrição em vez de mostrar uma sessão vazia.
 
 ### ⚡ Relâmpago
 
-Não é um modo, é uma **chave que liga por cima do modo escolhido** — 汉字 → pinyin, tradução → 汉字, só áudio, aleatório, qualquer um. Ligada, o MODO mostra o raio na frente do nome.
+Não é um modo, é uma **chave que liga por cima do modo escolhido** — mas com cinco modos ela só tem onde valer em **um**, o 汉字 → pinyin + tradução. Nos outros quatro responder já é uma ação (digitar, desenhar, marcar o tom) e não há virada pra cronometrar; a chave aparece visivelmente apagada. Ligada, o MODO mostra o raio na frente do nome.
 
 São **duas etapas por carta**, cada uma com o seu relógio na barra:
 
@@ -243,7 +246,7 @@ sobre eles depende do plano da conta.
 - Gravação de homófono é aceita: os arquivos do Commons são nomeados por pinyin, então 九 jiǔ recebe a gravação de 久 jiǔ. Som idêntico, que é o que importa pra tom e pronúncia — o `CREDITS.md` registra quais são
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
 - Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
-- Modo "só áudio" fora do 🔀 aleatório: sem voz chinesa no aparelho a carta viraria beco sem saída
+- Lista de modos cortada de 10 pra **5** (22/08): as quatro direções de leitura (汉字→pinyin→tradução, tradução→汉字, pinyin→汉字, só áudio) e o 🔀 aleatório eram variações do mesmo gesto — virar a carta — e as três portas do desenho eram o mesmo exercício com pista a menos. Sobrou um modo por *tipo de resposta*: virar, digitar, desenhar, marcar o tom. Quem tinha um modo antigo salvo cai no equivalente (as leituras → 汉字 → pinyin + tradução; os três desenhos → o desenho único)
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap
