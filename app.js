@@ -48,16 +48,24 @@ const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: '
 //   quiz = marca o tom nos cinco botões
 // front = o que a carta mostra enquanto a pergunta está de pé.
 const MODES = {
+  mix:     { mix: true },
   pt_type: { front: 'type',  type: true },
   zh_all:  { front: 'hanzi' },
   draw:    { front: 'draw',  draw: true },
   zh_tom:  { front: 'hanzi', quiz: true },
   tons:    { front: 'audio', quiz: true }
 };
+// O aleatório sorteia um destes A CADA CARTA. O desenho fica de fora de propósito: leva
+// dez vezes mais tempo que os outros e só serve pra 43 das 100 palavras, então cairia
+// como um pedágio no meio de uma sessão que é pra ser rápida. Quem quer desenhar escolhe
+// desenhar.
+const MIX_MODOS = ['pt_type', 'zh_all', 'zh_tom', 'tons'];
 // Modos que existiram e saíram da lista. Quem tinha um deles salvo não pode abrir o app
-// num modo que não existe mais — cai no equivalente mais próximo.
+// num modo que não existe mais — cai no equivalente mais próximo. O 'mix' antigo (que
+// sorteava só as direções de leitura) não está aqui porque o nome voltou a existir: quem
+// o tinha salvo cai no aleatório novo, que é o mesmo espírito com mais coisa dentro.
 const MODES_VELHOS = { zh_py_pt: 'zh_all', pt_zh: 'zh_all', py_zh: 'zh_all', audio: 'zh_all',
-  mix: 'zh_all', draw_pt: 'draw', draw_py: 'draw', draw_audio: 'draw' };
+  draw_pt: 'draw', draw_py: 'draw', draw_audio: 'draw' };
 // O relâmpago NÃO é um modo: é uma chave que liga por cima do modo escolhido. Só vale
 // no 汉字 → pinyin + tradução, que é o único em que responder é virar a carta.
 // Tempo que a carta fica na tela: 1s é duro pra quem tem duas semanas de mandarim,
@@ -66,6 +74,7 @@ const FLASH_MS = [1000, 2000, 3000];
 const FLASH_MS_PADRAO = 1000; // a exposição é só exposição: quem responde é a etapa 2
 const FLASH_RESP_MS = 3000;   // tempo pra dizer se acertou, com a explicação na tela
 const MODE_TITLES = {
+  mix: '🔀 Aleatório — os quatro juntos',
   pt_type: '⌨️ tradução → escrever no teclado',
   zh_all: '汉字 → pinyin + tradução',
   draw: '✍️ pinyin + tradução + áudio → desenhar 汉字',
@@ -121,13 +130,20 @@ if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
 settings.flash = !!settings.flash;
-function modo() { return MODES[settings.mode] || MODES.zh_all; }
+// No aleatório quem manda é o modo sorteado pra CARTA ATUAL; fora dele, o escolhido no
+// seletor. Tudo que pergunta "que modo é este?" passa por aqui, então a carta se monta,
+// se responde e se avalia como se aquele modo estivesse ligado sozinho.
+function mixOn() { return settings.mode === 'mix'; }
+function modoKey() { return (mixOn() && modoCarta) ? modoCarta : settings.mode; }
+function modo() { return MODES[modoKey()] || MODES.zh_all; }
 function drawOn() { return !!modo().draw; }
 function typeOn() { return !!modo().type; }
 function quizOn() { return !!modo().quiz; }
 // O relâmpago só vale onde responder é virar a carta. Nos outros quatro modos responder
 // já é outra coisa — digitar, desenhar, marcar o tom — e o raio não teria o que cronometrar.
-function flashOn() { return settings.flash && !quizOn() && !drawOn() && !typeOn(); }
+// (o aleatório também fica de fora: três dos quatro modos que ele sorteia não têm virada
+// pra cronometrar, e piscar só numa carta em cada quatro não é rodada de relâmpago)
+function flashOn() { return settings.flash && !mixOn() && !quizOn() && !drawOn() && !typeOn(); }
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 // id → {g, h, a} — quantas vezes acertou, marcou difícil e errou, desde sempre.
 // Fica FORA do srs de propósito: na prática livre você avalia carta que nunca foi
@@ -155,6 +171,8 @@ let drawScore = null;            // nota da carta atual; null = ainda não valid
 let drawCtx = null;              // contexto 2d da grade
 let drawPx = 0;                  // lado da grade em px de CSS
 let typeResult = null;           // {ok, escolhido} da carta atual no teclado; null = não respondeu
+let modoCarta = null;            // no aleatório, o modo sorteado pra carta atual
+let modoCartaAnterior = null;    // o da carta passada, pra não repetir duas seguidas
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
 let cartasFiltro = 'tema';       // 'tema' | 'aula' — mesma ideia do filtro de estudo
@@ -1043,7 +1061,26 @@ function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
 //   áudio → tom — e ainda tira o tom neutro: isolado, o TTS o fala com tom cheio, então
 //                 a pergunta não teria resposta pelo ouvido. No 汉字 → tom o neutro entra:
 //                 ali a resposta é o que a palavra É, não o que o alto-falante disse.
+// Sorteia o modo desta carta entre os que conseguem perguntar dela: tom só de palavra
+// de um caractere, e o de áudio nem de tom neutro nem de palavra que o aparelho não sabe
+// falar. Evita repetir o modo da carta anterior quando há alternativa — sem isso o acaso
+// entrega sequências de três iguais e a sessão parece travada num modo só.
+function sorteiaModo(c) {
+  const umSo = [...c.hanzi].length === 1;
+  let ok = MIX_MODOS.filter(k => {
+    if ((k === 'zh_tom' || k === 'tons') && !umSo) return false;
+    if (k === 'tons' && (toneOf(c.pinyin) === 5 || !canSpeak(c))) return false;
+    return true;
+  });
+  const semRepetir = ok.filter(k => k !== modoCartaAnterior);
+  if (semRepetir.length) ok = semRepetir;
+  return ok[Math.floor(Math.random() * ok.length)] || 'zh_all';
+}
 function podePerguntar(c) {
+  // no aleatório o pool é o inteiro: se um modo não dá conta desta palavra, o sorteio
+  // escolhe outro que dê. Sem esta linha o contador do alto encolheria pro tamanho do
+  // modo da carta que está na tela — 43 palavras enquanto a pergunta fosse de tom.
+  if (mixOn()) return true;
   if ((drawOn() || quizOn()) && [...c.hanzi].length !== 1) return false;
   if (settings.mode === 'tons' && toneOf(c.pinyin) === 5) return false;
   return true;
@@ -1117,6 +1154,9 @@ function showCard(card) {
   clearFlash(); // carta nova: mata relógio e resposta pendentes da anterior
   current = card;
   quizAnswered = false;
+  // o sorteio vem ANTES do modo() — é ele que decide o que este modo() vai responder
+  if (mixOn()) { modoCarta = sorteiaModo(card); modoCartaAnterior = modoCarta; }
+  else modoCarta = null;
   const m = modo();
   const relampago = flashOn();
   const desenho = !!m.draw;
@@ -1201,6 +1241,7 @@ function nextCard() {
 function finishSession() {
   clearFlash();
   current = null;
+  modoCarta = null; // o placar do fim é do modo escolhido, não do sorteado na última carta
   $('stage').style.display = 'none';
   $('grades').classList.remove('show');
   $('tones').classList.remove('show');
@@ -1234,7 +1275,7 @@ function finishSession() {
         (settings.mode === 'tons' ? ', e sem tom neutro, que o alto-falante não consegue perguntar.' : '.')) +
       ' Não sobrou nenhuma neste filtro — escolha outro tema/aula ou troque de modo.';
     $('freebtn').style.display = 'none';
-  } else if (quizOn()) {
+  } else if (quizOn()) { // no aleatório o modoCarta já foi zerado, então não cai aqui
     const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
     $('done-title').textContent = 'Fim do quiz!';
     $('done-sub').textContent = MODE_TITLES[settings.mode] + ': ' + quizScore.ok + '/' + quizScore.n +
@@ -1251,6 +1292,7 @@ function finishSession() {
 }
 function startSession() {
   clearFlash();
+  modoCarta = null; // senão a última carta do aleatório decidiria que sessão começa agora
   if (quizOn()) { startToneQuiz(); return; }
   if (flashOn()) { startFlash(); return; }
   buildQueue();
@@ -1268,8 +1310,7 @@ function answerTone(t) {
   if (!current || quizAnswered) return;
   quizAnswered = true;
   const correct = toneOf(current.pinyin);
-  quizScore.n++;
-  if (t === correct) quizScore.ok++;
+  if (!mixOn()) { quizScore.n++; if (t === correct) quizScore.ok++; }
   $('tones').querySelectorAll('button').forEach(bt => {
     const bt_t = parseInt(bt.dataset.t, 10);
     if (bt_t === correct) bt.classList.add('hit');
@@ -1279,7 +1320,15 @@ function answerTone(t) {
     '<small>' + esc(TONE_NAMES[correct]) + '</small>';
   $('quizfb').style.display = '';
   speak(current, true); // ouve de novo já sabendo a resposta
-  $('nextbtn').classList.add('show');
+  // No quiz puro a rodada é fechada e o botão só avança. No aleatório a carta é uma
+  // revisão como as outras: a resposta sugere um botão, mas quem decide é você — igual
+  // ao desenho e ao teclado, e é assim que o tom entra na meta e no agendamento.
+  if (mixOn()) {
+    $('grades').classList.add('show');
+    $('g-' + (t === correct ? 'good' : 'again')).classList.add('sugerido');
+  } else {
+    $('nextbtn').classList.add('show');
+  }
   renderCounter();
 }
 // ── relâmpago ───────────────────────────────────────────────
@@ -1755,6 +1804,7 @@ function renderModeUI() {
 // Os dois quizzes de tom viram tipos distintos porque o pool não é o mesmo — o de áudio
 // tira os neutros. O teclado é fila normal: mesmo pool, só a pergunta muda.
 function queueKind() {
+  if (mixOn()) return 'normal'; // fila normal: quem varia é a pergunta, carta a carta
   return quizOn() ? 'quiz:' + settings.mode : drawOn() ? 'draw' : flashOn() ? 'flash' : 'normal';
 }
 function renderModeSheet() {
@@ -1766,7 +1816,7 @@ function renderModeSheet() {
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
   // só um modo vira a carta; nos outros responder já é outra coisa (digitar, desenhar,
   // marcar o tom) e a chave do relâmpago fica visivelmente sem efeito
-  const semEfeito = quizOn() || drawOn() || typeOn();
+  const semEfeito = mixOn() || quizOn() || drawOn() || typeOn();
   $('flash-opt').classList.toggle('disabled', semEfeito);
   // só apaga o tempo quando o modo não aceita relâmpago; com a chave desligada ele
   // continua clicável, e tocar num tempo liga a chave

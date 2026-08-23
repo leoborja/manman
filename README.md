@@ -50,10 +50,11 @@ O seletor **abre a própria linha dos chips** e fica preso na esquerda quando el
 
 ### Modos (botão MODO)
 
-São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder é uma **ação** — digitar, desenhar, marcar o tom:
+São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder é uma **ação** — digitar, desenhar, marcar o tom. Mais o **🔀 Aleatório**, que não é um sexto exercício: é um sorteio entre quatro deles, carta a carta.
 
 | Modo | Frente | Como se responde |
 |---|---|---|
+| 🔀 **Aleatório** | sorteia um dos quatro a cada carta | do jeito do modo sorteado |
 | ⌨️ **tradução → escrever no teclado** | português | digita o pinyin e escolhe o ideograma na fileira de candidatos |
 | **汉字 → pinyin + tradução** | ideograma | toca na carta e ela vira, revelando tudo de uma vez |
 | ✍️ **pinyin + tradução + áudio → desenhar 汉字** | o som (escrito e falado) e o significado | escreve o ideograma na grade |
@@ -61,6 +62,16 @@ São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder �
 | 🎧 **áudio → tom** | nada na tela, só o som | marca o tom |
 
 Os dois quizzes de tom são a mesma pergunta por duas portas: o de áudio é ouvido puro, o de 汉字 é memória — a carta fica muda de propósito, e o 🔊 do canto some pra não virar botão de resposta.
+
+### 🔀 Aleatório
+
+Sorteia, **a cada carta**, entre ⌨️ teclado, 汉字 → pinyin + tradução, 🎯 汉字 → tom e 🎧 áudio → tom. A ideia é treinar as quatro habilidades na mesma sessão em vez de uma por dia: reconhecer, escrever o som, lembrar o tom de memória e ouvir o tom.
+
+**O desenho fica de fora.** Leva dez vezes mais tempo que os outros e só serve pra 43 das 100 palavras — no meio de uma sessão rápida ele viraria pedágio. Quem quer desenhar escolhe desenhar.
+
+**A pergunta se adapta à palavra.** Os dois tons só entram em palavra de um caractere, e o de áudio ainda exige tom não-neutro e voz no aparelho; o que sobra pra 你好 e 谢谢 é teclado ou virar a carta. Por isso o contador do alto mostra o deck **inteiro**: se um modo não dá conta de uma palavra, o sorteio pega outro que dê. O sorteio também não repete o modo da carta anterior quando há alternativa — sem isso o acaso entrega três iguais em sequência e a sessão parece travada.
+
+**Aqui o tom é revisão, não placar.** Sozinhos, os quizzes de tom são rodada fechada: embaralham o deck, contam acertos e não mexem no agendamento. Dentro do aleatório eles viram carta normal — marcou o tom, a resposta **sugere** um botão (certo → *Acertei*, errado → *Errei*) e quem decide é você, igual ao desenho e ao teclado. É o que faz o tom contar na meta de 30 e entrar na repetição espaçada.
 
 No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio automático) e o **"⚡ Relâmpago"**, abaixo.
 
@@ -94,7 +105,7 @@ A tolerância não é chute: o `tools/test_nota.js` roda a nota contra os 57 car
 
 ### ⚡ Relâmpago
 
-Não é um modo, é uma **chave que liga por cima do modo escolhido** — mas com cinco modos ela só tem onde valer em **um**, o 汉字 → pinyin + tradução. Nos outros quatro responder já é uma ação (digitar, desenhar, marcar o tom) e não há virada pra cronometrar; a chave aparece visivelmente apagada. Ligada, o MODO mostra o raio na frente do nome.
+Não é um modo, é uma **chave que liga por cima do modo escolhido** — mas ela só tem onde valer em **um**, o 汉字 → pinyin + tradução. Nos outros responder já é uma ação (digitar, desenhar, marcar o tom) e não há virada pra cronometrar; no aleatório, piscar só numa carta em cada quatro não seria rodada de relâmpago nenhuma. Nesses casos a chave aparece visivelmente apagada. Ligada, o MODO mostra o raio na frente do nome.
 
 São **duas etapas por carta**, cada uma com o seu relógio na barra:
 
@@ -254,6 +265,7 @@ sobre eles depende do plano da conta.
 - Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
 - Lista de modos cortada de 10 pra **5** (22/08): as quatro direções de leitura (汉字→pinyin→tradução, tradução→汉字, pinyin→汉字, só áudio) e o 🔀 aleatório eram variações do mesmo gesto — virar a carta — e as três portas do desenho eram o mesmo exercício com pista a menos. Sobrou um modo por *tipo de resposta*: virar, digitar, desenhar, marcar o tom. Quem tinha um modo antigo salvo cai no equivalente (as leituras → 汉字 → pinyin + tradução; os três desenhos → o desenho único)
 - Perfil e navegação arrumados (23/08): a pílula com o nome e o ícone de tema viraram **um botão de perfil** (a inicial, redondo) com folha própria, e o "por tema / por aula" virou a **cabeça da fila de chips** (sticky) em vez de uma linha só dele, que gastava uma faixa inteira de altura pra dizer duas palavras
+- 🔀 Aleatório (23/08) sorteando quatro modos por carta, e **o tom deixando de ser placar** quando está dentro dele: a rodada fechada do quiz não cabe numa fila de revisão, e manter as duas lógicas separadas dentro da mesma sessão significaria uma sessão que ora conta pra meta ora não. Virou carta avaliada como qualquer outra — o que também resolve o incômodo de o treino de tom ser o único que não entrava na repetição espaçada
 - Abas no rodapé, **tentadas e desfeitas** no mesmo dia (23/08): a ideia era o polegar, que no celular grande não alcança o topo. Mas o app roda tanto no celular quanto no navegador, e no navegador — janela larga, sem polegar — uma barra flutuando embaixo fica claramente deslocada. Voltaram pra fileira acima dos chips, que serve às duas telas. Se um dia valer a pena, o caminho é a barra de baixo **só no celular** (media query), não nos dois
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
