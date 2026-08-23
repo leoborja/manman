@@ -20,7 +20,7 @@ Escolha seu nome (Leo / Henrique / David). O progresso é individual e **sincron
 
 Depois disso, quem guarda esse estado é o **botão redondo do topo**, com a sua inicial: ele abre o **perfil**, onde se troca de nome e se escolhe **claro ou escuro**. São as duas coisas que se ajustam uma vez e esquecem, então dividem uma folha só em vez de ocupar dois botões fixos no cabeçalho.
 
-As três telas — **学 Estudar**, **卡 Cartas**, **🔥 Progresso** — ficam numa fileira logo **abaixo do cabeçalho e acima dos chips**, que é a ordem em que a escolha acontece: primeiro em que tela estou, depois o que ela filtra.
+As três telas — **Estudar**, **Cartas**, **Progresso** — ficam num **controle segmentado** logo abaixo do cabeçalho e acima dos chips, que é a ordem em que a escolha acontece: primeiro em que tela estou, depois o que ela filtra. Um controle só, e não três botões soltos: são três estados da mesma escolha e só um vale por vez. Só texto, sem ícone e sem duas linhas — assim a barra ocupa 40px em vez de 62 e a carta começa mais alto.
 
 ## 学 Estudar — como funciona
 
@@ -46,7 +46,7 @@ A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 
 
 ### Filtro (por tema / por aula)
 
-O seletor **abre a própria linha dos chips** e fica preso na esquerda quando ela rola: é ele que diz de que lista os chips do lado saíram — **por tema** (Números, Pronomes, Úteis…) ou **por aula** (a data em que a palavra entrou, de `data_aula`). Uma fileira só, alternando — duas fileiras empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
+**🏷️ tema** (Números, Pronomes, Úteis…) ou **📅 aula** (a data em que a palavra entrou, de `data_aula`). Os dois ícones **abrem a própria linha dos chips** e ficam presos na esquerda quando ela rola: são eles que dizem de que lista os chips do lado saíram. São pílulas do mesmo tamanho dos chips, mas o "ligado" aqui é neutro (contorno escuro) e não vermelho — vermelho é a coisa **escolhida** na fila, estes dois só dizem **que fila é**. Uma fileira só, alternando: duas fileiras empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
 
 ### Modos (botão MODO)
 
@@ -266,6 +266,7 @@ sobre eles depende do plano da conta.
 - Lista de modos cortada de 10 pra **5** (22/08): as quatro direções de leitura (汉字→pinyin→tradução, tradução→汉字, pinyin→汉字, só áudio) e o 🔀 aleatório eram variações do mesmo gesto — virar a carta — e as três portas do desenho eram o mesmo exercício com pista a menos. Sobrou um modo por *tipo de resposta*: virar, digitar, desenhar, marcar o tom. Quem tinha um modo antigo salvo cai no equivalente (as leituras → 汉字 → pinyin + tradução; os três desenhos → o desenho único)
 - Perfil e navegação arrumados (23/08): a pílula com o nome e o ícone de tema viraram **um botão de perfil** (a inicial, redondo) com folha própria, e o "por tema / por aula" virou a **cabeça da fila de chips** (sticky) em vez de uma linha só dele, que gastava uma faixa inteira de altura pra dizer duas palavras
 - 🔀 Aleatório (23/08) sorteando quatro modos por carta, e **o tom deixando de ser placar** quando está dentro dele: a rodada fechada do quiz não cabe numa fila de revisão, e manter as duas lógicas separadas dentro da mesma sessão significaria uma sessão que ora conta pra meta ora não. Virou carta avaliada como qualquer outra — o que também resolve o incômodo de o treino de tom ser o único que não entrava na repetição espaçada
+- Cromo de navegação encolhido (23/08): as abas viraram **um controle segmentado só de texto** (62 → 40px) e o "por tema / por aula" virou **dois ícones** do tamanho dos chips (🏷️ e 📅), liberando dois terços da largura que as duas palavras ocupavam. Tudo isso é moldura: quanto menos altura ela come, mais alto a carta começa — que é a única coisa na tela que a pessoa veio ver
 - Abas no rodapé, **tentadas e desfeitas** no mesmo dia (23/08): a ideia era o polegar, que no celular grande não alcança o topo. Mas o app roda tanto no celular quanto no navegador, e no navegador — janela larga, sem polegar — uma barra flutuando embaixo fica claramente deslocada. Voltaram pra fileira acima dos chips, que serve às duas telas. Se um dia valer a pena, o caminho é a barra de baixo **só no celular** (media query), não nos dois
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
