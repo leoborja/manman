@@ -20,7 +20,7 @@ Escolha seu nome (Leo / Henrique / David). O progresso é individual e **sincron
 
 Depois disso, quem guarda esse estado é o **botão redondo do topo**, com a sua inicial: ele abre o **perfil**, onde se troca de nome e se escolhe **claro ou escuro**. São as duas coisas que se ajustam uma vez e esquecem, então dividem uma folha só em vez de ocupar dois botões fixos no cabeçalho.
 
-As três telas — **学 Estudar**, **卡 Cartas**, **🔥 Progresso** — ficam na **barra de baixo**, onde o polegar chega sem trocar a mão de posição.
+As três telas — **学 Estudar**, **卡 Cartas**, **🔥 Progresso** — ficam numa fileira logo **abaixo do cabeçalho e acima dos chips**, que é a ordem em que a escolha acontece: primeiro em que tela estou, depois o que ela filtra.
 
 ## 学 Estudar — como funciona
 
@@ -69,6 +69,8 @@ No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio aut
 É assim que se escreve chinês num celular de verdade: você digita o **som** em letras latinas e o teclado oferece os ideogramas que se leem daquele jeito — quem escolhe é você. A carta mostra o português e a pessoa refaz esse caminho inteiro: lembrar o som, escrever o som, reconhecer o ideograma no meio dos homófonos.
 
 O pinyin se digita **sem tom** e sem espaço: `nihao`, `laoshi`. `ü` e `v` valem por `u` (nenhum teclado de celular tem trema), Enter escolhe o primeiro candidato. Os candidatos saem do **deck inteiro**, não do filtro da sessão — tirados do filtro, uma aula com uma palavra só em "hao" entregaria a resposta antes de a pessoa pensar.
+
+O resultado vem em **três linhas** — *era* 力波 / *não* 林娜 / **Lìbō** — e não numa frase só: comparar dois ideogramas parecidos com eles separados por vírgula é justamente o que não funciona. O ideograma é o que se veio ler ali, então é ele que é grande; o que você escolheu vem menor e em vermelho, sem risco em cima (riscar 一 ou 二 apaga o caractere, que é feito de traço horizontal).
 
 Quem não lembra o som fica sem candidato nenhum, então existe o **"não lembro"**: mostra a resposta e sugere *Errei*. Acertar sugere *Acertei*, errar o candidato sugere *Errei* — mas, como no desenho, **quem decide é você**, e é uma revisão normal que conta na meta e mexe no agendamento.
 
@@ -251,7 +253,8 @@ sobre eles depende do plano da conta.
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
 - Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
 - Lista de modos cortada de 10 pra **5** (22/08): as quatro direções de leitura (汉字→pinyin→tradução, tradução→汉字, pinyin→汉字, só áudio) e o 🔀 aleatório eram variações do mesmo gesto — virar a carta — e as três portas do desenho eram o mesmo exercício com pista a menos. Sobrou um modo por *tipo de resposta*: virar, digitar, desenhar, marcar o tom. Quem tinha um modo antigo salvo cai no equivalente (as leituras → 汉字 → pinyin + tradução; os três desenhos → o desenho único)
-- Perfil e navegação arrumados (23/08): a pílula com o nome e o ícone de tema viraram **um botão de perfil** (a inicial, redondo) com folha própria, e as abas desceram pro **rodapé**, como a navegação do sistema. O cabeçalho ficou só com marca, 🔥 e perfil; o alvo de toque mais usado — trocar de tela — saiu do topo, que no celular grande é onde a mão não alcança. No mesmo dia o "por tema / por aula" virou a cabeça da fila de chips (sticky) em vez de uma linha só dele, que gastava uma faixa inteira de altura pra dizer duas palavras
+- Perfil e navegação arrumados (23/08): a pílula com o nome e o ícone de tema viraram **um botão de perfil** (a inicial, redondo) com folha própria, e o "por tema / por aula" virou a **cabeça da fila de chips** (sticky) em vez de uma linha só dele, que gastava uma faixa inteira de altura pra dizer duas palavras
+- Abas no rodapé, **tentadas e desfeitas** no mesmo dia (23/08): a ideia era o polegar, que no celular grande não alcança o topo. Mas o app roda tanto no celular quanto no navegador, e no navegador — janela larga, sem polegar — uma barra flutuando embaixo fica claramente deslocada. Voltaram pra fileira acima dos chips, que serve às duas telas. Se um dia valer a pena, o caminho é a barra de baixo **só no celular** (media query), não nos dois
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap

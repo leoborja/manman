@@ -30,7 +30,7 @@ html[data-theme="dark"]{
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{margin:0;background:var(--bg);color:var(--txt);
 font:16px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Arial,sans-serif;
-padding-bottom:calc(78px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased;}
+padding-bottom:40px;-webkit-font-smoothing:antialiased;}
 .zh{font-family:'HanziKai','Kaiti SC','STKaiti','Kaiti','BiauKai','PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif;}
 
 header{position:sticky;top:0;z-index:50;background:var(--bg);
@@ -48,19 +48,19 @@ padding:12px 16px 8px;max-width:720px;margin:0 auto;}
 width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);
 color:var(--txt);font-size:15px;font-weight:800;line-height:1;cursor:pointer;box-shadow:var(--shadow);}
 .profilebtn:active{border-color:var(--red);color:var(--red);}
-/* Navegação principal no rodapé, como a do sistema: é onde o polegar chega sem trocar
-   a mão de posição, e no topo sobra espaço pra marca, o 🔥 e o perfil. Sem caixa e sem
-   sombra — quem marca a aba aberta é a cor, não um botão desenhado. */
-.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--bg);
-backdrop-filter:saturate(1.4) blur(8px);border-top:1px solid var(--line);
-padding-bottom:env(safe-area-inset-bottom);}
-.navrow{display:flex;max-width:720px;margin:0 auto;padding:6px 8px;}
-.tab{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:1px;
-padding:6px 4px;border-radius:12px;color:var(--soft);cursor:pointer;transition:.15s;}
-.tab b{font-size:21px;line-height:1.15;color:var(--soft);font-weight:800;}
-.tab small{font-size:10px;font-weight:700;letter-spacing:.3px;}
-.tab:active{background:var(--surface2);}
-.tab.active,.tab.active b{color:var(--red);}
+/* As três telas ficam numa fileira só, logo acima da fila de chips: é a ordem em que
+   a escolha acontece — primeiro em que tela estou, depois o que ela filtra. Já esteve
+   presa no rodapé, como a navegação de um app nativo, mas no navegador — onde a janela
+   é larga e não existe polegar — uma barra flutuando embaixo fica deslocada. */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:0 0 12px;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1 1 0;min-width:90px;padding:9px 12px;border:1px solid var(--line);
+border-radius:14px;background:var(--surface);color:var(--mut);text-align:center;
+cursor:pointer;transition:.15s;box-shadow:var(--shadow);}
+.tab b{display:block;font-size:17px;line-height:1.2;color:var(--txt);font-weight:800;}
+.tab small{font-size:10.5px;font-weight:600;letter-spacing:.2px;}
+.tab.active{background:var(--red);border-color:var(--red);box-shadow:0 6px 16px rgba(200,16,46,.35);}
+.tab.active b,.tab.active small{color:#fff;}
 
 main{max-width:720px;margin:0 auto;padding:16px;}
 .view{display:none;}
@@ -237,6 +237,9 @@ padding:13px 12px;font-weight:800;font-size:13px;cursor:pointer;color:var(--mut)
    de verdade — centralizado, o começo da fila ficaria fora de alcance quando enche */
 .typecands{display:flex;gap:8px;min-height:64px;align-items:center;
 overflow-x:auto;-webkit-overflow-scrolling:touch;}
+/* enquanto se digita a fileira guarda a própria altura, senão a carta pularia na
+   primeira letra; respondida, ela some e devolve o espaço pro resultado */
+.typecands.fim{min-height:0;}
 .typecands .cand{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;
 border:1px solid var(--line);background:var(--surface2);border-radius:14px;
 padding:6px 12px 4px;cursor:pointer;color:var(--txt);}
@@ -244,11 +247,20 @@ padding:6px 12px 4px;cursor:pointer;color:var(--txt);}
 .typecands .cand b{font-size:30px;font-weight:500;line-height:1.1;}
 .typecands .cand small{font-size:10px;color:var(--soft);font-weight:700;}
 .candvazio{color:var(--soft);font-size:13px;font-weight:700;}
-.typefb{font-size:15px;font-weight:800;min-height:44px;line-height:1.35;animation:f .25s ease;}
-.typefb b{font-size:26px;font-weight:500;vertical-align:-3px;}
-.typefb small{display:block;font-weight:700;font-size:13px;margin-top:2px;}
-.typefb.ok{color:var(--ok);}
-.typefb.ruim{color:var(--err);}
+/* O resultado é uma coisa por linha — "era X", "não Y", o pinyin — porque tudo na
+   mesma frase vira sopa de vírgulas justo quando a pessoa precisa comparar dois
+   ideogramas parecidos. O ideograma é o que se veio ler aqui, então é ele que é grande. */
+.typefb{display:flex;flex-direction:column;align-items:center;gap:1px;
+min-height:44px;line-height:1.2;color:var(--txt);animation:f .25s ease;}
+.typefb .l{display:flex;align-items:baseline;justify-content:center;gap:9px;}
+.typefb .lbl{font-size:15px;font-weight:800;color:var(--mut);}
+.typefb b{font-size:38px;font-weight:500;line-height:1.15;}
+/* a linha do que você escolheu: vermelha e menor, pra não competir com a certa. Sem
+   risco em cima: riscar 一 ou 二 apaga o caractere, que é feito de traços horizontais */
+.typefb .no .lbl{color:var(--err);}
+.typefb .no b{color:var(--err);font-size:30px;}
+.typefb .py{font-size:20px;font-weight:700;margin-top:3px;}
+.typefb.ok .lbl{color:var(--ok);font-size:19px;}
 
 /* relâmpago: barra de tempo + pausa + selo de resultado */
 .flashrow{display:none;align-items:center;gap:10px;margin:0 0 10px;}
@@ -473,6 +485,13 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <div class="banner" id="banner"></div>
 
+<!-- as abas abrem o conteúdo: mandam na tela inteira, os chips só no que ela lista -->
+<div class="tabs">
+  <div class="tab active" data-v="estudar"><b class="zh">学</b><small>ESTUDAR</small></div>
+  <div class="tab" data-v="cartas"><b class="zh">卡</b><small>CARTAS</small></div>
+  <div class="tab" data-v="progresso"><b>🔥</b><small>PROGRESSO</small></div>
+</div>
+
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
   <div class="chipsbar">
@@ -622,15 +641,6 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 </section>
 
 </main>
-
-<!-- navegação principal: fica no rodapé, ao alcance do polegar -->
-<nav class="bottomnav">
-  <div class="navrow">
-    <div class="tab active" data-v="estudar"><b class="zh">学</b><small>ESTUDAR</small></div>
-    <div class="tab" data-v="cartas"><b class="zh">卡</b><small>CARTAS</small></div>
-    <div class="tab" data-v="progresso"><b>🔥</b><small>PROGRESSO</small></div>
-  </div>
-</nav>
 
 <!-- login simples -->
 <div class="login" id="login">

@@ -639,6 +639,7 @@ function montaTeclado(card) {
   inp.disabled = false;
   $('typefb').className = 'typefb';
   $('typefb').innerHTML = '';
+  $('typecands').classList.remove('fim');
   $('type-skip').disabled = false;
   renderCandidatos();
 }
@@ -662,13 +663,15 @@ function respondeTeclado(hanzi) {
   $('typein').disabled = true;
   $('type-skip').disabled = true;
   $('typecands').innerHTML = '';
-  const zh = (h) => '<b class="zh" lang="zh-Hans">' + esc(h) + '</b>';
+  $('typecands').classList.add('fim');
+  // uma linha por informação: a resposta certa, o que você escolheu, e o som
+  const linha = (cls, lbl, h) => '<div class="l ' + cls + '"><span class="lbl">' + lbl +
+    '</span><b class="zh" lang="zh-Hans">' + esc(h) + '</b></div>';
   const fb = $('typefb');
   fb.className = 'typefb ' + (ok ? 'ok' : 'ruim');
-  fb.innerHTML = (ok ? '对! ' + zh(current.hanzi)
-      : hanzi ? 'era ' + zh(current.hanzi) + ', não ' + zh(hanzi)
-      : 'era ' + zh(current.hanzi)) +
-    '<small>' + pinyinColored(current.pinyin) + '</small>';
+  fb.innerHTML = linha('', ok ? '对!' : 'era', current.hanzi) +
+    (!ok && hanzi ? linha('no', 'não', hanzi) : '') +
+    '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
   $('hint-f').textContent = 'toque na carta pra ver tudo';
   // sugestão da nota; quem decide ainda é você, igual ao desenho
   $('grades').classList.add('show');
