@@ -18,6 +18,10 @@ Vira um app de verdade: ícone 慢, tela cheia, funciona offline. **Atualiza soz
 
 Escolha seu nome (Leo / Henrique / David). O progresso é individual e **sincroniza entre aparelhos** — estudou no ônibus, continua no computador.
 
+Depois disso, quem guarda esse estado é o **botão redondo do topo**, com a sua inicial: ele abre o **perfil**, onde se troca de nome e se escolhe **claro ou escuro**. São as duas coisas que se ajustam uma vez e esquecem, então dividem uma folha só em vez de ocupar dois botões fixos no cabeçalho.
+
+As três telas — **学 Estudar**, **卡 Cartas**, **🔥 Progresso** — ficam na **barra de baixo**, onde o polegar chega sem trocar a mão de posição.
+
 ## 学 Estudar — como funciona
 
 A fila é **contínua**: primeiro as revisões vencidas, depois as palavras novas, e quando acaba o agendado o app **emenda direto na prática livre** (deck inteiro embaralhado, infinito). Você só abre e estuda.
@@ -42,7 +46,7 @@ A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 
 
 ### Filtro (por tema / por aula)
 
-O seletor acima dos chips troca o que a linha filtra: **por tema** (Números, Pronomes, Úteis…) ou **por aula** (a data em que a palavra entrou, de `data_aula`). Uma fileira só, alternando — duas fileiras de chips empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
+O seletor **abre a própria linha dos chips** e fica preso na esquerda quando ela rola: é ele que diz de que lista os chips do lado saíram — **por tema** (Números, Pronomes, Úteis…) ou **por aula** (a data em que a palavra entrou, de `data_aula`). Uma fileira só, alternando — duas fileiras empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
 
 ### Modos (botão MODO)
 
@@ -247,6 +251,7 @@ sobre eles depende do plano da conta.
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor
 - Fonte trocada de LXGW WenKai (traço macio, base japonesa) para **AR PL UKai CN** — 楷书 de pincel, mais clássico
 - Lista de modos cortada de 10 pra **5** (22/08): as quatro direções de leitura (汉字→pinyin→tradução, tradução→汉字, pinyin→汉字, só áudio) e o 🔀 aleatório eram variações do mesmo gesto — virar a carta — e as três portas do desenho eram o mesmo exercício com pista a menos. Sobrou um modo por *tipo de resposta*: virar, digitar, desenhar, marcar o tom. Quem tinha um modo antigo salvo cai no equivalente (as leituras → 汉字 → pinyin + tradução; os três desenhos → o desenho único)
+- Perfil e navegação arrumados (23/08): a pílula com o nome e o ícone de tema viraram **um botão de perfil** (a inicial, redondo) com folha própria, e as abas desceram pro **rodapé**, como a navegação do sistema. O cabeçalho ficou só com marca, 🔥 e perfil; o alvo de toque mais usado — trocar de tela — saiu do topo, que no celular grande é onde a mão não alcança. No mesmo dia o "por tema / por aula" virou a cabeça da fila de chips (sticky) em vez de uma linha só dele, que gastava uma faixa inteira de altura pra dizer duas palavras
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap

@@ -30,7 +30,7 @@ html[data-theme="dark"]{
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{margin:0;background:var(--bg);color:var(--txt);
 font:16px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Arial,sans-serif;
-padding-bottom:40px;-webkit-font-smoothing:antialiased;}
+padding-bottom:calc(78px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased;}
 .zh{font-family:'HanziKai','Kaiti SC','STKaiti','Kaiti','BiauKai','PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif;}
 
 header{position:sticky;top:0;z-index:50;background:var(--bg);
@@ -41,20 +41,26 @@ padding:12px 16px 8px;max-width:720px;margin:0 auto;}
 .brand span{color:var(--red);}
 .brand small{color:var(--mut);font-weight:600;font-size:11px;margin-left:6px;}
 @media (max-width:460px){.brand small{display:none;}}
-.userpill{background:var(--surface);border:1px solid var(--line);border-radius:999px;
-padding:7px 14px;font-size:13px;font-weight:700;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);}
-.themebtn{background:var(--surface);border:1px solid var(--line);border-radius:50%;
-width:38px;height:38px;font-size:16px;cursor:pointer;line-height:1;box-shadow:var(--shadow);flex:0 0 auto;}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 12px;max-width:720px;
-margin:0 auto;scrollbar-width:none;}
-.tabs::-webkit-scrollbar{display:none;}
-.tab{flex:1 1 0;min-width:90px;padding:9px 12px;border:1px solid var(--line);
-border-radius:14px;background:var(--surface);color:var(--mut);text-align:center;
-cursor:pointer;transition:.15s;box-shadow:var(--shadow);}
-.tab b{display:block;font-size:17px;line-height:1.2;color:var(--txt);font-weight:800;}
-.tab small{font-size:10.5px;font-weight:600;letter-spacing:.2px;}
-.tab.active{background:var(--red);border-color:var(--red);box-shadow:0 6px 16px rgba(200,16,46,.35);}
-.tab.active b,.tab.active small{color:#fff;}
+/* Um botão só pra "quem sou eu e como quero ver": nome e tema são as duas coisas que
+   se troca uma vez e esquece, então não merecem dois lugares fixos no topo. Redondo com
+   a inicial porque o nome inteiro espremia o 🔥 no celular. */
+.profilebtn{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);
+color:var(--txt);font-size:15px;font-weight:800;line-height:1;cursor:pointer;box-shadow:var(--shadow);}
+.profilebtn:active{border-color:var(--red);color:var(--red);}
+/* Navegação principal no rodapé, como a do sistema: é onde o polegar chega sem trocar
+   a mão de posição, e no topo sobra espaço pra marca, o 🔥 e o perfil. Sem caixa e sem
+   sombra — quem marca a aba aberta é a cor, não um botão desenhado. */
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--bg);
+backdrop-filter:saturate(1.4) blur(8px);border-top:1px solid var(--line);
+padding-bottom:env(safe-area-inset-bottom);}
+.navrow{display:flex;max-width:720px;margin:0 auto;padding:6px 8px;}
+.tab{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:1px;
+padding:6px 4px;border-radius:12px;color:var(--soft);cursor:pointer;transition:.15s;}
+.tab b{font-size:21px;line-height:1.15;color:var(--soft);font-weight:800;}
+.tab small{font-size:10px;font-weight:700;letter-spacing:.3px;}
+.tab:active{background:var(--surface2);}
+.tab.active,.tab.active b{color:var(--red);}
 
 main{max-width:720px;margin:0 auto;padding:16px;}
 .view{display:none;}
@@ -77,6 +83,21 @@ font-size:12.5px;font-weight:700;color:var(--mut);cursor:pointer;}
 .chip{flex:0 0 auto;padding:7px 14px;border-radius:999px;border:1px solid var(--line);
 background:var(--surface);color:var(--pilltx);font-size:13px;font-weight:600;cursor:pointer;}
 .chip.active{background:var(--red);border-color:var(--red);color:#fff;}
+/* A chave "por tema / por aula" abre a fila de chips em vez de morar numa linha só
+   dela: é ela que diz de que lista os chips do lado saíram. Fica presa na esquerda
+   (sticky) enquanto a fila rola, senão a fila perderia a legenda no primeiro arrasto. */
+.chipsbar{display:flex;align-items:center;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;}
+.chipsbar::-webkit-scrollbar{display:none;}
+/* o fundo é opaco porque os chips passam POR BAIXO da chave quando a fila rola, e o
+   degradê à direita faz o chip sumir em vez de aparecer cortado na borda da chave */
+.chipsbar .filterpin{position:sticky;left:0;z-index:2;flex:0 0 auto;
+background:var(--bg);padding-right:8px;}
+.chipsbar .filterpin:after{content:"";position:absolute;left:100%;top:0;bottom:0;width:16px;
+background:linear-gradient(to right,var(--bg),transparent);pointer-events:none;}
+/* mais estreita aqui do que numa linha só dela: o que sobra de largura é a fila */
+.chipsbar .segmented button{padding:5px 11px;font-size:12px;}
+.chipsbar .chips{flex:0 0 auto;overflow:visible;padding:0;}
+.chipsbar .segmented{margin:0;}
 
 /* modo de estudo: botão + bottom sheet */
 .modebtn{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 10px;
@@ -445,13 +466,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <span class="n" id="streak-n">0</span>
       <span class="meta" id="streak-meta">–</span>
     </div>
-    <button class="userpill" id="userbtn">👤</button>
-    <button class="themebtn" id="themebtn" title="Tema">🌙</button>
-  </div>
-  <div class="tabs">
-    <div class="tab active" data-v="estudar"><b class="zh">学</b><small>ESTUDAR</small></div>
-    <div class="tab" data-v="cartas"><b class="zh">卡</b><small>CARTAS</small></div>
-    <div class="tab" data-v="progresso"><b>🔥</b><small>PROGRESSO</small></div>
+    <button class="profilebtn" id="profilebtn" title="Perfil">👤</button>
   </div>
 </header>
 <main>
@@ -460,11 +475,15 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
-  <div class="segmented" id="filtertype">
-    <button data-f="tema" class="active">por tema</button>
-    <button data-f="aula">por aula</button>
+  <div class="chipsbar">
+    <div class="filterpin">
+      <div class="segmented" id="filtertype">
+        <button data-f="tema" class="active">por tema</button>
+        <button data-f="aula">por aula</button>
+      </div>
+    </div>
+    <div class="chips" id="deckchips"></div>
   </div>
-  <div class="chips" id="deckchips"></div>
   <button class="modebtn" id="modebtn">
     <span class="mlabel">modo</span>
     <span class="mcur" id="modecur">汉字 → pinyin + tradução</span>
@@ -556,11 +575,15 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ CARTAS (consulta) ══════ -->
 <section class="view" id="view-cartas">
-  <div class="segmented" id="cartas-filtertype">
-    <button data-f="tema" class="active">por tema</button>
-    <button data-f="aula">por aula</button>
+  <div class="chipsbar">
+    <div class="filterpin">
+      <div class="segmented" id="cartas-filtertype">
+        <button data-f="tema" class="active">por tema</button>
+        <button data-f="aula">por aula</button>
+      </div>
+    </div>
+    <div class="chips" id="cartas-chips"></div>
   </div>
-  <div class="chips" id="cartas-chips"></div>
   <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
   <div class="counter" id="cartas-count"></div>
   <div id="bulkbar"></div>
@@ -600,6 +623,15 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 </main>
 
+<!-- navegação principal: fica no rodapé, ao alcance do polegar -->
+<nav class="bottomnav">
+  <div class="navrow">
+    <div class="tab active" data-v="estudar"><b class="zh">学</b><small>ESTUDAR</small></div>
+    <div class="tab" data-v="cartas"><b class="zh">卡</b><small>CARTAS</small></div>
+    <div class="tab" data-v="progresso"><b>🔥</b><small>PROGRESSO</small></div>
+  </div>
+</nav>
+
 <!-- login simples -->
 <div class="login" id="login">
   <div class="login-box">
@@ -610,6 +642,47 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="userbtn" data-u="henrique">Henrique</button>
     <button class="userbtn" data-u="david">David</button>
     <button class="guestbtn" data-u="convidado">só dar uma olhada (convidado)</button>
+  </div>
+</div>
+
+<!-- perfil (bottom sheet): quem está estudando + tema, atrás do botão redondo do topo -->
+<div class="sheetwrap" id="perfilsheet">
+  <div class="sheetbg" id="perfilsheet-bg"></div>
+  <div class="sheet scroll">
+    <div class="handle"></div>
+    <h3>Perfil</h3>
+    <div class="sheetsep">quem está estudando</div>
+    <button class="modeopt" data-pu="leo">
+      <span class="zhx">L</span>
+      <span class="info"><b>Leo</b><small>o progresso fica salvo neste nome</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-pu="henrique">
+      <span class="zhx">H</span>
+      <span class="info"><b>Henrique</b><small>o progresso fica salvo neste nome</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-pu="david">
+      <span class="zhx">D</span>
+      <span class="info"><b>David</b><small>o progresso fica salvo neste nome</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-pu="convidado">
+      <span class="zhx">👀</span>
+      <span class="info"><b>Convidado</b><small>só dar uma olhada — não sobe pro ranking da turma</small></span>
+      <span class="check"></span>
+    </button>
+    <div class="sheetsep">tema</div>
+    <button class="modeopt" data-t="light">
+      <span class="zhx">☀️</span>
+      <span class="info"><b>Claro</b><small>papel branco, como o caderno</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-t="dark">
+      <span class="zhx">🌙</span>
+      <span class="info"><b>Escuro</b><small>pra estudar de noite sem queimar a vista</small></span>
+      <span class="check"></span>
+    </button>
   </div>
 </div>
 

@@ -810,12 +810,23 @@ function loadUserState() {
   }
 }
 function renderUserPill() {
-  $('userbtn').textContent = settings.user ? '👤 ' + (USERS[settings.user] || settings.user) : '👤';
+  const nome = settings.user ? (USERS[settings.user] || settings.user) : '';
+  const b = $('profilebtn');
+  b.textContent = nome ? nome[0].toUpperCase() : '👤'; // o nome inteiro não cabe no topo
+  b.title = nome ? 'Perfil · ' + nome : 'Perfil';
+}
+// a folha de perfil guarda os dois estados que o botão redondo esconde: quem está
+// estudando e o tema
+function renderPerfilSheet() {
+  document.querySelectorAll('#perfilsheet [data-pu]').forEach(b =>
+    b.classList.toggle('active', b.dataset.pu === settings.user));
+  applyTheme();
 }
 async function selectUser(u) {
   settings.user = u; save(K.settings, settings);
   $('login').classList.remove('show');
-  renderUserPill();
+  $('perfilsheet').classList.remove('show');
+  renderUserPill(); renderPerfilSheet();
   loadUserState();
   gcSrs();
   await syncPull();
@@ -1761,15 +1772,22 @@ function renderModeSheet() {
 function applyTheme() {
   const pref = settings.theme || 'light'; // light é o padrão; dark só se a pessoa escolher
   document.documentElement.dataset.theme = pref;
-  $('themebtn').textContent = pref === 'dark' ? '☀️' : '🌙';
+  document.querySelectorAll('#perfilsheet [data-t]').forEach(b =>
+    b.classList.toggle('active', b.dataset.t === pref));
 }
 
 function bindEvents() {
   document.querySelectorAll('.tab').forEach(t => t.onclick = () => switchView(t.dataset.v));
-  $('themebtn').onclick = () => {
-    settings.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    save(K.settings, settings); applyTheme();
-  };
+  $('profilebtn').onclick = () => { renderPerfilSheet(); $('perfilsheet').classList.add('show'); };
+  $('perfilsheet-bg').onclick = () => $('perfilsheet').classList.remove('show');
+  document.querySelectorAll('#perfilsheet [data-t]').forEach(b => b.onclick = () => {
+    settings.theme = b.dataset.t; save(K.settings, settings); applyTheme();
+  });
+  // trocar de usuário recarrega progresso e sessão; tocar em quem já está só fecha
+  document.querySelectorAll('#perfilsheet [data-pu]').forEach(b => b.onclick = () => {
+    if (b.dataset.pu === settings.user) { $('perfilsheet').classList.remove('show'); return; }
+    selectUser(b.dataset.pu);
+  });
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
   $('filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
@@ -1865,7 +1883,6 @@ function bindEvents() {
   $('search').oninput = renderList;
   // login
   document.querySelectorAll('#login [data-u]').forEach(b => b.onclick = () => selectUser(b.dataset.u));
-  $('userbtn').onclick = () => $('login').classList.add('show');
   // progresso
   $('resetbtn').onclick = () => {
     if (!confirm('Zerar TODO o seu progresso de estudo (' + (USERS[settings.user] || '') + ')? As cartas não são apagadas.')) return;
