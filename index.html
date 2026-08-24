@@ -97,6 +97,7 @@ background:linear-gradient(to right,var(--bg),transparent);pointer-events:none;}
    dizem QUE fila é. */
 .chip.filtro{font-size:16px;line-height:1.3;padding:7px 12px;}
 .chip.filtro.active{background:var(--pill);border-color:var(--txt);color:var(--txt);}
+.chip[disabled]{opacity:.55;}
 .chipsbar .chips{flex:0 0 auto;overflow:visible;padding:0;}
 
 /* modo de estudo: botão + bottom sheet */
@@ -499,6 +500,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <div class="filtros" id="filtertype">
         <button class="chip filtro active" data-f="tema" title="Filtrar por tema" aria-label="Filtrar por tema">🏷️</button>
         <button class="chip filtro" data-f="aula" title="Filtrar por aula" aria-label="Filtrar por aula">📅</button>
+        <button class="chip filtro" data-f="erro" title="Só as que eu mais erro" aria-label="Filtrar pelas que eu mais erro">❌</button>
       </div>
     </div>
     <div class="chips" id="deckchips"></div>

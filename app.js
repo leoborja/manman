@@ -19,6 +19,8 @@
 
 // ── constantes ──────────────────────────────────────────────
 const LEARNED_IVL = 21;          // intervalo (dias) p/ considerar "aprendida"
+const FILTROS = ['tema', 'aula', 'erro'];
+const ERRO_FAIXAS = [1, 3, 5, 8]; // faixas do filtro "as que eu mais erro"
 const META_DIARIA = 30;          // revisões/dia pra fechar o dia — meta, não teto: pode fazer mais
 // 20/08 é o primeiro dia em que o contador funciona: até 19/08 a prática livre só
 // registrava os erros, então aqueles números estão subestimados e não dá pra julgá-los
@@ -122,8 +124,9 @@ function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom
 // ── estado ──────────────────────────────────────────────────
 let cards = [];                  // deck completo (não deletadas)
 let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', filtro: 'tema', aula: 'todas',
-  user: null, theme: null, autoSpeak: true, flash: false, flashMs: FLASH_MS_PADRAO });
-if (settings.filtro !== 'aula') settings.filtro = 'tema'; // quem já usava o app não tem o campo
+  erro: ERRO_FAIXAS[2], user: null, theme: null, autoSpeak: true, flash: false, flashMs: FLASH_MS_PADRAO });
+if (!FILTROS.includes(settings.filtro)) settings.filtro = 'tema'; // quem já usava o app não tem o campo
+if (!ERRO_FAIXAS.includes(settings.erro)) settings.erro = ERRO_FAIXAS[2];
 if (!settings.aula) settings.aula = 'todas';
 if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
 if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
@@ -1023,7 +1026,24 @@ function showBanner(kind, msg) {
 function hideBanner() { $('banner').className = 'banner'; }
 
 // ── fila de estudo ──────────────────────────────────────────
+// "errei" aqui é Errei + Difícil — a mesma conta que a aba Progresso usa em "mais erro",
+// pra que as duas telas nunca discordem sobre qual é a palavra pior.
+function erroCount(id) { const s = statOf(id); return s.a + s.h; }
+// As já aprendidas ficam de fora: o contador é histórico e não esquece, então sem isto
+// 说 (15 erros) moraria no topo da lista muito depois de você ter aprendido a palavra.
+function aprendida(id) { return !!(srs[id] && srs[id].ivl >= LEARNED_IVL); }
+function cardsComErro(min) {
+  return cards.filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
+}
+// só as faixas que têm palavra — chip vazio é convite a cair numa sessão de zero cartas.
+// A contagem já desconta as desligadas, senão o número do chip mentiria sobre a sessão.
+function faixasErro() {
+  return ERRO_FAIXAS
+    .map(n => ({ n, qtd: cardsComErro(n).filter(c => !isOff(c.id)).length }))
+    .filter(f => f.qtd);
+}
 function filteredCards() {
+  if (settings.filtro === 'erro') return cardsComErro(settings.erro);
   if (settings.filtro === 'aula') {
     if (settings.aula === 'todas') return cards;
     // fonte:x = veio de fora da aula (Duolingo, etc); 'fora' = sem procedência nenhuma
@@ -1092,6 +1112,16 @@ function buildQueue() {
   const pool = poolSessao();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t)
     .sort((a, b) => srs[a.id].due < srs[b.id].due ? -1 : 1);
+  // O filtro por erro ignora o agendamento de propósito: você pediu "as 7 que eu mais
+  // erro" pra treinar as 7. Palavra muito errada já tem data marcada, então o SRS
+  // sozinho te entregaria uma só. As atrasadas vêm na frente; o resto, embaralhado.
+  // As respostas continuam reagendando normalmente — só a ordem de hoje muda.
+  if (settings.filtro === 'erro') {
+    const resto = shuffle(pool.filter(c => !due.includes(c)));
+    queue = due.concat(resto).map(c => c.id);
+    phase = 'sched';
+    return;
+  }
   const news = shuffle(pool.filter(c => !srs[c.id])); // sem limite diário: o deck só tem o que a turma já viu
   queue = due.concat(news).map(c => c.id);
   phase = 'sched';
@@ -1111,12 +1141,25 @@ function dueCount(pool) {
 
 // ── UI: estudar ─────────────────────────────────────────────
 function renderChips() {
-  const porAula = settings.filtro === 'aula';
+  const eixo = settings.filtro;
   $('filtertype').querySelectorAll('button').forEach(b =>
-    b.classList.toggle('active', (b.dataset.f === 'aula') === porAula));
+    b.classList.toggle('active', b.dataset.f === eixo));
 
   let html;
-  if (porAula) {
+  if (eixo === 'erro') {
+    const faixas = faixasErro();
+    // a faixa escolhida pode ter esvaziado desde a última sessão (você aprendeu as palavras):
+    // cai na mais próxima que ainda tem gente, em vez de abrir uma sessão vazia
+    if (faixas.length && !faixas.some(f => f.n === settings.erro)) {
+      const menor = faixas.filter(f => f.n <= settings.erro).pop();
+      settings.erro = (menor || faixas[0]).n;
+    }
+    html = faixas.length
+      ? faixas.map(f =>
+          '<button class="chip' + (settings.erro === f.n ? ' active' : '') + '" data-e="' + f.n + '">' +
+          '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') + ' (' + f.qtd + ')</button>').join('')
+      : '<button class="chip" disabled>Nada errado ainda por aqui 🎉</button>';
+  } else if (eixo === 'aula') {
     const opcoes = opcoesAula();
     if (!opcoes.includes(settings.aula)) settings.aula = 'todas'; // aula sumiu do deck
     html = opcoes.map(a =>
@@ -1129,8 +1172,10 @@ function renderChips() {
       (d === 'todos' ? 'Todos' : esc(deckLabel(d))) + '</button>').join('');
   }
   $('deckchips').innerHTML = html;
-  $('deckchips').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    if (porAula) settings.aula = ch.dataset.a; else settings.deck = ch.dataset.d;
+  $('deckchips').querySelectorAll('.chip:not([disabled])').forEach(ch => ch.onclick = () => {
+    if (eixo === 'erro') settings.erro = +ch.dataset.e;
+    else if (eixo === 'aula') settings.aula = ch.dataset.a;
+    else settings.deck = ch.dataset.d;
     save(K.settings, settings);
     renderChips(); startSession();
   });
@@ -1146,6 +1191,10 @@ function renderCounter() {
       flashScore.ok + '/' + flashScore.n + ' certas · ' + queue.length + ' restantes';
   } else if (phase === 'practice') {
     $('counter').innerHTML = 'revisões do dia ✅ · <b>prática livre</b> · "Errei" ainda reagenda';
+  } else if (settings.filtro === 'erro') {
+    // aqui "para hoje" mentiria: a fila é a faixa inteira, não a agenda do dia
+    $('counter').innerHTML = '<b>≥' + settings.erro + ' erro' + (settings.erro > 1 ? 's' : '') +
+      '</b> · ' + queue.length + ' restantes';
   } else {
     $('counter').innerHTML = '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
   }
@@ -1273,7 +1322,7 @@ function finishSession() {
       ? 'O modo desenho usa uma grade por caractere, então só entram palavras de um caractere.'
       : 'O tom é de uma sílaba só, então só entram palavras de um caractere' +
         (settings.mode === 'tons' ? ', e sem tom neutro, que o alto-falante não consegue perguntar.' : '.')) +
-      ' Não sobrou nenhuma neste filtro — escolha outro tema/aula ou troque de modo.';
+      ' Não sobrou nenhuma neste filtro — escolha outra faixa/tema/aula ou troque de modo.';
     $('freebtn').style.display = 'none';
   } else if (quizOn()) { // no aleatório o modoCarta já foi zerado, então não cai aqui
     const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
@@ -1285,7 +1334,9 @@ function finishSession() {
     $('freebtn').style.display = '';
   } else { // só acontece sem nenhuma carta ativa no filtro
     $('done-title').textContent = 'Nada por aqui';
-    $('done-sub').textContent = 'Nenhuma carta ativa neste deck — religue cartas na aba Cartas ou escolha outro filtro.';
+    $('done-sub').textContent = settings.filtro === 'erro'
+      ? 'Nenhuma palavra nesta faixa de erro — escolha outra faixa, ou 🏷️/📅 pra voltar ao deck.'
+      : 'Nenhuma carta ativa neste deck — religue cartas na aba Cartas ou escolha outro filtro.';
     $('freebtn').style.display = 'none';
   }
   renderCounter();
