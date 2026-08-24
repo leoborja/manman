@@ -132,6 +132,7 @@ if (!settings.aula) settings.aula = 'todas';
 if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
 if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
+if (settings.tag === undefined) settings.tag = true; // quem já usava o app não tem o campo
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
 settings.flash = !!settings.flash;
 // No aleatório quem manda é o modo sorteado pra CARTA ATUAL; fora dele, o escolhido no
@@ -1323,6 +1324,8 @@ function showCard(card) {
   if (m.front === 'audio' || desenho) speak(card, true);
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
+  // "Números" na carta de 三 é meio caminho da resposta — dá pra desligar no MODO
+  $('fcard').classList.toggle('semtag', !settings.tag);
   $('back-hanzi').textContent = card.hanzi;
   renderBackHanzi(card, relampago);
   $('back-pinyin').innerHTML = pinyinColored(card.pinyin);
@@ -2021,6 +2024,7 @@ function renderModeSheet() {
   document.querySelectorAll('.modeopt[data-m]').forEach(b =>
     b.classList.toggle('active', b.dataset.m === settings.mode));
   $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
+  $('tag-opt').classList.toggle('active', !!settings.tag);
   $('flash-opt').classList.toggle('active', !!settings.flash);
   $('flashtime').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
@@ -2095,6 +2099,12 @@ function bindEvents() {
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
     renderModeSheet();
+  };
+  $('tag-opt').onclick = () => {
+    settings.tag = !settings.tag; save(K.settings, settings);
+    renderModeSheet();
+    // a carta na tela é a de agora: sem isto a mudança só apareceria na próxima
+    $('fcard').classList.toggle('semtag', !settings.tag);
   };
   $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
