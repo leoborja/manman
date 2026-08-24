@@ -532,6 +532,7 @@ function validaDesenho() {
   const r = notaDesenho(current.hanzi, drawInk);
   if (!r) return;
   drawScore = r;
+  bumpHab(current.id, 'esc', r.nota < DRAW_OK); // a nota, não o botão que você aperta depois
   repintaPad();
   const g = r.nota >= DRAW_OK ? 'good' : r.nota >= DRAW_QUASE ? 'hard' : 'again';
   const fb = $('drawfb');
@@ -682,6 +683,13 @@ function respondeTeclado(hanzi) {
   if (!current || typeResult) return;
   const ok = hanzi === current.hanzi;
   typeResult = { ok: ok, escolhido: hanzi };
+  // As duas metades da pergunta, medidas em separado. O ideograma só é medido quando o
+  // som estava certo: errar o pinyin e cair num candidato qualquer não diz nada sobre
+  // confundir homófonos. E digitar o pinyin certo e mesmo assim tocar em "não lembro"
+  // é justamente o caso que isto quer pegar — som ok, ideograma não.
+  const somOk = pyPlano($('typein').value) === pyPlano(current.pinyin);
+  bumpHab(current.id, 'som', !somOk);
+  if (somOk) bumpHab(current.id, 'ideo', !ok);
   $('typein').disabled = true;
   $('type-skip').disabled = true;
   $('typecands').innerHTML = '';
@@ -783,6 +791,18 @@ function calcStreak(registro) {
 // "Errei", e contar por lá daria um retrato só dos erros — o mesmo defeito que
 // o contador do dia tinha até 20/08.
 const GRADE_KEY = { good: 'g', hard: 'h', again: 'a' };
+// V2.7 — erro por HABILIDADE, não por modo. "Errei no teclado" é ambíguo: pode ser não
+// lembrar o som ou trocar o ideograma entre dois homófonos, e são fraquezas diferentes,
+// com treinos diferentes. O app já sabe qual das duas metades falhou — só não guardava.
+const HABS = [
+  { k: 'rec',  nome: 'reconhecer o 汉字',   dica: 'vê o ideograma e lembra o que é' },
+  { k: 'som',  nome: 'lembrar o som',       dica: 'no teclado, digitar o pinyin certo' },
+  { k: 'ideo', nome: 'achar o ideograma',   dica: 'com o pinyin certo, escolher entre os homófonos' },
+  { k: 'esc',  nome: 'escrever de memória', dica: 'desenho com menos de ' + DRAW_OK + '% de proximidade' },
+  { k: 'tomM', nome: 'tom de memória',      dica: 'marcar o tom vendo o ideograma' },
+  { k: 'tomO', nome: 'tom de ouvido',       dica: 'marcar o tom só ouvindo' }
+];
+const TOM_CURTO = { 1: '1º', 2: '2º', 3: '3º', 4: '4º', 5: 'neutro' };
 function bumpStat(id, grade) {
   const k = GRADE_KEY[grade];
   if (!k) return;
@@ -792,6 +812,30 @@ function bumpStat(id, grade) {
   save(uk(K.stats), stats);
 }
 function statOf(id) { return stats[id] || { g: 0, h: 0, a: 0 }; }
+// Grava um resultado OBJETIVO. Objetivo é a palavra que importa: no desenho e no teclado
+// quem aperta "Errei" é você e o app só sugere, então misturar o botão com o que a
+// máquina mediu estragaria o número. Aqui entra só o que a máquina viu.
+// Não sincroniza sozinho: quem responde uma carta passa pelo grade(), que já dá o push.
+// A exceção é o quiz puro de tom, que não passa por lá e empurra por conta própria.
+function bumpHab(id, k, errou) {
+  const s = stats[id] || { g: 0, h: 0, a: 0 };
+  if (!s.hab) s.hab = {};
+  const c = s.hab[k] || (s.hab[k] = { n: 0, e: 0 });
+  c.n++;
+  if (errou) c.e++;
+  stats[id] = s;
+  save(uk(K.stats), stats);
+}
+// O par (tom certo → tom marcado). A contagem crua de erros de tom não distingue trocar
+// 2º por 3º — que é um problema de ouvido específico — de chutar qualquer coisa.
+function bumpTomX(id, certo, marcado) {
+  const s = stats[id] || { g: 0, h: 0, a: 0 };
+  if (!s.tomX) s.tomX = {};
+  const par = certo + '>' + marcado;
+  s.tomX[par] = (s.tomX[par] || 0) + 1;
+  stats[id] = s;
+  save(uk(K.stats), stats);
+}
 function logToday(field) {
   const t = todayStr();
   if (!log[t]) log[t] = { rev: 0, new: 0 };
@@ -897,6 +941,9 @@ async function loadCards() {
 
 // ── sync de progresso (Supabase) ────────────────────────────
 function syncEnabled() { return sbConfigured() && settings.user && settings.user !== 'convidado'; }
+// Vira false quando o banco responde que ainda não tem as colunas da V2.7. Só nesta
+// sessão: na próxima o ALTER TABLE já pode ter rodado, e ela tenta de novo.
+let habColunaOk = true;
 // log de TODO mundo, pro gráfico da turma. Só leitura e sem dado sensível —
 // a policy de review_log já é aberta. Falhou? o gráfico some, o resto do app segue.
 let logTurma = null;
@@ -936,9 +983,25 @@ async function syncPull() {
         const rem = { g: row.n_good || 0, h: row.n_hard || 0, a: row.n_again || 0 };
         if (rem.g || rem.h || rem.a) {
           const loc = stats[row.card_id] || { g: 0, h: 0, a: 0 };
-          stats[row.card_id] = {
+          stats[row.card_id] = Object.assign(loc, {
             g: Math.max(loc.g || 0, rem.g), h: Math.max(loc.h || 0, rem.h), a: Math.max(loc.a || 0, rem.a)
-          };
+          });
+        }
+        // habilidade e confusão de tons seguem a mesma regra dos contadores: só crescem,
+        // o maior lado vence. Quem não tem a coluna (aparelho antes da V2.7) manda nada
+        // e não apaga o que o outro somou.
+        if (row.hab && typeof row.hab === 'object') {
+          const loc = stats[row.card_id] || (stats[row.card_id] = { g: 0, h: 0, a: 0 });
+          const h = loc.hab || (loc.hab = {});
+          for (const k of Object.keys(row.hab)) {
+            const r = row.hab[k] || {}, l = h[k] || { n: 0, e: 0 };
+            h[k] = { n: Math.max(l.n || 0, r.n || 0), e: Math.max(l.e || 0, r.e || 0) };
+          }
+        }
+        if (row.tom_x && typeof row.tom_x === 'object') {
+          const loc = stats[row.card_id] || (stats[row.card_id] = { g: 0, h: 0, a: 0 });
+          const x = loc.tomX || (loc.tomX = {});
+          for (const par of Object.keys(row.tom_x)) x[par] = Math.max(x[par] || 0, row.tom_x[par] || 0);
         }
       }
       save(uk(K.srs), srs);
@@ -964,7 +1027,11 @@ async function syncPush(id) {
   // livre sem nunca ter entrado na fila) — por isso os campos de srs são opcionais
   const linha = { user_name: settings.user, card_id: id };
   if (s) Object.assign(linha, { reps: s.reps, ivl: s.ivl, ease: s.ease, due: s.due, updated_ms: s.u });
-  if (stats[id]) Object.assign(linha, { n_good: stats[id].g, n_hard: stats[id].h, n_again: stats[id].a });
+  if (stats[id]) {
+    Object.assign(linha, { n_good: stats[id].g, n_hard: stats[id].h, n_again: stats[id].a });
+    if (habColunaOk && stats[id].hab) linha.hab = stats[id].hab;
+    if (habColunaOk && stats[id].tomX) linha.tom_x = stats[id].tomX;
+  }
   // o total do dia vai ANTES e por conta própria: são dados independentes, e uma
   // falha no progress (schema desatualizado, por exemplo) não pode levar junto
   // o contador que alimenta a meta e o gráfico da turma
@@ -973,12 +1040,23 @@ async function syncPush(id) {
     headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
     body: JSON.stringify({ user_name: settings.user, day: t, rev: l.rev, new_cnt: l.new })
   }).catch(() => {});
+  const post = (corpo) => fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
+    method: 'POST',
+    headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
+    body: JSON.stringify(corpo)
+  });
   try {
-    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
-      method: 'POST',
-      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-      body: JSON.stringify(linha)
-    });
+    let r = await post(linha);
+    // Banco ainda sem as colunas da V2.7 — o PostgREST devolve 400 e recusa a linha
+    // INTEIRA. Sem esta saída, publicar o app antes de rodar o ALTER TABLE derrubaria a
+    // sincronia toda (agendamento e contagens junto), não só a medição nova. Reenvia sem
+    // elas e para de mandá-las até a próxima sessão.
+    if (r.status === 400 && (linha.hab || linha.tom_x)) {
+      habColunaOk = false;
+      delete linha.hab;
+      delete linha.tom_x;
+      r = await post(linha);
+    }
     if (!r.ok) throw new Error('HTTP ' + r.status);
     dirty = dirty.filter(x => x !== id);
     save(uk(K.dirty), dirty);
@@ -1365,6 +1443,12 @@ function answerTone(t) {
   if (!current || quizAnswered) return;
   quizAnswered = true;
   const correct = toneOf(current.pinyin);
+  // de memória e de ouvido são habilidades diferentes e erram em lugares diferentes,
+  // então cada uma tem seu contador — e o par (certo → marcado) vai junto
+  bumpHab(current.id, modoKey() === 'tons' ? 'tomO' : 'tomM', t !== correct);
+  if (t !== correct) bumpTomX(current.id, correct, t);
+  // no quiz puro não vem um grade() depois pra sincronizar esta carta
+  if (!mixOn()) syncPush(current.id);
   if (!mixOn()) { quizScore.n++; if (t === correct) quizScore.ok++; }
   $('tones').querySelectorAll('button').forEach(bt => {
     const bt_t = parseInt(bt.dataset.t, 10);
@@ -1524,6 +1608,11 @@ function grade(g) {
   // enquanto era estatística, perverso depois que o streak passou a depender da meta.
   logToday('rev');
   bumpStat(current.id, g);
+  // "reconhecer" só é medível no modo que revela tudo de uma vez. Nos outros, responder
+  // já é outra coisa — digitar, desenhar, marcar o tom — e a nota mediria aquilo. Aqui o
+  // botão É a medida, porque não existe resultado objetivo: "Difícil" é acerto, você
+  // lembrou. Sem isso a taxa de "rec" não seria comparável com a dos outros cinco.
+  if (modoKey() === 'zh_all' && !flashOn()) bumpHab(current.id, 'rec', g === 'again');
   if (phase === 'sched') {
     const isNew = !srs[current.id];
     srsApply(current.id, g);
@@ -1770,6 +1859,59 @@ function renderWordStats() {
       pill(l.g, 'g') + pill(l.h, 'h') + pill(l.a, 'a') + '</span></div>';
   }).join('');
 }
+// Taxa, não contagem. O aleatório sorteia os modos de forma desigual, e tom e desenho só
+// valem pra palavra de um caractere: "14 erros de tom" sozinho não diz nada, "38% de erro
+// em 21 tentativas" diz. Por isso a tentativa aparece do lado de toda porcentagem.
+function renderHabStats() {
+  const tot = {};
+  HABS.forEach(h => tot[h.k] = { n: 0, e: 0 });
+  const conf = {};
+  let nConf = 0;
+  cards.forEach(c => {
+    const s = stats[c.id];
+    if (!s) return;
+    if (s.hab) HABS.forEach(h => {
+      const v = s.hab[h.k];
+      if (v) { tot[h.k].n += v.n || 0; tot[h.k].e += v.e || 0; }
+    });
+    if (s.tomX) for (const par of Object.keys(s.tomX)) {
+      conf[par] = (conf[par] || 0) + s.tomX[par];
+      nConf += s.tomX[par];
+    }
+  });
+  if (!HABS.some(h => tot[h.k].n)) {
+    $('habstats').innerHTML = '<p class="wempty">Ainda sem medição, e ela só enxerga daqui ' +
+      'pra frente: as revisões antigas não sabem de que modo vieram. O 🔀 Aleatório é o que ' +
+      'enche isto mais rápido, porque te expõe aos quatro modos na mesma sessão.</p>';
+    return;
+  }
+  const linhas = HABS.map(h => {
+    const v = tot[h.k];
+    if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(h.nome) +
+      '<small>' + esc(h.dica) + '</small></span><span class="hnum">sem dados</span></div>';
+    const pct = Math.round(v.e / v.n * 100);
+    return '<div class="habrow"><span class="hnome">' + esc(h.nome) +
+      '<small>' + esc(h.dica) + '</small></span>' +
+      '<span class="hnum"><b>' + pct + '%</b><small>de erro · ' + v.e + ' de ' + v.n + '</small></span>' +
+      '<span class="hbar"><i style="width:' + Math.max(2, pct) + '%"></i></span></div>';
+  }).join('');
+  // A lista de pares é a resposta à pergunta que a contagem de erros não responde.
+  // Duas ou três confusões concentram quase tudo — por isso só as cinco maiores.
+  const pares = Object.keys(conf).map(p => [p, conf[p]]).sort((a, b) => b[1] - a[1]);
+  let cx = '';
+  if (pares.length) {
+    const [certo, marcado] = pares[0][0].split('>');
+    cx = '<div class="tomx"><b>Quais tons você confunde</b>' +
+      '<p>O mais comum: era <b>' + TOM_CURTO[certo] + '</b> e você marcou <b>' + TOM_CURTO[marcado] +
+      '</b>, em ' + pares[0][1] + ' dos ' + nConf + ' erro' + (nConf > 1 ? 's' : '') + ' de tom.</p>' +
+      pares.slice(0, 5).map(function (par) {
+        const t = par[0].split('>');
+        return '<div class="tomxrow"><span>' + TOM_CURTO[t[0]] + ' → ' + TOM_CURTO[t[1]] +
+          '</span><b>' + par[1] + '×</b></div>';
+      }).join('') + '</div>';
+  }
+  $('habstats').innerHTML = linhas + cx;
+}
 function renderTurma() {
   if (!logTurma || !logTurma.length) {
     $('turma').innerHTML = '<p style="color:var(--mut);font-size:13px;margin:0;text-align:center">' +
@@ -1809,6 +1951,7 @@ function renderTurma() {
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
   renderTurma();
+  renderHabStats();
   renderWordStats();
   const t = todayStr();
   const { due, news } = dueCount();

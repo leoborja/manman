@@ -43,12 +43,21 @@ create table if not exists progress (
   n_good int not null default 0,    -- V2.6: quantas vezes acertou esta carta
   n_hard int not null default 0,    -- ...marcou "Difícil"
   n_again int not null default 0,   -- ...errou. Contam nas duas fases, agendado e prática
+  -- V2.7: erro por HABILIDADE, não por modo. {"rec":{"n":22,"e":4}, "som":{...}, ...}
+  -- n = tentativas, e = erros. Só entra resultado objetivo (o candidato certo ou errado,
+  -- a nota do desenho, o tom marcado) — nunca o botão que o próprio usuário apertou.
+  hab jsonb not null default '{}'::jsonb,
+  -- pares (tom certo > tom marcado): {"2>3": 11}. É o que responde "quais eu confundo"
+  tom_x jsonb not null default '{}'::jsonb,
   primary key (user_name, card_id)
 );
 -- tabela já existia antes da V2.6?
 alter table progress add column if not exists n_good int not null default 0;
 alter table progress add column if not exists n_hard int not null default 0;
 alter table progress add column if not exists n_again int not null default 0;
+-- ...ou antes da V2.7?
+alter table progress add column if not exists hab jsonb not null default '{}'::jsonb;
+alter table progress add column if not exists tom_x jsonb not null default '{}'::jsonb;
 alter table progress enable row level security;
 drop policy if exists "progress_all" on progress;
 create policy "progress_all" on progress for all using (true) with check (true);

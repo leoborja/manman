@@ -388,6 +388,27 @@ box-shadow:var(--shadow);padding:14px 16px;}
 .barlabels{display:flex;gap:5px;color:var(--soft);font-size:9px;text-align:center;}
 .barlabels span{flex:1;}
 h3.sec{font-size:13px;color:var(--red);margin:20px 0 10px;text-transform:uppercase;letter-spacing:.4px;}
+/* nome + taxa na primeira linha, barra ocupando a largura toda na segunda: em 375px
+   as três coisas lado a lado espremiam o nome até virar reticências */
+.habrow{display:grid;grid-template-columns:1fr auto;gap:3px 12px;padding:10px 2px;font-size:14px;}
+/* separador entre linhas, e não depois da última: :last-of-type olharia a TAG, e a
+   última div do bloco é a da confusão de tons, que já tem a borda dela */
+.habrow + .habrow{border-top:1px solid var(--line);}
+.habrow .hnome{font-weight:700;color:var(--txt);}
+.habrow .hnome small{display:block;font-weight:500;color:var(--mut);font-size:11.5px;line-height:1.3;}
+.habrow .hnum{text-align:right;color:var(--mut);font-size:12px;white-space:nowrap;}
+.habrow .hnum b{display:block;color:var(--txt);font-size:17px;line-height:1.2;}
+.habrow .hnum small{display:block;font-size:11.5px;}
+.habrow .hbar{grid-column:1/-1;height:5px;border-radius:99px;background:var(--surface2);
+border:1px solid var(--line);overflow:hidden;margin-top:3px;}
+.habrow .hbar i{display:block;height:100%;background:var(--red);}
+.habrow.vazio .hnome,.habrow.vazio .hnum{opacity:.5;}
+.tomx{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;}
+.tomx>b{display:block;font-size:13.5px;color:var(--txt);}
+.tomx p{margin:4px 0 10px;font-size:13px;color:var(--mut);line-height:1.45;}
+.tomx p b{color:var(--txt);}
+.tomxrow{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 2px;color:var(--mut);}
+.tomxrow b{color:var(--txt);}
 .deckrow{display:flex;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--line);font-size:14px;}
 .deckrow:last-child{border-bottom:none;}
 .deckrow b{font-weight:700;}
@@ -634,6 +655,9 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <div class="bars" id="bars"></div>
     <div class="barlabels" id="barlabels"></div>
   </div>
+  <h3 class="sec">Por habilidade</h3>
+  <div class="card" id="habstats"></div>
+
   <h3 class="sec">Palavra por palavra</h3>
   <div class="chips" id="statsort"></div>
   <div class="card" id="wordstats"></div>
