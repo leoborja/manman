@@ -127,6 +127,7 @@ let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', filtro: 'tema',
   erro: ERRO_FAIXAS[2], user: null, theme: null, autoSpeak: true, flash: false, flashMs: FLASH_MS_PADRAO });
 if (!FILTROS.includes(settings.filtro)) settings.filtro = 'tema'; // quem já usava o app não tem o campo
 if (!ERRO_FAIXAS.includes(settings.erro)) settings.erro = ERRO_FAIXAS[2];
+settings.escopoOpen = !!settings.escopoOpen;
 if (!settings.aula) settings.aula = 'todas';
 if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
 if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
@@ -1177,8 +1178,11 @@ function renderChips() {
     else if (eixo === 'aula') settings.aula = ch.dataset.a;
     else settings.deck = ch.dataset.d;
     save(K.settings, settings);
-    renderChips(); startSession();
+    renderChips();
+    $('modesheet').classList.remove('show');
+    startSession();
   });
+  renderModeUI(); // a pílula do botão é o resumo desta escolha
 }
 function renderCounter() {
   renderStreak();
@@ -1848,8 +1852,30 @@ function switchView(v) {
   // escondida — e aí a grade nasceu sem largura pra medir. Volta, remede.
   if (v === 'estudar' && drawOn() && current) montaPad();
 }
+// O que está na fila, em três palavras — serve tanto pra pílula do botão quanto pra
+// linha fechada dentro da folha, pra que as duas nunca digam coisas diferentes.
+function escopoResumo() {
+  if (settings.filtro === 'erro') {
+    const f = faixasErro().find(x => x.n === settings.erro);
+    return { ico: '❌', txt: f ? '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') : 'sem erros ainda' };
+  }
+  if (settings.filtro === 'aula') {
+    return { ico: '📅', txt: settings.aula === 'todas' ? 'Todas as aulas' : aulaLabel(settings.aula) };
+  }
+  return { ico: '🏷️', txt: settings.deck === 'todos' ? 'Todos os temas' : deckLabel(settings.deck) };
+}
 function renderModeUI() {
   $('modecur').textContent = (flashOn() ? '⚡ ' : '') + (MODE_TITLES[settings.mode] || MODE_TITLES.zh_all);
+  const e = escopoResumo();
+  $('modescope').textContent = e.ico + ' ' + e.txt;
+  $('escopo-ico').textContent = e.ico;
+  $('escopo-atual').textContent = e.txt;
+}
+function renderEscopo() {
+  const open = !!settings.escopoOpen;
+  $('escopo-body').classList.toggle('open', open);
+  $('escopo-toggle').classList.toggle('open', open);
+  $('escopo-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 // Que tipo de fila a combinação pede: cada uma monta a sessão de um jeito diferente.
 // Os dois quizzes de tom viram tipos distintos porque o pool não é o mesmo — o de áudio
@@ -1859,6 +1885,8 @@ function queueKind() {
   return quizOn() ? 'quiz:' + settings.mode : drawOn() ? 'draw' : flashOn() ? 'flash' : 'normal';
 }
 function renderModeSheet() {
+  renderChips(); // as faixas de erro mudam sozinhas conforme você estuda
+  renderEscopo();
   document.querySelectorAll('.modeopt[data-m]').forEach(b =>
     b.classList.toggle('active', b.dataset.m === settings.mode));
   $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
@@ -1894,6 +1922,11 @@ function bindEvents() {
   });
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
+  $('escopo-toggle').onclick = () => {
+    settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
+    renderEscopo();
+  };
+  // trocar de eixo não fecha a folha: depois do ❌ ainda falta escolher a faixa
   $('filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
     settings.filtro = b.dataset.f; save(K.settings, settings);
     renderChips(); startSession();

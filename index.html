@@ -106,6 +106,11 @@ background:var(--surface);border:1px solid var(--line);border-radius:14px;
 padding:11px 14px;cursor:pointer;box-shadow:var(--shadow);text-align:left;}
 .modebtn .mlabel{flex:0 0 auto;background:var(--pill);color:var(--pilltx);border-radius:8px;
 padding:3px 9px;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;}
+/* o escopo não vira caixa-alta: cabe "≥5 erros" aí, e o teto de largura é pra que um
+   tema de nome longo não coma o nome do modo, que é o texto principal do botão */
+.modebtn .mscope{flex:0 0 auto;max-width:46%;background:var(--pill);color:var(--pilltx);
+border-radius:8px;padding:3px 9px;font-size:11.5px;font-weight:800;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .modebtn .mcur{flex:1;font-size:14.5px;font-weight:700;color:var(--txt);
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .modebtn .marrow{flex:0 0 auto;color:var(--soft);font-size:11px;}
@@ -139,6 +144,18 @@ padding:12px 14px;margin:0 0 8px;cursor:pointer;}
 .modeopt .info small{display:block;color:var(--mut);font-size:12px;line-height:1.35;margin-top:1px;}
 .modeopt .check{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);}
 .modeopt.active{border-color:var(--red);background:var(--surface);}
+/* aberto, a linha e o corpo viram uma caixa só: solto, o par de ícones + chips ficava
+   boiando entre a linha e o Relâmpago, sem dizer a que dos dois pertencia */
+.modeopt.escopo.open{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;
+border-bottom-color:transparent;}
+.modeopt .caret{flex:0 0 auto;color:var(--soft);font-size:13px;transition:transform .18s ease;}
+.modeopt.open .caret{transform:rotate(90deg);}
+.escopo-body{display:none;}
+.escopo-body.open{display:block;background:var(--surface2);border:1.5px solid var(--line);
+border-top:0;border-radius:0 0 14px 14px;padding:2px 14px 12px;margin:0 0 8px;}
+/* dentro da folha os chips quebram linha em vez de rolar na horizontal: aqui há largura
+   sobrando, e uma fila que rola esconde metade das opções bem na hora de escolher */
+.wrapchips{flex-wrap:wrap;overflow:visible;padding:8px 0 0;}
 .modeopt.active .check{border-color:var(--red);background:var(--red);position:relative;}
 .modeopt.active .check:after{content:"";position:absolute;inset:0;margin:auto;width:6px;height:10px;
 border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px);}
@@ -495,18 +512,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
-  <div class="chipsbar">
-    <div class="filterpin">
-      <div class="filtros" id="filtertype">
-        <button class="chip filtro active" data-f="tema" title="Filtrar por tema" aria-label="Filtrar por tema">🏷️</button>
-        <button class="chip filtro" data-f="aula" title="Filtrar por aula" aria-label="Filtrar por aula">📅</button>
-        <button class="chip filtro" data-f="erro" title="Só as que eu mais erro" aria-label="Filtrar pelas que eu mais erro">❌</button>
-      </div>
-    </div>
-    <div class="chips" id="deckchips"></div>
-  </div>
+  <!-- um botão só resume a sessão inteira: a pílula diz O QUE está na fila, o texto diz
+       COMO a pergunta vem. Os dois se escolhem na mesma folha. -->
   <button class="modebtn" id="modebtn">
-    <span class="mlabel">modo</span>
+    <span class="mscope" id="modescope">🏷️ Todos os temas</span>
     <span class="mcur" id="modecur">汉字 → pinyin + tradução</span>
     <span class="marrow">▼</span>
   </button>
@@ -705,7 +714,23 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
        os últimos modos ficariam inalcançáveis (a folha é ancorada embaixo) -->
   <div class="sheet scroll">
     <div class="handle"></div>
-    <h3>Como você quer estudar?</h3>
+    <h3>Sua sessão</h3>
+    <!-- Fechado por padrão: a folha já passa da altura da tela com os oito modos, e
+         aberto isto empurraria a lista inteira pra baixo da dobra. O estado fica salvo —
+         quem troca de tema o tempo todo abre uma vez e não abre de novo. -->
+    <button class="modeopt escopo" id="escopo-toggle" aria-expanded="false">
+      <span class="zhx" id="escopo-ico">🏷️</span>
+      <span class="info"><b>O que estudar</b><small id="escopo-atual">Todos os temas</small></span>
+      <span class="caret">▸</span>
+    </button>
+    <div class="escopo-body" id="escopo-body">
+      <div class="filtros" id="filtertype">
+        <button class="chip filtro active" data-f="tema" title="Filtrar por tema" aria-label="Filtrar por tema">🏷️</button>
+        <button class="chip filtro" data-f="aula" title="Filtrar por aula" aria-label="Filtrar por aula">📅</button>
+        <button class="chip filtro" data-f="erro" title="Só as que eu mais erro" aria-label="Filtrar pelas que eu mais erro">❌</button>
+      </div>
+      <div class="chips wrapchips" id="deckchips"></div>
+    </div>
     <!-- Não é um modo, é uma chave: liga por cima do modo escolhido. Fica no TOPO de
          propósito — embaixo da lista de modos ela caía fora da área visível do celular
          e só se chegava nela rolando por dentro da folha. -->
