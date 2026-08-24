@@ -174,7 +174,8 @@ let drawTrecho = null;           // traço em andamento (o dedo ainda na tela)
 let drawScore = null;            // nota da carta atual; null = ainda não validou
 let drawCtx = null;              // contexto 2d da grade
 let drawPx = 0;                  // lado da grade em px de CSS
-let typeResult = null;           // {ok, escolhido} da carta atual no teclado; null = não respondeu
+let typeResult = null;
+let typePinyin = ''; // o pinyin em composição no teclado do sistema, quando ele deixa ver           // {ok, escolhido} da carta atual no teclado; null = não respondeu
 let modoCarta = null;            // no aleatório, o modo sorteado pra carta atual
 let modoCartaAnterior = null;    // o da carta passada, pra não repetir duas seguidas
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
@@ -626,8 +627,9 @@ function bindPad() {
 // É assim que se escreve chinês num celular: você digita o SOM em letras latinas, sem
 // tom, e o teclado oferece os ideogramas que se leem daquele jeito — quem escolhe é você.
 // Aqui a carta mostra o português e a pessoa refaz esse caminho inteiro: lembrar o som,
-// escrever o som, reconhecer o ideograma no meio dos homófonos.
-const TYPE_MAX_CAND = 9;         // uma fileira de candidatos, como num teclado de verdade
+// escrever o som, reconhecer o ideograma no meio dos homófonos. Quem oferece os
+// candidatos é o teclado de mandarim DO APARELHO, não o app: a fileira própria escolhia
+// entre as cem cartas do deck e entregava a resposta; a do sistema, entre milhares.
 // pinyin → só as letras do som: sem marca de tom, sem espaço, sem apóstrofo. O ü vira u
 // e o v também, então "lu", "lv" e "lǜ" caem todos no mesmo lugar — nenhum teclado de
 // celular tem ü, e cobrar o trema de quem tem duas semanas de mandarim seria maldade.
@@ -637,48 +639,28 @@ function pyPlano(py) {
     .replace(/v/g, 'u')
     .replace(/[^a-z]/g, '');
 }
-// Os candidatos saem do deck INTEIRO, não do filtro da sessão: tirados do filtro, uma
-// aula com uma palavra só em "hao" entregaria a resposta antes de a pessoa pensar.
-function candidatos(txt) {
-  if (!txt) return [];
-  const exatos = [], comeca = [];
-  cards.forEach(c => {
-    const p = pyPlano(c.pinyin);
-    if (p === txt) exatos.push(c);
-    else if (p.indexOf(txt) === 0) comeca.push(c);
-  });
-  const vistos = new Set(); // 的 pode estar em duas cartas e viraria dois candidatos iguais
-  return exatos.concat(comeca).filter(c => {
-    if (vistos.has(c.hanzi)) return false;
-    vistos.add(c.hanzi);
-    return true;
-  }).slice(0, TYPE_MAX_CAND);
-}
 function montaTeclado(card) {
   typeResult = null;
+  typePinyin = '';
   $('typeask').textContent = card.pt;
   const inp = $('typein');
   inp.value = '';
   inp.disabled = false;
   $('typefb').className = 'typefb';
   $('typefb').innerHTML = '';
-  $('typecands').classList.remove('fim');
   $('type-skip').disabled = false;
-  renderCandidatos();
+  renderTypeCheck();
 }
-function renderCandidatos() {
-  const box = $('typecands');
-  if (typeResult) { box.innerHTML = ''; return; }
-  const txt = pyPlano($('typein').value);
-  const cs = candidatos(txt);
-  box.innerHTML = cs.length
-    ? cs.map((c, i) => '<button class="cand" data-h="' + esc(c.hanzi) + '">' +
-        '<b class="zh" lang="zh-Hans">' + esc(c.hanzi) + '</b><small>' + (i + 1) + '</small></button>').join('')
-    : txt ? '<span class="candvazio">nenhum ideograma do deck se lê assim</span>' : '';
-  box.querySelectorAll('.cand').forEach(b =>
-    b.onclick = (e) => { e.stopPropagation(); respondeTeclado(b.dataset.h); });
+// sem a fileira de candidatos não existe mais o clique que respondia a carta: quem
+// responde agora é o "conferir" (ou o Enter), e só com alguma coisa escrita
+function renderTypeCheck() {
+  $('type-check').disabled = !!typeResult || !$('typein').value.trim();
 }
-// hanzi = o ideograma escolhido; null = tocou em "não lembro"
+// hanzi = o que você escreveu; null = tocou em "não lembro"
+function confereTeclado() {
+  const v = $('typein').value.trim();
+  if (v) respondeTeclado(v);
+}
 function respondeTeclado(hanzi) {
   if (!current || typeResult) return;
   const ok = hanzi === current.hanzi;
@@ -687,20 +669,26 @@ function respondeTeclado(hanzi) {
   // som estava certo: errar o pinyin e cair num candidato qualquer não diz nada sobre
   // confundir homófonos. E digitar o pinyin certo e mesmo assim tocar em "não lembro"
   // é justamente o caso que isto quer pegar — som ok, ideograma não.
-  const somOk = pyPlano($('typein').value) === pyPlano(current.pinyin);
-  bumpHab(current.id, 'som', !somOk);
-  if (somOk) bumpHab(current.id, 'ideo', !ok);
+  // Com o teclado do sistema o campo recebe só o ideograma pronto — o pinyin fica
+  // dentro do IME. Alguns teclados o entregam no evento de composição; quando entregam,
+  // dá pra separar "não lembrei o som" de "errei o ideograma". Quando não entregam é
+  // melhor não gravar nada do que gravar as duas coisas erradas.
+  const digitado = pyPlano(typePinyin);
+  if (digitado) {
+    const somOk = digitado === pyPlano(current.pinyin);
+    bumpHab(current.id, 'som', !somOk);
+    if (somOk) bumpHab(current.id, 'ideo', !ok);
+  }
   $('typein').disabled = true;
   $('type-skip').disabled = true;
-  $('typecands').innerHTML = '';
-  $('typecands').classList.add('fim');
+  $('type-check').disabled = true;
   // uma linha por informação: a resposta certa, o que você escolheu, e o som
   const linha = (cls, lbl, h) => '<div class="l ' + cls + '"><span class="lbl">' + lbl +
     '</span><b class="zh" lang="zh-Hans">' + esc(h) + '</b></div>';
   const fb = $('typefb');
   fb.className = 'typefb ' + (ok ? 'ok' : 'ruim');
   fb.innerHTML = linha('', ok ? '对!' : 'era', current.hanzi) +
-    (!ok && hanzi ? linha('no', 'não', hanzi) : '') +
+    (!ok && hanzi ? linha('no', 'você', hanzi) : '') +
     '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
   $('hint-f').textContent = 'toque na carta pra ver tudo';
   // sugestão da nota; quem decide ainda é você, igual ao desenho
@@ -2115,14 +2103,16 @@ function bindEvents() {
   // candidatos ocupam quase toda a frente, e virar entregaria a resposta. Depois de
   // responder o clique passa: a dica manda tocar na carta pra ver tudo.
   $('typewrap').onclick = (e) => { if (!typeResult) e.stopPropagation(); };
-  $('typein').oninput = renderCandidatos;
+  $('typein').oninput = renderTypeCheck;
+  // o pinyin cru só existe aqui dentro: no `input` o campo já traz o ideograma escolhido
+  $('typein').addEventListener('compositionupdate', (e) => { if (e.data) typePinyin = e.data; });
   $('typein').onkeydown = (e) => {
-    if (e.key !== 'Enter') return;
-    e.preventDefault(); // Enter escolhe o primeiro candidato, como a barra de espaço num IME
-    const c = candidatos(pyPlano($('typein').value))[0];
-    if (c) respondeTeclado(c.hanzi);
+    if (e.key !== 'Enter' || e.isComposing) return; // Enter dentro do IME é dele, não nosso
+    e.preventDefault();
+    confereTeclado();
   };
-  // sem esta saída, quem não lembra o som fica preso: sem pinyin não há candidato nenhum
+  $('type-check').onclick = (e) => { e.stopPropagation(); confereTeclado(); };
+  // sem esta saída, quem não lembra o som fica preso
   $('type-skip').onclick = (e) => { e.stopPropagation(); respondeTeclado(null); };
   $('draw-undo').onclick = (e) => { e.stopPropagation(); desfazTraco(); };
   $('draw-clear').onclick = (e) => { e.stopPropagation(); limpaDesenho(); };

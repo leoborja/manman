@@ -233,14 +233,18 @@ padding:12px 14px;font-weight:800;font-size:14px;cursor:pointer;color:var(--txt)
 /* a nota sugere um botão, mas quem decide é você */
 .grades button.sugerido{box-shadow:inset 0 0 0 2px currentColor,var(--shadow);}
 
-/* modo teclado: campo de pinyin + fileira de candidatos, como num IME de celular */
+/* modo teclado: campo onde se escreve o 汉字 com o teclado de mandarim do aparelho */
 .fcard.type{min-height:400px;}
 .fcard.type .face.front{padding:44px 16px 28px;gap:12px;justify-content:flex-start;}
 .fcard.type .face.front .hint{bottom:8px;}
 .typewrap{display:none;flex-direction:column;align-items:stretch;gap:12px;align-self:stretch;}
 .typewrap.show{display:flex;}
 .typeask{font-size:27px;font-weight:800;letter-spacing:-.3px;line-height:1.25;min-height:34px;}
-.typerow{display:flex;gap:8px;align-items:center;}
+/* o campo ocupa a linha inteira e os dois botões dividem a de baixo: com os três lado
+   a lado o campo sobrava com um terço da largura, apertado pra escrever 汉字 */
+.typerow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.typerow .typein{flex:1 1 100%;}
+.typerow .typeskip{flex:1 1 0;}
 /* font:inherit antes do font-size senão o iOS usa a fonte de formulário dele. E o campo
    precisa de 16px pra cima: abaixo disso o Safari dá zoom na página ao focar. */
 .typein{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface2);
@@ -251,20 +255,6 @@ color:var(--red);text-align:center;letter-spacing:1px;}
 .typeskip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:14px;
 padding:13px 12px;font-weight:800;font-size:13px;cursor:pointer;color:var(--mut);}
 .typeskip:disabled{opacity:.4;cursor:default;}
-/* rola na horizontal e começa pela esquerda, como a barra de candidatos de um teclado
-   de verdade — centralizado, o começo da fila ficaria fora de alcance quando enche */
-.typecands{display:flex;gap:8px;min-height:64px;align-items:center;
-overflow-x:auto;-webkit-overflow-scrolling:touch;}
-/* enquanto se digita a fileira guarda a própria altura, senão a carta pularia na
-   primeira letra; respondida, ela some e devolve o espaço pro resultado */
-.typecands.fim{min-height:0;}
-.typecands .cand{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;
-border:1px solid var(--line);background:var(--surface2);border-radius:14px;
-padding:6px 12px 4px;cursor:pointer;color:var(--txt);}
-.typecands .cand:active{background:var(--pill);}
-.typecands .cand b{font-size:30px;font-weight:500;line-height:1.1;}
-.typecands .cand small{font-size:10px;color:var(--soft);font-weight:700;}
-.candvazio{color:var(--soft);font-size:13px;font-weight:700;}
 /* O resultado é uma coisa por linha — "era X", "não Y", o pinyin — porque tudo na
    mesma frase vira sopa de vírgulas justo quando a pessoa precisa comparar dois
    ideogramas parecidos. O ideograma é o que se veio ler aqui, então é ele que é grande. */
@@ -563,12 +553,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <div class="typewrap" id="typewrap">
           <div class="typeask" id="typeask"></div>
           <div class="typerow">
-            <input class="typein" id="typein" type="text" inputmode="latin" enterkeyhint="done"
+            <!-- sem inputmode: com "latin" o iOS abre o teclado ocidental e atrapalha
+                 quem vai escrever no teclado de mandarim, que é o ponto deste modo -->
+            <input class="typein" id="typein" type="text" enterkeyhint="done" lang="zh-Hans"
               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-              placeholder="digite o pinyin, sem tom">
+              placeholder="escreva o 汉字">
+            <button class="typeskip" id="type-check" title="Conferir a resposta">conferir</button>
             <button class="typeskip" id="type-skip" title="Desistir e ver a resposta">não lembro</button>
           </div>
-          <div class="typecands" id="typecands"></div>
           <div class="typefb" id="typefb"></div>
         </div>
         <div class="quizfb" id="quizfb" style="display:none"></div>
@@ -781,7 +773,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     </button>
     <button class="modeopt" data-m="pt_type">
       <span class="zhx">⌨️</span>
-      <span class="info"><b>tradução → escrever no teclado</b><small>vê o português, digita o pinyin e escolhe o ideograma na fileira de candidatos</small></span>
+      <span class="info"><b>tradução → escrever no teclado</b><small>vê o português e escreve o ideograma com o teclado de mandarim do próprio aparelho</small></span>
       <span class="check"></span>
     </button>
     <button class="modeopt" data-m="zh_all">
