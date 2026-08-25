@@ -14,6 +14,9 @@
   {"id":"ni","hanzi":"你","pinyin":"nǐ","pt":"você","deck":"pronomes","data_aula":"2026-08-06","nota":"Leva o radical 亻(pessoa) à esquerda"},
 
   {"id":"jiao","hanzi":"叫","pinyin":"jiào","pt":"chamar-se","deck":"verbos","data_aula":"2026-08-06","nota":"我叫… = eu me chamo… (radical 口 boca)"},
+  {"id":"shenme","hanzi":"什么","pinyin":"shénme","pt":"o que / qual","deck":"uteis","data_aula":"2026-08-06","nota":"你叫什么名字? = como você se chama? — a pergunta que abre com o 叫 que você já tem. 什 leva 亻(pessoa), 么 tem 3 traços: os dois valem só pelo som, e a segunda sílaba fica neutra (shénme)"},
+  {"id":"mingzi","hanzi":"名字","pinyin":"míngzi","pt":"nome","deck":"uteis","data_aula":"2026-08-06","nota":"我的名字是… ou, mais comum na fala, 我叫… 名 é 夕 (anoitecer) + 口 (boca): o nome é o que se chama no escuro. 字 é o 子 (criança) que você já tem, debaixo de um teto 宀. Segunda sílaba em tom neutro: míngzi"},
+  {"id":"baxi","hanzi":"巴西","pinyin":"Bāxī","pt":"Brasil","deck":"paises","data_aula":"2026-08-06","nota":"我是巴西人 = eu sou brasileiro, pela mesma receita país + 人 de 中国人 e 美国人. É transcrição do som e não leva 国, como 日本. O 巴 é o mesmo do 爸爸, também só pelo som; 西 sozinho é oeste"},
 
   {"id":"hao","hanzi":"好","pinyin":"hǎo","pt":"bom / bem","deck":"uteis","data_aula":"2026-08-06","nota":"Ideograma composto: 女 (mulher/feminino) + 子 (criança)"},
   {"id":"hen","hanzi":"很","pinyin":"hěn","pt":"muito","deck":"uteis","data_aula":"2026-08-12","nota":"我很好 = eu estou muito bem"},
@@ -55,6 +58,7 @@
   {"id":"didi","hanzi":"弟弟","pinyin":"dìdi","pt":"irmão mais novo","deck":"familia","data_aula":"2026-08-19","nota":"Par do 哥哥. Repare que a segunda sílaba perde o tom nos dois: gēge, dìdi"},
   {"id":"jiejie","hanzi":"姐姐","pinyin":"jiějie","pt":"irmã mais velha","deck":"familia","data_aula":"2026-08-19","nota":"女 (mulher/feminino) + 且. É o 哥哥 no feminino"},
   {"id":"meimei","hanzi":"妹妹","pinyin":"mèimei","pt":"irmã mais nova","deck":"familia","data_aula":"2026-08-19","nota":"女 (mulher/feminino) + 未 (ainda não) — a que ainda não cresceu. É o 弟弟 no feminino"},
+  {"id":"yeye","hanzi":"爷爷","pinyin":"yéye","pt":"avô (paterno)","deck":"familia","data_aula":"2026-08-19","nota":"O pai do pai: 爷 traz 父 (pai) em cima, o mesmo do 爸爸. Dobrado e com a segunda sílaba neutra — yéye, como 哥哥 e 弟弟. A avó paterna é 奶奶 nǎinai; os avós maternos têm nome próprio, 外公 wàigōng e 外婆 wàipó"},
 
   {"id":"women","hanzi":"我们","pinyin":"wǒmen","pt":"nós","deck":"pronomes","data_aula":"2026-08-19","nota":"我 + 们, o sufixo de plural. 们 nunca aparece sozinho"},
   {"id":"nimen","hanzi":"你们","pinyin":"nǐmen","pt":"vocês","deck":"pronomes","data_aula":"2026-08-19","nota":"你 + 们. Mesmo padrão de 我们 e 他们"},
@@ -65,6 +69,9 @@
   {"id":"nanren","hanzi":"男人","pinyin":"nánrén","pt":"homem","deck":"uteis","data_aula":"2026-08-19","nota":"男 (homem/masculino) + 人 (pessoa). Par de 女人 nǚrén (mulher)"},
   {"id":"pengyou","hanzi":"朋友","pinyin":"péngyou","pt":"amigo","deck":"uteis","data_aula":"2026-08-19","nota":"朋 são duas luas 月 lado a lado. Segunda sílaba em tom neutro: péngyou"},
   {"id":"kafei","hanzi":"咖啡","pinyin":"kāfēi","pt":"café","deck":"comida","data_aula":"2026-08-19","nota":"Transliteração do som estrangeiro — os dois caracteres levam 口 (boca) e valem só pelo som"},
+  {"id":"yinliao","hanzi":"饮料","pinyin":"yǐnliào","pt":"bebidas","deck":"comida","data_aula":"2026-08-19","nota":"饮 (beber) + 料 (matéria-prima): é a palavra de cardápio, bebida em geral. O 饣à esquerda é o mesmo radical de comida do 饭 (米饭) e do 饿 (com fome). Pra ação continua o 喝: 我要喝饮料"},
+  {"id":"kele","hanzi":"可乐","pinyin":"kělè","pt":"Coca-Cola","deck":"comida","data_aula":"2026-08-19","nota":"可 (poder) + 乐 (alegre), escolhidos pelo som — o nome completo é 可口可乐 Kěkǒu Kělè. Sozinho serve pra qualquer refrigerante de cola. Repare no 乐: aqui é lè, mas em 音乐 yīnyuè ele vira yuè"},
+  {"id":"hanbaobao","hanzi":"汉堡包","pinyin":"hànbǎobāo","pt":"hambúrguer","deck":"comida","data_aula":"2026-08-19","nota":"汉堡 vale só pelo som de \"Hamburgo\" e 包 é pão/embrulho — o pão fecha a palavra. No dia a dia se diz só 汉堡. O 汉 é o mesmo de 汉字 hànzì (os caracteres) e de 汉语 Hànyǔ (a língua chinesa)"},
 
   {"id":"yao","hanzi":"要","pinyin":"yào","pt":"querer","deck":"verbos","data_aula":"2026-08-19","nota":"你要咖啡吗? = você quer café?"},
   {"id":"he-beber","hanzi":"喝","pinyin":"hē","pt":"beber","deck":"verbos","data_aula":"2026-08-19","nota":"Radical 口 (boca) à esquerda — como 吗, 呢 e 叫"},
@@ -78,6 +85,8 @@
   {"id":"num-100","hanzi":"百","pinyin":"bǎi","pt":"cem (100)","deck":"numeros","data_aula":"2026-08-19","nota":"Depois do 十 (dez) vem o 百: 一百 yìbǎi = cem — repare que o 一 troca de tom antes do 3º tom de bǎi. Pra página cem: 第一百页"},
   {"id":"nupengyou","hanzi":"女朋友","pinyin":"nǚpéngyou","pt":"namorada","deck":"familia","data_aula":"2026-08-19","nota":"女 (feminino) + 朋友 (amigo): os dois você já tem separados. Sem o 女, 朋友 volta a ser só amigo"},
   {"id":"nanpengyou","hanzi":"男朋友","pinyin":"nánpéngyou","pt":"namorado","deck":"familia","data_aula":"2026-08-19","nota":"男 (masculino) + 朋友, o par de 女朋友. Já aparecia citado na nota do 男"},
+
+  {"id":"gou","hanzi":"狗","pinyin":"gǒu","pt":"cachorro","deck":"animais","data_aula":"2026-08-19","nota":"O 犭à esquerda é o 犬 (cão) espremido: o radical que marca bicho de quatro patas, como em 猫 māo (gato). 小狗 xiǎo gǒu = cachorrinho (小 xiǎo = pequeno)"},
 
   {"id":"mifan","hanzi":"米饭","pinyin":"mǐfàn","pt":"arroz (cozido)","deck":"comida","fonte":"duolingo","nota":"米 mǐ é o grão cru, 饭 fàn é a comida pronta — 米饭 é o arroz do prato. O 饣de 饭 é o mesmo radical de comida do 饿 (com fome)"},
   {"id":"shui","hanzi":"水","pinyin":"shuǐ","pt":"água","deck":"comida","fonte":"duolingo","nota":"Pictograma de um rio correndo. Espremido à esquerda vira 氵— o radical de 渴 (com sede) que você já tem"},
