@@ -21,6 +21,8 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 我 | wǒ | [Zh-wǒ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C7%92.ogg) | 我 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 你 | nǐ | [Zh-nǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C7%90.ogg) | 你 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 叫 | jiào | [Zh-jiào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C3%A0o.ogg) | 叫 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 什么 | shénme | [Zh-shénme.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%A9nme.ogg) | 什么 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 名字 | míngzi | [Zh-míngzi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%ADngzi.ogg) | 名字 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 好 | hǎo | [Zh-hǎo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C7%8Eo.ogg) | 好 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 很 | hěn | [Zh-hěn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C4%9Bn.ogg) | 很 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 也 | yě | [Zh-yě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%9B.ogg) | 也 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
@@ -50,6 +52,7 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 弟弟 | dìdi | [Zh-dìdi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%ACdi.ogg) | 弟弟 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 姐姐 | jiějie | [Zh-jiějie.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C4%9Bjie.ogg) | 姐姐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 妹妹 | mèimei | [Zh-mèimei.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A8imei.ogg) | 妹妹 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 爷爷 | yéye | [Zh-yéye.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A9ye.ogg) | 爷爷 | Yue Tan | CC BY-SA 3.0 us |
 | 我们 | wǒmen | [Zh-wǒmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C7%92men.ogg) | 我们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 你们 | nǐmen | [Zh-nǐmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C7%90men.ogg) | 你们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 他们 | tāmen | [Zh-tāmen.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%81men.ogg) | 它们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
