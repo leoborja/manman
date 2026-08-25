@@ -178,6 +178,10 @@ padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;}
 /* escondida, ela some de verdade: com visibility:hidden o canto continuaria reservado e
    o título da carta ficaria empurrado pra baixo por um espaço vazio */
 .semtag .face .deckpill{display:none;}
+/* a pronúncia aproximada anda colada no pinyin, um corpo menor e sem peso: é nota de
+   rodapé do som, não o som. Desligada, sai do fluxo — com visibility sobraria o buraco */
+.pron{font-size:.78em;font-weight:400;opacity:.72;margin-left:.35em;white-space:nowrap;}
+.sempron .pron{display:none;}
 .bigspk{width:108px;height:108px;border-radius:50%;border:1px solid var(--line);
 background:var(--surface2);font-size:46px;line-height:1;cursor:pointer;box-shadow:var(--shadow);}
 .bigspk:active{background:var(--pill);transform:scale(.97);}
@@ -802,6 +806,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <!-- estes dois não são modo nem escopo: não mudam o que se pergunta nem como, mudam
          o quanto a carta entrega. Ficam depois da lista, sob divisória própria. -->
     <div class="sheetsep">configurações</div>
+    <button class="modeopt" id="pron-opt">
+      <span class="zhx">🗣️</span>
+      <span class="info"><b>Pronúncia aproximada</b><small>o som em letras de português atrás do pinyin — hǎo (rau). Muleta pra ler; a referência é o áudio</small></span>
+      <span class="check"></span>
+    </button>
     <button class="modeopt" id="tag-opt">
       <span class="zhx">🏷️</span>
       <span class="info"><b>Mostrar o tema na carta</b><small>a etiqueta no canto — desligue se ela estiver entregando a resposta</small></span>

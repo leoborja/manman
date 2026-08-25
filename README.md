@@ -132,6 +132,7 @@ No fim da rodada: *"Você acertou 41 de 57 — 72%"*. A nota é sobre o **deck i
 - **Traçado animado**: o ideograma se desenha traço a traço na ordem oficial; toque nele pra repetir
 - **🔊 Pronúncia**: voz chinesa do próprio aparelho, na frente e no verso
 - **Pinyin colorido por tom**: 1º vermelho · 2º laranja · 3º verde · 4º azul · neutro cinza
+- **Pronúncia aproximada** atrás do pinyin — *hǎo (rau)*, *xièxie (xié-xié)* —, ligada por padrão e com interruptor no MODO. São as letras do **português** que chegam mais perto do som: quem lê "hao" com olho de brasileiro fala "áo", e o h chinês é o r de "rato". É muleta pra primeira leitura, não transcrição fonética — a referência continua sendo a gravação do 🔊
 - **🚫 desligar esta carta**: tira da rotação (religa na aba Cartas) — individual por usuário
 
 ## 卡 Cartas
@@ -273,6 +274,7 @@ sobre eles depende do plano da conta.
 - 🔀 Aleatório (23/08) sorteando quatro modos por carta, e **o tom deixando de ser placar** quando está dentro dele: a rodada fechada do quiz não cabe numa fila de revisão, e manter as duas lógicas separadas dentro da mesma sessão significaria uma sessão que ora conta pra meta ora não. Virou carta avaliada como qualquer outra — o que também resolve o incômodo de o treino de tom ser o único que não entrava na repetição espaçada
 - Cromo de navegação encolhido (23/08): as abas viraram **um controle segmentado só de texto** (62 → 40px) e o "por tema / por aula" virou **dois ícones** do tamanho dos chips (🏷️ e 📅), liberando dois terços da largura que as duas palavras ocupavam. Tudo isso é moldura: quanto menos altura ela come, mais alto a carta começa — que é a única coisa na tela que a pessoa veio ver
 - Abas no rodapé, **tentadas e desfeitas** no mesmo dia (23/08): a ideia era o polegar, que no celular grande não alcança o topo. Mas o app roda tanto no celular quanto no navegador, e no navegador — janela larga, sem polegar — uma barra flutuando embaixo fica claramente deslocada. Voltaram pra fileira acima dos chips, que serve às duas telas. Se um dia valer a pena, o caminho é a barra de baixo **só no celular** (media query), não nos dois
+- Pronúncia aproximada **calculada, não preenchida** (25/08): a tentação era uma coluna nova no `seed_cards.json` pra escrever o som palavra por palavra. Mas o pinyin já é um alfabeto fechado — pouco mais de 400 sílabas, todas montadas de inicial + final — então uma tabela de ~50 linhas no `app.js` cobre o deck inteiro e toda palavra futura sem ninguém preencher campo nenhum, sem migração no banco e sem rodar o `seed.py`. Sílaba que saia torta se conserta no `PRON_EXCECAO`, num lugar só, e não carta por carta. O mesmo trabalho encontrou um bug antigo do divisor de sílabas: 韩国 `Hánguó` virava `háng-uó` (o g virando coda), o que também pintava o tom na sílaba errada
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap

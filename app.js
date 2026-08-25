@@ -107,18 +107,88 @@ function silabas(tok) {
   PY_SILABA.lastIndex = 0;
   while ((m = PY_SILABA.exec(low)) !== null) {
     if (m.index !== pos) return [tok]; // sobrou letra entre sílabas → não é pinyin limpo, não arrisca
-    out.push(tok.slice(pos, pos + m[0].length));
-    pos += m[0].length;
+    let fim = pos + m[0].length;
+    // A consoante do fim nem sempre é coda: em Hánguó o g abre a sílaba seguinte (hán-guó,
+    // não háng-uó) e em nǚrén o r faz o mesmo. Vogal logo depois dela entrega o caso —
+    // e quando a divisão é ambígua de verdade o pinyin usa apóstrofo (fān'àn), então
+    // devolver a consoante é o palpite certo. Sem isto o 韩国 saía pintado e falado errado.
+    if (fim < low.length && PY_VOGAIS.indexOf(low[fim]) >= 0
+        && 'ngr'.indexOf(low[fim - 1]) >= 0 && fim - 1 > pos) fim--;
+    out.push(tok.slice(pos, fim));
+    pos = fim;
+    PY_SILABA.lastIndex = pos;
   }
   return (pos === tok.length && out.length) ? out : [tok];
 }
-function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom
-  return String(py || '').split(/([\s'’]+)/).map(tok => // ’ curvo também: teclado do iPhone gera
+function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom, e o som em português atrás
+  const cor = String(py || '').split(/([\s'’]+)/).map(tok => // ’ curvo também: teclado do iPhone gera
     /[a-zA-ZüÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/.test(tok)
       ? silabas(tok).map(s =>
         '<span style="color:' + TONE_COLORS[toneOf(s)] + '">' + esc(s) + '</span>').join('')
       : esc(tok)
   ).join('');
+  const pron = pronuncia(py);
+  return pron ? cor + '<span class="pron">(' + esc(pron) + ')</span>' : cor;
+}
+
+// ── pronúncia aproximada ────────────────────────────────────
+// hǎo (rau). São as letras do PORTUGUÊS que chegam mais perto do som chinês — quem lê
+// "hao" com olho de brasileiro fala "áo", e o h chinês é o r de "rato". Não é transcrição
+// fonética e não substitui a gravação: é muleta pra primeira leitura.
+//
+// Isto NÃO é coluna do banco. O pinyin já é um alfabeto fechado — pouco mais de 400
+// sílabas, todas montadas de inicial + final — então a aproximação se calcula da própria
+// sílaba e vale pra toda palavra nova sem ninguém preencher campo nenhum. Palavra que
+// saísse torta se conserta aqui, no PRON_EXCECAO, e não carta por carta.
+const PRON_INICIAL = { b:'b', p:'p', m:'m', f:'f', d:'d', t:'t', n:'n', l:'l', g:'g', k:'k',
+  h:'r',                          // o h chinês raspa a garganta: é o r de "rato", não o h mudo de "hoje"
+  j:'dj', q:'tch', x:'x',         // j/q/x e zh/ch/sh caem no mesmo par pra ouvido brasileiro
+  zh:'dj', ch:'tch', sh:'ch',
+  r:'j',                          // 人 rén soa "jên", com o j de "já"
+  z:'dz', c:'ts', s:'s' };
+const PRON_FINAL = { a:'a', o:'ô', e:'ê', ai:'ai', ei:'ei', ao:'au', ou:'ou',
+  an:'an', en:'ên', ang:'ang', eng:'eng', ong:'ong', er:'ar',
+  i:'i', ia:'iá', ie:'ié', iao:'iau', iu:'iou', ian:'ién', in:'in',
+  iang:'iang', ing:'ing', iong:'iong',
+  u:'u', ua:'uá', uo:'uô', uai:'uai', ui:'uei', uan:'uan', un:'uên',
+  uang:'uang', ueng:'ueng',
+  'ü':'iu', 'üe':'iué', 'üan':'iuan', 'ün':'iun' };
+// y e w não são consoante nenhuma: são a mesma vogal escrita de outro jeito quando abre a
+// sílaba (yī = i, wǒ = uo, yǔ = ü). Normalizados aqui, a tabela de finais resolve o resto.
+const PRON_YW = { yi:'i', ya:'ia', ye:'ie', yao:'iao', you:'iu', yan:'ian', yin:'in',
+  yang:'iang', ying:'ing', yong:'iong', yu:'ü', yue:'üe', yuan:'üan', yun:'ün',
+  wu:'u', wa:'ua', wo:'uo', wai:'uai', wei:'ui', wan:'uan', wen:'un', wang:'uang', weng:'ueng' };
+const PRON_EXCECAO = {};          // sílaba plana → aproximação escrita à mão, quando a tabela erra
+// tira o tom mas guarda o trema: o ü de 女 nǚ é outra vogal, não enfeite (o pyPlano do
+// teclado achata os dois no mesmo u de propósito, que é o contrário do que se quer aqui)
+const PRON_SEM_TOM = { 'ā':'a','á':'a','ǎ':'a','à':'a', 'ē':'e','é':'e','ě':'e','è':'e',
+  'ī':'i','í':'i','ǐ':'i','ì':'i', 'ō':'o','ó':'o','ǒ':'o','ò':'o',
+  'ū':'u','ú':'u','ǔ':'u','ù':'u', 'ǖ':'ü','ǘ':'ü','ǚ':'ü','ǜ':'ü', v:'ü' };
+function pronSilaba(sil) {
+  const s = String(sil).toLowerCase().split('').map(c => PRON_SEM_TOM[c] || c).join('');
+  if (!/^[a-zü]+$/.test(s)) return s;
+  if (PRON_EXCECAO[s]) return PRON_EXCECAO[s];
+  if (PRON_YW[s] !== undefined) return PRON_FINAL[PRON_YW[s]] || s;
+  const ini = /^(zh|ch|sh)/.test(s) ? s.slice(0, 2) : (PRON_INICIAL[s[0]] ? s[0] : '');
+  let fin = s.slice(ini.length);
+  // depois de j/q/x o u escrito é sempre ü (xué = xüé); depois de n/l os dois existem
+  if ('jqx'.indexOf(ini) >= 0 && fin[0] === 'u') fin = 'ü' + fin.slice(1);
+  // o i de shì, rì, zhī não é i nenhum: é a língua parada no lugar da consoante, zumbindo
+  if (fin === 'i' && ['zh', 'ch', 'sh', 'r'].indexOf(ini) >= 0) return PRON_INICIAL[ini] + 'r';
+  let cabeca = PRON_INICIAL[ini] || '';
+  // "ge" em português é "je": o g duro antes de e/i pede o u mudo, como em "guerra"
+  if (cabeca === 'g' && 'eêi'.indexOf((PRON_FINAL[fin] || '')[0]) >= 0) cabeca = 'gu';
+  const cauda = PRON_FINAL[fin];
+  if (cauda === undefined) return s; // sílaba que a tabela não conhece sai como veio
+  return cabeca + cauda;
+}
+function pronuncia(py) {
+  const out = String(py || '').split(/([\s'’]+)/).map(tok =>
+    /[a-zA-ZüÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/.test(tok)
+      ? silabas(tok).map(pronSilaba).join('-')
+      : tok
+  ).join('').trim();
+  return out;
 }
 
 // ── estado ──────────────────────────────────────────────────
@@ -133,6 +203,7 @@ if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
 if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 if (settings.tag === undefined) settings.tag = true; // quem já usava o app não tem o campo
+if (settings.pron === undefined) settings.pron = true;   // idem
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
 settings.flash = !!settings.flash;
 // No aleatório quem manda é o modo sorteado pra CARTA ATUAL; fora dele, o escolhido no
@@ -2025,6 +2096,7 @@ function renderModeSheet() {
     b.classList.toggle('active', b.dataset.m === settings.mode));
   $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
   $('tag-opt').classList.toggle('active', !!settings.tag);
+  $('pron-opt').classList.toggle('active', !!settings.pron);
   $('flash-opt').classList.toggle('active', !!settings.flash);
   $('flashtime').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
@@ -2036,6 +2108,13 @@ function renderModeSheet() {
   // continua clicável, e tocar num tempo liga a chave
   $('flashtime').classList.toggle('disabled', semEfeito);
 }
+// a aproximação sai do HTML sempre; quem decide se aparece é esta classe no <html>.
+// Assim o interruptor vale na hora pra carta na tela, pra lista de Cartas e pro que já
+// está montado — nada precisa ser redesenhado.
+function applyPron() {
+  document.documentElement.classList.toggle('sempron', !settings.pron);
+}
+
 function applyTheme() {
   const pref = settings.theme || 'light'; // light é o padrão; dark só se a pessoa escolher
   document.documentElement.dataset.theme = pref;
@@ -2099,6 +2178,10 @@ function bindEvents() {
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
     renderModeSheet();
+  };
+  $('pron-opt').onclick = () => {
+    settings.pron = !settings.pron; save(K.settings, settings);
+    renderModeSheet(); applyPron();
   };
   $('tag-opt').onclick = () => {
     settings.tag = !settings.tag; save(K.settings, settings);
@@ -2185,6 +2268,7 @@ function bindEvents() {
 // ── init ────────────────────────────────────────────────────
 async function init() {
   applyTheme();
+  applyPron();
   bindEvents();
   bindTips();
   renderModeUI();
