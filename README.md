@@ -48,6 +48,28 @@ A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 
 
 **🏷️ tema** (Números, Pronomes, Úteis…) ou **📅 aula** (a data em que a palavra entrou, de `data_aula`). Os dois ícones **abrem a própria linha dos chips** e ficam presos na esquerda quando ela rola: são eles que dizem de que lista os chips do lado saíram. São pílulas do mesmo tamanho dos chips, mas o "ligado" aqui é neutro (contorno escuro) e não vermelho — vermelho é a coisa **escolhida** na fila, estes dois só dizem **que fila é**. Uma fileira só, alternando: duas fileiras empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
 
+### 💬 Frases
+
+Uma frase **é** uma carta: mesmos campos, mesmo SRS, mesma sincronização, e conta na mesma meta de 30. O que separa as duas é a **fila** — palavra e frase nunca se misturam numa sessão, porque frase chega em bloco (uma aula inteira de uma vez) e afogaria o vocabulário em cartas novas.
+
+Por isso "Palavras / Frases" **não é um quarto ícone** ao lado de 🏷️📅❌. Aqueles três são *eixos de fatiar a mesma lista*; este escolhe **qual lista é**. Fica um nível acima deles, dentro do "O que estudar", e assim "as frases da aula de 06/08" e "as frases que eu mais erro" continuam existindo. Enquanto o deck não tiver frase nenhuma a linha inteira some — botão que abre sessão vazia é pior que botão nenhum.
+
+**Três dos seis modos ficam de fora, e sozinhos.** Desenho e os dois quizzes de tom pedem palavra de um caractere: a grade 田字格 é uma só e o tom é de uma sílaba. Eles já se excluíam antes de existir frase, então não foi preciso ensinar nada a eles — só sumiram do seletor, em vez de abrir uma sessão vazia e explicar depois. Sobra o que a frase sabe responder: virar a carta, o teclado e o 🧩 ordenar.
+
+**O áudio da frase é o TTS, e aqui isso é bom.** O defeito conhecido da voz sintética é o 3º tom **isolado** — só a descida, sem a subida. Numa frase inteira não existe sílaba isolada, então o problema que tirou o TTS das palavras não aparece.
+
+### 🧩 Ordenar as palavras
+
+A frase ensina uma coisa que a palavra não ensina: **ordem**. 不 antes do verbo, o tempo antes do lugar, o 是 que só liga substantivo a substantivo. Nenhum dos outros modos cobra isso — virar a carta cobra reconhecimento, o teclado cobra o ideograma.
+
+Você vê o português, as palavras da frase aparecem embaralhadas em pílulas, e monta tocando nelas em ordem. Tocar de novo numa que já está na frase devolve ela pro monte — o desfazer não precisa de botão próprio. O "conferir" só libera com a frase inteira montada: meia frase não é resposta errada, é resposta pela metade.
+
+No resultado, a ordem certa vem em cima e a **sua** embaixo, com cada peça verde ou vermelha conforme tenha caído na mesma posição. Como no desenho e no teclado, a nota **sugere** um botão e quem decide é você — é revisão normal, conta na meta e mexe no agendamento.
+
+**A segmentação não é campo preenchido à mão.** O pinyin já vem separado por palavra (`Wǒ shì Bāxī rén`) e cada sílaba de pinyin é exatamente um caractere — então contar as sílabas de cada pedaço entrega `我 | 是 | 巴西 | 人` sozinho. É a mesma escolha da pronúncia aproximada: calcular em vez de digitar, pra que frase nova não precise de campo novo nem de migração no banco. Quando a conta não fecha (儿 de 哪儿 é caractere sem sílaba própria) a frase simplesmente não aparece neste modo — exercício ausente é melhor que exercício errado. A saída manual, pra frase que insista, é o campo `seg` da carta: `"我|是|巴西|人"`.
+
+As peças são identificadas por chave e não pelo que está escrito nelas, porque frase repete palavra: 对不对 tem dois 对, e sem chave própria clicar num moveria o outro.
+
 ### Modos (botão MODO)
 
 São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder é uma **ação** — digitar, desenhar, marcar o tom. Mais o **🔀 Aleatório**, que não é um sexto exercício: é um sorteio entre quatro deles, carta a carta.
@@ -55,7 +77,8 @@ São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder �
 | Modo | Frente | Como se responde |
 |---|---|---|
 | 🔀 **Aleatório** | sorteia um dos quatro a cada carta | do jeito do modo sorteado |
-| ⌨️ **tradução → escrever no teclado** | português | digita o pinyin e escolhe o ideograma na fileira de candidatos |
+| ⌨️ **tradução → escrever no teclado** | português | escreve o 汉字 (ou a frase) no teclado de mandarim do aparelho |
+| 🧩 **tradução → ordenar as palavras** *(só frase)* | português | toca nas palavras embaralhadas na ordem certa |
 | **汉字 → pinyin + tradução** | ideograma | toca na carta e ela vira, revelando tudo de uma vez |
 | ✍️ **pinyin + tradução + áudio → desenhar 汉字** | o som (escrito e falado) e o significado | escreve o ideograma na grade |
 | 🎯 **汉字 → tom** | ideograma, em silêncio | marca o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
@@ -81,6 +104,8 @@ No seletor de modo também ficam duas chaves: **"Falar ao revelar"** (áudio aut
 
 O pinyin se digita **sem tom** e sem espaço: `nihao`, `laoshi`. `ü` e `v` valem por `u` (nenhum teclado de celular tem trema), Enter escolhe o primeiro candidato. Os candidatos saem do **deck inteiro**, não do filtro da sessão — tirados do filtro, uma aula com uma palavra só em "hao" entregaria a resposta antes de a pessoa pensar.
 
+**Na frase o resultado é outro.** Comparar 我是巴西人 com 我是巴细人 em dois blocos de 38px é caçar o caractere errado no olho — exatamente o que o resultado deveria poupar. Então o texto encolhe e o erro vem **marcado na posição em que aconteceu**: cada caractere seu ganha verde ou vermelho contra o gabarito, e o 细 fora do lugar salta da linha. Pontuação e espaço não entram na conta — quem escreveu 我是巴西人。com o ponto do teclado chinês acertou a frase, e reprovar por isso seria cobrar datilografia.
+
 O resultado vem em **três linhas** — *era* 力波 / *não* 林娜 / **Lìbō** — e não numa frase só: comparar dois ideogramas parecidos com eles separados por vírgula é justamente o que não funciona. O ideograma é o que se veio ler ali, então é ele que é grande; o que você escolheu vem menor e em vermelho, sem risco em cima (riscar 一 ou 二 apaga o caractere, que é feito de traço horizontal).
 
 Quem não lembra o som fica sem candidato nenhum, então existe o **"não lembro"**: mostra a resposta e sugere *Errei*. Acertar sugere *Acertei*, errar o candidato sugere *Errei* — mas, como no desenho, **quem decide é você**, e é uma revisão normal que conta na meta e mexe no agendamento.
@@ -101,7 +126,7 @@ Como funciona por dentro: o app reamostra as **medianas** do caractere (o esquel
 
 A tolerância não é chute: o `tools/test_nota.js` roda a nota contra os 57 caracteres do deck deformados de três jeitos (aluno caprichado, médio e desengonçado) e contra todos os pares de caracteres trocados. Com a tolerância atual nenhum caractere errado passa dos 90% — o mais perigoso é 吗 na carta de 喝, que dá 88 porque dividem o 口 e quase toda a estrutura. A primeira tolerância que testei era três vezes mais frouxa e aprovava **38%** dos caracteres errados.
 
-**Só palavras de um caractere.** A grade é uma só, então 你好 e 谢谢 ficam de fora. Os dois quizzes de tom têm a mesma restrição, por outro motivo — o tom é de uma sílaba — e o de áudio ainda tira o tom neutro, que o TTS fala com tom cheio quando isolado. O contador no alto já mostra só o que a sessão vai perguntar, e quando o filtro não sobra nada o app diz qual é a restrição em vez de mostrar uma sessão vazia.
+**Só palavras de um caractere — e só as que têm traçado.** A grade é uma só, então 你好 e 谢谢 ficam de fora. E a nota compara o seu traço com o traçado oficial: carta cujo caractere ainda não está no `strokes.json` (palavra nova antes de o `build_strokes.py` rodar, ou caractere que o makemeahanzi não tem) sai da sessão em vez de entrar nela com o "✓ Validar" mudo. Os dois quizzes de tom têm a mesma restrição, por outro motivo — o tom é de uma sílaba — e o de áudio ainda tira o tom neutro, que o TTS fala com tom cheio quando isolado. O contador no alto já mostra só o que a sessão vai perguntar, e quando o filtro não sobra nada o app diz qual é a restrição em vez de mostrar uma sessão vazia.
 
 ### ⚡ Relâmpago
 
@@ -152,7 +177,7 @@ Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (ag
 | `index.html` + `app.js` | app inteiro — HTML/CSS/JS puro, sem build, sem dependências |
 | `config.js` | URL + anon key do Supabase (pública por design; RLS protege) |
 | `seed/seed_cards.json` | **a fonte de verdade do deck** — editado à mão; o banco é a cópia (ver o fluxo abaixo) |
-| `supabase/schema.sql` | tabelas `cards` (read-only via anon), `progress`, `review_log` |
+| `supabase/schema.sql` | tabelas `cards` (read-only via anon; `tipo` = `palavra`/`frase`), `progress`, `review_log` |
 | `supabase/seed.py` | upsert do seed no banco (service key) |
 | `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~24KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
@@ -174,15 +199,15 @@ seed/seed_cards.json  ──(supabase/seed.py)──▶  Supabase  ──(fetch)
 Três consequências:
 
 - **Editar pelo painel do Supabase é perda de tempo.** O próximo `seed.py` sobrescreve com o que está no JSON.
-- **Nem toda coluna é do JSON.** O `seed.py` manda 9 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, created_by`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
+- **Nem toda coluna é do JSON.** O `seed.py` manda 11 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, fonte, tipo, created_by`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
 - **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. A coluna `deleted` existe no schema e o app já filtra por ela, mas o `seed.py` ainda não a marca — hoje some só editando o banco à mão.
 
 ### Adicionar palavras novas (fluxo do Leo)
 
-1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula
+1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
-4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`)
+4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão de TTS, que numa frase é bom
 5. Commit + push — **os MP3s precisam estar publicados**, senão o `audio_url` aponta pra 404
 
 Rodou o `schema.sql` antes da V2.3? Ele é idempotente — rodar de novo só adiciona a coluna `data_aula`, não apaga nada.
@@ -275,6 +300,9 @@ sobre eles depende do plano da conta.
 - Cromo de navegação encolhido (23/08): as abas viraram **um controle segmentado só de texto** (62 → 40px) e o "por tema / por aula" virou **dois ícones** do tamanho dos chips (🏷️ e 📅), liberando dois terços da largura que as duas palavras ocupavam. Tudo isso é moldura: quanto menos altura ela come, mais alto a carta começa — que é a única coisa na tela que a pessoa veio ver
 - Abas no rodapé, **tentadas e desfeitas** no mesmo dia (23/08): a ideia era o polegar, que no celular grande não alcança o topo. Mas o app roda tanto no celular quanto no navegador, e no navegador — janela larga, sem polegar — uma barra flutuando embaixo fica claramente deslocada. Voltaram pra fileira acima dos chips, que serve às duas telas. Se um dia valer a pena, o caminho é a barra de baixo **só no celular** (media query), não nos dois
 - Pronúncia aproximada **calculada, não preenchida** (25/08): a tentação era uma coluna nova no `seed_cards.json` pra escrever o som palavra por palavra. Mas o pinyin já é um alfabeto fechado — pouco mais de 400 sílabas, todas montadas de inicial + final — então uma tabela de ~50 linhas no `app.js` cobre o deck inteiro e toda palavra futura sem ninguém preencher campo nenhum, sem migração no banco e sem rodar o `seed.py`. Sílaba que saia torta se conserta no `PRON_EXCECAO`, num lugar só, e não carta por carta. O mesmo trabalho encontrou um bug antigo do divisor de sílabas: 韩国 `Hánguó` virava `háng-uó` (o g virando coda), o que também pintava o tom na sílaba errada
+- Frase entra como **carta com `tipo`**, não como tabela nova (30/08): frase e palavra têm os mesmos campos, então uma tabela separada duplicaria SRS, sincronização, meta, streak e a aba Cartas pra ganhar o quê. O que precisava separar era a **fila**, e uma coluna resolve. O `tipo` tem default `'palavra'`, então as 108 cartas antigas não precisaram de migração nenhuma
+- "Palavras / Frases" **acima** dos eixos 🏷️📅❌, e não como um quarto ícone ao lado deles (30/08): os três são maneiras de fatiar uma lista, e frase é outra lista. Lado a lado, escolher "frases" custaria poder escolher a aula — e "as frases da aula de ontem" é justamente o filtro que a gente vai querer. Coube sem gastar altura porque o "O que estudar" já mora dentro da folha do MODO, que rola
+- Segmentação da frase **calculada do pinyin**, não digitada (30/08): mesma decisão da pronúncia aproximada de 25/08. `Wǒ shì Bāxī rén` já tem a separação escrita nele, e sílaba de pinyin é caractere — então `我|是|巴西|人` sai de graça, sem coluna nova e sem ninguém preencher campo por frase. O `seg` existe como escape, não como rotina
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap

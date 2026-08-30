@@ -103,6 +103,15 @@ def main():
     force = "--force" in sys.argv
     with open(os.path.join(root, "seed", "seed_cards.json"), encoding="utf-8") as f:
         cards = json.load(f)
+    # Frases ficam de fora: o Commons nomeia os arquivos por sílaba de PALAVRA, então
+    # procurar "Zh-wo shi baxi ren.ogg" é consulta garantidamente vazia — e ainda
+    # engordaria a lista de "sem gravação" com coisas que nunca vão ter uma. Elas caem
+    # no TTS do aparelho, que é justamente onde ele é bom: o defeito conhecido é o 3º
+    # tom ISOLADO, e numa frase inteira não existe sílaba isolada.
+    frases = [c for c in cards if c.get("tipo") == "frase"]
+    cards = [c for c in cards if c.get("tipo", "palavra") != "frase"]
+    if frases:
+        print(f"({len(frases)} frase(s) fora da busca — vão de TTS)")
     os.makedirs(dest, exist_ok=True)
 
     achados = consulta_lote(cards)

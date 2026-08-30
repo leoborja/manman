@@ -25,8 +25,10 @@ with open(os.path.join(here, "..", "seed", "seed_cards.json")) as f:
 # PostgREST exige as MESMAS chaves em todos os objetos do lote (PGRST102)
 # data_aula: 'YYYY-MM-DD' do dia da aula. fonte: de onde veio quando não foi da aula
 # ('duolingo', etc); ausente nos dois = palavra sem procedência registrada
-KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fonte", "created_by"]
-cards = [{k: c.get(k, "leo" if k == "created_by" else ([] if k == "tags" else None)) for k in KEYS} for c in cards]
+# audio_url fica DE FORA de propósito: quem escreve nele é o build_audio_nativo.py, e
+# mandá-lo daqui desligaria as gravações nativas a cada seed.
+KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fonte", "tipo", "created_by"]
+cards = [{k: c.get(k, "leo" if k == "created_by" else ("palavra" if k == "tipo" else ([] if k == "tags" else None))) for k in KEYS} for c in cards]
 
 req = urllib.request.Request(
     URL + "/rest/v1/cards?on_conflict=id",

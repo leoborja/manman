@@ -43,16 +43,24 @@ const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: '
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
   nomes: 'Nomes', familia: 'Família', geral: 'Geral', comida: 'Comida',
   paises: 'Países', escola: 'Escola' };
+// Uma frase É uma carta: mesmos campos, mesmo SRS, mesma sincronização, mesma meta de
+// 30. O que separa as duas é a FILA — o app nunca mistura, porque frase chega em bloco
+// (uma aula inteira de uma vez) e afogaria a sessão de vocabulário em cartas novas.
+// Carta sem `tipo` é palavra: é o que as 108 já gravadas são.
+const TIPOS = ['palavra', 'frase'];
+const TIPO_LABEL = { palavra: 'Palavras', frase: 'Frases' };
 // Cinco modos, e só um deles vira a carta. Nos outros quatro a resposta é uma AÇÃO —
 // digitar, desenhar, marcar o tom — e o campo que diz qual delas é:
 //   type = digita o pinyin num teclado chinês de mentirinha e escolhe o ideograma
 //   draw = escreve o ideograma na grade e pede a nota
 //   quiz = marca o tom nos cinco botões
+//   ordenar = monta a frase tocando nas palavras na ordem certa (só frase)
 // front = o que a carta mostra enquanto a pergunta está de pé.
 const MODES = {
   mix:     { mix: true },
   pt_type: { front: 'type',  type: true },
   zh_all:  { front: 'hanzi' },
+  ordenar: { front: 'ord',   ordenar: true },
   draw:    { front: 'draw',  draw: true },
   zh_tom:  { front: 'hanzi', quiz: true },
   tons:    { front: 'audio', quiz: true }
@@ -62,6 +70,18 @@ const MODES = {
 // como um pedágio no meio de uma sessão que é pra ser rápida. Quem quer desenhar escolhe
 // desenhar.
 const MIX_MODOS = ['pt_type', 'zh_all', 'zh_tom', 'tons'];
+// Na frase o sorteio é outro baralho: os dois tons perguntam de uma sílaba e não sabem
+// o que fazer com cinco, e entra o ordenar, que só existe aqui.
+const MIX_MODOS_FRASE = ['pt_type', 'zh_all', 'ordenar'];
+// Que modos cada tipo oferece. O desenho e os dois tons já se excluem sozinhos no
+// podePerguntar (grade e tom são de um caractere só), mas deixá-los na lista da frase
+// seria oferecer uma sessão que abre vazia — então somem do seletor em vez de abrir e
+// avisar. Pelo mesmo motivo o ordenar não aparece na palavra: não há o que ordenar.
+const MODOS_TIPO = {
+  palavra: ['mix', 'pt_type', 'zh_all', 'draw', 'zh_tom', 'tons'],
+  frase:   ['mix', 'pt_type', 'zh_all', 'ordenar']
+};
+function modosDoTipo() { return MODOS_TIPO[settings.tipo] || MODOS_TIPO.palavra; }
 // Modos que existiram e saíram da lista. Quem tinha um deles salvo não pode abrir o app
 // num modo que não existe mais — cai no equivalente mais próximo. O 'mix' antigo (que
 // sorteava só as direções de leitura) não está aqui porque o nome voltou a existir: quem
@@ -79,6 +99,7 @@ const MODE_TITLES = {
   mix: '🔀 Aleatório — os quatro juntos',
   pt_type: '⌨️ tradução → escrever no teclado',
   zh_all: '汉字 → pinyin + tradução',
+  ordenar: '🧩 tradução → ordenar as palavras',
   draw: '✍️ pinyin + tradução + áudio → desenhar 汉字',
   zh_tom: '🎯 汉字 → tom',
   tons: '🎧 áudio → tom'
@@ -192,15 +213,52 @@ function pronuncia(py) {
 }
 
 // ── estado ──────────────────────────────────────────────────
+// ── frases: onde uma palavra acaba e a outra começa ─────────
+// A segmentação NÃO é campo preenchido à mão. O pinyin já vem separado por palavra
+// ("Wǒ shì Bāxī rén") e cada sílaba de pinyin é exatamente um caractere — então contar
+// as sílabas de cada pedaço entrega 我 | 是 | 巴西 | 人 sozinho. É a mesma escolha da
+// pronúncia aproximada: calcular em vez de digitar, pra que frase nova não precise de
+// campo novo, nem de migração no banco.
+// Quando a conta não fecha — 儿 de 哪儿 é caractere sem sílaba própria, e caractere
+// repetido em pinyin colado também engana — devolve null, e quem chamou desiste do
+// exercício. Exercício ausente é melhor que exercício errado. A saída manual, pra
+// frase que insista em não fechar, é o campo `seg` na carta: "我|是|巴西|人".
+const PONTU = /[，。？！、：；「」『』（）〈〉《》…—·,.?!:;"'“”‘’]/g;
+function limpaHanzi(str) { return String(str || '').replace(PONTU, '').replace(/\s+/g, ''); }
+const segCache = {};
+function segmenta(card) {
+  if (!(card.id in segCache)) segCache[card.id] = calcSeg(card);
+  return segCache[card.id];
+}
+function calcSeg(card) {
+  if (card.seg) return String(card.seg).split('|').filter(Boolean);
+  const hz = [...limpaHanzi(card.hanzi)];
+  const toks = String(card.pinyin || '').trim().split(/\s+/).filter(Boolean);
+  if (toks.length < 2 || !hz.length) return null; // uma palavra só não tem ordem pra treinar
+  const out = [];
+  let i = 0;
+  for (const t of toks) {
+    const n = silabas(t.replace(PONTU, '')).length;
+    if (!n || i + n > hz.length) return null;
+    out.push(hz.slice(i, i + n).join(''));
+    i += n;
+  }
+  return i === hz.length ? out : null;
+}
+
 let cards = [];                  // deck completo (não deletadas)
-let settings = load(K.settings, { mode: 'zh_all', deck: 'todos', filtro: 'tema', aula: 'todas',
-  erro: ERRO_FAIXAS[2], user: null, theme: null, autoSpeak: true, flash: false, flashMs: FLASH_MS_PADRAO });
+let settings = load(K.settings, { mode: 'zh_all', tipo: 'palavra', deck: 'todos', filtro: 'tema',
+  aula: 'todas', erro: ERRO_FAIXAS[2], user: null, theme: null, autoSpeak: true, flash: false,
+  flashMs: FLASH_MS_PADRAO });
+if (!TIPOS.includes(settings.tipo)) settings.tipo = 'palavra'; // quem já usava o app não tem o campo
 if (!FILTROS.includes(settings.filtro)) settings.filtro = 'tema'; // quem já usava o app não tem o campo
 if (!ERRO_FAIXAS.includes(settings.erro)) settings.erro = ERRO_FAIXAS[2];
 settings.escopoOpen = !!settings.escopoOpen;
 if (!settings.aula) settings.aula = 'todas';
 if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
 if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
+// modo salvo que não vale no tipo salvo (ficou no desenho e voltou nas frases)
+if (!modosDoTipo().includes(settings.mode)) settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 if (settings.tag === undefined) settings.tag = true; // quem já usava o app não tem o campo
 if (settings.pron === undefined) settings.pron = true;   // idem
@@ -215,11 +273,12 @@ function modo() { return MODES[modoKey()] || MODES.zh_all; }
 function drawOn() { return !!modo().draw; }
 function typeOn() { return !!modo().type; }
 function quizOn() { return !!modo().quiz; }
+function ordenarOn() { return !!modo().ordenar; }
 // O relâmpago só vale onde responder é virar a carta. Nos outros quatro modos responder
 // já é outra coisa — digitar, desenhar, marcar o tom — e o raio não teria o que cronometrar.
 // (o aleatório também fica de fora: três dos quatro modos que ele sorteia não têm virada
 // pra cronometrar, e piscar só numa carta em cada quatro não é rodada de relâmpago)
-function flashOn() { return settings.flash && !mixOn() && !quizOn() && !drawOn() && !typeOn(); }
+function flashOn() { return settings.flash && !mixOn() && !quizOn() && !drawOn() && !typeOn() && !ordenarOn(); }
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 // id → {g, h, a} — quantas vezes acertou, marcou difícil e errou, desde sempre.
 // Fica FORA do srs de propósito: na prática livre você avalia carta que nunca foi
@@ -246,6 +305,9 @@ let drawTrecho = null;           // traço em andamento (o dedo ainda na tela)
 let drawScore = null;            // nota da carta atual; null = ainda não validou
 let drawCtx = null;              // contexto 2d da grade
 let drawPx = 0;                  // lado da grade em px de CSS
+let ordPool = [];                // pílulas ainda não usadas, embaralhadas
+let ordEscolhido = [];           // a frase que você está montando, em ordem
+let ordResult = null;            // {ok} da carta atual; null = ainda não conferiu
 let typeResult = null;
 let typePinyin = ''; // o pinyin em composição no teclado do sistema, quando ele deixa ver           // {ok, escolhido} da carta atual no teclado; null = não respondeu
 let modoCarta = null;            // no aleatório, o modo sorteado pra carta atual
@@ -716,6 +778,7 @@ function montaTeclado(card) {
   typePinyin = '';
   $('typeask').textContent = card.pt;
   const inp = $('typein');
+  inp.placeholder = ehFrase(card) ? 'escreva a frase' : 'escreva o 汉字';
   inp.value = '';
   inp.disabled = false;
   $('typefb').className = 'typefb';
@@ -733,9 +796,22 @@ function confereTeclado() {
   const v = $('typein').value.trim();
   if (v) respondeTeclado(v);
 }
+// Uma linha de caracteres com cada um marcado contra um gabarito: verde onde bate na
+// MESMA posição, vermelho onde não. Numa palavra de dois caracteres dava pra comparar
+// no olho; numa frase de cinco, ver "era 我是巴西人 / você 我是巴细人" é caçar o erro a
+// olho nu — que é justamente o que o resultado deveria poupar.
+function charDiff(str, gabarito) {
+  const g = [...String(gabarito || '')];
+  return '<div class="chardiff zh" lang="zh-Hans">' + [...String(str)].map((ch, i) =>
+    '<span class="' + (g[i] === ch ? 'hit' : 'miss') + '">' + esc(ch) + '</span>').join('') + '</div>';
+}
 function respondeTeclado(hanzi) {
   if (!current || typeResult) return;
-  const ok = hanzi === current.hanzi;
+  // pontuação e espaço não são a pergunta: quem escreve 我是巴西人。com o ponto do
+  // teclado chinês acertou a frase, e reprovar por isso seria cobrar datilografia
+  const alvo = limpaHanzi(current.hanzi);
+  const dado = limpaHanzi(hanzi);
+  const ok = dado === alvo;
   typeResult = { ok: ok, escolhido: hanzi };
   // As duas metades da pergunta, medidas em separado. O ideograma só é medido quando o
   // som estava certo: errar o pinyin e cair num candidato qualquer não diz nada sobre
@@ -745,11 +821,18 @@ function respondeTeclado(hanzi) {
   // dentro do IME. Alguns teclados o entregam no evento de composição; quando entregam,
   // dá pra separar "não lembrei o som" de "errei o ideograma". Quando não entregam é
   // melhor não gravar nada do que gravar as duas coisas erradas.
-  const digitado = pyPlano(typePinyin);
-  if (digitado) {
-    const somOk = digitado === pyPlano(current.pinyin);
-    bumpHab(current.id, 'som', !somOk);
-    if (somOk) bumpHab(current.id, 'ideo', !ok);
+  // Na frase o buffer de composição do IME guarda só a última palavra digitada, nunca a
+  // frase inteira — compará-lo com o pinyin todo marcaria erro de "som" em toda carta,
+  // inclusive nas certas. Aqui a habilidade medida é outra e é uma só: acertar a frase.
+  if (ehFrase(current)) {
+    bumpHab(current.id, 'frase', !ok);
+  } else {
+    const digitado = pyPlano(typePinyin);
+    if (digitado) {
+      const somOk = digitado === pyPlano(current.pinyin);
+      bumpHab(current.id, 'som', !somOk);
+      if (somOk) bumpHab(current.id, 'ideo', !ok);
+    }
   }
   $('typein').disabled = true;
   $('type-skip').disabled = true;
@@ -758,12 +841,117 @@ function respondeTeclado(hanzi) {
   const linha = (cls, lbl, h) => '<div class="l ' + cls + '"><span class="lbl">' + lbl +
     '</span><b class="zh" lang="zh-Hans">' + esc(h) + '</b></div>';
   const fb = $('typefb');
-  fb.className = 'typefb ' + (ok ? 'ok' : 'ruim');
-  fb.innerHTML = linha('', ok ? '对!' : 'era', current.hanzi) +
-    (!ok && hanzi ? linha('no', 'você', hanzi) : '') +
-    '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
+  if (ehFrase(current)) {
+    // na frase o ideograma grande não cabe na linha, e comparar duas frases quase iguais
+    // no olho é o exercício errado: aqui o resultado é o erro MARCADO onde ele aconteceu
+    fb.className = 'typefb frase ' + (ok ? 'ok' : 'ruim');
+    fb.innerHTML = '<div class="l"><span class="lbl">' + (ok ? '对!' : 'era') + '</span></div>' +
+      charDiff(alvo, ok ? alvo : dado) +
+      (!ok && dado ? '<div class="l no"><span class="lbl">você</span></div>' + charDiff(dado, alvo) : '') +
+      '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
+  } else {
+    fb.className = 'typefb ' + (ok ? 'ok' : 'ruim');
+    fb.innerHTML = linha('', ok ? '对!' : 'era', current.hanzi) +
+      (!ok && hanzi ? linha('no', 'você', hanzi) : '') +
+      '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
+  }
   $('hint-f').textContent = 'toque na carta pra ver tudo';
   // sugestão da nota; quem decide ainda é você, igual ao desenho
+  $('grades').classList.add('show');
+  $('g-' + (ok ? 'good' : 'again')).classList.add('sugerido');
+  if (settings.autoSpeak) speak(current, true);
+}
+
+// ── ordenar as palavras ─────────────────────────────────────
+// A frase ensina uma coisa que a palavra não ensina: ORDEM. 不 antes do verbo, o tempo
+// antes do lugar, o 是 que só liga substantivo a substantivo. Nenhum dos outros modos
+// cobra isso — virar a carta cobra reconhecimento, o teclado cobra o ideograma.
+// Aqui a resposta é um toque, não digitação: no celular montar cinco pílulas é rápido,
+// e escrever cinco 汉字 no IME é lento o bastante pra virar pedágio. As peças são
+// identificadas por chave, e não pelo que está escrito nelas, porque frase repete
+// palavra — 对不对 tem dois 对, e sem chave própria clicar num moveria o outro.
+function montaOrdenar(card) {
+  ordResult = null;
+  const seg = segmenta(card) || [];
+  ordEscolhido = [];
+  ordPool = shuffle(seg.map((p, k) => ({ p, k })));
+  // frase de duas palavras sai embaralhada na ordem certa uma vez em duas: entrega a
+  // resposta sem a pessoa pensar. Rembaralha enquanto estiver igual, com teto pra não
+  // girar pra sempre quando todas as peças forem iguais.
+  for (let i = 0; i < 8 && ordPool.every((o, j) => o.p === seg[j]); i++) shuffle(ordPool);
+  $('ordask').textContent = card.pt;
+  $('ordfb').className = 'typefb frase';
+  $('ordfb').innerHTML = '';
+  $('ord-skip').disabled = false;
+  renderOrdenar();
+}
+function renderOrdenar() {
+  const pill = (o, onde) => '<button class="ordpill zh" lang="zh-Hans" data-k="' + o.k +
+    '" data-w="' + onde + '">' + esc(o.p) + '</button>';
+  $('ordline').innerHTML = ordEscolhido.length
+    ? ordEscolhido.map(o => pill(o, 'l')).join('')
+    : '<span class="ordvazio">toque nas palavras na ordem certa</span>';
+  $('ordline').classList.toggle('vazia', !ordEscolhido.length);
+  $('ordpool').innerHTML = ordPool.map(o => pill(o, 'p')).join('');
+  document.querySelectorAll('#ordline .ordpill, #ordpool .ordpill').forEach(b => b.onclick = (e) => {
+    e.stopPropagation();
+    if (ordResult) return;
+    const k = +b.dataset.k;
+    // clicar na de baixo põe no fim da frase; clicar na frase devolve pro monte —
+    // é o desfazer, e não precisa de botão próprio
+    const de = b.dataset.w === 'p' ? ordPool : ordEscolhido;
+    const pra = b.dataset.w === 'p' ? ordEscolhido : ordPool;
+    const i = de.findIndex(o => o.k === k);
+    if (i >= 0) pra.push(de.splice(i, 1)[0]);
+    renderOrdenar();
+  });
+  // só confere com a frase inteira montada: metade da frase não é resposta errada,
+  // é resposta pela metade — e reprovar por ela ensinaria a coisa errada
+  $('ord-check').disabled = !!ordResult || !!ordPool.length;
+  ajustaAlturaOrd(); // mover pílula entre o monte e a frase muda quantas linhas cada um ocupa
+}
+// A carta não cresce com o conteúdo: as faces são absolutas, que é o que faz a virada.
+// Cada modo declara a sua altura — e o ordenar é o único em que ela não é previsível.
+// 打开书 tem duas pílulas e 老师说，打开书，第八页 tem sete, que quebram em três linhas;
+// uma altura fixa ou sobra meia tela na frase curta ou corta o resultado da longa.
+// Então aqui ela é medida: o conteúdo diz de quanto precisa, a cada render.
+function ajustaAlturaOrd() {
+  const w = $('ordwrap');
+  if (!w.classList.contains('show')) return;
+  const front = $('fcard').querySelector('.face.front');
+  const cs = getComputedStyle(front);
+  const moldura = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + 18; // +18 = a faixa da dica
+  $('fcard').style.minHeight = Math.max(400, Math.ceil(w.scrollHeight + moldura)) + 'px';
+}
+// gabarito = a ordem certa; verde na peça que caiu na MESMA posição, vermelho no resto
+function ordPills(pecas, gabarito) {
+  return '<div class="ordfbline">' + pecas.map((p, i) =>
+    '<span class="ordfbpill zh' + (gabarito ? (gabarito[i] === p ? ' hit' : ' miss') : '') +
+    '" lang="zh-Hans">' + esc(p) + '</span>').join('') + '</div>';
+}
+function respondeOrdenar(desistiu) {
+  if (!current || ordResult) return;
+  const certo = segmenta(current) || [];
+  const seu = ordEscolhido.map(o => o.p);
+  const ok = !desistiu && seu.length === certo.length && seu.every((p, i) => p === certo[i]);
+  ordResult = { ok: ok };
+  bumpHab(current.id, 'ordem', !ok);
+  $('ord-check').disabled = true;
+  $('ord-skip').disabled = true;
+  document.querySelectorAll('#ordline .ordpill, #ordpool .ordpill')
+    .forEach(b => b.classList.add('travada'));
+  const fb = $('ordfb');
+  fb.className = 'typefb frase ' + (ok ? 'ok' : 'ruim');
+  fb.innerHTML = '<div class="l"><span class="lbl">' + (ok ? '对!' : 'era') + '</span></div>' +
+    ordPills(certo, null) +
+    // errou: a sua ordem embaixo, marcada. Certo, ela é a mesma linha de cima — repetir
+    // seria só ocupar a tela dizendo duas vezes a mesma coisa.
+    (!ok && seu.length ? '<div class="l no"><span class="lbl">você</span></div>' +
+      ordPills(seu, certo) : '') +
+    '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
+  $('hint-f').textContent = 'toque na carta pra ver tudo';
+  ajustaAlturaOrd(); // o resultado acabou de entrar na frente: a carta cresce pra caber
+  // a nota sugere um botão; quem decide é você, igual ao desenho e ao teclado
   $('grades').classList.add('show');
   $('g-' + (ok ? 'good' : 'again')).classList.add('sugerido');
   if (settings.autoSpeak) speak(current, true);
@@ -859,6 +1047,8 @@ const HABS = [
   { k: 'som',  nome: 'lembrar o som',       dica: 'no teclado, digitar o pinyin certo' },
   { k: 'ideo', nome: 'achar o ideograma',   dica: 'com o pinyin certo, escolher entre os homófonos' },
   { k: 'esc',  nome: 'escrever de memória', dica: 'desenho com menos de ' + DRAW_OK + '% de proximidade' },
+  { k: 'ordem', nome: 'a ordem da frase',   dica: 'montar a frase com as palavras na ordem certa' },
+  { k: 'frase', nome: 'escrever a frase',   dica: 'digitar a frase inteira no teclado' },
   { k: 'tomM', nome: 'tom de memória',      dica: 'marcar o tom vendo o ideograma' },
   { k: 'tomO', nome: 'tom de ouvido',       dica: 'marcar o tom só ouvindo' }
 ];
@@ -1171,8 +1361,13 @@ function erroCount(id) { const s = statOf(id); return s.a + s.h; }
 // As já aprendidas ficam de fora: o contador é histórico e não esquece, então sem isto
 // 说 (15 erros) moraria no topo da lista muito depois de você ter aprendido a palavra.
 function aprendida(id) { return !!(srs[id] && srs[id].ivl >= LEARNED_IVL); }
+function ehFrase(c) { return (c.tipo || 'palavra') === 'frase'; }
+function temFrases() { return cards.some(ehFrase); }
+// O deck do TIPO escolhido — é ele que todos os filtros fatiam. Palavra e frase não se
+// encontram em fila nenhuma: são dois decks que moram na mesma tabela.
+function deckAtual() { return cards.filter(c => (c.tipo || 'palavra') === settings.tipo); }
 function cardsComErro(min) {
-  return cards.filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
+  return deckAtual().filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
 }
 // só as faixas que têm palavra — chip vazio é convite a cair numa sessão de zero cartas.
 // A contagem já desconta as desligadas, senão o número do chip mentiria sobre a sessão.
@@ -1182,26 +1377,31 @@ function faixasErro() {
     .filter(f => f.qtd);
 }
 function filteredCards() {
+  const base = deckAtual();
   if (settings.filtro === 'erro') return cardsComErro(settings.erro);
   if (settings.filtro === 'aula') {
-    if (settings.aula === 'todas') return cards;
+    if (settings.aula === 'todas') return base;
     // fonte:x = veio de fora da aula (Duolingo, etc); 'fora' = sem procedência nenhuma
     if (settings.aula.indexOf('fonte:') === 0) {
       const f = settings.aula.slice(6);
-      return cards.filter(c => c.fonte === f);
+      return base.filter(c => c.fonte === f);
     }
-    if (settings.aula === 'fora') return cards.filter(c => !c.data_aula && !c.fonte);
-    return cards.filter(c => c.data_aula === settings.aula);
+    if (settings.aula === 'fora') return base.filter(c => !c.data_aula && !c.fonte);
+    return base.filter(c => c.data_aula === settings.aula);
   }
-  return settings.deck === 'todos' ? cards : cards.filter(c => c.deck === settings.deck);
+  return settings.deck === 'todos' ? base : base.filter(c => c.deck === settings.deck);
 }
-// datas de aula presentes no deck, da mais antiga pra mais recente
-function aulas() { return [...new Set(cards.map(c => c.data_aula).filter(Boolean))].sort(); }
-function fontes() { return [...new Set(cards.map(c => c.fonte).filter(Boolean))].sort(); }
+// Datas de aula presentes, da mais antiga pra mais recente. A base é parâmetro porque
+// a tela de Estudar só quer as do tipo escolhido (aula que só teve palavra não pode
+// aparecer como opção de frase, e vice-versa), enquanto a aba Cartas é o navegador do
+// deck inteiro — ali palavra e frase convivem, porque consultar não é estudar.
+function aulas(base) { return [...new Set((base || deckAtual()).map(c => c.data_aula).filter(Boolean))].sort(); }
+function fontes(base) { return [...new Set((base || deckAtual()).map(c => c.fonte).filter(Boolean))].sort(); }
 // opções do filtro "por aula": as datas em ordem, depois as fontes de fora da aula
-function opcoesAula() {
-  const fora = cards.some(c => !c.data_aula && !c.fonte);
-  return ['todas'].concat(aulas(), fontes().map(f => 'fonte:' + f), fora ? ['fora'] : []);
+function opcoesAula(base) {
+  base = base || deckAtual();
+  const fora = base.some(c => !c.data_aula && !c.fonte);
+  return ['todas'].concat(aulas(base), fontes(base).map(f => 'fonte:' + f), fora ? ['fora'] : []);
 }
 function aulaLabel(a) {
   if (a === 'todas') return 'Todas';
@@ -1226,9 +1426,10 @@ function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
 // entrega sequências de três iguais e a sessão parece travada num modo só.
 function sorteiaModo(c) {
   const umSo = [...c.hanzi].length === 1;
-  let ok = MIX_MODOS.filter(k => {
+  let ok = (ehFrase(c) ? MIX_MODOS_FRASE : MIX_MODOS).filter(k => {
     if ((k === 'zh_tom' || k === 'tons') && !umSo) return false;
     if (k === 'tons' && (toneOf(c.pinyin) === 5 || !canSpeak(c))) return false;
+    if (k === 'ordenar' && !segmenta(c)) return false;
     return true;
   });
   const semRepetir = ok.filter(k => k !== modoCartaAnterior);
@@ -1241,7 +1442,18 @@ function podePerguntar(c) {
   // modo da carta que está na tela — 43 palavras enquanto a pergunta fosse de tom.
   if (mixOn()) return true;
   if ((drawOn() || quizOn()) && [...c.hanzi].length !== 1) return false;
+  // Desenhar exige o traçado oficial: sem ele o "✓ Validar" não tem com o que comparar
+  // e devolve null — o botão fica mudo e a carta vira beco sem saída. Acontece com toda
+  // palavra nova enquanto o build_strokes.py não roda, e com a que o makemeahanzi não
+  // tiver. Some da sessão em vez de quebrar dentro dela.
+  if (drawOn() && !strokesDB[c.hanzi]) return false;
   if (settings.mode === 'tons' && toneOf(c.pinyin) === 5) return false;
+  // Ordenar é exercício de FRASE, e a checagem é aqui e não só no seletor: palavra de
+  // pinyin composto também segmenta — 林娜 vira 林|娜, 对不对 vira 对|不|对 — e sem esta
+  // linha um modo escolhido pra frase continuaria perguntando a ordem do nome do colega,
+  // que não tem ordem pra treinar. Segmentação é o segundo requisito: sem ela não há
+  // pílula pra embaralhar.
+  if (ordenarOn() && (!ehFrase(c) || !segmenta(c))) return false;
   return true;
 }
 // O que a SESSÃO pode mostrar — é isso que o contador do alto conta, não o pool inteiro
@@ -1280,6 +1492,13 @@ function dueCount(pool) {
 
 // ── UI: estudar ─────────────────────────────────────────────
 function renderChips() {
+  // sem frase no deck a linha inteira some: um botão "Frases" que abre sessão vazia é
+  // pior que botão nenhum. Enquanto o Leo não publicar as frases, nada muda de lugar.
+  const tem = temFrases();
+  $('tipotype').style.display = tem ? '' : 'none';
+  if (!tem && settings.tipo !== 'palavra') { settings.tipo = 'palavra'; save(K.settings, settings); }
+  $('tipotype').querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', b.dataset.tp === settings.tipo));
   const eixo = settings.filtro;
   $('filtertype').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', b.dataset.f === eixo));
@@ -1305,7 +1524,7 @@ function renderChips() {
       '<button class="chip' + (settings.aula === a ? ' active' : '') + '" data-a="' + esc(a) + '">' +
       esc(aulaLabel(a)) + '</button>').join('');
   } else {
-    const decks = ['todos'].concat([...new Set(cards.map(c => c.deck))]);
+    const decks = ['todos'].concat([...new Set(deckAtual().map(c => c.deck))]);
     html = decks.map(d =>
       '<button class="chip' + (settings.deck === d ? ' active' : '') + '" data-d="' + esc(d) + '">' +
       (d === 'todos' ? 'Todos' : esc(deckLabel(d))) + '</button>').join('');
@@ -1338,7 +1557,8 @@ function renderCounter() {
     $('counter').innerHTML = '<b>≥' + settings.erro + ' erro' + (settings.erro > 1 ? 's' : '') +
       '</b> · ' + queue.length + ' restantes';
   } else {
-    $('counter').innerHTML = '<b>' + due + '</b> para hoje · <b>' + news + '</b> novas';
+    $('counter').innerHTML = '<b>' + due + '</b> para hoje · <b>' + news + '</b> nova' +
+      (news === 1 ? '' : 's') + (settings.tipo === 'frase' ? ' · 💬 frases' : '');
   }
 }
 function showCard(card) {
@@ -1352,21 +1572,26 @@ function showCard(card) {
   const relampago = flashOn();
   const desenho = !!m.draw;
   const teclado = !!m.type;
+  const ordena = !!m.ordenar;
   const f = $('fcard');
   f.classList.remove('flipped');
   f.classList.toggle('draw', desenho);
-  f.classList.toggle('type', teclado);
+  f.classList.toggle('type', teclado || ordena); // os dois pedem a frente alta e alinhada
+  f.classList.toggle('ord', ordena);
+  f.style.minHeight = ''; // a altura do ordenar é medida; os outros modos usam a da classe
   $('drawwrap').classList.toggle('show', desenho);
   $('typewrap').classList.toggle('show', teclado);
+  $('ordwrap').classList.toggle('show', ordena);
   // carta nova zera tinta, nota e resposta do teclado SEMPRE, mesmo saindo do modo: sem
   // isto os botões ↶ ✕ ✓ continuavam na tela depois de trocar pra um modo que não desenha
   drawInk = []; drawTrecho = null; drawScore = null;
   typeResult = null;
+  ordResult = null; ordEscolhido = []; ordPool = [];
   renderDrawTools();
   const front = $('front-content');
   // no desenho e no teclado a pergunta mora dentro do próprio exercício, não aqui
-  front.style.display = (desenho || teclado) ? 'none' : '';
-  if (desenho || teclado) front.innerHTML = '';
+  front.style.display = (desenho || teclado || ordena) ? 'none' : '';
+  if (desenho || teclado || ordena) front.innerHTML = '';
   else if (m.front === 'hanzi') front.innerHTML = '<div class="hanzi-lg zh" lang="zh-Hans">' + esc(card.hanzi) + '</div>';
   else { // áudio → tom: a carta não mostra nada, o som é a pergunta inteira
     front.innerHTML = '<button class="bigspk" id="bigspk" title="Ouvir de novo">🔊</button>' +
@@ -1377,19 +1602,23 @@ function showCard(card) {
   // 汉字 → tom ele seria um botão de resposta — dita o que digitar, canta o tom; quem não
   // lembra sai pelo "não lembro", que conta como erro. No desenho ele é só repetido: a
   // pergunta já tem o seu, e os dois ficavam colados na mesma quina.
-  $('spk-front').style.display = (m.quiz || m.type || m.draw) ? 'none' : '';
+  // no ordenar o 🔊 entrega a frase inteira falada, que é literalmente a resposta
+  $('spk-front').style.display = (m.quiz || m.type || m.draw || m.ordenar) ? 'none' : '';
   $('quizfb').style.display = 'none';
   $('quizfb').innerHTML = '';
   $('tones').classList.toggle('show', !!m.quiz);
   $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
   $('hint-f').textContent = desenho ? 'escreva o ideograma na grade e toque em Validar'
-    : teclado ? 'digite o som e toque no ideograma certo'
+    : ordena ? 'monte a frase e toque em conferir'
+    : teclado ? (ehFrase(card) ? 'escreva a frase no teclado de mandarim'
+                               : 'digite o som e escolha o ideograma')
     : m.quiz ? (m.front === 'audio' ? 'ouça e escolha o tom · toque na carta pra repetir'
                                     : 'olhe o ideograma e escolha o tom')
     : relampago ? 'toque assim que reconhecer'
     : 'toque para virar';
   if (desenho) montaDesenho(card);
   if (teclado) montaTeclado(card);
+  if (ordena) montaOrdenar(card);
   // o áudio só toca sozinho onde ele É a pergunta (áudio → tom) ou parte dela (desenho).
   // No 汉字 → tom ouvir entregaria a resposta, então ali fica quieto até responder.
   if (m.front === 'audio' || desenho) speak(card, true);
@@ -1441,6 +1670,7 @@ function finishSession() {
   $('drawtools').classList.remove('show');
   $('drawwrap').classList.remove('show');
   $('typewrap').classList.remove('show');
+  $('ordwrap').classList.remove('show');
   $('nextbtn').classList.remove('show');
   $('offbtn').style.display = 'none';
   $('done').classList.add('show');
@@ -1462,7 +1692,9 @@ function finishSession() {
   } else if (!poolSessao().length && activePool().length) {
     // tem carta no filtro, mas nenhuma que ESTE modo consiga perguntar
     $('done-title').textContent = 'Nada pra perguntar aqui';
-    $('done-sub').textContent = (drawOn()
+    $('done-sub').textContent = (ordenarOn()
+      ? 'O ordenar precisa saber onde cada palavra da frase começa, e isso vem do pinyin separado por palavra. Nenhuma frase deste filtro fecha a conta.'
+      : drawOn()
       ? 'O modo desenho usa uma grade por caractere, então só entram palavras de um caractere.'
       : 'O tom é de uma sílaba só, então só entram palavras de um caractere' +
         (settings.mode === 'tons' ? ', e sem tom neutro, que o alto-falante não consegue perguntar.' : '.')) +
@@ -1733,7 +1965,7 @@ function renderCartasChips() {
     b.classList.toggle('active', (b.dataset.f === 'aula') === porAula));
 
   const nOff = offCount();
-  const opcoes = porAula ? opcoesAula() : ['todos'].concat([...new Set(cards.map(c => c.deck))]);
+  const opcoes = porAula ? opcoesAula(cards) : ['todos'].concat([...new Set(cards.map(c => c.deck))]);
   if (!opcoes.includes(cartasDeck) && cartasDeck !== '__off__') cartasDeck = opcoes[0];
   let html = opcoes.map(o =>
     '<button class="chip' + (cartasDeck === o ? ' active' : '') + '" data-d="' + esc(o) + '">' +
@@ -1789,10 +2021,11 @@ function renderList() {
       (c.pt || '').toLowerCase().includes(q)));
   // conta o que está na tela; quando há filtro ou busca, mostra também o total do deck
   renderBulk();
+  const nome = temFrases() ? 'cartas' : 'palavras'; // com frase no deck "palavras" mente
   const filtrado = list.length !== cards.length;
   $('cartas-count').innerHTML = filtrado
-    ? '<b>' + list.length + '</b> de ' + cards.length + ' palavras'
-    : '<b>' + cards.length + '</b> palavras no deck';
+    ? '<b>' + list.length + '</b> de ' + cards.length + ' ' + nome
+    : '<b>' + cards.length + '</b> ' + nome + ' no deck';
   $('cardlist').innerHTML = list.map(c =>
     '<div class="card' + (isOff(c.id) ? ' offrow' : '') + '"><div class="rowline">' +
     '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
@@ -2018,8 +2251,12 @@ function renderProgress() {
   const t = todayStr();
   const { due, news } = dueCount();
   const nOff = offCount();
+  // o Progresso é do deck inteiro, não do tipo escolhido em Estudar: aqui a pergunta é
+  // "como eu vou", e ir bem em frases também é ir bem
+  const nFr = cards.filter(ehFrase).length;
   $('s-total').textContent = cards.length;
-  $('s-total-lbl').textContent = 'palavras no deck' + (nOff ? ' · ' + nOff + ' desligada' + (nOff > 1 ? 's' : '') : '');
+  $('s-total-lbl').textContent = (nFr ? (cards.length - nFr) + ' palavras + ' + nFr + ' frase' + (nFr > 1 ? 's' : '')
+    : 'palavras no deck') + (nOff ? ' · ' + nOff + ' desligada' + (nOff > 1 ? 's' : '') : '');
   $('s-hoje').textContent = due;
   $('s-novas').textContent = news;
   $('s-aprendidas').textContent = cards.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
@@ -2060,6 +2297,12 @@ function switchView(v) {
 // O que está na fila, em três palavras — serve tanto pra pílula do botão quanto pra
 // linha fechada dentro da folha, pra que as duas nunca digam coisas diferentes.
 function escopoResumo() {
+  const r = escopoEixo();
+  // o tipo vem na frente porque é a escolha de cima: primeiro que deck, depois que fatia
+  if (settings.tipo === 'frase') r.txt = 'Frases · ' + r.txt;
+  return r;
+}
+function escopoEixo() {
   if (settings.filtro === 'erro') {
     const f = faixasErro().find(x => x.n === settings.erro);
     return { ico: '❌', txt: f ? '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') : 'sem erros ainda' };
@@ -2087,13 +2330,19 @@ function renderEscopo() {
 // tira os neutros. O teclado é fila normal: mesmo pool, só a pergunta muda.
 function queueKind() {
   if (mixOn()) return 'normal'; // fila normal: quem varia é a pergunta, carta a carta
-  return quizOn() ? 'quiz:' + settings.mode : drawOn() ? 'draw' : flashOn() ? 'flash' : 'normal';
+  // o ordenar tem pool próprio (só frase que a segmentação fecha), então é família à
+  // parte: trocar pra ele ou sair dele remonta a fila em vez de reaproveitar a atual
+  return quizOn() ? 'quiz:' + settings.mode : drawOn() ? 'draw'
+    : ordenarOn() ? 'ordenar' : flashOn() ? 'flash' : 'normal';
 }
 function renderModeSheet() {
   renderChips(); // as faixas de erro mudam sozinhas conforme você estuda
   renderEscopo();
-  document.querySelectorAll('.modeopt[data-m]').forEach(b =>
-    b.classList.toggle('active', b.dataset.m === settings.mode));
+  const validos = modosDoTipo();
+  document.querySelectorAll('.modeopt[data-m]').forEach(b => {
+    b.style.display = validos.includes(b.dataset.m) ? '' : 'none';
+    b.classList.toggle('active', b.dataset.m === settings.mode);
+  });
   $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
   $('tag-opt').classList.toggle('active', !!settings.tag);
   $('pron-opt').classList.toggle('active', !!settings.pron);
@@ -2102,7 +2351,7 @@ function renderModeSheet() {
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
   // só um modo vira a carta; nos outros responder já é outra coisa (digitar, desenhar,
   // marcar o tom) e a chave do relâmpago fica visivelmente sem efeito
-  const semEfeito = mixOn() || quizOn() || drawOn() || typeOn();
+  const semEfeito = mixOn() || quizOn() || drawOn() || typeOn() || ordenarOn();
   $('flash-opt').classList.toggle('disabled', semEfeito);
   // só apaga o tempo quando o modo não aceita relâmpago; com a chave desligada ele
   // continua clicável, e tocar num tempo liga a chave
@@ -2140,6 +2389,20 @@ function bindEvents() {
     settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
     renderEscopo();
   };
+  // Palavras ↔ Frases é a escolha de cima: troca o deck inteiro, então zera a fatia
+  // (a aula de 06/08 tem palavra e frase, mas 12/08 pode ter só palavra) e, se o modo
+  // atual não souber perguntar do tipo novo, cai no de virar a carta.
+  $('tipotype').querySelectorAll('button').forEach(b => b.onclick = () => {
+    if (b.dataset.tp === settings.tipo) return;
+    settings.tipo = b.dataset.tp;
+    settings.deck = 'todos'; settings.aula = 'todas';
+    if (!modosDoTipo().includes(settings.mode)) settings.mode = 'zh_all';
+    save(K.settings, settings);
+    renderModeSheet(); renderModeUI(); startSession();
+  });
+  $('ordwrap').onclick = (e) => { if (!ordResult) e.stopPropagation(); };
+  $('ord-check').onclick = (e) => { e.stopPropagation(); respondeOrdenar(false); };
+  $('ord-skip').onclick = (e) => { e.stopPropagation(); respondeOrdenar(true); };
   // trocar de eixo não fecha a folha: depois do ❌ ainda falta escolher a faixa
   $('filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
     settings.filtro = b.dataset.f; save(K.settings, settings);
@@ -2163,7 +2426,7 @@ function bindEvents() {
     else if (current) showCard(current);
   });
   $('flash-opt').onclick = () => { // a chave do relâmpago: liga por cima do modo atual
-    if (quizOn() || drawOn() || typeOn()) return;
+    if (quizOn() || drawOn() || typeOn() || ordenarOn()) return;
     settings.flash = !settings.flash; save(K.settings, settings);
     renderModeSheet(); renderModeUI();
     startSession(); // ligar ou desligar troca o tipo de fila
