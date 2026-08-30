@@ -670,6 +670,7 @@ function validaDesenho() {
   bumpHab(current.id, 'esc', r.nota < DRAW_OK); // a nota, não o botão que você aperta depois
   repintaPad();
   const g = r.nota >= DRAW_OK ? 'good' : r.nota >= DRAW_QUASE ? 'hard' : 'again';
+  ajustaAltura(); // a nota entrou embaixo da grade
   const fb = $('drawfb');
   fb.className = 'drawfb ' + (g === 'good' ? 'ok' : g === 'hard' ? 'quase' : 'ruim');
   fb.innerHTML = (g === 'good' ? '对! ' : g === 'hard' ? 'Quase — ' : '') + r.nota + '% de proximidade' +
@@ -856,6 +857,7 @@ function respondeTeclado(hanzi) {
       '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
   }
   $('hint-f').textContent = 'toque na carta pra ver tudo';
+  ajustaAltura(); // o resultado entrou na frente e pode ser mais alto que a pergunta
   // sugestão da nota; quem decide ainda é você, igual ao desenho
   $('grades').classList.add('show');
   $('g-' + (ok ? 'good' : 'again')).classList.add('sugerido');
@@ -908,20 +910,42 @@ function renderOrdenar() {
   // só confere com a frase inteira montada: metade da frase não é resposta errada,
   // é resposta pela metade — e reprovar por ela ensinaria a coisa errada
   $('ord-check').disabled = !!ordResult || !!ordPool.length;
-  ajustaAlturaOrd(); // mover pílula entre o monte e a frase muda quantas linhas cada um ocupa
+  ajustaAltura(); // mover pílula entre o monte e a frase muda quantas linhas cada um ocupa
 }
-// A carta não cresce com o conteúdo: as faces são absolutas, que é o que faz a virada.
-// Cada modo declara a sua altura — e o ordenar é o único em que ela não é previsível.
-// 打开书 tem duas pílulas e 老师说，打开书，第八页 tem sete, que quebram em três linhas;
-// uma altura fixa ou sobra meia tela na frase curta ou corta o resultado da longa.
-// Então aqui ela é medida: o conteúdo diz de quanto precisa, a cada render.
-function ajustaAlturaOrd() {
-  const w = $('ordwrap');
-  if (!w.classList.contains('show')) return;
-  const front = $('fcard').querySelector('.face.front');
-  const cs = getComputedStyle(front);
-  const moldura = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + 18; // +18 = a faixa da dica
-  $('fcard').style.minHeight = Math.max(400, Math.ceil(w.scrollHeight + moldura)) + 'px';
+// A carta não cresce com o conteúdo: as faces são `position:absolute; inset:0`, que é o
+// que permite empilhar frente e verso no mesmo lugar pra poder virar. Enquanto o deck era
+// só palavra isso nunca apareceu — 好, o pinyin e "bom / bem" cabem em qualquer altura.
+// A frase estourou: sete caracteres com traçado quebram em duas fileiras, o pinyin longo
+// vira três linhas e a nota é um parágrafo. E como a face é centralizada, o que não cabe
+// não vaza só pra baixo: vaza pelos DOIS lados, por cima da moldura.
+//
+// Então a altura passa a ser medida — e das DUAS faces, não só da que está virada pra
+// frente. A carta é uma só: se ela mudasse de tamanho no meio da virada, a página inteira
+// pularia embaixo do dedo justo quando a pessoa foi ler a resposta.
+function alturaDaFace(face) {
+  if (!face) return 0;
+  const cs = getComputedStyle(face);
+  const gap = parseFloat(cs.rowGap) || 0;
+  let h = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+  let n = 0;
+  for (const el of face.children) {
+    const s = getComputedStyle(el);
+    // o que é absoluto não empurra nada: a etiqueta do tema, o 🔊 e a dica do rodapé
+    if (s.display === 'none' || s.position === 'absolute') continue;
+    const alt = el.offsetHeight; // offsetHeight e não getBoundingClientRect: a carta pode
+    if (!alt) continue;          // estar no meio da rotação, e o rect vem deformado
+    h += alt + (n++ ? gap : 0);
+  }
+  return h + 22; // a faixa da dica, que mora absoluta no rodapé e ninguém mediu acima
+}
+function ajustaAltura() {
+  const f = $('fcard');
+  if (!f.offsetParent) return; // aba escondida: sem largura, toda medida sai errada
+  f.style.minHeight = '';      // limpa antes de ler, pra enxergar o mínimo da classe do modo
+  const base = parseFloat(getComputedStyle(f).minHeight) || 0;
+  const alvo = Math.max(alturaDaFace(f.querySelector('.face.front')),
+                        alturaDaFace(f.querySelector('.face.back')));
+  f.style.minHeight = Math.max(base, Math.ceil(alvo)) + 'px';
 }
 // gabarito = a ordem certa; verde na peça que caiu na MESMA posição, vermelho no resto
 function ordPills(pecas, gabarito) {
@@ -950,7 +974,7 @@ function respondeOrdenar(desistiu) {
       ordPills(seu, certo) : '') +
     '<div class="py">' + pinyinColored(current.pinyin) + '</div>';
   $('hint-f').textContent = 'toque na carta pra ver tudo';
-  ajustaAlturaOrd(); // o resultado acabou de entrar na frente: a carta cresce pra caber
+  ajustaAltura(); // o resultado acabou de entrar na frente: a carta cresce pra caber
   // a nota sugere um botão; quem decide é você, igual ao desenho e ao teclado
   $('grades').classList.add('show');
   $('g-' + (ok ? 'good' : 'again')).classList.add('sugerido');
@@ -1587,7 +1611,7 @@ function showCard(card) {
   f.classList.toggle('draw', desenho);
   f.classList.toggle('type', teclado || ordena); // os dois pedem a frente alta e alinhada
   f.classList.toggle('ord', ordena);
-  f.style.minHeight = ''; // a altura do ordenar é medida; os outros modos usam a da classe
+  f.style.minHeight = ''; // zera antes de montar; quem mede é o ajustaAltura, no fim
   $('drawwrap').classList.toggle('show', desenho);
   $('typewrap').classList.toggle('show', teclado);
   $('ordwrap').classList.toggle('show', ordena);
@@ -1651,6 +1675,7 @@ function showCard(card) {
   $('offbtn').style.display = '';
   $('done').classList.remove('show');
   renderCounter();
+  ajustaAltura(); // frente e verso já montados: agora dá pra saber de quanta altura ela precisa
   if (relampago) { runFlashClock(); renderPausa(); } // por último: relógio com a carta já montada
 }
 function nextCard() {
@@ -1761,6 +1786,7 @@ function answerTone(t) {
   $('quizfb').innerHTML = pinyinColored(current.pinyin) + ' · ' + esc(current.pt) +
     '<small>' + esc(TONE_NAMES[correct]) + '</small>';
   $('quizfb').style.display = '';
+  ajustaAltura(); // o gabarito do tom entrou na frente
   speak(current, true); // ouve de novo já sabendo a resposta
   // No quiz puro a rodada é fechada e o botão só avança. No aleatório a carta é uma
   // revisão como as outras: a resposta sugere um botão, mas quem decide é você — igual
@@ -2454,6 +2480,7 @@ function bindEvents() {
   $('pron-opt').onclick = () => {
     settings.pron = !settings.pron; save(K.settings, settings);
     renderModeSheet(); applyPron();
+    if (current) ajustaAltura(); // a aproximação some/volta e o pinyin muda de linhas
   };
   $('tag-opt').onclick = () => {
     settings.tag = !settings.tag; save(K.settings, settings);
@@ -2483,7 +2510,12 @@ function bindEvents() {
   $('draw-clear').onclick = (e) => { e.stopPropagation(); limpaDesenho(); };
   $('draw-check').onclick = (e) => { e.stopPropagation(); validaDesenho(); };
   // a grade é medida em px: mudou o tamanho da tela, redesenha (a tinta vive em 0–1024)
-  window.addEventListener('resize', () => { if (drawOn() && current) montaPad(); });
+  window.addEventListener('resize', () => {
+    if (drawOn() && current) montaPad();
+    // largura nova quebra as linhas em outro lugar: a altura medida antes não vale mais.
+    // É o caso de virar o celular no meio de uma frase longa.
+    if (current) ajustaAltura();
+  });
   $('back-strokes').onclick = (e) => { // repetir o traçado sem desvirar a carta
     e.stopPropagation();
     if (!current) return;

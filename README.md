@@ -56,6 +56,8 @@ Por isso "Palavras / Frases" **não é um quarto ícone** ao lado de 🏷️📅
 
 **Três dos seis modos ficam de fora, e sozinhos.** Desenho e os dois quizzes de tom pedem palavra de um caractere: a grade 田字格 é uma só e o tom é de uma sílaba. Eles já se excluíam antes de existir frase, então não foi preciso ensinar nada a eles — só sumiram do seletor, em vez de abrir uma sessão vazia e explicar depois. Sobra o que a frase sabe responder: virar a carta, o teclado e o 🧩 ordenar.
 
+**A carta passou a medir a própria altura.** As duas faces são absolutas — é o que permite empilhar frente e verso pra virada — então o cartão nunca cresceu com o conteúdo: cada modo declarava um número fixo. Com palavra isso nunca apareceu (好 cabe em qualquer altura); com frase, sim: nove caracteres com traçado quebram em três fileiras, o pinyin vira duas linhas e a nota é um parágrafo, e como a face é centralizada o que não cabia vazava pelos **dois** lados. Agora a altura sai da soma do conteúdo, medida nas duas faces ao mesmo tempo — virar não pode mudar o tamanho da carta no meio da animação, senão a página pula embaixo do dedo justo quando a pessoa foi ler a resposta. Frase curta continua no mínimo do modo; quem precisa, cresce.
+
 **O áudio da frase é o TTS, e aqui isso é bom.** O defeito conhecido da voz sintética é o 3º tom **isolado** — só a descida, sem a subida. Numa frase inteira não existe sílaba isolada, então o problema que tirou o TTS das palavras não aparece.
 
 ### 🧩 Ordenar as palavras
