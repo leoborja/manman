@@ -182,5 +182,5 @@
   {"id":"num-20","hanzi":"二十","pinyin":"èrshí","pt":"vinte (20)","deck":"numeros","fonte":"treino","nota":"Dezena = número + 十. 二十 é literalmente 'dois dez'. Com esta receita você lê qualquer número até 99 sem decorar mais nada"},
   {"id":"num-30","hanzi":"三十","pinyin":"sānshí","pt":"trinta (30)","deck":"numeros","fonte":"treino","nota":"A unidade vem depois, colada: 三十五 sānshíwǔ = trinta e cinco. É assim que se diz a página 35"},
   {"id":"num-40","hanzi":"四十","pinyin":"sìshí","pt":"quarenta (40)","deck":"numeros","fonte":"treino"},
-  {"id":"num-yibai","hanzi":"一百","pinyin":"yìbǎi","pt":"cem (100)","deck":"numeros","fonte":"treino","nota":"O 一 troca de tom antes do 3º tom de bǎi: yìbǎi, não yībǎi — a mesma família de regra que faz 不 virar bú antes de 4º tom"}
+  {"id":"num-yibai","hanzi":"一百","pinyin":"yìbǎi","pt":"cem (100), com o 一 na frente","deck":"numeros","fonte":"treino","nota":"O 一 troca de tom antes do 3º tom de bǎi: yìbǎi, não yībǎi — a mesma família de regra que faz 不 virar bú antes de 4º tom"}
 ]
