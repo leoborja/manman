@@ -252,9 +252,29 @@ let settings = load(K.settings, { mode: 'zh_all', tipo: 'palavra', deck: 'todos'
   flashMs: FLASH_MS_PADRAO });
 if (!TIPOS.includes(settings.tipo)) settings.tipo = 'palavra'; // quem já usava o app não tem o campo
 if (!FILTROS.includes(settings.filtro)) settings.filtro = 'tema'; // quem já usava o app não tem o campo
-if (!ERRO_FAIXAS.includes(settings.erro)) settings.erro = ERRO_FAIXAS[2];
+// Os três eixos SOMAM em vez de se excluírem: dá pra pedir "Família E as que eu mais
+// erro" numa sessão só. Cada um guarda um conjunto — vazio quer dizer "não filtra por
+// isto" —, e o resultado é a interseção dos que estiverem ligados. Dentro do mesmo eixo
+// os chips se somam (Família OU Comida), que é a leitura natural de marcar dois temas.
+// O settings.filtro deixou de ser "qual filtro vale" e virou só "qual fila de chips
+// está na tela": navegação, não exclusão.
+// Migração do formato antigo, em que os três eixos se EXCLUÍAM: os três campos ficavam
+// preenchidos, mas só o que o `filtro` apontava estava valendo. Trazer os três ligados
+// entregaria a interseção deles — que na prática é sessão vazia — pra quem só abriu o
+// app depois da atualização. Então migra só o eixo que estava em uso, e a tela continua
+// mostrando exatamente o que mostrava antes.
+if (!Array.isArray(settings.decks)) {
+  const eixoVelho = settings.filtro;
+  settings.decks = (eixoVelho === 'tema' && settings.deck && settings.deck !== 'todos') ? [settings.deck] : [];
+  settings.aulas = (eixoVelho === 'aula' && settings.aula && settings.aula !== 'todas') ? [settings.aula] : [];
+  settings.erro = (eixoVelho === 'erro' && ERRO_FAIXAS.includes(settings.erro)) ? settings.erro : null;
+  delete settings.deck; delete settings.aula;
+  save(K.settings, settings);
+}
+if (!Array.isArray(settings.aulas)) settings.aulas = [];
+// erro: número = piso de erros; null = eixo desligado
+if (settings.erro !== null && !ERRO_FAIXAS.includes(settings.erro)) settings.erro = null;
 settings.escopoOpen = !!settings.escopoOpen;
-if (!settings.aula) settings.aula = 'todas';
 if (MODES_VELHOS[settings.mode]) settings.mode = MODES_VELHOS[settings.mode];
 if (MODES[settings.mode] === undefined) settings.mode = 'zh_all';
 // modo salvo que não vale no tipo salvo (ficou no desenho e voltou nas frases)
@@ -1399,8 +1419,14 @@ function deckAtual() {
   const querFrase = settings.tipo === 'frase';
   return cards.filter(c => ehFrase(c) === querFrase);
 }
+// O pool dos OUTROS eixos, pra que a contagem do chip de erro seja a da sessão que ele
+// vai abrir. Com "Família" marcado, "≥3 erros (2)" tem que dizer 2 palavras de família —
+// contar o deck inteiro prometeria carta que o tema já tirou.
 function cardsComErro(min) {
-  return deckAtual().filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
+  let base = deckAtual();
+  if (settings.decks.length) base = base.filter(c => settings.decks.indexOf(c.deck) >= 0);
+  if (settings.aulas.length) base = base.filter(c => settings.aulas.some(a => casaAula(c, a)));
+  return base.filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
 }
 // só as faixas que têm palavra — chip vazio é convite a cair numa sessão de zero cartas.
 // A contagem já desconta as desligadas, senão o número do chip mentiria sobre a sessão.
@@ -1409,21 +1435,23 @@ function faixasErro() {
     .map(n => ({ n, qtd: cardsComErro(n).filter(c => !isOff(c.id)).length }))
     .filter(f => f.qtd);
 }
-function filteredCards() {
-  const base = deckAtual();
-  if (settings.filtro === 'erro') return cardsComErro(settings.erro);
-  if (settings.filtro === 'aula') {
-    if (settings.aula === 'todas') return base;
-    // fonte:x = veio de fora da aula (Duolingo, etc); 'fora' = sem procedência nenhuma
-    if (settings.aula.indexOf('fonte:') === 0) {
-      const f = settings.aula.slice(6);
-      return base.filter(c => c.fonte === f);
-    }
-    if (settings.aula === 'fora') return base.filter(c => !c.data_aula && !c.fonte);
-    return base.filter(c => c.data_aula === settings.aula);
-  }
-  return settings.deck === 'todos' ? base : base.filter(c => c.deck === settings.deck);
+// uma opção do eixo 📅: data da aula, 'fonte:x' (veio de fora — Duolingo, treino) ou
+// 'fora' (sem procedência nenhuma)
+function casaAula(c, a) {
+  if (a.indexOf('fonte:') === 0) return c.fonte === a.slice(6);
+  if (a === 'fora') return !c.data_aula && !c.fonte;
+  return c.data_aula === a;
 }
+// Interseção dos eixos ligados; dentro de cada um, união dos chips marcados.
+// Eixo com conjunto vazio não filtra — é assim que "Todos" volta a ser todos.
+function filteredCards() {
+  let base = deckAtual();
+  if (settings.decks.length) base = base.filter(c => settings.decks.indexOf(c.deck) >= 0);
+  if (settings.aulas.length) base = base.filter(c => settings.aulas.some(a => casaAula(c, a)));
+  if (settings.erro) base = base.filter(c => !aprendida(c.id) && erroCount(c.id) >= settings.erro);
+  return base;
+}
+function algumFiltro() { return !!(settings.decks.length || settings.aulas.length || settings.erro); }
 // Datas de aula presentes, da mais antiga pra mais recente. A base é parâmetro porque
 // a tela de Estudar só quer as do tipo escolhido (aula que só teve palavra não pode
 // aparecer como opção de frase, e vice-versa), enquanto a aba Cartas é o navegador do
@@ -1500,7 +1528,7 @@ function buildQueue() {
   // erro" pra treinar as 7. Palavra muito errada já tem data marcada, então o SRS
   // sozinho te entregaria uma só. As atrasadas vêm na frente; o resto, embaralhado.
   // As respostas continuam reagendando normalmente — só a ordem de hoje muda.
-  if (settings.filtro === 'erro') {
+  if (settings.erro) {
     const resto = shuffle(pool.filter(c => !due.includes(c)));
     queue = due.concat(resto).map(c => c.id);
     phase = 'sched';
@@ -1533,43 +1561,63 @@ function renderChips() {
   $('tipotype').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', b.dataset.tp === settings.tipo));
   const eixo = settings.filtro;
-  $('filtertype').querySelectorAll('button').forEach(b =>
-    b.classList.toggle('active', b.dataset.f === eixo));
+  // O ícone diz duas coisas diferentes: `active` é a fila de chips que está na tela
+  // (navegação), e `filtrando` é o eixo que está de fato cortando o deck. Sem o segundo,
+  // marcar "Família" e ir olhar o 📅 esconderia que o 🏷️ continua ligado — e a sessão
+  // seria menor do que os chips na tela explicam.
+  $('filtertype').querySelectorAll('button').forEach(b => {
+    b.classList.toggle('active', b.dataset.f === eixo);
+    b.classList.toggle('filtrando',
+      b.dataset.f === 'tema' ? !!settings.decks.length :
+      b.dataset.f === 'aula' ? !!settings.aulas.length : !!settings.erro);
+  });
 
+  // o primeiro chip de cada eixo é o "não filtre por isto": ligado quando o conjunto
+  // está vazio, e tocar nele limpa o eixo inteiro de uma vez
+  const chip = (on, attr, val, txt) => '<button class="chip' + (on ? ' active' : '') +
+    '" data-' + attr + '="' + esc(String(val)) + '">' + esc(txt) + '</button>';
   let html;
   if (eixo === 'erro') {
     const faixas = faixasErro();
-    // a faixa escolhida pode ter esvaziado desde a última sessão (você aprendeu as palavras):
-    // cai na mais próxima que ainda tem gente, em vez de abrir uma sessão vazia
-    if (faixas.length && !faixas.some(f => f.n === settings.erro)) {
+    // a faixa escolhida pode ter esvaziado (você aprendeu as palavras, ou marcou um tema
+    // que não tem nenhuma): desliga o eixo em vez de abrir uma sessão vazia
+    if (settings.erro && !faixas.some(f => f.n === settings.erro)) {
       const menor = faixas.filter(f => f.n <= settings.erro).pop();
-      settings.erro = (menor || faixas[0]).n;
+      settings.erro = menor ? menor.n : (faixas[0] ? faixas[0].n : null);
     }
-    html = faixas.length
-      ? faixas.map(f =>
-          '<button class="chip' + (settings.erro === f.n ? ' active' : '') + '" data-e="' + f.n + '">' +
-          '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') + ' (' + f.qtd + ')</button>').join('')
-      : '<button class="chip" disabled>Nada errado ainda por aqui 🎉</button>';
+    html = chip(!settings.erro, 'e', 0, 'Tanto faz') + (faixas.length
+      ? faixas.map(f => chip(settings.erro === f.n, 'e', f.n,
+          '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') + ' (' + f.qtd + ')')).join('')
+      : '<button class="chip" disabled>nada errado por aqui 🎉</button>');
   } else if (eixo === 'aula') {
-    const opcoes = opcoesAula();
-    if (!opcoes.includes(settings.aula)) settings.aula = 'todas'; // aula sumiu do deck
-    html = opcoes.map(a =>
-      '<button class="chip' + (settings.aula === a ? ' active' : '') + '" data-a="' + esc(a) + '">' +
-      esc(aulaLabel(a)) + '</button>').join('');
+    const opcoes = opcoesAula().filter(a => a !== 'todas');
+    settings.aulas = settings.aulas.filter(a => opcoes.includes(a)); // aula que sumiu do deck
+    html = chip(!settings.aulas.length, 'a', 'todas', 'Todas') +
+      opcoes.map(a => chip(settings.aulas.includes(a), 'a', a, aulaLabel(a))).join('');
   } else {
-    const decks = ['todos'].concat([...new Set(deckAtual().map(c => c.deck))]);
-    html = decks.map(d =>
-      '<button class="chip' + (settings.deck === d ? ' active' : '') + '" data-d="' + esc(d) + '">' +
-      (d === 'todos' ? 'Todos' : esc(deckLabel(d))) + '</button>').join('');
+    const decks = [...new Set(deckAtual().map(c => c.deck))];
+    settings.decks = settings.decks.filter(d => decks.includes(d)); // tema que não existe neste tipo
+    html = chip(!settings.decks.length, 'd', 'todos', 'Todos') +
+      decks.map(d => chip(settings.decks.includes(d), 'd', d, deckLabel(d))).join('');
   }
   $('deckchips').innerHTML = html;
+  // alterna em vez de trocar: marcar Família e Comida é pedir as duas. E a folha NÃO
+  // fecha mais no toque — quem pode escolher vários precisa da lista aberta pra isso.
+  // Quem fecha é o toque no fundo, com a sessão já remontada atrás.
   $('deckchips').querySelectorAll('.chip:not([disabled])').forEach(ch => ch.onclick = () => {
-    if (eixo === 'erro') settings.erro = +ch.dataset.e;
-    else if (eixo === 'aula') settings.aula = ch.dataset.a;
-    else settings.deck = ch.dataset.d;
+    if (eixo === 'erro') {
+      const n = +ch.dataset.e;
+      settings.erro = (!n || settings.erro === n) ? null : n; // eixo de valor único: alterna liga/desliga
+    } else {
+      const alvo = eixo === 'aula' ? 'aulas' : 'decks';
+      const v = eixo === 'aula' ? ch.dataset.a : ch.dataset.d;
+      if (v === 'todas' || v === 'todos') settings[alvo] = [];
+      else settings[alvo] = settings[alvo].includes(v)
+        ? settings[alvo].filter(x => x !== v)
+        : settings[alvo].concat([v]);
+    }
     save(K.settings, settings);
     renderChips();
-    $('modesheet').classList.remove('show');
     startSession();
   });
   renderModeUI(); // a pílula do botão é o resumo desta escolha
@@ -1585,10 +1633,10 @@ function renderCounter() {
       flashScore.ok + '/' + flashScore.n + ' certas · ' + queue.length + ' restantes';
   } else if (phase === 'practice') {
     $('counter').innerHTML = 'revisões do dia ✅ · <b>prática livre</b> · "Errei" ainda reagenda';
-  } else if (settings.filtro === 'erro') {
+  } else if (settings.erro) {
     // aqui "para hoje" mentiria: a fila é a faixa inteira, não a agenda do dia
     $('counter').innerHTML = '<b>≥' + settings.erro + ' erro' + (settings.erro > 1 ? 's' : '') +
-      '</b> · ' + queue.length + ' restantes';
+      '</b>' + (settings.tipo === 'frase' ? ' · 💬 frases' : '') + ' · ' + queue.length + ' restantes';
   } else {
     $('counter').innerHTML = '<b>' + due + '</b> para hoje · <b>' + news + '</b> nova' +
       (news === 1 ? '' : 's') + (settings.tipo === 'frase' ? ' · 💬 frases' : '');
@@ -1744,8 +1792,8 @@ function finishSession() {
     $('freebtn').style.display = '';
   } else { // só acontece sem nenhuma carta ativa no filtro
     $('done-title').textContent = 'Nada por aqui';
-    $('done-sub').textContent = settings.filtro === 'erro'
-      ? 'Nenhuma palavra nesta faixa de erro — escolha outra faixa, ou 🏷️/📅 pra voltar ao deck.'
+    $('done-sub').textContent = algumFiltro()
+      ? 'Nada sobrou cruzando os filtros de "' + escopoResumo().txt + '". Desmarque um deles no MODO — os três se somam, então cada um corta mais.'
       : 'Nenhuma carta ativa neste deck — religue cartas na aba Cartas ou escolha outro filtro.';
     $('freebtn').style.display = 'none';
   }
@@ -2331,21 +2379,22 @@ function switchView(v) {
 }
 // O que está na fila, em três palavras — serve tanto pra pílula do botão quanto pra
 // linha fechada dentro da folha, pra que as duas nunca digam coisas diferentes.
+// A fila em uma linha. Agora ela pode ter três partes somadas — "Família + Comida ·
+// 12/08 · ≥3 erros" — e é o único lugar onde o estado inteiro aparece de uma vez: dentro
+// da folha você só vê a fila de chips de um eixo por vez.
 function escopoResumo() {
-  const r = escopoEixo();
+  const partes = [];
+  if (settings.decks.length) partes.push(settings.decks.map(deckLabel).join(' + '));
+  if (settings.aulas.length) partes.push(settings.aulas.map(aulaLabel).join(' + '));
+  if (settings.erro) partes.push('≥' + settings.erro + ' erro' + (settings.erro > 1 ? 's' : ''));
+  // o ícone é o do primeiro eixo ligado; sem nenhum, o do eixo que está na tela
+  const ico = settings.decks.length ? '🏷️' : settings.aulas.length ? '📅' : settings.erro ? '❌'
+    : settings.filtro === 'aula' ? '📅' : settings.filtro === 'erro' ? '❌' : '🏷️';
+  if (!partes.length) {
+    return { ico, txt: settings.tipo === 'frase' ? 'Todas as frases' : 'Todas as palavras' };
+  }
   // o tipo vem na frente porque é a escolha de cima: primeiro que deck, depois que fatia
-  if (settings.tipo === 'frase') r.txt = 'Frases · ' + r.txt;
-  return r;
-}
-function escopoEixo() {
-  if (settings.filtro === 'erro') {
-    const f = faixasErro().find(x => x.n === settings.erro);
-    return { ico: '❌', txt: f ? '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') : 'sem erros ainda' };
-  }
-  if (settings.filtro === 'aula') {
-    return { ico: '📅', txt: settings.aula === 'todas' ? 'Todas as aulas' : aulaLabel(settings.aula) };
-  }
-  return { ico: '🏷️', txt: settings.deck === 'todos' ? 'Todos os temas' : deckLabel(settings.deck) };
+  return { ico, txt: (settings.tipo === 'frase' ? 'Frases · ' : '') + partes.join(' · ') };
 }
 function renderModeUI() {
   $('modecur').textContent = (flashOn() ? '⚡ ' : '') + (MODE_TITLES[settings.mode] || MODE_TITLES.zh_all);
@@ -2430,7 +2479,7 @@ function bindEvents() {
   $('tipotype').querySelectorAll('button').forEach(b => b.onclick = () => {
     if (b.dataset.tp === settings.tipo) return;
     settings.tipo = b.dataset.tp;
-    settings.deck = 'todos'; settings.aula = 'todas';
+    settings.decks = []; settings.aulas = [];
     if (!modosDoTipo().includes(settings.mode)) settings.mode = 'zh_all';
     save(K.settings, settings);
     renderModeSheet(); renderModeUI(); startSession();

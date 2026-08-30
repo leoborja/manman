@@ -98,6 +98,15 @@ background:linear-gradient(to right,var(--bg),transparent);pointer-events:none;}
 .chip.filtro{font-size:16px;line-height:1.3;padding:7px 12px;}
 .chip.filtro.active{background:var(--pill);border-color:var(--txt);color:var(--txt);}
 .chip[disabled]{opacity:.55;}
+/* Os três eixos SOMAM, e a folha só mostra a fila de chips de um por vez — então o ícone
+   precisa dizer duas coisas: qual fila está na tela (o "ligado", contorno escuro) e quais
+   eixos estão de fato cortando o deck (o ponto). Sem o ponto, marcar "Família" e ir olhar
+   o 📅 esconderia que o 🏷️ continua valendo, e a sessão sairia menor do que os chips na
+   tela explicam. */
+.chip.filtro{position:relative;}
+.chip.filtro.filtrando:after{content:"";position:absolute;top:2px;right:2px;
+width:8px;height:8px;border-radius:50%;background:var(--red);
+box-shadow:0 0 0 2px var(--surface2);}
 /* Palavras / Frases: pílula do mesmo tamanho dos eixos, com o texto junto, porque aqui
    o ícone sozinho não diz nada — 💬 poderia ser "conversa", "nota", qualquer coisa.
    Ligado é neutro como os eixos: vermelho é a coisa ESCOLHIDA na fila, não o rótulo. */

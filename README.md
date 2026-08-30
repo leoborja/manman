@@ -44,15 +44,25 @@ O streak conta dias fechados. A regra antiga era "≥1 revisão", barata demais 
 
 A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 20 tinham sido calibrados em números que ignoravam a prática livre.
 
-### Filtro (por tema / por aula)
+### Filtro — três eixos que se somam
 
-**🏷️ tema** (Números, Pronomes, Úteis…) ou **📅 aula** (a data em que a palavra entrou, de `data_aula`). Os dois ícones **abrem a própria linha dos chips** e ficam presos na esquerda quando ela rola: são eles que dizem de que lista os chips do lado saíram. São pílulas do mesmo tamanho dos chips, mas o "ligado" aqui é neutro (contorno escuro) e não vermelho — vermelho é a coisa **escolhida** na fila, estes dois só dizem **que fila é**. Uma fileira só, alternando: duas fileiras empilhadas comeriam a tela do celular. A escolha fica salva por usuário.
+São três: **🏷️ tema** (Números, Pronomes, Família…), **📅 aula** (a data em que a palavra entrou, de `data_aula`, mais as origens de fora da aula) e **❌ erro** (as que você mais erra, por faixa).
+
+**Eles somam.** Dá pra pedir "Família **e** Comida **e** só as que eu erro" numa sessão só — o resultado é a **interseção** dos eixos ligados. Dentro do mesmo eixo os chips se **somam**: marcar Família e Comida é pedir as duas, que é a leitura natural de marcar dois temas. Eixo sem nenhum chip marcado não filtra nada, e é assim que "Todos" volta a ser todos.
+
+Até 30/08 os três se excluíam: escolher a aula desligava o tema. A troca é o que permite "as frases da aula de ontem" e "as palavras de família que eu mais erro" — que são justamente as perguntas que a gente faz na véspera da prova.
+
+**Os ícones dizem duas coisas diferentes.** O "ligado" neutro (contorno escuro) é **qual fila de chips está na tela** — navegação, porque só cabe uma fileira e duas empilhadas comeriam o celular. O **ponto vermelho** é **quais eixos estão de fato cortando o deck**. Sem o ponto, marcar "Família" e ir olhar o 📅 esconderia que o 🏷️ continua valendo, e a sessão sairia menor do que os chips na tela explicam.
+
+O estado inteiro aparece de uma vez só num lugar: a linha do "O que estudar", que lê `Família + Comida · ≥1 erro`. E marcar um chip **não fecha mais a folha** — quem pode escolher vários precisa da lista aberta pra isso; quem fecha é o toque no fundo, com a sessão já remontada atrás.
+
+Tudo salvo por usuário. Quem já usava o app tinha os três campos preenchidos (eles se excluíam, então só um valia): a migração traz **só o eixo que estava em uso**, senão a interseção dos três abriria uma sessão vazia pra quem só apertou atualizar.
 
 ### 💬 Frases
 
 Uma frase **é** uma carta: mesmos campos, mesmo SRS, mesma sincronização, e conta na mesma meta de 30. O que separa as duas é a **fila** — palavra e frase nunca se misturam numa sessão, porque frase chega em bloco (uma aula inteira de uma vez) e afogaria o vocabulário em cartas novas.
 
-Por isso "Palavras / Frases" **não é um quarto ícone** ao lado de 🏷️📅❌. Aqueles três são *eixos de fatiar a mesma lista*; este escolhe **qual lista é**. Fica um nível acima deles, dentro do "O que estudar", e assim "as frases da aula de 06/08" e "as frases que eu mais erro" continuam existindo. Enquanto o deck não tiver frase nenhuma a linha inteira some — botão que abre sessão vazia é pior que botão nenhum.
+Por isso "Palavras / Frases" **não é um quarto ícone** ao lado de 🏷️📅❌. Aqueles três são *eixos de fatiar a mesma lista*, e se somam entre si; este escolhe **qual lista é**, e é exclusivo. Fica um nível acima deles, dentro do "O que estudar", e assim "as frases da aula de 06/08" e "as frases que eu mais erro" continuam existindo. Enquanto o deck não tiver frase nenhuma a linha inteira some — botão que abre sessão vazia é pior que botão nenhum.
 
 **Três dos seis modos ficam de fora, e sozinhos.** Desenho e os dois quizzes de tom pedem palavra de um caractere: a grade 田字格 é uma só e o tom é de uma sílaba. Eles já se excluíam antes de existir frase, então não foi preciso ensinar nada a eles — só sumiram do seletor, em vez de abrir uma sessão vazia e explicar depois. Sobra o que a frase sabe responder: virar a carta, o teclado e o 🧩 ordenar.
 
