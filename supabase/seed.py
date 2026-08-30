@@ -27,8 +27,20 @@ with open(os.path.join(here, "..", "seed", "seed_cards.json")) as f:
 # ('duolingo', etc); ausente nos dois = palavra sem procedência registrada
 # audio_url fica DE FORA de propósito: quem escreve nele é o build_audio_nativo.py, e
 # mandá-lo daqui desligaria as gravações nativas a cada seed.
-KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fonte", "tipo", "created_by"]
-cards = [{k: c.get(k, "leo" if k == "created_by" else ("palavra" if k == "tipo" else ([] if k == "tags" else None))) for k in KEYS} for c in cards]
+KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fonte", "created_by"]
+
+# No JSON a frase se marca com "tipo":"frase", que é o que se quer escrever à mão. No
+# banco ela vira a tag 'frase', porque coluna nova exigiria DDL e ninguém do time tem —
+# ver o comentário no schema.sql. A tradução mora aqui, num lugar só, e o JSON não
+# precisa saber dessa limitação.
+def com_tags(c):
+    tags = list(c.get("tags") or [])
+    if c.get("tipo") == "frase" and "frase" not in tags:
+        tags.append("frase")
+    return tags
+
+cards = [dict({k: c.get(k, "leo" if k == "created_by" else ([] if k == "tags" else None))
+               for k in KEYS}, tags=com_tags(c)) for c in cards]
 
 req = urllib.request.Request(
     URL + "/rest/v1/cards?on_conflict=id",

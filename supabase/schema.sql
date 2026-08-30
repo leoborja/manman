@@ -14,12 +14,16 @@ create table if not exists cards (
   audio_url text,         -- V2
   data_aula date,         -- V2.3: dia da aula em que a palavra entrou; null = veio de fora da aula
   fonte text,             -- V2.7: de onde veio quando não foi da aula ('duolingo', etc). null = aula
-  -- V2.8: 'palavra' (o padrão) ou 'frase'. As duas convivem na mesma tabela porque uma
-  -- frase É uma carta — mesmos campos, mesmo SRS, mesma sincronização. O que muda é a
-  -- fila: o app nunca mistura as duas, senão vinte frases novas afogam uma sessão de
-  -- vocabulário. Sem NOT NULL retroativo por engano: as 108 palavras já gravadas caem
-  -- no default sozinhas.
-  tipo text not null default 'palavra',
+  -- V2.8: frase e palavra convivem na MESMA tabela, porque uma frase É uma carta —
+  -- mesmos campos, mesmo SRS, mesma sincronização. O que muda é a fila, e quem separa
+  -- as duas é a marca 'frase' dentro de `tags`, não uma coluna própria.
+  --
+  -- Por que tags e não uma coluna `tipo`, que seria mais limpa: ninguém do time tem
+  -- acesso de DDL neste projeto. A service key fala com o PostgREST, que faz dados e
+  -- não faz ALTER TABLE — então uma coluna nova exigiria alguém logado no painel, e
+  -- nesse dia a feature simplesmente não sairia. `tags` já existia, já era enviada pelo
+  -- seed.py, estava vazia em todas as cartas e não era lida por nada. Esquema um pouco
+  -- menos bonito, feature que existe.
   created_by text,
   deleted boolean not null default false,
   created_at timestamptz default now()
@@ -27,10 +31,8 @@ create table if not exists cards (
 -- tabela já existia antes da V2.3? o create table acima não roda de novo, então:
 alter table cards add column if not exists data_aula date;
 alter table cards add column if not exists fonte text;
-alter table cards add column if not exists tipo text not null default 'palavra';
 create index if not exists cards_data_aula_idx on cards (data_aula);
 create index if not exists cards_fonte_idx on cards (fonte);
-create index if not exists cards_tipo_idx on cards (tipo);
 
 alter table cards enable row level security;
 drop policy if exists "cards_read" on cards;

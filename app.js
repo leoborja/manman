@@ -1361,11 +1361,20 @@ function erroCount(id) { const s = statOf(id); return s.a + s.h; }
 // As já aprendidas ficam de fora: o contador é histórico e não esquece, então sem isto
 // 说 (15 erros) moraria no topo da lista muito depois de você ter aprendido a palavra.
 function aprendida(id) { return !!(srs[id] && srs[id].ivl >= LEARNED_IVL); }
-function ehFrase(c) { return (c.tipo || 'palavra') === 'frase'; }
+// A marca da frase vem do banco dentro de `tags` — coluna nova exigiria DDL, que
+// ninguém do time tem (o porquê está no schema.sql). Aceita também um campo `tipo`,
+// que é como o seed_cards.json escreve e como o banco entregaria se um dia a coluna
+// existir; assim as duas fontes servem e nada precisa mudar aqui nesse dia.
+function ehFrase(c) {
+  return c.tipo === 'frase' || (Array.isArray(c.tags) && c.tags.indexOf('frase') >= 0);
+}
 function temFrases() { return cards.some(ehFrase); }
 // O deck do TIPO escolhido — é ele que todos os filtros fatiam. Palavra e frase não se
 // encontram em fila nenhuma: são dois decks que moram na mesma tabela.
-function deckAtual() { return cards.filter(c => (c.tipo || 'palavra') === settings.tipo); }
+function deckAtual() {
+  const querFrase = settings.tipo === 'frase';
+  return cards.filter(c => ehFrase(c) === querFrase);
+}
 function cardsComErro(min) {
   return deckAtual().filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
 }
