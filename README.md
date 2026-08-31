@@ -1,6 +1,6 @@
 # Mànmàn 慢慢 — Flashcards de Mandarim
 
-App de flashcards pra turma de mandarim do Enrico — **Leo, Henrique e David**.
+App de flashcards pra turma de mandarim do Enrico — **Leo, Henrique, David e Fraga**.
 
 **慢慢 (mànmàn)** = "devagar, com calma" — como em 慢慢来 (mànmàn lái, "vai com calma").
 Um pouquinho todo dia é assim que se aprende mandarim.
@@ -16,7 +16,7 @@ Vira um app de verdade: ícone 慢, tela cheia, funciona offline. **Atualiza soz
 
 ## Primeiro acesso
 
-Escolha seu nome (Leo / Henrique / David). O progresso é individual e **sincroniza entre aparelhos** — estudou no ônibus, continua no computador.
+Escolha seu nome (Leo / Henrique / David / Fraga). O progresso é individual e **sincroniza entre aparelhos** — estudou no ônibus, continua no computador.
 
 Depois disso, quem guarda esse estado é o **botão redondo do topo**, com a sua inicial: ele abre o **perfil**, onde se troca de nome e se escolhe **claro ou escuro**. São as duas coisas que se ajustam uma vez e esquecem, então dividem uma folha só em vez de ocupar dois botões fixos no cabeçalho.
 
