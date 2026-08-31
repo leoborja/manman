@@ -27,7 +27,7 @@ const META_DIARIA = 30;          // revisões/dia pra fechar o dia — meta, nã
 // por meta nenhuma. Antes dessa data vale a regra antiga, "≥1 revisão no dia".
 const META_DESDE = '2026-08-20';
 const EASE_START = 2.5, EASE_MIN = 1.3, EASE_MAX = 2.8;
-const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', convidado: 'Convidado' };
+const USERS = { leo: 'Leo', henrique: 'Henrique', david: 'David', fraga: 'Fraga', convidado: 'Convidado' };
 const K = {                      // chaves do localStorage (as por-usuário ganham sufixo .<user>)
   cards: 'manman.cards.v1',
   srs: 'manman.srs.v1',
