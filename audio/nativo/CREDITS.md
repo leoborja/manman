@@ -98,3 +98,14 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 非常 | fēicháng | [Zh-fēicháng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-f%C4%93ich%C3%A1ng.ogg) | 非常 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 为 | wèi | [Zh-wèi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8i.ogg) | 为 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 为什么 | wèishénme | [Zh-wèishénme.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8ish%C3%A9nme.ogg) | 为什么 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 医生 | yīshēng | [Zh-yīshēng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%ABsh%C4%93ng.ogg) | 医生 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 国 | guó | [Zh-guó.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%B3.ogg) | 国 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 语 | yǔ | [Zh-yǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C7%94.ogg) | 雨 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 文 | wén | [Zh-wén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A9n.ogg) | 闻 | Yue Tan | CC BY-SA 3.0 us |
+| 上 | shàng | [Zh-shàng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%A0ng.ogg) | 上 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 有 | yǒu | [Zh-yǒu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C7%92u.ogg) | 有 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 上课 | shàng kè | [Zh-shàngkè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%A0ngk%C3%A8.ogg) | 上课 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 中文 | Zhōngwén | [Zh-zhōngwén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C5%8Dngw%C3%A9n.ogg) | 中文 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 英语 | Yīngyǔ | [Zh-yīngyǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%ABngy%C7%94.ogg) | 英语 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 汉语 | Hànyǔ | [Zh-hànyǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A0ny%C7%94.ogg) | 汉语 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 今天 | jīntiān | [Zh-jīntiān.ogg](https://commons.wikimedia.org/wiki/File%3AZh-j%C4%ABnti%C4%81n.ogg) | 今天 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
