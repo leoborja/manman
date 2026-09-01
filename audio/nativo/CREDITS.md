@@ -86,3 +86,15 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 数学 | shùxué | [Zh-shùxué.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%B9xu%C3%A9.ogg) | 数学 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 音乐 | yīnyuè | [Zh-yīnyuè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%ABnyu%C3%A8.ogg) | 音乐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 对 | duì | [Zh-duì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-du%C3%AC.ogg) | 对 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 第 | dì | [Zh-dì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%AC.ogg) | 第 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 先生 | xiānsheng | [Zh-xiānsheng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C4%81nsheng.ogg) | 先生 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 儿子 | érzi | [Zh-érzi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-%C3%A9rzi.ogg) | 儿子 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 老 | lǎo | [Zh-lǎo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C7%8Eo.ogg) | 老 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 大 | dà | [Zh-dà.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%A0.ogg) | 大 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 非 | fēi | [Zh-fēi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-f%C4%93i.ogg) | 飞 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 常 | cháng | [Zh-cháng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C3%A1ng.ogg) | 常 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 快乐 | kuàilè | [Zh-kuàilè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ku%C3%A0il%C3%A8.ogg) | 快乐 | Yue Tan | CC BY-SA 3.0 us |
+| 高兴 | gāoxìng | [Zh-gāoxìng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-g%C4%81ox%C3%ACng.ogg) | 高兴 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 非常 | fēicháng | [Zh-fēicháng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-f%C4%93ich%C3%A1ng.ogg) | 非常 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 为 | wèi | [Zh-wèi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8i.ogg) | 为 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 为什么 | wèishénme | [Zh-wèishénme.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8ish%C3%A9nme.ogg) | 为什么 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

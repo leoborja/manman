@@ -238,7 +238,11 @@ function calcSeg(card) {
   const out = [];
   let i = 0;
   for (const t of toks) {
-    const n = silabas(t.replace(PONTU, '')).length;
+    // O apóstrofo separa DUAS SÍLABAS DA MESMA PALAVRA (nǚ'ér): conta as duas, mas não
+    // parte a peça — 女儿 continua sendo um pedaço só do 🧩. Sem isto o PONTU o apagava,
+    // "nǚér" virava uma sílaba e a conta não fechava: a frase saía do ordenar calada.
+    const n = t.split(/['’]/).filter(Boolean)
+      .reduce((s, p) => s + silabas(p.replace(PONTU, '')).length, 0);
     if (!n || i + n > hz.length) return null;
     out.push(hz.slice(i, i + n).join(''));
     i += n;
