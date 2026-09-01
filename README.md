@@ -306,6 +306,7 @@ sobre eles depende do plano da conta.
 
 - Deck contém **só o que a turma já aprendeu** — sem limite de novas/dia
 - Partículas (吗/呢) faladas **sozinhas** e fora do quiz de tons (isoladas, o TTS falaria tom cheio contradizendo o gabarito neutro)
+- **🐢 Falar devagar** (0,75×) em `configurações`, desligado por padrão. Um interruptor só, porque a lentidão vale nas duas fontes: no MP3 é `playbackRate` com `preservesPitch`, no TTS é o `rate` da voz. Time-stretch em vez de dois arquivos gravados — meio caminho pra qualquer voz futura e nenhum byte a mais no repositório. O `preservesPitch` não é detalhe de qualidade: sem ele, 0,75× baixa a **altura** da voz junto com a velocidade, e num idioma de tom isso ensina o aluno a ouvir errado. O TTS já falava a 0,8 desde sempre, então o 🐢 multiplica esse número (0,6) em vez de trocá-lo — "devagar" não pode sair mais rápido do que o app falava antes de a opção existir
 - Voz: **gravação de falante nativo** (Wikimedia/Shtooka) nas cartas que têm; TTS do aparelho no resto. O professor apontou que o TTS não faz o 3º tom completo — só a descida, sem a subida. Teste cego com 好 confirmou: a gravação humana ganhou de todas as opções de TTS (voz, velocidade, pontuação) e da ElevenLabs
 - Gravação de homófono é aceita: os arquivos do Commons são nomeados por pinyin, então 九 jiǔ recebe a gravação de 久 jiǔ. Som idêntico, que é o que importa pra tom e pronúncia — o `CREDITS.md` registra quais são
 - Light mode padrão; fonte caligráfica porque a de imprensa não batia com a escrita à mão do professor

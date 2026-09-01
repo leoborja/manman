@@ -286,6 +286,7 @@ if (!modosDoTipo().includes(settings.mode)) settings.mode = 'zh_all';
 if (settings.autoSpeak === undefined) settings.autoSpeak = true;
 if (settings.tag === undefined) settings.tag = true; // quem já usava o app não tem o campo
 if (settings.pron === undefined) settings.pron = true;   // idem
+if (settings.lento === undefined) settings.lento = false; // idem
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
 settings.flash = !!settings.flash;
 // No aleatório quem manda é o modo sorteado pra CARTA ATUAL; fora dele, o escolhido no
@@ -384,6 +385,7 @@ if ('speechSynthesis' in window) {
 // (Por isso cartas de tom neutro ficam fora do quiz de tons — isolado, o TTS
 // fala 吗 com tom cheio, o que contradiria o gabarito "neutro".)
 let warnedNoVoice = false;
+const VEL_LENTA = 0.75;          // o 🐢: fração da velocidade normal, gravação e TTS
 function canSpeak(card) {
   if (card.audio_url) return true;
   if (!('speechSynthesis' in window)) return false;
@@ -394,7 +396,16 @@ function speak(card, auto) {
   // MP3 gravado tem prioridade, mas se ele falhar (404, offline, formato) cai pro TTS —
   // ficar mudo é o pior desfecho num app que ensina tom.
   if (card.audio_url) {
-    new Audio(card.audio_url).play().catch(() => falaTTS(card, auto));
+    const a = new Audio(card.audio_url);
+    if (settings.lento) {
+      // estica o tempo SEM baixar a altura da voz. Num idioma de tom isso não é
+      // conforto, é correção: 0,75× sem isto desafinaria o 2º e o 3º tom pra baixo e o
+      // aluno decoraria uma altura que ninguém fala. `preservesPitch` já é o padrão dos
+      // navegadores de hoje; o webkit- fica pro Safari velho, que ignora o outro.
+      a.preservesPitch = a.webkitPreservesPitch = true;
+      a.playbackRate = VEL_LENTA;
+    }
+    a.play().catch(() => falaTTS(card, auto));
     return;
   }
   falaTTS(card, auto);
@@ -411,7 +422,10 @@ function falaTTS(card, auto) {
   const u = new SpeechSynthesisUtterance(card.hanzi);
   u.voice = zhVoice;
   u.lang = zhVoice.lang;
-  u.rate = 0.8; // mais devagar pra aluno — 慢慢!
+  // 0.8 já era a velocidade de sempre do TTS — mais devagar pra aluno, 慢慢. O 🐢 não
+  // troca esse número por 1: ele multiplica o que já havia, senão "devagar" sairia mais
+  // rápido do que o app falava antes de existir a opção.
+  u.rate = 0.8 * (settings.lento ? VEL_LENTA : 1);
   speechSynthesis.speak(u);
 }
 
@@ -2452,6 +2466,7 @@ function renderModeSheet() {
     b.classList.toggle('active', b.dataset.m === settings.mode);
   });
   $('autospeak-opt').classList.toggle('active', !!settings.autoSpeak);
+  $('lento-opt').classList.toggle('active', !!settings.lento);
   $('tag-opt').classList.toggle('active', !!settings.tag);
   $('pron-opt').classList.toggle('active', !!settings.pron);
   $('flash-opt').classList.toggle('active', !!settings.flash);
@@ -2558,6 +2573,11 @@ function bindEvents() {
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
     renderModeSheet();
+  };
+  $('lento-opt').onclick = () => {
+    settings.lento = !settings.lento; save(K.settings, settings);
+    renderModeSheet();
+    if (current) speak(current); // ouve na hora a diferença que acabou de ligar
   };
   $('pron-opt').onclick = () => {
     settings.pron = !settings.pron; save(K.settings, settings);
