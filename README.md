@@ -176,6 +176,10 @@ No fim da rodada: *"Você acertou 41 de 57 — 72%"*. A nota é sobre o **deck i
 
 Consulta: busca, filtro por categoria, 🔊 por linha e o switch liga/desliga de cada carta.
 
+**A aba lista um tipo por vez, e abre em Palavras.** Frase e palavra dividem a mesma tabela, mas quem entra aqui está procurando o pictograma — e 59 frases embaralhadas com 129 palavras transformam a consulta numa rolagem. O par `汉 Palavras · 💬 Frases` no alto é o mesmo do escopo do estudar, então a escolha se faz do mesmo jeito nas duas telas, e some inteiro quando não há frase publicada. Tudo abaixo dele vive dentro do tipo escolhido: os temas (Identidade e Gostos só existem em frase, e não viram chip na lista de palavras), o eixo 📅, a contagem de desligadas e o contador, que voltou a dizer "129 palavras" em vez do "cartas" genérico que somava os dois. Trocar de tipo limpa a busca e o filtro, porque um filtro do outro lado quase nunca existe deste.
+
+Na lista de frases o hanzi sobe pra uma linha só dele. Na coluna de 58px que serve pra 水, uma frase como 我爸爸很喜欢喝啤酒 espremeria a tradução contra a borda no celular.
+
 Palavras novas entram pelo `seed/seed_cards.json` e são publicadas pelo `seed.py` — aparecem pra todo mundo sem ninguém atualizar nada.
 
 ## 🔥 Progresso

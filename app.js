@@ -339,6 +339,7 @@ let modoCartaAnterior = null;    // o da carta passada, pra não repetir duas se
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
 let cartasFiltro = 'tema';       // 'tema' | 'aula' — mesma ideia do filtro de estudo
+let cartasTipo = 'palavra';      // 'palavra' | 'frase' — a aba lista UM tipo por vez
 
 // ── helpers ─────────────────────────────────────────────────
 function load(key, fallback) {
@@ -2048,11 +2049,22 @@ function tapCard() {
 // ── UI: cartas (consulta) ───────────────────────────────────
 function renderCartasChips() {
   const porAula = cartasFiltro === 'aula';
+  // sem frase publicada a linha inteira some, igual à do estudar: um botão que só abre
+  // lista vazia é pior que botão nenhum
+  const tem = temFrases();
+  $('cartas-tipotype').style.display = tem ? '' : 'none';
+  if (!tem) cartasTipo = 'palavra';
+  $('cartas-tipotype').querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', b.dataset.tp === cartasTipo));
+
   $('cartas-filtertype').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', (b.dataset.f === 'aula') === porAula));
 
-  const nOff = offCount();
-  const opcoes = porAula ? opcoesAula(cards) : ['todos'].concat([...new Set(cards.map(c => c.deck))]);
+  // tudo daqui pra baixo vive DENTRO do tipo escolhido: os temas, as aulas, a contagem
+  // de desligadas. Tema que só existe em frase não vira chip na lista de palavras.
+  const base = cartasBase();
+  const nOff = base.filter(c => isOff(c.id)).length;
+  const opcoes = porAula ? opcoesAula(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
   if (!opcoes.includes(cartasDeck) && cartasDeck !== '__off__') cartasDeck = opcoes[0];
   let html = opcoes.map(o =>
     '<button class="chip' + (cartasDeck === o ? ' active' : '') + '" data-d="' + esc(o) + '">' +
@@ -2066,19 +2078,22 @@ function renderCartasChips() {
     renderCartasChips(); renderList();
   });
 }
+// o tipo que a aba está listando — é a base de tudo o que ela mostra e conta
+function cartasBase() { return cards.filter(c => ehFrase(c) === (cartasTipo === 'frase')); }
 // as cartas que o filtro da aba Cartas está mostrando, ignorando a busca por texto
 function cartasFiltradas() {
-  if (cartasDeck === '__off__') return cards.filter(c => isOff(c.id));
+  const base = cartasBase();
+  if (cartasDeck === '__off__') return base.filter(c => isOff(c.id));
   if (cartasFiltro === 'aula') {
-    if (cartasDeck === 'todas') return cards;
+    if (cartasDeck === 'todas') return base;
     if (cartasDeck.indexOf('fonte:') === 0) {
       const f = cartasDeck.slice(6);
-      return cards.filter(c => c.fonte === f);
+      return base.filter(c => c.fonte === f);
     }
-    if (cartasDeck === 'fora') return cards.filter(c => !c.data_aula && !c.fonte);
-    return cards.filter(c => c.data_aula === cartasDeck);
+    if (cartasDeck === 'fora') return base.filter(c => !c.data_aula && !c.fonte);
+    return base.filter(c => c.data_aula === cartasDeck);
   }
-  return cartasDeck === 'todos' ? cards : cards.filter(c => c.deck === cartasDeck);
+  return cartasDeck === 'todos' ? base : base.filter(c => c.deck === cartasDeck);
 }
 // botão de ligar/desligar em bloco — só aparece com um filtro específico escolhido,
 // porque "desligar todas" com o filtro em Todas é um tiro no pé sem querer
@@ -2108,11 +2123,15 @@ function renderList() {
       (c.pt || '').toLowerCase().includes(q)));
   // conta o que está na tela; quando há filtro ou busca, mostra também o total do deck
   renderBulk();
-  const nome = temFrases() ? 'cartas' : 'palavras'; // com frase no deck "palavras" mente
-  const filtrado = list.length !== cards.length;
-  $('cartas-count').innerHTML = filtrado
-    ? '<b>' + list.length + '</b> de ' + cards.length + ' ' + nome
-    : '<b>' + cards.length + '</b> ' + nome + ' no deck';
+  // o nome e o total seguem o TIPO na tela. Antes o rótulo era "cartas" assim que
+  // entrava frase no deck, porque "palavras" mentiria sobre um total que somava as duas;
+  // agora que a aba lista um tipo por vez, ela pode voltar a chamar cada coisa pelo nome.
+  const base = cartasBase().length;
+  const nome = cartasTipo === 'frase' ? 'frases' : 'palavras';
+  $('cartas-count').innerHTML = list.length !== base
+    ? '<b>' + list.length + '</b> de ' + base + ' ' + nome
+    : '<b>' + base + '</b> ' + nome + ' no deck';
+  $('cardlist').className = cartasTipo === 'frase' ? 'frases' : '';
   $('cardlist').innerHTML = list.map(c =>
     '<div class="card' + (isOff(c.id) ? ' offrow' : '') + '"><div class="rowline">' +
     '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
@@ -2122,7 +2141,8 @@ function renderList() {
     '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
     '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
     (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
-    '</div></div>').join('') || '<p style="color:var(--mut);text-align:center">Nenhuma carta encontrada.</p>';
+    '</div></div>').join('') || '<p style="color:var(--mut);text-align:center">Nenhuma ' +
+      (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
     if (c) speak(c);
@@ -2499,6 +2519,15 @@ function bindEvents() {
   $('cartas-filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
     cartasFiltro = b.dataset.f;
     cartasDeck = cartasFiltro === 'aula' ? 'todas' : 'todos';
+    renderCartasChips(); renderList();
+  });
+  $('cartas-tipotype').querySelectorAll('button').forEach(b => b.onclick = () => {
+    cartasTipo = b.dataset.tp;
+    // os temas de palavra e de frase não são os mesmos, e a busca por "水" não devolve
+    // nada em frase: trocar de tipo recomeça a consulta em vez de herdar um filtro que
+    // provavelmente não existe do outro lado
+    cartasDeck = cartasFiltro === 'aula' ? 'todas' : 'todos';
+    $('search').value = '';
     renderCartasChips(); renderList();
   });
   $('credbtn').onclick = () => $('credsheet').classList.add('show');

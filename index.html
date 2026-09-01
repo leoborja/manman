@@ -421,6 +421,11 @@ box-shadow:var(--shadow);padding:14px 16px;margin:0 0 10px;}
 .rowline .mid .n{color:var(--mut);font-size:12.5px;line-height:1.4;margin-top:2px;}
 .rowline .pill{background:var(--pill);color:var(--pilltx);padding:4px 10px;border-radius:999px;
 font-size:11px;font-weight:700;flex:0 0 auto;align-self:flex-start;margin-top:4px;}
+/* Frase não é pictograma solto: em 58px de coluna, 我爸爸很喜欢喝啤酒 espreme a tradução
+   contra a borda no celular. Na lista de frases o hanzi sobe pra uma linha só dele e o
+   resto da linha — pinyin, tradução, tema, 🔊, interruptor — continua igual embaixo. */
+#cardlist.frases .rowline{flex-wrap:wrap;}
+#cardlist.frases .rowline .h{flex:1 0 100%;font-size:22px;line-height:1.4;min-width:0;}
 .rowline .switch{position:relative;flex:0 0 auto;width:44px;height:26px;align-self:center;}
 .switch input{opacity:0;width:0;height:0;position:absolute;}
 .switch .knob{position:absolute;inset:0;background:var(--pill);border-radius:99px;transition:.2s;cursor:pointer;}
@@ -695,6 +700,12 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ CARTAS (consulta) ══════ -->
 <section class="view" id="view-cartas">
+  <!-- Palavra e frase moram na mesma tabela, mas esta aba é consulta: quem vem aqui
+       procura o pictograma. Frase entra por escolha, nunca embolada com a palavra. -->
+  <div class="filtros tipos" id="cartas-tipotype" style="display:none">
+    <button class="chip filtro tipo active" data-tp="palavra"><span class="zh">汉</span> Palavras</button>
+    <button class="chip filtro tipo" data-tp="frase">💬 Frases</button>
+  </div>
   <div class="chipsbar">
     <div class="filterpin">
       <div class="filtros" id="cartas-filtertype">
