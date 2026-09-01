@@ -68,7 +68,7 @@ Por isso "Palavras / Frases" **não é um quarto ícone** ao lado de 🏷️📅
 
 **A carta passou a medir a própria altura.** As duas faces são absolutas — é o que permite empilhar frente e verso pra virada — então o cartão nunca cresceu com o conteúdo: cada modo declarava um número fixo. Com palavra isso nunca apareceu (好 cabe em qualquer altura); com frase, sim: nove caracteres com traçado quebram em três fileiras, o pinyin vira duas linhas e a nota é um parágrafo, e como a face é centralizada o que não cabia vazava pelos **dois** lados. Agora a altura sai da soma do conteúdo, medida nas duas faces ao mesmo tempo — virar não pode mudar o tamanho da carta no meio da animação, senão a página pula embaixo do dedo justo quando a pessoa foi ler a resposta. Frase curta continua no mínimo do modo; quem precisa, cresce.
 
-**O áudio da frase é o TTS, e aqui isso é bom.** O defeito conhecido da voz sintética é o 3º tom **isolado** — só a descida, sem a subida. Numa frase inteira não existe sílaba isolada, então o problema que tirou o TTS das palavras não aparece.
+**O áudio da frase é voz sintética, e aqui isso é bom.** O defeito conhecido da voz sintética é o 3º tom **isolado** — só a descida, sem a subida. Numa frase inteira não existe sílaba isolada, então o problema que tirou a voz sintética das palavras não aparece. Até 01/09 as frases iam no TTS do próprio aparelho por esse mesmo argumento; o que mudou é que o TTS do celular soa mecânico na PROSÓDIA — ritmo e entonação, não tom — e isso a ElevenLabs faz bem. As 65 frases agora têm MP3 gerado; as palavras seguem com gravação de gente.
 
 ### 🧩 Ordenar as palavras
 
@@ -223,8 +223,9 @@ Três consequências:
 1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
-4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão de TTS, que numa frase é bom
-5. Commit + push — **os MP3s precisam estar publicados**, senão o `audio_url` aponta pra 404
+4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão pro passo 5
+5. Frase nova? `python3 tools/build_audio_frases.py` — gera a voz da ElevenLabs só das frases que ainda não têm arquivo (precisa da `ELEVEN_API_KEY` além das variáveis do passo 2)
+6. Commit + push — **os MP3s precisam estar publicados**, senão o `audio_url` aponta pra 404
 
 Rodou o `schema.sql` antes da V2.3? Ele é idempotente — rodar de novo só adiciona a coluna `data_aula`, não apaga nada.
 
@@ -281,7 +282,7 @@ Falso positivo legítimo passa com `git commit --no-verify`.
 Por que a trava: este repositório é **público**. Segredo publicado não se apaga — sai do arquivo mas fica no histórico e em qualquer fork ou clone que já exista. A recuperação é rotacionar a chave no Supabase, não editar o commit.
 
 - **A `SUPABASE_SERVICE_KEY` ignora o RLS por completo** — quem a tem pode apagar o deck e sobrescrever o progresso de todo mundo, e não dá pra revogar de uma pessoa só. Ela não é necessária pra mexer no app: só o `seed.py` e o passo final do `build_audio_nativo.py` usam. A anon key do `config.js` é outra coisa, pública por design.
-- **Não rode `tools/build_audio.py`.** É o da ElevenLabs, desativado — ele sobrescreve o `audio_url` de **todas** as cartas e desliga as 51 gravações nativas de uma vez.
+- **`tools/build_audio_frases.py` só toca em frase.** Era o `build_audio.py`, que sobrescrevia o `audio_url` de **todas** as cartas e por isso viveu meses com um "não rode" aqui. Foi reescrito com três travas — lista filtrada por tipo, conferência do id antes do PATCH, e pasta própria (`audio/frases/`) que não colide com `audio/nativo/`. Rodar duas vezes não faz nada de novo; só gera o que falta.
 - **Nada de PDF no git.** O `.gitignore` barra `*.pdf` porque o livro do professor fica na pasta do projeto e o repositório é público.
 
 ## Licenças dos ativos de terceiros
