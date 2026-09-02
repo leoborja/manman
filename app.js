@@ -1163,7 +1163,7 @@ function gcSrs() { // remove estados de cartas que não existem mais
   for (const id of Object.keys(off)) if (!ids.has(id)) { delete off[id]; changedOff = true; }
   for (const id of Object.keys(stats)) if (!ids.has(id)) { delete stats[id]; changedStats = true; }
   if (changed) save(uk(K.srs), srs);
-  if (changedOff) save(uk(K.off), off);
+  if (changedOff) { save(uk(K.off), off); offVer++; }
   if (changedStats) save(uk(K.stats), stats);
 }
 
@@ -1172,6 +1172,7 @@ function isOff(id) { return !!(off[id] && off[id].off); }
 function offCount() { return cards.filter(c => isOff(c.id)).length; }
 function setOff(id, val) {
   off[id] = { off: val, u: Date.now() };
+  offVer++;
   save(uk(K.off), off);
   pushOff(id);
 }
@@ -1183,6 +1184,7 @@ function loadUserState() {
   log = load(uk(K.log), {});
   dirty = load(uk(K.dirty), []);
   off = load(uk(K.off), {});
+  offVer++;
   dirtyOff = load(uk(K.dirtyOff), []);
   // migração: progresso antigo sem usuário vira do primeiro que logar
   if (!Object.keys(srs).length && localStorage.getItem(K.srs)) {
@@ -1289,6 +1291,7 @@ async function syncPull() {
         const lo = off[row.card_id];
         if ((row.off_ms || 0) > 0 && (!lo || row.off_ms > lo.u)) {
           off[row.card_id] = { off: !!row.suspended, u: row.off_ms };
+          offVer++;
           changed = true;
         }
         // contagens só crescem, então o maior lado vence — sem timestamp e sem
@@ -1432,6 +1435,31 @@ function ehFrase(c) {
   return c.tipo === 'frase' || (Array.isArray(c.tags) && c.tags.indexOf('frase') >= 0);
 }
 function temFrases() { return cards.some(ehFrase); }
+// ── a frase herda o desligado das palavras ──────────────────
+// Desligar 谢谢 e continuar caindo em 谢谢你 na prática é a mesma carta voltando pela
+// porta dos fundos. Então a frase sai da rotação junto: basta o 汉字 de uma palavra
+// desligada aparecer dentro dela. Casa por SUBSTRING, e não pela segmentação, porque
+// a segmentação devolve null na frase que não fecha a conta de sílabas — e ali o certo
+// é bloquear, não deixar passar. O interruptor da própria frase continua sendo dela:
+// isto só a tira da rotação, ninguém mexe no `off` dela.
+let offVer = 0;                  // sobe a cada escrita em `off` — invalida o cache abaixo
+let offHzCache = [], offHzVer = -1;
+function offHanzis() {
+  if (offHzVer !== offVer) {
+    offHzCache = cards.filter(c => !ehFrase(c) && isOff(c.id))
+      .map(c => limpaHanzi(c.hanzi)).filter(Boolean);
+    offHzVer = offVer;
+  }
+  return offHzCache;
+}
+// qual palavra desligada tira esta frase da rotação (null se nenhuma, ou se não é frase)
+function palavraDesligada(c) {
+  if (!ehFrase(c)) return null;
+  const hz = limpaHanzi(c.hanzi);
+  return offHanzis().find(h => hz.indexOf(h) >= 0) || null;
+}
+// fora da rotação = desligada na mão, ou frase que carrega palavra desligada
+function foraDaRotacao(c) { return isOff(c.id) || !!palavraDesligada(c); }
 // O deck do TIPO escolhido — é ele que todos os filtros fatiam. Palavra e frase não se
 // encontram em fila nenhuma: são dois decks que moram na mesma tabela.
 function deckAtual() {
@@ -1451,7 +1479,7 @@ function cardsComErro(min) {
 // A contagem já desconta as desligadas, senão o número do chip mentiria sobre a sessão.
 function faixasErro() {
   return ERRO_FAIXAS
-    .map(n => ({ n, qtd: cardsComErro(n).filter(c => !isOff(c.id)).length }))
+    .map(n => ({ n, qtd: cardsComErro(n).filter(c => !foraDaRotacao(c)).length }))
     .filter(f => f.qtd);
 }
 // uma opção do eixo 📅: data da aula, 'fonte:x' (veio de fora — Duolingo, treino) ou
@@ -1493,7 +1521,7 @@ function aulaLabel(a) {
   const [, m, dia] = a.split('-');
   return dia + '/' + m;
 }
-function activePool() { return filteredCards().filter(c => !isOff(c.id)); }
+function activePool() { return filteredCards().filter(c => !foraDaRotacao(c)); }
 // Nem todo modo consegue perguntar de toda palavra:
 //   desenho — a grade é uma só, então 你好 e 谢谢 ficam de fora
 //   tom     — o tom é de uma sílaba, mesma restrição de um caractere
@@ -1758,7 +1786,7 @@ function nextCard() {
   }
   const id = queue[0];
   const card = cards.find(c => c.id === id);
-  if (!card || isOff(id)) { queue.shift(); nextCard(); return; }
+  if (!card || foraDaRotacao(card)) { queue.shift(); nextCard(); return; }
   showCard(card);
 }
 function finishSession() {
@@ -1992,7 +2020,7 @@ function resumeFlash() {
   flashSuspenso = null;
   // desligou a carta enquanto estava fora → pula; senão a carta recomeça da exposição,
   // que é mais justo do que cobrar a resposta de uma explicação que ele não viu
-  if (!current || isOff(current.id)) { queue.shift(); nextCard(); }
+  if (!current || foraDaRotacao(current)) { queue.shift(); nextCard(); }
   else showCard(current);
 }
 function grade(g) {
@@ -2077,7 +2105,10 @@ function renderCartasChips() {
   // tudo daqui pra baixo vive DENTRO do tipo escolhido: os temas, as aulas, a contagem
   // de desligadas. Tema que só existe em frase não vira chip na lista de palavras.
   const base = cartasBase();
-  const nOff = base.filter(c => isOff(c.id)).length;
+  // conta quem está FORA da rotação, não só quem tem o interruptor desligado: a frase
+  // que carrega palavra desligada também não vai cair no estudo, e escondê-la aqui
+  // deixaria o usuário procurando por que a frase sumiu.
+  const nOff = base.filter(c => foraDaRotacao(c)).length;
   const opcoes = porAula ? opcoesAula(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
   if (!opcoes.includes(cartasDeck) && cartasDeck !== '__off__') cartasDeck = opcoes[0];
   let html = opcoes.map(o =>
@@ -2097,7 +2128,7 @@ function cartasBase() { return cards.filter(c => ehFrase(c) === (cartasTipo === 
 // as cartas que o filtro da aba Cartas está mostrando, ignorando a busca por texto
 function cartasFiltradas() {
   const base = cartasBase();
-  if (cartasDeck === '__off__') return base.filter(c => isOff(c.id));
+  if (cartasDeck === '__off__') return base.filter(c => foraDaRotacao(c));
   if (cartasFiltro === 'aula') {
     if (cartasDeck === 'todas') return base;
     if (cartasDeck.indexOf('fonte:') === 0) {
@@ -2146,16 +2177,21 @@ function renderList() {
     ? '<b>' + list.length + '</b> de ' + base + ' ' + nome
     : '<b>' + base + '</b> ' + nome + ' no deck';
   $('cardlist').className = cartasTipo === 'frase' ? 'frases' : '';
-  $('cardlist').innerHTML = list.map(c =>
-    '<div class="card' + (isOff(c.id) ? ' offrow' : '') + '"><div class="rowline">' +
+  $('cardlist').innerHTML = list.map(c => {
+    // a frase bloqueada por palavra desligada fica apagada como as desligadas, mas com o
+    // interruptor ligado — porque ele é dela. A linha diz qual palavra a está segurando.
+    const bloq = palavraDesligada(c);
+    return '<div class="card' + (isOff(c.id) || bloq ? ' offrow' : '') + '"><div class="rowline">' +
     '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
     '<div class="mid"><div class="p">' + pinyinColored(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
-    (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') + '</div>' +
+    (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') +
+    (bloq ? '<div class="n">🚫 fora da rotação: ' + esc(bloq) + ' está desligada</div>' : '') + '</div>' +
     '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
     '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
     '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
     (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
-    '</div></div>').join('') || '<p style="color:var(--mut);text-align:center">Nenhuma ' +
+    '</div></div>';
+  }).join('') || '<p style="color:var(--mut);text-align:center">Nenhuma ' +
       (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
@@ -2166,7 +2202,7 @@ function renderList() {
     renderCartasChips(); renderList();
     if (phase !== 'quiz') { // realinha a fila de estudo mantendo a carta atual na frente
       if (phase === 'sched') buildQueue(); else enterPractice();
-      if (current && !isOff(current.id)) {
+      if (current && !foraDaRotacao(current)) {
         queue = queue.filter(x => x !== current.id);
         queue.unshift(current.id);
         renderCounter();
