@@ -34,13 +34,14 @@ rodar essa linha uma vez** — sem ela a trava contra vazar chave não existe ne
 
 Dois scripts precisam dela — o `supabase/seed.py` e o passo final do
 `build_audio_nativo.py`. Ela chega pelo Leo, por canal privado, e **mora fora da pasta do
-projeto**:
+projeto**, junto da `ELEVEN_API_KEY` que o áudio das frases usa:
 
 ```bash
 mkdir -p ~/.config
 cat > ~/.config/manman.env <<'EOF'
 export SUPABASE_URL=https://xxxxxxxx.supabase.co
 export SUPABASE_SERVICE_KEY=eyJ...
+export ELEVEN_API_KEY=sk_...
 EOF
 chmod 600 ~/.config/manman.env
 ```
@@ -189,13 +190,33 @@ source ~/.config/manman.env && python3 tools/build_audio_nativo.py
 
 Baixa a gravação de falante nativo do Wikimedia Commons pras cartas novas e liga o
 `audio_url` no banco. **Frases ele pula de propósito** — o Commons nomeia arquivo por
-sílaba, procurar frase inteira é consulta vazia. Frase vai de TTS, e nela isso é bom: o
-defeito do TTS é o 3º tom isolado, e frase não tem sílaba isolada.
+sílaba de palavra, então frase inteira é consulta garantidamente vazia lá; elas são o
+passo seguinte. Palavra sem gravação disponível cai no TTS do aparelho sozinha, sem
+precisar de nada.
 
-### 5. Commitar e publicar
+### 5. Frase nova? Voz sintética
 
 ```bash
-git add seed/seed_cards.json audio/nativo/ fonts/ strokes/
+source ~/.config/manman.env && python3 tools/build_audio_frases.py
+```
+
+Gera `audio/frases/<id>.mp3` na ElevenLabs **só das frases que ainda não têm arquivo** —
+rodar duas vezes não refaz nada nem gasta crédito à toa. Voz sintética numa frase é
+aceitável (o defeito dela é o 3º tom *isolado*, e frase não tem sílaba isolada), e o TTS
+do celular perde no ritmo e na entonação, que é o que a frase precisa.
+
+Se não entrou frase nova, pule — é chamada paga.
+
+**Esse script não toca em palavra**, nem no arquivo nem no banco: lista filtrada por
+tipo, conferência do id antes do PATCH e pasta própria. A versão antiga dele
+(`tools/build_audio.py`, apagada em 01/09) apagava o `audio_url` do deck inteiro e
+desligava as gravações humanas de uma vez — se você encontrar esse nome em algum texto
+velho, é a versão que não existe mais.
+
+### 6. Commitar e publicar
+
+```bash
+git add seed/seed_cards.json audio/nativo/ audio/frases/ fonts/ strokes/
 git commit -m "..."
 git push origin main
 ```
@@ -207,8 +228,9 @@ gerado nunca entra no commit.)
 
 ## Nunca
 
-- **Não rode `tools/build_audio.py`.** É o da ElevenLabs, desativado: ele sobrescreve o
-  `audio_url` de **todas** as cartas e desliga as gravações nativas de uma vez.
+- **Não escreva `audio_url` no seed nem no painel do Supabase.** Quem manda nessa coluna
+  são os dois scripts de áudio, e é por isso que rodar o `seed.py` não desliga as
+  gravações — ele mandaria a coluna vazia junto.
 - **Não commite PDF.** O livro do professor fica na pasta e o repositório é público — o
   `.gitignore` barra `*.pdf` por isso.
 - **Não passe `--no-verify`** pra escapar do hook de pre-commit sem entender o que ele
