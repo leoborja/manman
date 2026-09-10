@@ -149,7 +149,9 @@ source ~/.config/manman.env && python3 supabase/seed.py
 ```
 
 Sobe as cartas novas e atualiza as que mudaram (upsert por `id`). O caminho do `.env` é
-o de cada máquina — o do Leo é `~/Documents/codes/cloud_local/manman_supabase.env`.
+o de cada máquina: `~/.config/manman.env` é a convenção deste repositório (é o que os
+scripts citam quando a chave falta), mas quem já tem as variáveis em outro arquivo usa o
+seu — o que não pode é o arquivo morar dentro de `manman/`.
 
 ### 3. Caractere novo? Fonte e traçados
 
