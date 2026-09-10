@@ -109,3 +109,11 @@ Arquivos do Commons são nomeados por pinyin, não por caractere — quando a gr
 | 英语 | Yīngyǔ | [Zh-yīngyǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%ABngy%C7%94.ogg) | 英语 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 汉语 | Hànyǔ | [Zh-hànyǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A0ny%C7%94.ogg) | 汉语 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 今天 | jīntiān | [Zh-jīntiān.ogg](https://commons.wikimedia.org/wiki/File%3AZh-j%C4%ABnti%C4%81n.ogg) | 今天 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 牛奶 | niúnǎi | [Zh-niúnǎi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ni%C3%BAn%C7%8Ei.ogg) | 牛奶 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 汽水 | qìshuǐ | [Zh-qìshuǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-q%C3%ACshu%C7%90.ogg) | 汽水 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 酒 | jiǔ | [Zh-jiǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C7%94.ogg) | 久 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 苹果 | píngguǒ | [Zh-píngguǒ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-p%C3%ADnggu%C7%92.ogg) | 苹果 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 刀 | dāo | [Zh-dāo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C4%81o.ogg) | 刀 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 口 | kǒu | [Zh-kǒu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C7%92u.ogg) | 口 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 又 | yòu | [Zh-yòu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%B2u.ogg) | 又 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 可 | kě | [Zh-kě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%9B.ogg) | 渴 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
