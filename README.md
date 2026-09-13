@@ -46,13 +46,15 @@ A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 
 
 ### Filtro — três eixos que se somam
 
-São três: **🏷️ tema** (Números, Pronomes, Família…), **📅 aula** (a data em que a palavra entrou, de `data_aula`, mais as origens de fora da aula) e **❌ erro** (as que você mais erra, por faixa).
+São três: **🏷️ tema** (Números, Pronomes, Família…), **📖 origem** (de onde a carta veio, de `fonte`: o capítulo do livro — Cap. 1, Cap. 2… —, os Extras da aula ou o Duolingo) e **❌ erro** (as que você mais erra, por faixa).
 
 **Eles somam.** Dá pra pedir "Família **e** Comida **e** só as que eu erro" numa sessão só — o resultado é a **interseção** dos eixos ligados. Dentro do mesmo eixo os chips se **somam**: marcar Família e Comida é pedir as duas, que é a leitura natural de marcar dois temas. Eixo sem nenhum chip marcado não filtra nada, e é assim que "Todos" volta a ser todos.
 
 Até 30/08 os três se excluíam: escolher a aula desligava o tema. A troca é o que permite "as frases da aula de ontem" e "as palavras de família que eu mais erro" — que são justamente as perguntas que a gente faz na véspera da prova.
 
-**Os ícones dizem duas coisas diferentes.** O "ligado" neutro (contorno escuro) é **qual fila de chips está na tela** — navegação, porque só cabe uma fileira e duas empilhadas comeriam o celular. O **ponto vermelho** é **quais eixos estão de fato cortando o deck**. Sem o ponto, marcar "Família" e ir olhar o 📅 esconderia que o 🏷️ continua valendo, e a sessão sairia menor do que os chips na tela explicam.
+Em 13/09 o 📅 aula virou **📖 origem**. A turma estuda pelos capítulos do *New Practical Chinese Reader 1*, e a data da aula não dizia de que capítulo a palavra era — nem separava o que veio do livro do que entrou pelo Duolingo. A `data_aula` continua gravada no JSON e no banco, só não vira mais chip. Capítulo novo não precisa de código: `"fonte": "cap3"` já aparece como "Cap. 3", na ordem certa. Quem tinha datas marcadas no 📅 volta sem filtro de origem, em vez de ficar com um corte que nenhum chip mostra.
+
+**Os ícones dizem duas coisas diferentes.** O "ligado" neutro (contorno escuro) é **qual fila de chips está na tela** — navegação, porque só cabe uma fileira e duas empilhadas comeriam o celular. O **ponto vermelho** é **quais eixos estão de fato cortando o deck**. Sem o ponto, marcar "Família" e ir olhar o 📖 esconderia que o 🏷️ continua valendo, e a sessão sairia menor do que os chips na tela explicam.
 
 O estado inteiro aparece de uma vez só num lugar: a linha do "O que estudar", que lê `Família + Comida · ≥1 erro`. E marcar um chip **não fecha mais a folha** — quem pode escolher vários precisa da lista aberta pra isso; quem fecha é o toque no fundo, com a sessão já remontada atrás.
 
@@ -176,7 +178,7 @@ No fim da rodada: *"Você acertou 41 de 57 — 72%"*. A nota é sobre o **deck i
 
 Consulta: busca, filtro por categoria, 🔊 por linha e o switch liga/desliga de cada carta.
 
-**A aba lista um tipo por vez, e abre em Palavras.** Frase e palavra dividem a mesma tabela, mas quem entra aqui está procurando o pictograma — e 59 frases embaralhadas com 129 palavras transformam a consulta numa rolagem. O par `汉 Palavras · 💬 Frases` no alto é o mesmo do escopo do estudar, então a escolha se faz do mesmo jeito nas duas telas, e some inteiro quando não há frase publicada. Tudo abaixo dele vive dentro do tipo escolhido: os temas (Identidade e Gostos só existem em frase, e não viram chip na lista de palavras), o eixo 📅, a contagem de desligadas e o contador, que voltou a dizer "129 palavras" em vez do "cartas" genérico que somava os dois. Trocar de tipo limpa a busca e o filtro, porque um filtro do outro lado quase nunca existe deste.
+**A aba lista um tipo por vez, e abre em Palavras.** Frase e palavra dividem a mesma tabela, mas quem entra aqui está procurando o pictograma — e 59 frases embaralhadas com 129 palavras transformam a consulta numa rolagem. O par `汉 Palavras · 💬 Frases` no alto é o mesmo do escopo do estudar, então a escolha se faz do mesmo jeito nas duas telas, e some inteiro quando não há frase publicada. Tudo abaixo dele vive dentro do tipo escolhido: os temas (Identidade e Gostos só existem em frase, e não viram chip na lista de palavras), o eixo 📖, a contagem de desligadas e o contador, que voltou a dizer "129 palavras" em vez do "cartas" genérico que somava os dois. Trocar de tipo limpa a busca e o filtro, porque um filtro do outro lado quase nunca existe deste.
 
 **A frase herda o desligado das palavras.** Desligar 喝 e continuar caindo em 我要喝啤酒 na prática é a mesma carta voltando pela porta dos fundos — o interruptor prometia tirar da rotação e não tirava. Agora basta o 汉字 de uma palavra desligada aparecer dentro da frase pra ela sair do estudo junto (13 frases saem com o 喝). A conta é por substring e não pela segmentação do 🧩: a segmentação devolve `null` na frase que não fecha a conta de sílabas, e ali o certo é bloquear, não deixar passar. O interruptor da frase continua sendo dela — ninguém mexe no estado salvo —, mas a linha aparece apagada na aba, com o motivo escrito embaixo (`🚫 fora da rotação: 喝 está desligada`), e entra na contagem do chip 🚫. Sem esse aviso a frase sumiria do estudo com a chavinha verde na tela, e o usuário procuraria o bug no lugar errado.
 
@@ -217,12 +219,12 @@ seed/seed_cards.json  ──(supabase/seed.py)──▶  Supabase  ──(fetch)
 Três consequências:
 
 - **Editar pelo painel do Supabase é perda de tempo.** O próximo `seed.py` sobrescreve com o que está no JSON.
-- **Nem toda coluna é do JSON.** O `seed.py` manda 11 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, fonte, tipo, created_by`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
-- **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. A coluna `deleted` existe no schema e o app já filtra por ela, mas o `seed.py` ainda não a marca — hoje some só editando o banco à mão.
+- **Nem toda coluna é do JSON.** O `seed.py` manda 11 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, fonte, deleted, created_by` — o `tipo` do JSON vira a tag `frase`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
+- **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. Pra tirar uma carta de todo mundo, marque `"deleted": true` nela no JSON: o `seed.py` manda a coluna, o banco entrega sem ela e o app some com a carta — e o JSON continua dizendo que ela existiu.
 
 ### Adicionar palavras novas (fluxo do Leo)
 
-1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
+1. Editar `seed/seed_cards.json` — preencher `fonte` com a origem (`cap3`, `extra-aula`, `duolingo`) — é o eixo 📖 — e `data_aula` (`"2026-08-13"`) com o dia da aula, quando veio de uma. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
 4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão pro passo 5

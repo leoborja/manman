@@ -19,7 +19,7 @@
 
 // ── constantes ──────────────────────────────────────────────
 const LEARNED_IVL = 21;          // intervalo (dias) p/ considerar "aprendida"
-const FILTROS = ['tema', 'aula', 'erro'];
+const FILTROS = ['tema', 'origem', 'erro'];
 const ERRO_FAIXAS = [1, 3, 5, 8]; // faixas do filtro "as que eu mais erro"
 const META_DIARIA = 30;          // revisões/dia pra fechar o dia — meta, não teto: pode fazer mais
 // 20/08 é o primeiro dia em que o contador funciona: até 19/08 a prática livre só
@@ -43,6 +43,13 @@ const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: '
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
   nomes: 'Nomes', familia: 'Família', geral: 'Geral', comida: 'Comida',
   paises: 'Países', escola: 'Escola' };
+// O eixo 📖 fatia pela ORIGEM da carta: de que capítulo do livro (New Practical Chinese
+// Reader 1) ela saiu, ou se veio de fora dele. Mora na coluna `fonte`, que já existia —
+// ninguém do time tem DDL pra criar coluna nova (ver o schema.sql). Capítulo novo não
+// precisa de código: "fonte": "cap3" no JSON já vira o chip "Cap. 3", na ordem certa.
+const ORIGEM_LABELS = { 'extra-aula': 'Extras da aula', duolingo: 'Duolingo', treino: 'Treino',
+  fora: 'Sem origem' };
+const ORIGEM_FIM = ['extra-aula', 'duolingo', 'treino']; // depois dos capítulos, nesta ordem
 // Uma frase É uma carta: mesmos campos, mesmo SRS, mesma sincronização, mesma meta de
 // 30. O que separa as duas é a FILA — o app nunca mistura, porque frase chega em bloco
 // (uma aula inteira de uma vez) e afogaria a sessão de vocabulário em cartas novas.
@@ -252,9 +259,11 @@ function calcSeg(card) {
 
 let cards = [];                  // deck completo (não deletadas)
 let settings = load(K.settings, { mode: 'zh_all', tipo: 'palavra', deck: 'todos', filtro: 'tema',
-  aula: 'todas', erro: ERRO_FAIXAS[2], user: null, theme: null, autoSpeak: true, flash: false,
+  erro: ERRO_FAIXAS[2], user: null, theme: null, autoSpeak: true, flash: false,
   flashMs: FLASH_MS_PADRAO });
 if (!TIPOS.includes(settings.tipo)) settings.tipo = 'palavra'; // quem já usava o app não tem o campo
+// 13/09: o eixo 📅 aula virou 📖 origem — quem estava olhando as aulas continua na mesma fila
+if (settings.filtro === 'aula') settings.filtro = 'origem';
 if (!FILTROS.includes(settings.filtro)) settings.filtro = 'tema'; // quem já usava o app não tem o campo
 // Os três eixos SOMAM em vez de se excluírem: dá pra pedir "Família E as que eu mais
 // erro" numa sessão só. Cada um guarda um conjunto — vazio quer dizer "não filtra por
@@ -270,12 +279,14 @@ if (!FILTROS.includes(settings.filtro)) settings.filtro = 'tema'; // quem já us
 if (!Array.isArray(settings.decks)) {
   const eixoVelho = settings.filtro;
   settings.decks = (eixoVelho === 'tema' && settings.deck && settings.deck !== 'todos') ? [settings.deck] : [];
-  settings.aulas = (eixoVelho === 'aula' && settings.aula && settings.aula !== 'todas') ? [settings.aula] : [];
   settings.erro = (eixoVelho === 'erro' && ERRO_FAIXAS.includes(settings.erro)) ? settings.erro : null;
   delete settings.deck; delete settings.aula;
   save(K.settings, settings);
 }
-if (!Array.isArray(settings.aulas)) settings.aulas = [];
+// As datas marcadas no 📅 não têm par no 📖: descartar é o que evita abrir, pra quem só
+// atualizou o app, uma sessão cortada por um filtro que nenhum chip na tela mostra.
+delete settings.aulas;
+if (!Array.isArray(settings.origens)) settings.origens = [];
 // erro: número = piso de erros; null = eixo desligado
 if (settings.erro !== null && !ERRO_FAIXAS.includes(settings.erro)) settings.erro = null;
 settings.escopoOpen = !!settings.escopoOpen;
@@ -339,7 +350,7 @@ let modoCarta = null;            // no aleatório, o modo sorteado pra carta atu
 let modoCartaAnterior = null;    // o da carta passada, pra não repetir duas seguidas
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
-let cartasFiltro = 'tema';       // 'tema' | 'aula' — mesma ideia do filtro de estudo
+let cartasFiltro = 'tema';       // 'tema' | 'origem' — mesma ideia do filtro de estudo
 let cartasTipo = 'palavra';      // 'palavra' | 'frase' — a aba lista UM tipo por vez
 
 // ── helpers ─────────────────────────────────────────────────
@@ -1247,7 +1258,8 @@ async function loadCards() {
   }
   try {
     const r = await fetch('./seed/seed_cards.json');
-    cards = await r.json();
+    // o banco já entrega sem as tiradas (deleted=eq.false); o JSON cru precisa do mesmo corte
+    cards = (await r.json()).filter(c => !c.deleted);
     dataSource = 'seed';
   } catch (e) {
     cards = []; dataSource = 'vazio';
@@ -1472,7 +1484,7 @@ function deckAtual() {
 function cardsComErro(min) {
   let base = deckAtual();
   if (settings.decks.length) base = base.filter(c => settings.decks.indexOf(c.deck) >= 0);
-  if (settings.aulas.length) base = base.filter(c => settings.aulas.some(a => casaAula(c, a)));
+  if (settings.origens.length) base = base.filter(c => settings.origens.includes(origemDe(c)));
   return base.filter(c => !aprendida(c.id) && erroCount(c.id) >= min);
 }
 // só as faixas que têm palavra — chip vazio é convite a cair numa sessão de zero cartas.
@@ -1482,44 +1494,40 @@ function faixasErro() {
     .map(n => ({ n, qtd: cardsComErro(n).filter(c => !foraDaRotacao(c)).length }))
     .filter(f => f.qtd);
 }
-// uma opção do eixo 📅: data da aula, 'fonte:x' (veio de fora — Duolingo, treino) ou
-// 'fora' (sem procedência nenhuma)
-function casaAula(c, a) {
-  if (a.indexOf('fonte:') === 0) return c.fonte === a.slice(6);
-  if (a === 'fora') return !c.data_aula && !c.fonte;
-  return c.data_aula === a;
-}
+// A origem de uma carta. Sem `fonte` ela cai em 'fora', pra aparecer num chip em vez de
+// sumir do filtro sem ninguém saber por quê.
+function origemDe(c) { return c.fonte || 'fora'; }
 // Interseção dos eixos ligados; dentro de cada um, união dos chips marcados.
 // Eixo com conjunto vazio não filtra — é assim que "Todos" volta a ser todos.
 function filteredCards() {
   let base = deckAtual();
   if (settings.decks.length) base = base.filter(c => settings.decks.indexOf(c.deck) >= 0);
-  if (settings.aulas.length) base = base.filter(c => settings.aulas.some(a => casaAula(c, a)));
+  if (settings.origens.length) base = base.filter(c => settings.origens.includes(origemDe(c)));
   if (settings.erro) base = base.filter(c => !aprendida(c.id) && erroCount(c.id) >= settings.erro);
   return base;
 }
-function algumFiltro() { return !!(settings.decks.length || settings.aulas.length || settings.erro); }
-// Datas de aula presentes, da mais antiga pra mais recente. A base é parâmetro porque
-// a tela de Estudar só quer as do tipo escolhido (aula que só teve palavra não pode
-// aparecer como opção de frase, e vice-versa), enquanto a aba Cartas é o navegador do
-// deck inteiro — ali palavra e frase convivem, porque consultar não é estudar.
-function aulas(base) { return [...new Set((base || deckAtual()).map(c => c.data_aula).filter(Boolean))].sort(); }
-function fontes(base) { return [...new Set((base || deckAtual()).map(c => c.fonte).filter(Boolean))].sort(); }
-// opções do filtro "por aula": as datas em ordem, depois as fontes de fora da aula
-function opcoesAula(base) {
-  base = base || deckAtual();
-  const fora = base.some(c => !c.data_aula && !c.fonte);
-  return ['todas'].concat(aulas(base), fontes(base).map(f => 'fonte:' + f), fora ? ['fora'] : []);
+function algumFiltro() { return !!(settings.decks.length || settings.origens.length || settings.erro); }
+// Os capítulos primeiro, pelo número (o cap10 depois do cap9, não do cap1); depois as de
+// fora do livro na ordem de ORIGEM_FIM; o que ninguém previu; e 'fora' por último.
+function ordemOrigem(o) {
+  const m = /^cap(\d+)$/.exec(o);
+  if (m) return +m[1];
+  if (o === 'fora') return 3000;
+  const i = ORIGEM_FIM.indexOf(o);
+  return i < 0 ? 2000 : 1000 + i;
 }
-function aulaLabel(a) {
-  if (a === 'todas') return 'Todas';
-  if (a === 'fora') return 'Sem origem';
-  if (a.indexOf('fonte:') === 0) {
-    const f = a.slice(6);
-    return f.charAt(0).toUpperCase() + f.slice(1);
-  }
-  const [, m, dia] = a.split('-');
-  return dia + '/' + m;
+// Origens presentes na base. A base é parâmetro porque a tela de Estudar só quer as do
+// tipo escolhido (origem que só tem palavra não pode virar opção de frase), e a aba
+// Cartas passa a dela.
+function opcoesOrigem(base) {
+  const tem = [...new Set((base || deckAtual()).map(origemDe))];
+  return ['todas'].concat(tem.sort((a, b) => ordemOrigem(a) - ordemOrigem(b) || a.localeCompare(b)));
+}
+function origemLabel(o) {
+  if (o === 'todas') return 'Todas';
+  const m = /^cap(\d+)$/.exec(o);
+  if (m) return 'Cap. ' + m[1];
+  return ORIGEM_LABELS[o] || (o.charAt(0).toUpperCase() + o.slice(1));
 }
 function activePool() { return filteredCards().filter(c => !foraDaRotacao(c)); }
 // Nem todo modo consegue perguntar de toda palavra:
@@ -1616,7 +1624,7 @@ function renderChips() {
     b.classList.toggle('active', b.dataset.f === eixo);
     b.classList.toggle('filtrando',
       b.dataset.f === 'tema' ? !!settings.decks.length :
-      b.dataset.f === 'aula' ? !!settings.aulas.length : !!settings.erro);
+      b.dataset.f === 'origem' ? !!settings.origens.length : !!settings.erro);
   });
 
   // o primeiro chip de cada eixo é o "não filtre por isto": ligado quando o conjunto
@@ -1636,11 +1644,11 @@ function renderChips() {
       ? faixas.map(f => chip(settings.erro === f.n, 'e', f.n,
           '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') + ' (' + f.qtd + ')')).join('')
       : '<button class="chip" disabled>nada errado por aqui 🎉</button>');
-  } else if (eixo === 'aula') {
-    const opcoes = opcoesAula().filter(a => a !== 'todas');
-    settings.aulas = settings.aulas.filter(a => opcoes.includes(a)); // aula que sumiu do deck
-    html = chip(!settings.aulas.length, 'a', 'todas', 'Todas') +
-      opcoes.map(a => chip(settings.aulas.includes(a), 'a', a, aulaLabel(a))).join('');
+  } else if (eixo === 'origem') {
+    const opcoes = opcoesOrigem().filter(o => o !== 'todas');
+    settings.origens = settings.origens.filter(o => opcoes.includes(o)); // origem que não existe neste tipo
+    html = chip(!settings.origens.length, 'o', 'todas', 'Todas') +
+      opcoes.map(o => chip(settings.origens.includes(o), 'o', o, origemLabel(o))).join('');
   } else {
     const decks = [...new Set(deckAtual().map(c => c.deck))];
     settings.decks = settings.decks.filter(d => decks.includes(d)); // tema que não existe neste tipo
@@ -1656,8 +1664,8 @@ function renderChips() {
       const n = +ch.dataset.e;
       settings.erro = (!n || settings.erro === n) ? null : n; // eixo de valor único: alterna liga/desliga
     } else {
-      const alvo = eixo === 'aula' ? 'aulas' : 'decks';
-      const v = eixo === 'aula' ? ch.dataset.a : ch.dataset.d;
+      const alvo = eixo === 'origem' ? 'origens' : 'decks';
+      const v = eixo === 'origem' ? ch.dataset.o : ch.dataset.d;
       if (v === 'todas' || v === 'todos') settings[alvo] = [];
       else settings[alvo] = settings[alvo].includes(v)
         ? settings[alvo].filter(x => x !== v)
@@ -1827,7 +1835,7 @@ function finishSession() {
       ? 'O modo desenho usa uma grade por caractere, então só entram palavras de um caractere.'
       : 'O tom é de uma sílaba só, então só entram palavras de um caractere' +
         (settings.mode === 'tons' ? ', e sem tom neutro, que o alto-falante não consegue perguntar.' : '.')) +
-      ' Não sobrou nenhuma neste filtro — escolha outra faixa/tema/aula ou troque de modo.';
+      ' Não sobrou nenhuma neste filtro — escolha outra faixa/tema/origem ou troque de modo.';
     $('freebtn').style.display = 'none';
   } else if (quizOn()) { // no aleatório o modoCarta já foi zerado, então não cai aqui
     const pct = quizScore.n ? Math.round(quizScore.ok / quizScore.n * 100) : 0;
@@ -2090,7 +2098,7 @@ function tapCard() {
 
 // ── UI: cartas (consulta) ───────────────────────────────────
 function renderCartasChips() {
-  const porAula = cartasFiltro === 'aula';
+  const porOrigem = cartasFiltro === 'origem';
   // sem frase publicada a linha inteira some, igual à do estudar: um botão que só abre
   // lista vazia é pior que botão nenhum
   const tem = temFrases();
@@ -2100,20 +2108,20 @@ function renderCartasChips() {
     b.classList.toggle('active', b.dataset.tp === cartasTipo));
 
   $('cartas-filtertype').querySelectorAll('button').forEach(b =>
-    b.classList.toggle('active', (b.dataset.f === 'aula') === porAula));
+    b.classList.toggle('active', (b.dataset.f === 'origem') === porOrigem));
 
-  // tudo daqui pra baixo vive DENTRO do tipo escolhido: os temas, as aulas, a contagem
+  // tudo daqui pra baixo vive DENTRO do tipo escolhido: os temas, as origens, a contagem
   // de desligadas. Tema que só existe em frase não vira chip na lista de palavras.
   const base = cartasBase();
   // conta quem está FORA da rotação, não só quem tem o interruptor desligado: a frase
   // que carrega palavra desligada também não vai cair no estudo, e escondê-la aqui
   // deixaria o usuário procurando por que a frase sumiu.
   const nOff = base.filter(c => foraDaRotacao(c)).length;
-  const opcoes = porAula ? opcoesAula(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
+  const opcoes = porOrigem ? opcoesOrigem(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
   if (!opcoes.includes(cartasDeck) && cartasDeck !== '__off__') cartasDeck = opcoes[0];
   let html = opcoes.map(o =>
     '<button class="chip' + (cartasDeck === o ? ' active' : '') + '" data-d="' + esc(o) + '">' +
-    (porAula ? esc(aulaLabel(o)) : o === 'todos' ? 'Todas' : esc(deckLabel(o))) + '</button>').join('');
+    (porOrigem ? esc(origemLabel(o)) : o === 'todos' ? 'Todas' : esc(deckLabel(o))) + '</button>').join('');
   if (nOff > 0 || cartasDeck === '__off__') {
     html += '<button class="chip' + (cartasDeck === '__off__' ? ' active' : '') + '" data-d="__off__">🚫 Desligadas (' + nOff + ')</button>';
   }
@@ -2129,14 +2137,8 @@ function cartasBase() { return cards.filter(c => ehFrase(c) === (cartasTipo === 
 function cartasFiltradas() {
   const base = cartasBase();
   if (cartasDeck === '__off__') return base.filter(c => foraDaRotacao(c));
-  if (cartasFiltro === 'aula') {
-    if (cartasDeck === 'todas') return base;
-    if (cartasDeck.indexOf('fonte:') === 0) {
-      const f = cartasDeck.slice(6);
-      return base.filter(c => c.fonte === f);
-    }
-    if (cartasDeck === 'fora') return base.filter(c => !c.data_aula && !c.fonte);
-    return base.filter(c => c.data_aula === cartasDeck);
+  if (cartasFiltro === 'origem') {
+    return cartasDeck === 'todas' ? base : base.filter(c => origemDe(c) === cartasDeck);
   }
   return cartasDeck === 'todos' ? base : base.filter(c => c.deck === cartasDeck);
 }
@@ -2148,7 +2150,7 @@ function renderBulk() {
   if (generico || !grupo.length) { $('bulkbar').innerHTML = ''; return; }
   const ligadas = grupo.filter(c => !isOff(c.id)).length;
   const desligar = ligadas > 0;
-  const rotulo = cartasFiltro === 'aula' ? aulaLabel(cartasDeck) : deckLabel(cartasDeck);
+  const rotulo = cartasFiltro === 'origem' ? origemLabel(cartasDeck) : deckLabel(cartasDeck);
   $('bulkbar').innerHTML = '<button class="bulkbtn' + (desligar ? '' : ' on') + '" id="bulkbtn">' +
     (desligar ? '🚫 Desligar as ' + ligadas + ' de ' + esc(rotulo)
       : '↩︎ Religar as ' + grupo.length + ' de ' + esc(rotulo)) + '</button>';
@@ -2454,16 +2456,16 @@ function switchView(v) {
 // O que está na fila, em três palavras — serve tanto pra pílula do botão quanto pra
 // linha fechada dentro da folha, pra que as duas nunca digam coisas diferentes.
 // A fila em uma linha. Agora ela pode ter três partes somadas — "Família + Comida ·
-// 12/08 · ≥3 erros" — e é o único lugar onde o estado inteiro aparece de uma vez: dentro
+// Cap. 2 · ≥3 erros" — e é o único lugar onde o estado inteiro aparece de uma vez: dentro
 // da folha você só vê a fila de chips de um eixo por vez.
 function escopoResumo() {
   const partes = [];
   if (settings.decks.length) partes.push(settings.decks.map(deckLabel).join(' + '));
-  if (settings.aulas.length) partes.push(settings.aulas.map(aulaLabel).join(' + '));
+  if (settings.origens.length) partes.push(settings.origens.map(origemLabel).join(' + '));
   if (settings.erro) partes.push('≥' + settings.erro + ' erro' + (settings.erro > 1 ? 's' : ''));
   // o ícone é o do primeiro eixo ligado; sem nenhum, o do eixo que está na tela
-  const ico = settings.decks.length ? '🏷️' : settings.aulas.length ? '📅' : settings.erro ? '❌'
-    : settings.filtro === 'aula' ? '📅' : settings.filtro === 'erro' ? '❌' : '🏷️';
+  const ico = settings.decks.length ? '🏷️' : settings.origens.length ? '📖' : settings.erro ? '❌'
+    : settings.filtro === 'origem' ? '📖' : settings.filtro === 'erro' ? '❌' : '🏷️';
   if (!partes.length) {
     return { ico, txt: settings.tipo === 'frase' ? 'Todas as frases' : 'Todas as palavras' };
   }
@@ -2549,12 +2551,12 @@ function bindEvents() {
     renderEscopo();
   };
   // Palavras ↔ Frases é a escolha de cima: troca o deck inteiro, então zera a fatia
-  // (a aula de 06/08 tem palavra e frase, mas 12/08 pode ter só palavra) e, se o modo
+  // (uma origem pode ter palavra e frase, outra só palavra) e, se o modo
   // atual não souber perguntar do tipo novo, cai no de virar a carta.
   $('tipotype').querySelectorAll('button').forEach(b => b.onclick = () => {
     if (b.dataset.tp === settings.tipo) return;
     settings.tipo = b.dataset.tp;
-    settings.decks = []; settings.aulas = [];
+    settings.decks = []; settings.origens = [];
     if (!modosDoTipo().includes(settings.mode)) settings.mode = 'zh_all';
     save(K.settings, settings);
     renderModeSheet(); renderModeUI(); startSession();
@@ -2569,7 +2571,7 @@ function bindEvents() {
   });
   $('cartas-filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
     cartasFiltro = b.dataset.f;
-    cartasDeck = cartasFiltro === 'aula' ? 'todas' : 'todos';
+    cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
     renderCartasChips(); renderList();
   });
   $('cartas-tipotype').querySelectorAll('button').forEach(b => b.onclick = () => {
@@ -2577,7 +2579,7 @@ function bindEvents() {
     // os temas de palavra e de frase não são os mesmos, e a busca por "水" não devolve
     // nada em frase: trocar de tipo recomeça a consulta em vez de herdar um filtro que
     // provavelmente não existe do outro lado
-    cartasDeck = cartasFiltro === 'aula' ? 'todas' : 'todos';
+    cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
     $('search').value = '';
     renderCartasChips(); renderList();
   });
