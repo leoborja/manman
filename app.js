@@ -348,6 +348,7 @@ let typeResult = null;
 let typePinyin = ''; // o pinyin em composição no teclado do sistema, quando ele deixa ver           // {ok, escolhido} da carta atual no teclado; null = não respondeu
 let modoCarta = null;            // no aleatório, o modo sorteado pra carta atual
 let modoCartaAnterior = null;    // o da carta passada, pra não repetir duas seguidas
+let cartasEm = 0;                // quando as cartas vieram do banco pela última vez (0 = nunca, nesta abertura)
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
 let cartasDeck = 'todos';        // filtro da aba Cartas
 let cartasFiltro = 'tema';       // 'tema' | 'origem' — mesma ideia do filtro de estudo
@@ -1255,6 +1256,7 @@ async function loadCards() {
       cards = await r.json();
       save(K.cards, cards);
       dataSource = 'supabase';
+      cartasEm = Date.now();
       return;
     } catch (e) {
       if (cached && cached.length) { cards = cached; dataSource = 'cache'; return; }
@@ -1436,7 +1438,9 @@ function showBanner(kind, msg) {
   b.className = 'banner show ' + kind;
   b.textContent = msg;
 }
-function hideBanner() { $('banner').className = 'banner'; }
+// limpa o texto junto: escondido com o texto dentro, o aviso 📴 continuava casando com as
+// checagens de startsWith('📴') depois de sumir da tela
+function hideBanner() { $('banner').className = 'banner'; $('banner').textContent = ''; }
 
 // ── sem internet ────────────────────────────────────────────
 // O sw.js guarda a casca do app sozinho; os áudios ele só conhece pela lista de cartas,
@@ -1450,6 +1454,7 @@ const AVISO_OFFLINE = '📴 Sem internet — o que você estudar fica salvo e so
 window.addEventListener('offline', () => showBanner('info', AVISO_OFFLINE));
 window.addEventListener('online', async () => {
   if ($('banner').textContent.startsWith('📴')) hideBanner();
+  await recarregaCartas();
   if (!settings.user) return;
   // a conexão voltou com o app aberto: sobe agora o que foi respondido offline, sem esperar a
   // próxima abertura, e traz o que a pessoa fez em outro aparelho nesse meio-tempo
@@ -1457,6 +1462,32 @@ window.addEventListener('online', async () => {
   flushDirty();
   if (changed && gradedThisSession === 0) startSession();
   renderProgress(); renderStreak();
+});
+// O iPhone guarda o app aberto na memória e não roda o init de novo quando a pessoa volta pra
+// ele — as cartas ficavam as da última abertura por dias, e o deck reorganizado no banco não
+// chegava (13/09: frases ainda em "Treino" num celular, com o banco já em capítulos). O mesmo
+// valia pra quem abriu com sinal ruim e caiu nas cartas salvas: nada buscava de novo depois.
+const RECARREGA_MS = 5 * 60 * 1000;
+let recarregando = false;
+async function recarregaCartas() {
+  if (recarregando || !sbConfigured() || !navigator.onLine) return;
+  recarregando = true;
+  try {
+    const antes = JSON.stringify(cards);
+    await loadCards();
+    if (dataSource !== 'supabase') return;          // o banco não respondeu de novo: fica como está
+    if ($('banner').textContent.startsWith('📴')) hideBanner();
+    if (JSON.stringify(cards) === antes) return;     // nada mudou: não mexe na sessão de ninguém
+    prepararOffline();
+    renderChips(); renderCartasChips(); renderList(); renderProgress(); renderStreak();
+    if (gradedThisSession === 0) startSession();    // no meio de uma rodada, a fila atual termina antes
+  } finally {
+    recarregando = false;
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) return;
+  if (dataSource !== 'supabase' || Date.now() - cartasEm > RECARREGA_MS) recarregaCartas();
 });
 
 // ── fila de estudo ──────────────────────────────────────────

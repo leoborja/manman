@@ -14,7 +14,7 @@ Um pouquinho todo dia é assim que se aprende mandarim.
 
 Vira um app de verdade: ícone 慢, tela cheia, funciona offline. **Atualiza sozinho** — toda vez que abre com internet, busca a versão mais nova (se parecer teimoso, feche o app no multitarefa e abra de novo).
 
-**Sem internet:** abra uma vez com internet e deixe aberto uns segundos — o app baixa sozinho os ~4 MB de áudio. Depois disso ele abre, estuda e toca todas as gravações em modo avião, e o que você responder fica guardado e sobe pro banco assim que a conexão voltar (sem precisar fechar o app). Sinal ruim também vale: se o banco não responder em 4 segundos, o app abre com as cartas salvas em vez de ficar em branco. Instalar na Tela de Início não é só conforto: no iPhone, site que não está lá perde os dados salvos depois de uns 7 dias sem uso.
+**Sem internet:** abra uma vez com internet e deixe aberto uns segundos — o app baixa sozinho os ~4 MB de áudio. Depois disso ele abre, estuda e toca todas as gravações em modo avião, e o que você responder fica guardado e sobe pro banco assim que a conexão voltar (sem precisar fechar o app). Sinal ruim também vale: se o banco não responder em 4 segundos, o app abre com as cartas salvas em vez de ficar em branco — e busca de novo sozinho quando a conexão volta, ou quando você volta pro app depois de 5 minutos fora (o iPhone deixa o app aberto na memória, e sem isso o deck reorganizado no banco não chegava). Instalar na Tela de Início não é só conforto: no iPhone, site que não está lá perde os dados salvos depois de uns 7 dias sem uso.
 
 ## Primeiro acesso
 
