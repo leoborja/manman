@@ -1243,8 +1243,14 @@ async function loadCards() {
   const cached = load(K.cards, null);
   if (sbConfigured()) {
     try {
+      // Com cartas salvas, a rede ganha 4s: sinal ruim (metrô, elevador) não pode deixar a
+      // tela em branco esperando — é pior que estar sem internet, que falha na hora e cai no
+      // cache. Sem cartas salvas não há plano B, então aí espera o quanto for.
+      const ctrl = new AbortController();
+      const prazo = cached && cached.length ? setTimeout(() => ctrl.abort(), 4000) : null;
       const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/cards?select=*&deleted=eq.false&order=created_at.asc',
-        { headers: sbHeaders() });
+        { headers: sbHeaders(), signal: ctrl.signal });
+      clearTimeout(prazo);
       if (!r.ok) throw new Error('HTTP ' + r.status);
       cards = await r.json();
       save(K.cards, cards);
@@ -1431,6 +1437,27 @@ function showBanner(kind, msg) {
   b.textContent = msg;
 }
 function hideBanner() { $('banner').className = 'banner'; }
+
+// ── sem internet ────────────────────────────────────────────
+// O sw.js guarda a casca do app sozinho; os áudios ele só conhece pela lista de cartas,
+// então o app manda a lista a cada abertura e ele baixa o que faltar em segundo plano.
+function prepararOffline() {
+  if (!('serviceWorker' in navigator)) return;
+  const urls = [...new Set(cards.map(c => c.audio_url).filter(Boolean))].map(u => new URL(u, location.href).href);
+  navigator.serviceWorker.ready.then(reg => { if (reg.active) reg.active.postMessage({ tipo: 'baixar-audios', urls }); });
+}
+const AVISO_OFFLINE = '📴 Sem internet — o que você estudar fica salvo e sobe quando a conexão voltar.';
+window.addEventListener('offline', () => showBanner('info', AVISO_OFFLINE));
+window.addEventListener('online', async () => {
+  if ($('banner').textContent.startsWith('📴')) hideBanner();
+  if (!settings.user) return;
+  // a conexão voltou com o app aberto: sobe agora o que foi respondido offline, sem esperar a
+  // próxima abertura, e traz o que a pessoa fez em outro aparelho nesse meio-tempo
+  const changed = await syncPull();
+  flushDirty();
+  if (changed && gradedThisSession === 0) startSession();
+  renderProgress(); renderStreak();
+});
 
 // ── fila de estudo ──────────────────────────────────────────
 // "errei" aqui é Errei + Difícil — a mesma conta que a aba Progresso usa em "mais erro",
@@ -2721,6 +2748,7 @@ async function init() {
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
   else if (dataSource === 'vazio') showBanner('error', 'Não consegui carregar nenhuma carta. Verifique a conexão e recarregue.');
   else hideBanner();
+  prepararOffline();
   if (settings.user) { // estado do usuário ANTES de qualquer render (off/srs afetam chips e fila)
     renderUserPill();
     loadUserState();

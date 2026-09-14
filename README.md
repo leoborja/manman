@@ -14,6 +14,8 @@ Um pouquinho todo dia é assim que se aprende mandarim.
 
 Vira um app de verdade: ícone 慢, tela cheia, funciona offline. **Atualiza sozinho** — toda vez que abre com internet, busca a versão mais nova (se parecer teimoso, feche o app no multitarefa e abra de novo).
 
+**Sem internet:** abra uma vez com internet e deixe aberto uns segundos — o app baixa sozinho os ~4 MB de áudio. Depois disso ele abre, estuda e toca todas as gravações em modo avião, e o que você responder fica guardado e sobe pro banco assim que a conexão voltar (sem precisar fechar o app). Sinal ruim também vale: se o banco não responder em 4 segundos, o app abre com as cartas salvas em vez de ficar em branco. Instalar na Tela de Início não é só conforto: no iPhone, site que não está lá perde os dados salvos depois de uns 7 dias sem uso.
+
 ## Primeiro acesso
 
 Escolha seu nome (Leo / Henrique / David / Fraga). O progresso é individual e **sincroniza entre aparelhos** — estudou no ônibus, continua no computador.
@@ -204,7 +206,7 @@ Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (ag
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
 | `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
-| `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
+| `sw.js` + `manifest.webmanifest` | PWA que funciona sem internet: casca pela rede com prazo de 3s e cópia se não vier, áudio da cópia atualizando por trás, Supabase fora do SW (as regras estão no cabeçalho do arquivo) |
 
 ### Por onde o conteúdo anda
 
@@ -338,5 +340,5 @@ sobre eles depende do plano da conta.
 - [ ] Radical/decomposição nas cartas
 - [ ] **Domínio próprio** — `manman.com.br` já registrado (Cloud Arbitration). Ordem: DNS primeiro (4 registros `A` da raiz pra `185.199.108.153`, `.109.153`, `.110.153`, `.111.153` e `CNAME` do `www` pra `leoborja.github.io`), depois o domínio em Settings → Pages, depois **Enforce HTTPS** (sem isso o PWA não instala). Três detalhes:
   - Se o DNS for pela Cloudflare, mantenha a **nuvem cinza** até o GitHub emitir o certificado — com o proxy ligado ele não valida o domínio. Só depois, se quiser proxy, use SSL **Full (strict)**: no Flexible dá loop de redirecionamento.
-  - Com proxy ligado, exclua `app.js`, `index.html` e `config.js` do cache. O service worker é network-first e conta com o servidor devolver a versão nova.
+  - Com proxy ligado, exclua `app.js`, `index.html` e `config.js` do cache. O service worker busca a casca na rede primeiro (com prazo de 3s) e conta com o servidor devolver a versão nova.
   - `localStorage` é por origem: no domínio novo o app abre com progresso zerado, mas **recupera** ao escolher o nome — o `syncPull` aceita o que vem do Supabase quando não há estado local. Só as preferências de tela (modo, tema, filtro) voltam ao padrão. Avisar os três pra reinstalar o atalho na tela de início.
