@@ -140,3 +140,10 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 土 | tǔ | [LL-Q727694 (cmn)-Shangkuanlc-土.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q727694_%28cmn%29-Shangkuanlc-%E5%9C%9F.wav) | 土 | Speaker: Shangkuanlc Recorder: Shangkuanlc | CC BY-SA 4.0 |
 | 又 | yòu | [Zh-yòu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%B2u.ogg) | 又 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 可 | kě | [Zh-kě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%9B.ogg) | 渴 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 您 | nín | [Zh-nín.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C3%ADn.ogg) | 您 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 这 | zhè | [Zh-zhè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C3%A8.ogg) | 这 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 那 | nà | [Zh-nà.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C3%A0.ogg) | 那 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 哪 | nǎ | [Zh-nǎ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C7%8E.ogg) | 哪 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 谁 | shéi | [LL-Q9192 (cmn)-Luilui6666-谁.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E8%B0%81.wav) | 谁 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
+| 外语 | wàiyǔ | [Zh-wàiyǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A0iy%C7%94.ogg) | 外语 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 陈 | Chén | [Zh-chén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C3%A9n.ogg) | 沉 | Yue Tan | CC BY-SA 3.0 us |

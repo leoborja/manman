@@ -1,10 +1,10 @@
 # Áudio das frases — voz sintética
 
-Gerado pelo `tools/build_audio_frases.py`: as frases 1–65 em 2026-09-01, as 66–121 em 2026-09-13.
+Gerado pelo `tools/build_audio_frases.py`: as frases 1–65 em 2026-09-01, as 66–121 em 2026-09-13 e as 122–135 (capítulo 3) em 2026-09-14.
 Em 13/09 cada áudio novo passou pelo Whisper (transcrição automática) e foi gerado de novo quando a
 transcrição não batia com o texto — assim saiu, por exemplo, o 巴西 que a voz lia como "把戏".
 
-**Quatro frases usam outro modelo, `eleven_v3`, com a mesma voz:** 我们都要汉堡, 林娜，你好吗, 我叫力波 e 力波，你好. No `eleven_multilingual_v2` (e também no turbo e no flash v2.5) o 汉堡 saía "一包" e o 林娜 saía "李诺" em todas as tentativas. Os arquivos existem, então o script não os refaz; um `--force` voltaria as quatro pro modelo do `voice.json`.
+**Cinco frases usam outro modelo, `eleven_v3`, com a mesma voz:** 我们都要汉堡, 林娜，你好吗, 我叫力波, 力波，你好 e 她是哪国人. No `eleven_multilingual_v2` (e também no turbo e no flash v2.5) o 汉堡 saía "一包" e o 林娜 saía "李诺" e o 哪国人 saía "哪个人" em todas as tentativas. Os arquivos existem, então o script não os refaz; um `--force` voltaria as cinco pro modelo do `voice.json`.
 
 - **Provedor:** ElevenLabs, plano pago (uso comercial coberto pelo plano da conta)
 - **Voz:** Sage - Soothing & Gentle (zh standard)
@@ -142,3 +142,17 @@ campo `pt` termina em "?" exatamente quando a frase é pergunta.
 | 119 | 我哥哥是律师 | 我哥哥是律师。 | Meu irmão mais velho é advogado |
 | 120 | 你爸爸是老师吗 | 你爸爸是老师吗？ | Seu pai é professor? |
 | 121 | 今天有课吗 | 今天有课吗？ | Hoje tem aula? |
+| 122 | 那是谁 | 那是谁？ | Quem é aquele? |
+| 123 | 那是我们老师 | 那是我们老师。 | Aquele é o nosso professor |
+| 124 | 她是哪国人 | 她是哪国人？ | De que país ela é? |
+| 125 | 她是中国人 | 她是中国人。 | Ela é chinesa |
+| 126 | 我们老师都是中国人 | 我们老师都是中国人。 | Nossos professores são todos chineses |
+| 127 | 陈老师，您好 | 陈老师，您好。 | Olá, professor Chen |
+| 128 | 这是我哥哥 | 这是我哥哥。 | Este é meu irmão mais velho |
+| 129 | 他是外语老师 | 他是外语老师。 | Ele é professor de língua estrangeira |
+| 130 | 这是我朋友 | 这是我朋友。 | Este é meu amigo |
+| 131 | 你也是老师吗 | 你也是老师吗？ | Você também é professor? |
+| 132 | 我不是老师，我是医生 | 我不是老师，我是医生。 | Não sou professor, sou médico |
+| 133 | 这是你奶奶吗 | 这是你奶奶吗？ | Esta é a sua avó? |
+| 134 | 不是，她是我外婆 | 不是，她是我外婆。 | Não, ela é minha avó materna |
+| 135 | 外婆，您好 | 外婆，您好。 | Olá, vovó |
