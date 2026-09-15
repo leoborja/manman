@@ -438,10 +438,29 @@ function falaTTS(card, auto) {
 // ── traçado animado (dados do makemeahanzi) ─────────────────
 let strokesDB = {};
 let svgUid = 0;
+// traço → componente de cada caractere (gerado pelo tools/build_radicals.py). É o que
+// deixa a Grade pintar um radical de azul dentro do pictograma.
+let radicalsDB = {};
 async function loadStrokes() {
   try { strokesDB = await (await fetch('./strokes/strokes.json')).json(); }
   catch (e) { strokesDB = {}; }
+  try { radicalsDB = await (await fetch('./strokes/radicals.json')).json(); }
+  catch (e) { radicalsDB = {}; }
 }
+// Os radicais que viram opção no seletor, com o que cada um quer dizer. É conhecimento
+// (o significado do radical), não recorte do deck — por isso mora aqui e não no arquivo
+// gerado. Só entram os que ENSINAM uma relação; traço solto que a decomposição separa
+// (一, 丿, 亠…) fica de fora, mesmo aparecendo em muita carta. A lista some sozinha pro
+// que o deck não tem: o seletor só mostra radical presente em ≥2 cartas da tela.
+const RADICAIS = [
+  ['氵', 'água'], ['木', 'árvore'], ['艹', 'planta'], ['火', 'fogo'], ['灬', 'fogo'],
+  ['日', 'sol / dia'], ['月', 'lua / carne'], ['田', 'campo'], ['土', 'terra'], ['米', 'arroz'],
+  ['口', 'boca'], ['女', 'mulher'], ['亻', 'pessoa'], ['人', 'pessoa'], ['子', 'filho'],
+  ['父', 'pai'], ['马', 'cavalo'], ['扌', 'mão'], ['又', 'mão / de novo'], ['忄', 'coração'],
+  ['心', 'coração'], ['讠', 'fala'], ['饣', 'comida'], ['彳', 'passo'], ['囗', 'cerca'],
+  ['宀', 'teto'], ['疒', 'doença'], ['力', 'força'], ['阝', 'monte / cidade'],
+];
+const RADICAL_PT = Object.fromEntries(RADICAIS);
 function medianLen(m) {
   let L = 0;
   for (let i = 1; i < m.length; i++) L += Math.hypot(m[i][0] - m[i - 1][0], m[i][1] - m[i - 1][1]);
@@ -2462,8 +2481,74 @@ function gradeCfg() {
   if (!Array.isArray(g.faixas) || g.faixas.length !== GRADE_FAIXAS.length) {
     g.faixas = GRADE_FAIXAS.map(() => true);
   }
+  if (g.radical && !RADICAL_PT[g.radical]) g.radical = null; // radical que saiu da lista
   delete g.frases;
   return g;
+}
+// os traços do caractere `ch` que pertencem ao radical `rad` (vazio se não tem)
+function tracosDoRadical(ch, rad) {
+  const r = radicalsDB[ch];
+  return (r && r[rad]) || [];
+}
+// a carta contém o radical? (qualquer um dos seus caracteres)
+function temRadical(c, rad) {
+  return [...limpaHanzi(c.hanzi)].some(ch => tracosDoRadical(ch, rad).length);
+}
+// os radicais rotulados que aparecem em ≥2 cartas da lista dada — o seletor só oferece
+// o que tem relação pra mostrar. Cada um vem com a contagem, que é o que o chip exibe.
+function radicaisDisponiveis(list) {
+  return RADICAIS.map(([rad, pt]) => {
+    const n = list.filter(c => temRadical(c, rad)).length;
+    return { rad, pt, n };
+  }).filter(r => r.n >= 2);
+}
+// O pictograma desenhado a pincel (mesma técnica do traçado animado, parada), com os
+// traços do radical em azul e o resto na cor do texto. É a única forma de pintar UM
+// pedaço do caractere: a fonte pinta o glifo inteiro de uma cor só.
+function radicalSvg(ch, rad, size) {
+  const d = strokesDB[ch];
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 1024 1024');
+  svg.setAttribute('width', size); svg.setAttribute('height', size);
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('transform', 'scale(1,-1) translate(0,-900)');
+  svg.appendChild(g);
+  const azuis = new Set(tracosDoRadical(ch, rad));
+  d.s.forEach((p, i) => {
+    const id = 'rk' + (++svgUid);
+    const clip = document.createElementNS(NS, 'clipPath');
+    clip.setAttribute('id', id);
+    const cp = document.createElementNS(NS, 'path');
+    cp.setAttribute('d', p);
+    clip.appendChild(cp);
+    g.appendChild(clip);
+    const m = d.m[i];
+    const line = document.createElementNS(NS, 'path');
+    line.setAttribute('d', 'M' + m.map(pt => pt[0] + ' ' + pt[1]).join(' L'));
+    line.setAttribute('clip-path', 'url(#' + id + ')');
+    line.setAttribute('fill', 'none');
+    line.setAttribute('stroke', azuis.has(i) ? 'var(--rad)' : 'currentColor');
+    line.setAttribute('stroke-width', '180');
+    line.setAttribute('stroke-linecap', 'round');
+    g.appendChild(line);
+  });
+  return svg;
+}
+// troca o hanzi de fonte pela versão SVG com o radical pintado, nas cartas que o têm.
+// Feito depois do innerHTML, e não dentro do gradeTile, porque SVG é DOM, não string —
+// montar à mão o clipPath de cada traço em texto seria ilegível.
+function pintaRadical(rad) {
+  $('gradewrap').querySelectorAll('.gcard.radhit').forEach(card => {
+    const c = cards.find(x => x.id === card.dataset.id);
+    if (!c) return;
+    const gh = card.querySelector('.gh');
+    const chars = [...limpaHanzi(c.hanzi)].filter(ch => strokesDB[ch]);
+    if (!chars.length) return;
+    const size = ehFrase(c) ? 30 : chars.length > 2 ? 26 : chars.length > 1 ? 34 : 42;
+    gh.textContent = '';
+    chars.forEach(ch => gh.appendChild(radicalSvg(ch, rad, size)));
+  });
 }
 // Quanto da carta já está de pé: 0 = nunca vista, 1 = aprendida. A régua é o mesmo
 // LEARNED_IVL do Progresso, pra que "aprendida" queira dizer a mesma coisa nas duas
@@ -2526,9 +2611,11 @@ function gradeGrupos(list) {
 // Pinyin sem as cores de tom de propósito: em 76px, com fundo vermelho atrás, cinco
 // cores de sílaba viram ruído em cima do código que esta tela existe pra mostrar.
 function gradeTile(c) {
+  const rad = gradeCfg().radical;
   const tier = erroTier(c);
   const fora = foraDaRotacao(c);
   const erros = erroCount(c.id);
+  const hit = rad && temRadical(c, rad);
   const tip = [c.pt,
     srs[c.id] ? Math.round(dominio(c.id) * 100) + '% de domínio' : 'nunca vista',
     erros ? erros + (erros > 1 ? ' tropeços' : ' tropeço') : null,
@@ -2536,8 +2623,12 @@ function gradeTile(c) {
   // 30px só cabe no pictograma solto: 汉堡肉 nesse tamanho quebra em duas linhas e
   // desalinha a fileira inteira. A palavra comprida encolhe a letra em vez de quebrar.
   const n = Math.min(4, limpaHanzi(c.hanzi).length || 1);
-  return '<button class="gcard n' + n + (ehFrase(c) ? ' frase' : '') + (tier ? ' e' + tier : '') +
-    (aprendida(c.id) ? ' ok' : '') + (fora ? ' off' : '') +
+  // com radical ligado o vermelho do erro SAI: são duas perguntas diferentes (o que eu
+  // erro / como o caractere é feito), e pintar as duas de uma vez é o problema das duas
+  // escalas de novo. A carta acende (tem o radical) ou recua (não tem).
+  return '<button class="gcard n' + n + (ehFrase(c) ? ' frase' : '') +
+    (rad ? (hit ? ' radhit' : ' raddim') : (tier ? ' e' + tier : '')) +
+    (aprendida(c.id) && !rad ? ' ok' : '') + (fora ? ' off' : '') +
     '" data-id="' + esc(c.id) + '" data-tip="' + esc(tip) + '">' +
     '<span class="gh zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
     '<span class="gp">' + esc(c.pinyin) + '</span></button>';
@@ -2580,6 +2671,7 @@ function gradeResumo() {
   if (escondido.length) {
     partes.push('sem ' + escondido.map(([, t]) => t.replace(/^\S+\s/, '').toLowerCase()).join(', '));
   }
+  if (cfg.radical) partes.push('radical ' + cfg.radical);
   return { escopo: cfg.grupo === 'nada' ? '⬜ Sem grupo' : rot(cfg.grupo), txt: partes.join(' · ') };
 }
 function renderGrade() {
@@ -2626,6 +2718,14 @@ function renderGrade() {
   const r = gradeResumo();
   $('gradescope').textContent = r.escopo;
   $('gradecur').textContent = r.txt;
+  // o seletor de radical: os rotulados presentes em ≥2 cartas da tela. "nenhum" volta
+  // pro pictograma normal e devolve o vermelho do erro.
+  const disp = radicaisDisponiveis(list);
+  $('grade-radical').innerHTML =
+    '<button class="chip' + (!cfg.radical ? ' active' : '') + '" data-r="">nenhum</button>' +
+    disp.map(d => '<button class="chip' + (cfg.radical === d.rad ? ' active' : '') +
+      '" data-r="' + esc(d.rad) + '"><span class="zh">' + esc(d.rad) + '</span> ' +
+      esc(d.pt) + ' <i>' + d.n + '</i></button>').join('');
   const arr = arranjoOn();
   $('gradewrap').classList.toggle('arrastando', arr);
   $('gradewrap').innerHTML = gradeGrupos(gradeOrdena(list)).map(gr =>
@@ -2646,6 +2746,7 @@ function renderGrade() {
     const c = cards.find(x => x.id === b.dataset.id);
     if (c) speak(c);
   });
+  if (cfg.radical) pintaRadical(cfg.radical); // depois do innerHTML: SVG precisa do DOM pronto
   $('grade-grupo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cfg.grupo = ch.dataset.g; save(K.settings, settings); renderGrade();
   });
@@ -2659,6 +2760,10 @@ function renderGrade() {
   $('grade-faixas').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     const t = +ch.dataset.t;
     cfg.faixas[t] = !cfg.faixas[t];
+    save(K.settings, settings); renderGrade();
+  });
+  $('grade-radical').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    cfg.radical = ch.dataset.r || null;
     save(K.settings, settings); renderGrade();
   });
 }

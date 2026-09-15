@@ -212,6 +212,14 @@ O quinto agrupamento não vem do deck: vem de você. Agrupar por tema, aula ou t
 
 **O arranjo mora só no `localStorage`, por usuário, e não sobe pro banco.** Uma coluna nova exige DDL, que ninguém do time tem — o mesmo motivo que fez a frase morar em `tags`. Então ele é seu e do seu aparelho: não segue pro computador e não aparece pros outros.
 
+### 🔵 Radical em azul
+
+O último eixo da folha não pinta o seu progresso — pinta a estrutura do caractere. Marca **氵 água** e todo pictograma que tem o 氵 desenha esses três traços em azul: 汁, 汉, 汤, 汽, 渴, 酒. É o que deixa ver a olho que 河 e 海 são "parentes de água", que o 女 do 妈 é o mesmo do 好 e do 姐. O seletor lista só radical rotulado presente em **≥2 cartas da tela** (radical solitário não mostra relação nenhuma), com o significado em português e a contagem.
+
+**Pintar um pedaço do caractere exige desenhá-lo como SVG** — a fonte pinta o glifo inteiro de uma cor só. Então a carta que tem o radical troca a fonte pelo traçado a pincel do makemeahanzi (o mesmo do modo ✍️), com os traços do radical em azul e o resto na cor do texto; a que não tem recua pro fundo, pra o olho ir direto ao conjunto que compartilha o radical. E **ligar um radical apaga o vermelho do erro**: são duas perguntas diferentes — o que eu erro, como o caractere é feito — e pintar as duas de uma vez é o problema das duas escalas de novo. Uma lente por vez.
+
+O dado é o campo `matches` do `dictionary.txt` do makemeahanzi, que diz a que componente de 1º nível cada traço pertence; o `tools/build_radicals.py` recorta isso pros caracteres do deck em `strokes/radicals.json` (5 KB). Os significados dos radicais ficam no `RADICAIS` do `app.js`, não no arquivo gerado: significado de radical é conhecimento, não recorte do deck.
+
 A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
 
 ## 🔥 Progresso
@@ -229,9 +237,10 @@ Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (ag
 | `supabase/seed.py` | upsert do seed no banco (service key) |
 | `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~24KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
+| `strokes/radicals.json` | traço→componente de cada caractere, pro radical em azul da Grade (makemeahanzi) |
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
-| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
+| `tools/` | `build_font.py`, `build_strokes.py`, `build_radicals.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
 | `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
 
 ### Por onde o conteúdo anda
@@ -254,7 +263,7 @@ Três consequências:
 
 1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
-3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
+3. Caractere novo? `python3 tools/build_font.py`, `python3 tools/build_strokes.py` e `python3 tools/build_radicals.py`
 4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão pro passo 5
 5. Frase nova? `python3 tools/build_audio_frases.py` — gera a voz da ElevenLabs só das frases que ainda não têm arquivo (precisa da `ELEVEN_API_KEY` além das variáveis do passo 2)
 6. Commit + push — **os MP3s precisam estar publicados**, senão o `audio_url` aponta pra 404

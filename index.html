@@ -19,8 +19,10 @@
 --pill:#eef0f4;--pilltx:#4a4f57;
 --shadow:0 1px 2px rgba(20,22,28,.05),0 6px 18px rgba(20,22,28,.06);
 --radius:18px;
---e1:rgba(200,16,46,.09);--e2:rgba(200,16,46,.19);--e3:rgba(200,16,46,.3);--e4:rgba(200,16,46,.42);}
+--e1:rgba(200,16,46,.09);--e2:rgba(200,16,46,.19);--e3:rgba(200,16,46,.3);--e4:rgba(200,16,46,.42);
+--rad:#2563eb;}
 html[data-theme="dark"]{
+--rad:#6aa4ff;
 --bg:#0c0d0f;--surface:#17181c;--surface2:#1c1e23;
 --line:#2a2d33;--txt:#eceef2;--mut:#9a9ea6;--soft:#7c828b;
 --pill:#25272d;--pilltx:#c9ccd3;
@@ -443,6 +445,18 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 #gradesheet #grade-faixas .chip:not(.active){opacity:.55;text-decoration:line-through;}
 /* o chip da faixa carrega o próprio quadradinho da escala — ele É a legenda dela */
 #gradesheet #grade-faixas .chip{display:inline-flex;align-items:center;gap:6px;}
+#gradesheet #grade-radical .chip{display:inline-flex;align-items:center;gap:5px;}
+#gradesheet #grade-radical .chip .zh{font-size:16px;}
+#gradesheet #grade-radical .chip i{font-style:normal;font-size:11px;color:var(--soft);}
+#gradesheet #grade-radical .chip.active i{color:rgba(255,255,255,.75);}
+/* radical ativo: a que TEM ele desenha os traços a pincel (a fonte não pinta pedaço),
+   e a que NÃO tem recua pro fundo — o olho vai direto pro conjunto que compartilha o
+   radical, que é a pergunta que este modo responde */
+.gcard.radhit{background:var(--surface);border-color:var(--rad);}
+.gcard.radhit .gh{display:flex;justify-content:center;gap:2px;line-height:1;}
+.gcard.radhit .gh svg{display:block;}
+.gcard.raddim{background:var(--surface2);}
+.gcard.raddim .gh,.gcard.raddim .gp{opacity:.32;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
 .gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
@@ -838,6 +852,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
          escala desenhada num canto pra você casar com os quadradinhos na tela. -->
     <div class="sheetsep">…e quantos tropeços</div>
     <div class="filtros wrapchips" id="grade-faixas"></div>
+    <!-- pintar o radical é OUTRA pergunta que não a do erro, então ligar um radical
+         apaga o vermelho da tela: uma lente por vez. O seletor só lista radical que
+         aparece em ≥2 cartas — radical solitário não mostra relação nenhuma. -->
+    <div class="sheetsep">radical em azul</div>
+    <div class="filtros wrapchips" id="grade-radical"></div>
     <!-- aprendida e fora da rotação falam por borda, não por cor de fundo, então não
          entram na escala acima e continuam precisando de legenda -->
     <div class="gradelegend">
