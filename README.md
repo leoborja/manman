@@ -232,9 +232,24 @@ O botão **significado** (ao lado do A−/A+) acrescenta a tradução embaixo do
 
 A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
 
+## 🏆 Competição
+
+A aba Progresso é sobre **você**; a Competição é sobre os **quatro juntos**. Puxa o `progress` de todo mundo de uma vez (a policy de leitura é aberta e não há dado sensível — é acerto e erro de flashcard), agrega por pessoa e compara. **Sem coluna nova:** tudo já mora no `n_good/n_hard/n_again` e no `hab` de cada linha.
+
+- **Placar** — um cartão por pessoa (🥇🥈🥉), ordenado por aprendidas, com cartas ligadas, % de acerto e a sequência 🔥. O seu fica destacado.
+- **Cartas novas ao longo do tempo** — gráfico de linhas, uma por pessoa, do vocabulário crescendo (soma acumulada de `new_cnt` do `review_log`). O banco não guarda o acerto histórico, só o de agora — então a curva mostra o crescimento do deck de cada um, que é o que o dado permite.
+- **Erro por habilidade** / **por tema** / **frases × palavras** — três matrizes linha × pessoa, célula = % de erro (vermelho cresce com a taxa). Quem vai bem em quê, em que assunto, e em frase vs palavra.
+- **Tons que cada um confunde** — do `tom_x`, o par que cada pessoa mais troca.
+- **Quem estudou mais · 7 dias** — a grade de revisões por dia de cada um (veio da aba Progresso, é o lugar dela: é comparação, não progresso pessoal).
+- **O que a turma mais erra** — ranking das cartas que a turma toda mais tropeça, com quanto cada um errou.
+
+No PC o placar e o gráfico ficam em largura cheia, e o resto se espalha em duas colunas (masonry), como o Progresso.
+
+Só leitura, e cai fora sem quebrar nada se o banco não responder.
+
 ## 🔥 Progresso
 
-Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥, gráfico das suas últimas 2 semanas e o **gráfico da turma** (uma linha por pessoa, ordenado por total — barra cheia = dia em que bateu a meta). Toque ou passe o mouse nas barras pra ver o número. "Zerar meu progresso" apaga local + nuvem (só o seu).
+Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥 e o gráfico das suas últimas 2 semanas. Toque ou passe o mouse nas barras pra ver o número. (A comparação da turma foi pra aba 🏆 Competição.) "Zerar meu progresso" apaga local + nuvem (só o seu).
 
 ## 🖥️ No computador
 

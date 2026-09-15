@@ -478,6 +478,51 @@ border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;
 .gradetgl{border:1px solid var(--line);background:var(--surface);color:var(--txt);
 border-radius:9px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;line-height:1;}
 .gradetgl.on{background:var(--red);border-color:var(--red);color:#fff;}
+
+/* competição */
+#view-competicao{max-width:1100px;margin:0 auto;}
+.complacar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 6px;}
+.compcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+box-shadow:var(--shadow);padding:12px 14px;}
+.compcard.eu{border-color:var(--red);}
+.cptop{display:flex;align-items:center;gap:7px;margin:0 0 8px;}
+.cptop .cppos{font-size:17px;}
+.cptop .cpnome{font-size:14.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cpnums{display:flex;gap:10px;}
+.cpnums span{display:flex;flex-direction:column;}
+.cpnums b{font-size:17px;font-weight:800;line-height:1.1;}
+.cpnums small{font-size:10px;color:var(--mut);}
+/* a matriz: primeira coluna é o rótulo (habilidade ou carta), as outras são as pessoas */
+.cmatriz{display:flex;flex-direction:column;gap:3px;}
+.cmrow{display:grid;grid-template-columns:minmax(0,1fr) repeat(var(--cn,4),46px);
+align-items:center;gap:4px;}
+.cmlab{font-size:12.5px;color:var(--txt);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cmrow.cmhead .cmlab{}
+.cmcel{text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:8px;
+background:var(--surface2);color:var(--txt);}
+.cmcel i{color:var(--soft);font-style:normal;}
+.cmcel.cmh{background:none;color:var(--mut);font-size:11px;font-weight:800;
+text-transform:uppercase;letter-spacing:.3px;padding:2px 0;}
+.cmcel.eu{outline:2px solid var(--red);outline-offset:-2px;}
+.cmcel.cmh.eu{outline:0;color:var(--red);}
+.cmlab.carta{display:flex;align-items:baseline;gap:7px;}
+.cmlab.carta .zh{font-size:17px;flex:0 0 auto;}
+.cmlab.carta .cmpt{font-size:12px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cptop .cpfogo{margin-left:auto;font-size:12px;font-weight:800;color:var(--mut);white-space:nowrap;}
+/* gráfico de linhas */
+.cgsvg{width:100%;height:auto;display:block;}
+.cgleg{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:8px;
+font-size:12px;color:var(--mut);}
+.cglegi{display:flex;align-items:center;gap:5px;}
+.cglegi i{width:14px;height:3px;border-radius:2px;display:inline-block;}
+/* tons que confunde */
+.ctons{display:flex;flex-direction:column;gap:2px;}
+.ctonrow{display:flex;align-items:baseline;gap:10px;padding:7px 4px;border-top:1px solid var(--line);}
+.ctonrow:first-child{border-top:0;}
+.ctonrow > b{flex:0 0 70px;font-size:13px;}
+.ctonrow.eu > b{color:var(--red);}
+.ctonv{font-size:13px;color:var(--mut);}
+.ctonv small{color:var(--soft);}
 .pcol{display:contents;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
@@ -749,6 +794,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   .pblock{margin:0 0 6px;}
   .pblock .sec{margin-top:8px;}
 
+  /* Competição: placar e gráfico em largura cheia; o resto em duas colunas (masonry) */
+  .cgrid{columns:2;column-gap:22px;}
+  .cblock{break-inside:avoid;margin:0 0 6px;}
+  .cblock .sec{margin-top:8px;}
+
   /* Grade é a única que quer a largura toda — é a tela do "ver tudo". Só o botão e a
      linha do contador ficam centrados; a grade vai de ponta a ponta. O tamanho do
      cartão parte de um pouco maior no PC, e o A−/A+ ajusta a partir daí. */
@@ -789,6 +839,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <button class="tab active" data-v="estudar">Estudar</button>
   <button class="tab" data-v="cartas">Cartas</button>
   <button class="tab" data-v="grade">Grade</button>
+  <button class="tab" data-v="competicao">Competição</button>
   <button class="tab" data-v="progresso">Progresso</button>
 </div>
 
@@ -986,6 +1037,40 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   </div>
 </div>
 
+<!-- ══════ COMPETIÇÃO (comparar os 4) ══════ -->
+<section class="view" id="view-competicao">
+  <div id="comp-placar"></div>
+  <h3 class="sec">Cartas novas ao longo do tempo</h3>
+  <div id="comp-graf"></div>
+  <!-- o resto em duas colunas no PC (masonry); no celular os .cblock empilham na ordem -->
+  <div class="cgrid">
+    <div class="cblock">
+      <h3 class="sec">Quem estudou mais · 7 dias</h3>
+      <div class="card" id="turma"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">Erro por habilidade</h3>
+      <div class="card" id="comp-hab"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">Erro por tema</h3>
+      <div class="card" id="comp-tema"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">Frases × palavras</h3>
+      <div class="card" id="comp-tipo"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">Tons que cada um confunde</h3>
+      <div class="card" id="comp-tom"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">O que a turma mais erra</h3>
+      <div class="card" id="comp-erram"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ══════ PROGRESSO ══════ -->
 <section class="view" id="view-progresso">
   <div class="stats">
@@ -1024,10 +1109,6 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       </div>
     </div>
     <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">A turma</h3>
-        <div class="card" id="turma"></div>
-      </div>
       <div class="pblock">
         <h3 class="sec">Por deck</h3>
         <div class="card" id="deckstats"></div>
