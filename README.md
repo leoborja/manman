@@ -236,9 +236,11 @@ A frase não entra na grade: ela toma a linha inteira, e intercalada com as pala
 
 A aba Progresso é sobre **você**; a Competição é sobre os **quatro juntos**. Puxa o `progress` de todo mundo de uma vez (a policy de leitura é aberta e não há dado sensível — é acerto e erro de flashcard), agrega por pessoa e compara. **Sem coluna nova:** tudo já mora no `n_good/n_hard/n_again` e no `hab` de cada linha.
 
-- **Placar** — um cartão por pessoa (🥇🥈🥉), ordenado por aprendidas, com vistas e % de acerto. O seu fica destacado.
-- **Erro por habilidade** — uma matriz: linha = habilidade (reconhecer, som, ideograma, ordem, frase, tom…), coluna = pessoa, célula = % de erro, com o vermelho crescendo com a taxa. Dá pra ver de relance quem vai bem em quê.
-- **O que a turma mais erra** — o ranking das cartas que a turma toda mais tropeça, com quanto cada um errou em cada uma.
+- **Placar** — um cartão por pessoa (🥇🥈🥉), ordenado por aprendidas, com cartas ligadas, % de acerto e a sequência 🔥. O seu fica destacado.
+- **Cartas novas ao longo do tempo** — gráfico de linhas, uma por pessoa, do vocabulário crescendo (soma acumulada de `new_cnt` do `review_log`). O banco não guarda o acerto histórico, só o de agora — então a curva mostra o crescimento do deck de cada um, que é o que o dado permite.
+- **Erro por habilidade** / **por tema** / **frases × palavras** — três matrizes linha × pessoa, célula = % de erro (vermelho cresce com a taxa). Quem vai bem em quê, em que assunto, e em frase vs palavra.
+- **Tons que cada um confunde** — do `tom_x`, o par que cada pessoa mais troca.
+- **O que a turma mais erra** — ranking das cartas que a turma toda mais tropeça, com quanto cada um errou.
 
 Só leitura, e cai fora sem quebrar nada se o banco não responder.
 

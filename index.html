@@ -508,6 +508,21 @@ text-transform:uppercase;letter-spacing:.3px;padding:2px 0;}
 .cmlab.carta{display:flex;align-items:baseline;gap:7px;}
 .cmlab.carta .zh{font-size:17px;flex:0 0 auto;}
 .cmlab.carta .cmpt{font-size:12px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cptop .cpfogo{margin-left:auto;font-size:12px;font-weight:800;color:var(--mut);white-space:nowrap;}
+/* gráfico de linhas */
+.cgsvg{width:100%;height:auto;display:block;}
+.cgleg{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:8px;
+font-size:12px;color:var(--mut);}
+.cglegi{display:flex;align-items:center;gap:5px;}
+.cglegi i{width:14px;height:3px;border-radius:2px;display:inline-block;}
+/* tons que confunde */
+.ctons{display:flex;flex-direction:column;gap:2px;}
+.ctonrow{display:flex;align-items:baseline;gap:10px;padding:7px 4px;border-top:1px solid var(--line);}
+.ctonrow:first-child{border-top:0;}
+.ctonrow > b{flex:0 0 70px;font-size:13px;}
+.ctonrow.eu > b{color:var(--red);}
+.ctonv{font-size:13px;color:var(--mut);}
+.ctonv small{color:var(--soft);}
 .pcol{display:contents;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
@@ -1020,8 +1035,16 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <!-- ══════ COMPETIÇÃO (comparar os 4) ══════ -->
 <section class="view" id="view-competicao">
   <div id="comp-placar"></div>
+  <h3 class="sec">Cartas novas ao longo do tempo</h3>
+  <div id="comp-graf"></div>
   <h3 class="sec">Erro por habilidade</h3>
   <div class="card" id="comp-hab"></div>
+  <h3 class="sec">Erro por tema</h3>
+  <div class="card" id="comp-tema"></div>
+  <h3 class="sec">Frases × palavras</h3>
+  <div class="card" id="comp-tipo"></div>
+  <h3 class="sec">Tons que cada um confunde</h3>
+  <div class="card" id="comp-tom"></div>
   <h3 class="sec">O que a turma mais erra</h3>
   <div class="card" id="comp-erram"></div>
 </section>
