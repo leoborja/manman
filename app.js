@@ -2482,8 +2482,21 @@ function gradeCfg() {
     g.faixas = GRADE_FAIXAS.map(() => true);
   }
   if (g.radical && !RADICAL_PT[g.radical]) g.radical = null; // radical que saiu da lista
+  if (!['pintar', 'agrupar', 'so'].includes(g.radModo)) g.radModo = 'pintar';
   delete g.frases;
   return g;
+}
+const RAD_MODOS = [['pintar', '🖌️ Pintar'], ['agrupar', '📑 Agrupar'], ['so', '🔎 Só essas']];
+// os dois montes do modo Agrupar: com o radical em cima, sem embaixo. Substitui o eixo
+// Agrupar enquanto o radical está ligado — aninhar "tema dentro de com-氵" viraria
+// sub-sub-grupo e poluiria a tela.
+function gradeRadicalGrupos(list, rad) {
+  const com = list.filter(c => temRadical(c, rad));
+  const sem = list.filter(c => !temRadical(c, rad));
+  const out = [];
+  if (com.length) out.push({ rot: rad + ' ' + (RADICAL_PT[rad] || ''), cards: com });
+  if (sem.length) out.push({ rot: 'sem ' + rad, cards: sem });
+  return out;
 }
 // os traços do caractere `ch` que pertencem ao radical `rad` (vazio se não tem)
 function tracosDoRadical(ch, rad) {
@@ -2611,7 +2624,8 @@ function gradeGrupos(list) {
 // Pinyin sem as cores de tom de propósito: em 76px, com fundo vermelho atrás, cinco
 // cores de sílaba viram ruído em cima do código que esta tela existe pra mostrar.
 function gradeTile(c) {
-  const rad = gradeCfg().radical;
+  const gc = gradeCfg();
+  const rad = gc.radical;
   const tier = erroTier(c);
   const fora = foraDaRotacao(c);
   const erros = erroCount(c.id);
@@ -2627,7 +2641,7 @@ function gradeTile(c) {
   // erro / como o caractere é feito), e pintar as duas de uma vez é o problema das duas
   // escalas de novo. A carta acende (tem o radical) ou recua (não tem).
   return '<button class="gcard n' + n + (ehFrase(c) ? ' frase' : '') +
-    (rad ? (hit ? ' radhit' : ' raddim') : (tier ? ' e' + tier : '')) +
+    (rad ? (hit ? ' radhit' : (gc.radModo === 'pintar' ? ' raddim' : '')) : (tier ? ' e' + tier : '')) +
     (aprendida(c.id) && !rad ? ' ok' : '') + (fora ? ' off' : '') +
     '" data-id="' + esc(c.id) + '" data-tip="' + esc(tip) + '">' +
     '<span class="gh zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
@@ -2671,8 +2685,14 @@ function gradeResumo() {
   if (escondido.length) {
     partes.push('sem ' + escondido.map(([, t]) => t.replace(/^\S+\s/, '').toLowerCase()).join(', '));
   }
-  if (cfg.radical) partes.push('radical ' + cfg.radical);
-  return { escopo: cfg.grupo === 'nada' ? '⬜ Sem grupo' : rot(cfg.grupo), txt: partes.join(' · ') };
+  if (cfg.radical) {
+    partes.push(cfg.radModo === 'so' ? 'só ' + cfg.radical
+      : cfg.radModo === 'agrupar' ? 'radical ' + cfg.radical
+      : 'radical ' + cfg.radical + ' em azul');
+  }
+  const escopo = (cfg.radical && cfg.radModo === 'agrupar') ? '🔵 ' + cfg.radical
+    : cfg.grupo === 'nada' ? '⬜ Sem grupo' : rot(cfg.grupo);
+  return { escopo, txt: partes.join(' · ') };
 }
 function renderGrade() {
   const cfg = gradeCfg();
@@ -2699,10 +2719,12 @@ function renderGrade() {
   // dizendo que elas estão na tela.
   const escondidos = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k]);
   const todasFaixas = cfg.faixas.every(Boolean);
-  const list = (escondidos.length || !todasFaixas)
+  let list = (escondidos.length || !todasFaixas)
     ? cards.filter(c => !escondidos.some(([, , pega]) => pega(c)) &&
         (aprendida(c.id) || cfg.faixas[erroTier(c)]))
     : cards.slice();
+  // "só essas": some com quem não tem o radical, em vez de só recuar pro fundo
+  if (cfg.radical && cfg.radModo === 'so') list = list.filter(c => temRadical(c, cfg.radical));
   const apr = list.filter(c => aprendida(c.id)).length;
   const nunca = list.filter(c => !srs[c.id]).length;
   // com filtro ligado o total do deck continua na linha: sem ele, "178 cartas" parece o
@@ -2726,9 +2748,16 @@ function renderGrade() {
     disp.map(d => '<button class="chip' + (cfg.radical === d.rad ? ' active' : '') +
       '" data-r="' + esc(d.rad) + '"><span class="zh">' + esc(d.rad) + '</span> ' +
       esc(d.pt) + ' <i>' + d.n + '</i></button>').join('');
+  $('grade-radmodo').innerHTML = cfg.radical
+    ? RAD_MODOS.map(([k, t]) => '<button class="chip' + (cfg.radModo === k ? ' active' : '') +
+        '" data-rm="' + k + '">' + t + '</button>').join('')
+    : '';
   const arr = arranjoOn();
   $('gradewrap').classList.toggle('arrastando', arr);
-  $('gradewrap').innerHTML = gradeGrupos(gradeOrdena(list)).map(gr =>
+  const grupos = (cfg.radical && cfg.radModo === 'agrupar')
+    ? gradeRadicalGrupos(gradeOrdena(list), cfg.radical)
+    : gradeGrupos(gradeOrdena(list));
+  $('gradewrap').innerHTML = grupos.map(gr =>
     // o "+ novo monte" vem antes do Sem monte, não depois de tudo: com 161 cartas no
     // fim da lista, um botão embaixo delas é um botão que ninguém acha
     (arr && gr.sem ? '<button class="gnovo" id="gnovo">+ novo monte</button>' : '') +
@@ -2764,6 +2793,10 @@ function renderGrade() {
   });
   $('grade-radical').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cfg.radical = ch.dataset.r || null;
+    save(K.settings, settings); renderGrade();
+  });
+  $('grade-radmodo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    cfg.radModo = ch.dataset.rm;
     save(K.settings, settings); renderGrade();
   });
 }
