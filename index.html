@@ -437,17 +437,13 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 .card.offrow{opacity:.55;}
 
 /* grade — o deck inteiro numa tela só */
-.gradebar{display:flex;flex-direction:column;gap:6px;margin:0 0 12px;}
-.gradebar .linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-.gradebar .rot{flex:1 0 100%;font-size:10px;font-weight:800;color:var(--soft);
-text-transform:uppercase;letter-spacing:.6px;margin:2px 0 -1px;}
-.gradebar .filtros{display:flex;gap:6px;flex-wrap:wrap;}
-.gradebar .chip{font-size:12.5px;padding:6px 11px;}
-.gradebar #grade-mostrar .chip:not(.active){opacity:.55;text-decoration:line-through;}
+#gradesheet .filtros{display:flex;gap:6px;flex-wrap:wrap;}
+#gradesheet .chip{font-size:13px;padding:7px 12px;}
+#gradesheet #grade-mostrar .chip:not(.active){opacity:.55;text-decoration:line-through;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
 .gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
-color:var(--mut);font-size:11px;margin:0 0 16px;}
+color:var(--mut);font-size:11.5px;margin:8px 0 2px;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
 .lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
@@ -786,36 +782,45 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
 <!-- ══════ GRADE (o deck inteiro numa tela só) ══════ -->
 <section class="view" id="view-grade">
-  <!-- Dois eixos, e os dois valem ao mesmo tempo: em QUE montes as cartas caem, e em
-       que ordem dentro de cada monte. A aba Cartas filtra (esconde o resto); esta não
-       esconde nada — o ponto dela é o deck inteiro na mesma tela. -->
-  <div class="gradebar">
-    <div class="linha">
-      <span class="rot">Agrupar</span>
-      <div class="filtros" id="grade-grupo"></div>
-    </div>
-    <div class="linha">
-      <span class="rot">Ordenar</span>
-      <div class="filtros" id="grade-ordem"></div>
-    </div>
-    <!-- o terceiro eixo tira coisa da tela. Chip aceso = aparece; apagado e riscado =
-         escondido — sem o risco, um chip branco aqui se lê como "clique pra mostrar",
-         que é o contrário do que ele está dizendo. -->
-    <div class="linha">
-      <span class="rot">Mostrar</span>
-      <div class="filtros" id="grade-mostrar"></div>
-    </div>
-  </div>
+  <!-- Três eixos, e os três valem ao mesmo tempo. Eles moram numa folha, e não em três
+       filas de chips na tela: em 375px aquilo eram 150px de controle antes da primeira
+       carta — metade da tela gasta pra escolher como ver a outra metade. Mesmo botão da
+       aba Estudar: uma linha que diz o estado inteiro, e a escolha acontece na folha. -->
+  <button class="modebtn" id="gradebtn">
+    <span class="mscope" id="gradescope">🏷️ Tema</span>
+    <span class="mcur" id="gradecur">🔥 Erros</span>
+    <span class="marrow">▼</span>
+  </button>
   <div class="counter" id="grade-count"></div>
-  <!-- a legenda desenha a escala inteira, e não uma amostra dela: "mais vermelho = mais
-       tropeço" não diz onde começa nem quantos degraus são -->
-  <div class="gradelegend">
-    <span><span class="escala"><i class="lg"></i><i class="lg e1"></i><i class="lg e2"></i><i class="lg e3"></i><i class="lg e4"></i></span> tranquila → você tropeça muito</span>
-    <span><i class="lg ok"></i> aprendida</span>
-    <span><i class="lg off"></i> fora da rotação</span>
-  </div>
   <div id="gradewrap"></div>
 </section>
+
+<!-- como ver a grade (bottom sheet) — os três eixos e o que as cores dizem -->
+<div class="sheetwrap" id="gradesheet">
+  <div class="sheetbg" id="gradesheet-bg"></div>
+  <div class="sheet scroll">
+    <div class="handle"></div>
+    <h3>Como ver a grade</h3>
+    <div class="sheetsep">agrupar</div>
+    <div class="filtros wrapchips" id="grade-grupo"></div>
+    <div class="sheetsep">ordenar dentro do grupo</div>
+    <div class="filtros wrapchips" id="grade-ordem"></div>
+    <!-- este eixo TIRA coisa da tela. Chip aceso = aparece; apagado e riscado =
+         escondido — sem o risco, um chip branco aqui se lê como "clique pra mostrar",
+         que é o contrário do que ele está dizendo. -->
+    <div class="sheetsep">mostrar</div>
+    <div class="filtros wrapchips" id="grade-mostrar"></div>
+    <!-- a legenda desenha a escala inteira, e não uma amostra dela: "mais vermelho =
+         mais tropeço" não diz onde começa nem quantos degraus são. Mora aqui porque é
+         referência: você lê uma vez e não precisa dela ocupando a tela depois. -->
+    <div class="sheetsep">o que a cor diz</div>
+    <div class="gradelegend">
+      <span><span class="escala"><i class="lg"></i><i class="lg e1"></i><i class="lg e2"></i><i class="lg e3"></i><i class="lg e4"></i></span> tranquila → você tropeça muito</span>
+      <span><i class="lg ok"></i> aprendida</span>
+      <span><i class="lg off"></i> fora da rotação</span>
+    </div>
+  </div>
+</div>
 
 <!-- ══════ PROGRESSO ══════ -->
 <section class="view" id="view-progresso">

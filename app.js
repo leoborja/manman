@@ -2335,6 +2335,21 @@ function gradeCorpo(list) {
   return (pal.length ? '<div class="grade">' + pal.map(gradeTile).join('') + '</div>' : '') +
     (fr.length ? '<div class="gradefrases">' + fr.map(gradeTile).join('') + '</div>' : '');
 }
+// O botão diz os três eixos em uma linha, porque é o único lugar onde eles aparecem
+// juntos — dentro da folha você vê um eixo de cada vez. A pílula leva o agrupamento
+// (é o que muda a cara da tela) e o texto leva a ordem mais o que está escondido.
+function gradeResumo() {
+  const cfg = gradeCfg();
+  const rot = k => (GRADE_GRUPOS.concat(GRADE_ORDENS).find(([x]) => x === k) || [, k])[1];
+  const escondido = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k] && (k !== 'frases' || temFrases()));
+  const partes = [rot(cfg.ordem)];
+  // "sem aprendidas" e não "aprendidas": o chip apagado ESCONDE, e o resumo tem que
+  // dizer o que sumiu, senão ele lê como se estivesse mostrando só aquilo
+  if (escondido.length) {
+    partes.push('sem ' + escondido.map(([, t]) => t.replace(/^\S+\s/, '').toLowerCase()).join(', '));
+  }
+  return { escopo: cfg.grupo === 'nada' ? '⬜ Sem grupo' : rot(cfg.grupo), txt: partes.join(' · ') };
+}
 function renderGrade() {
   const cfg = gradeCfg();
   const chips = (arr, sel, attr) => arr.map(([k, t]) =>
@@ -2365,6 +2380,9 @@ function renderGrade() {
   if (cfg.mostrar.aprendidas) partes.push('<b>' + apr + '</b> aprendidas');
   if (cfg.mostrar.novas) partes.push('<b>' + nunca + '</b> nunca vistas');
   $('grade-count').innerHTML = partes.join(' · ');
+  const r = gradeResumo();
+  $('gradescope').textContent = r.escopo;
+  $('gradecur').textContent = r.txt;
   $('gradewrap').innerHTML = gradeGrupos(gradeOrdena(list)).map(gr =>
     '<div class="gradegrupo">' +
     (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span></h3>' : '') +
@@ -2719,6 +2737,9 @@ function bindEvents() {
   });
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
+  // a folha se monta no próprio renderGrade, então abrir é só mostrar
+  $('gradebtn').onclick = () => $('gradesheet').classList.add('show');
+  $('gradesheet-bg').onclick = () => $('gradesheet').classList.remove('show');
   $('escopo-toggle').onclick = () => {
     settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
     renderEscopo();
