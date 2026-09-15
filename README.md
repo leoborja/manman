@@ -182,15 +182,73 @@ Consulta: busca, filtro por categoria, 🔊 por linha e o switch liga/desliga de
 
 **A aba lista um tipo por vez, e abre em Palavras.** Frase e palavra dividem a mesma tabela, mas quem entra aqui está procurando o pictograma — e 59 frases embaralhadas com 129 palavras transformam a consulta numa rolagem. O par `汉 Palavras · 💬 Frases` no alto é o mesmo do escopo do estudar, então a escolha se faz do mesmo jeito nas duas telas, e some inteiro quando não há frase publicada. Tudo abaixo dele vive dentro do tipo escolhido: os temas (Identidade e Gostos só existem em frase, e não viram chip na lista de palavras), o eixo 📖, a contagem de desligadas e o contador, que voltou a dizer "129 palavras" em vez do "cartas" genérico que somava os dois. Trocar de tipo limpa a busca e o filtro, porque um filtro do outro lado quase nunca existe deste.
 
+**Agrupar por, como na Grade.** A barra "Agrupar" (Sem grupo · 🏷️ Tema · 📅 Aula) separa a lista em seções com cabeçalho e contagem, sem tirar nada da tela. É **independente do filtro** 🏷️/📅 acima (que escolhe UM tema/aula): dá pra filtrar por uma aula e ainda ver o resultado agrupado por tema. Vale no celular e no PC; o padrão é "Sem grupo", então a lista corrida de sempre continua sendo o que abre.
+
 **A frase herda o desligado das palavras.** Desligar 喝 e continuar caindo em 我要喝啤酒 na prática é a mesma carta voltando pela porta dos fundos — o interruptor prometia tirar da rotação e não tirava. Agora basta o 汉字 de uma palavra desligada aparecer dentro da frase pra ela sair do estudo junto (13 frases saem com o 喝). A conta é por substring e não pela segmentação do 🧩: a segmentação devolve `null` na frase que não fecha a conta de sílabas, e ali o certo é bloquear, não deixar passar. O interruptor da frase continua sendo dela — ninguém mexe no estado salvo —, mas a linha aparece apagada na aba, com o motivo escrito embaixo (`🚫 fora da rotação: 喝 está desligada`), e entra na contagem do chip 🚫. Sem esse aviso a frase sumiria do estudo com a chavinha verde na tela, e o usuário procuraria o bug no lugar errado.
 
 Na lista de frases o hanzi sobe pra uma linha só dele. Na coluna de 58px que serve pra 水, uma frase como 我爸爸很喜欢喝啤酒 espremeria a tradução contra a borda no celular.
 
 Palavras novas entram pelo `seed/seed_cards.json` e são publicadas pelo `seed.py` — aparecem pra todo mundo sem ninguém atualizar nada.
 
+## 格 Grade
+
+O deck inteiro numa tela só — pictograma em cima, pinyin embaixo, sem escolher tema antes. A aba Cartas é ótima pra achar **uma** carta e cega pro conjunto: ela lista um tipo, um tema, uma linha por vez. A Grade é a visão de cima, pra enxergar a olho o que a lista só sabe contar — o que já está de pé, o que você mais erra, o que nunca abriu.
+
+Três eixos, e os três valem ao mesmo tempo: **Agrupar** (🏷️ tema · 📅 aula · 汉 tipo · ⬜ nada), **Ordenar** dentro de cada monte (🔥 erros · 🌱 domínio · 🔤 pinyin · 📋 deck) e **Mostrar** (💬 frases · ✅ aprendidas · 🌱 nunca vistas · 🚫 desligadas). A escolha inteira fica salva no `settings`, porque numa tela de consulta você monta a vista uma vez e volta nela.
+
+Os três moram numa folha, atrás do **mesmo botão de uma linha da aba Estudar** — pílula com o agrupamento, texto com a ordem e o que está escondido, ▼. Em filas de chips na tela eles eram 150px de controle em 375px de largura: metade da tela gasta pra escolher como ver a outra metade, antes da primeira carta aparecer. O botão é o único lugar onde os três aparecem juntos; dentro da folha você vê um eixo por vez. O resumo diz "sem aprendidas" e não "aprendidas", porque o chip apagado **esconde** — dito ao contrário, ele se leria como se a tela estivesse mostrando só aquilo.
+
+Além dos quatro chips de classe, o Mostrar tem **um chip por degrau da escala de vermelho** — `sem tropeço · 1–2 · 3–4 · 5–7 · 8+`, tirados do próprio `ERRO_FAIXAS`, então mexer nas faixas do filtro 🔥 reescreve os chips sozinho. Apagar os degraus claros é "quero ver só as que eu sou muito ruim", e o resumo do botão vira `≥5 tropeços` quando as faixas ligadas são as mais vermelhas em sequência. Cada chip carrega o quadradinho da própria cor: ele **é** a legenda da escala, e por isso não existe mais uma escala desenhada num canto pra você casar com os quadradinhos na tela. A **aprendida não passa pelas faixas** — ela está fora da escala do vermelho, que é o que a borda verde diz, e quem manda nela é só o chip ✅; sem essa exceção, apagar "sem tropeço" pra ver as difíceis levaria as aprendidas junto com o ✅ aceso dizendo que elas estão na tela.
+
+No Mostrar cada chip **esconde** uma classe de carta quando apagado, e todos nascem ligados: a Grade abre no deck inteiro, que é a razão dela existir, e tirar coisa da tela é o que você faz depois, de propósito. Esconder as aprendidas é o caso que pediu esse eixo — o que sobra é exatamente o que ainda falta. Chip apagado aparece riscado, senão um chip branco aqui se leria como "clique pra mostrar", que é o contrário do que ele está dizendo. Carta que casa com mais de um chip apagado some do mesmo jeito: some se **qualquer** um a pegar, que é como se lê "esconder". Com filtro ligado o contador diz "137 de 302 cartas" — sozinho, "137 cartas" pareceria o tamanho do deck —, e a categoria escondida sai da linha em vez de aparecer zerada, porque "0 aprendidas" logo abaixo do ✅ riscado se lê como "você não aprendeu nenhuma". O 💬 só existe quando há frase publicada.
+
+O que a tela pinta é o **seu** estado, não o conteúdo da carta. **Uma escala só, e ela é do fundo:** branco = tranquila, e o vermelho vai ficando mais forte conforme você tropeça, nas mesmas quatro faixas do filtro 🔥 (1, 3, 5, 8 tropeços). A legenda desenha a escala inteira, os cinco degraus — "mais vermelho = mais tropeço" não diz onde ela começa nem quantos degraus tem.
+
+**Aprendida é fundo branco com borda verde.** Ela sai da escala em vez de ocupar o degrau zero: não é "a que eu menos erro", é outra coisa, e por isso fala por uma borda e não por um tom. Sair do vermelho é justamente o que se quer ver acontecer — o contador de tropeços é histórico e não esquece, e 说 com 15 no currículo deixar de ser vermelho quando o intervalo chega nos 21 dias (o mesmo `LEARNED_IVL` do Progresso) é a tela dizendo que você aprendeu. Fora da rotação fala por borda tracejada e cinza, pelo mesmo motivo.
+
+Já teve uma segunda camada aqui — a opacidade do texto dizendo o quanto você sabe, por cima do vermelho do fundo. Duas escalas no mesmo quadrado não se leem: você olhava um tom mais claro e não sabia se ele queria dizer "ainda não sei" ou "não erro". Saiu (24/09). Com uma escala e duas bordas, que são coisas de natureza diferente, a tela inteira se lê de longe. O preço é que "nunca vista" agora parece igual a "vista e tranquila" — as duas são brancas; quem separa as duas é o 🌱 Domínio na ordenação e o balão de cada carta. Tocar fala a carta e abre esse balão, com a tradução, o domínio e a contagem de tropeços.
+
+### ✋ Meu arranjo
+
+O quinto agrupamento não vem do deck: vem de você. Agrupar por tema, aula ou tipo responde perguntas que o JSON já sabe responder; a pergunta que ele não sabe é **"quais destas eu confundo uma com a outra"** — 我 e 找, 书 e 出. Isso não está em campo nenhum, está na sua cabeça, e a única forma de botar na tela é arrastar uma pra perto da outra.
+
+`+ novo monte` cria um monte (✏️ renomeia, ✕ desfaz — as cartas voltam pro **Sem monte**, que é onde mora tudo que você ainda não arrumou). O botão fica **antes** do Sem monte: depois dele seriam 160 cartas de rolagem até um botão que ninguém acha. Dentro de um monte seu a ordem é a que você arrastou, e o eixo Ordenar não manda ali — ordenar por erro dentro do seu arranjo o desmancharia a cada revisão, que é o oposto de arrumar. Uma carta vive num monte só: arrastar **move**, não copia, senão "estas eu confundo" deixaria de querer dizer alguma coisa. Os filtros do Mostrar continuam valendo — a carta escondida só não aparece, o monte dela continua lá.
+
+**O arrasto é pointer event na mão**, não a API de drag-and-drop do HTML, que não existe em toque. No dedo ele só começa depois de **230ms parado**: sem essa espera não sobraria como rolar uma tela de 300 cartas — o dedo que desliza é rolagem, o dedo que espera é arrasto. Quando pega, vibra (12ms) e a página para de rolar sozinha (um `preventDefault` no `touchmove`, que só funciona porque o dedo ficou parado até ali — gesto de rolagem já começado é tarde). A rolagem passa a ser a do próprio arrasto, quando você chega na borda da tela. No mouse não existe esse empate, então lá quem começa o arrasto é o primeiro movimento — e não o clique parado, senão todo toque pra ouvir a carta piscaria um fantasma.
+
+**O arranjo mora só no `localStorage`, por usuário, e não sobe pro banco.** Uma coluna nova exige DDL, que ninguém do time tem — o mesmo motivo que fez a frase morar em `tags`. Então ele é seu e do seu aparelho: não segue pro computador e não aparece pros outros.
+
+### 🔵 Radical em azul
+
+O último eixo da folha não pinta o seu progresso — pinta a estrutura do caractere. Marca **氵 água** e todo pictograma que tem o 氵 desenha esses três traços em azul: 汁, 汉, 汤, 汽, 渴, 酒. É o que deixa ver a olho que 河 e 海 são "parentes de água", que o 女 do 妈 é o mesmo do 好 e do 姐. O seletor lista só radical rotulado presente em **≥2 cartas da tela** (radical solitário não mostra relação nenhuma), com o significado em português e a contagem.
+
+**Pintar um pedaço do caractere exige desenhá-lo como SVG** — a fonte pinta o glifo inteiro de uma cor só. Então a carta que tem o radical troca a fonte pelo traçado a pincel do makemeahanzi (o mesmo do modo ✍️), com os traços do radical em azul e o resto na cor do texto; a que não tem recua pro fundo, pra o olho ir direto ao conjunto que compartilha o radical. E **ligar um radical apaga o vermelho do erro**: são duas perguntas diferentes — o que eu erro, como o caractere é feito — e pintar as duas de uma vez é o problema das duas escalas de novo. Uma lente por vez.
+
+Com um radical escolhido aparece **o que ele faz com a tela**, num segmentado de três: **🖌️ Pintar** (o de cima — mostra tudo, pinta quem tem, recua o resto), **📑 Agrupar** (quebra em dois montes, `氵 água` em cima e `sem 氵` embaixo) e **🔎 Só essas** (esconde quem não tem, sobra só o grupo do radical). O Agrupar **substitui o eixo Agrupar** enquanto o radical estiver ligado — aninhar "tema dentro de com-氵" viraria sub-sub-grupo e poluiria a tela; a pílula do botão vira 🔵 氵 pra avisar. Já o Só essas **preserva** o Agrupar: "as de água, por tema" continua valendo, porque ali ele filtra, não reagrupa.
+
+O dado é o campo `matches` do `dictionary.txt` do makemeahanzi, que diz a que componente de 1º nível cada traço pertence; o `tools/build_radicals.py` recorta isso pros caracteres do deck em `strokes/radicals.json` (5 KB). Os significados dos radicais ficam no `RADICAIS` do `app.js`, não no arquivo gerado: significado de radical é conhecimento, não recorte do deck.
+
+O botão **significado** (ao lado do A−/A+) acrescenta a tradução embaixo do pinyin em cada cartão — desligado por padrão, pra o cartão continuar sendo só pictograma + som. Fica salvo por aparelho, como o tamanho.
+
+A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
+
 ## 🔥 Progresso
 
 Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥, gráfico das suas últimas 2 semanas e o **gráfico da turma** (uma linha por pessoa, ordenado por total — barra cheia = dia em que bateu a meta). Toque ou passe o mouse nas barras pra ver o número. "Zerar meu progresso" apaga local + nuvem (só o seu).
+
+## 🖥️ No computador
+
+O app é o mesmo — HTML/JS num arquivo só, servido no Pages, aberto no navegador do celular ou do PC. Ele nasceu **mobile-first**: uma coluna de 720px no meio, e é assim que fica no telefone, que segue sendo a prioridade. Em tela larga (≥900px) entra um bloco de CSS que só **alarga**, nunca redesenha — nenhuma regra de celular muda, então o telefone fica byte a byte igual.
+
+No PC ele deixa de imitar o telefone numa faixa central e vira layout de computador:
+
+- **Menu na lateral esquerda** — as abas do topo viram uma barra vertical fixa, fundo claro (branco no tema claro, o tom escuro equivalente no escuro), e o conteúdo desloca pra depois dela.
+- **Grade** vai de ponta a ponta (é a tela do "ver tudo de uma vez"); só o botão e a linha do contador ficam centrados. O **A− / A+** ao lado do contador aumenta e diminui o cartão (menos/mais colunas) — vale no celular também, e cada aparelho guarda o seu tamanho (o `localStorage` é por navegador).
+- **Cartas** vira uma **lista em largura cheia com cada informação numa coluna** — pictograma, pinyin, significado, descrição, categoria, som, interruptor —, alinhadas de linha em linha como uma tabela. A largura toda é o que tira a quebra de linha da descrição, que agora é uma coluna e não desce mais pra baixo. **Frase segue a mesma organização**, só com o hanzi numa coluna larga (a frase é longa) e o miolo dividido em `fr` em vez de px fixo, porque o pinyin de uma frase inteira não cabe num tamanho fixo.
+- **Progresso** vira **três colunas** (flex), sendo a do meio só a "palavra por palavra" — a lista longa —, que assim para de empurrar o resto pra baixo; as cinco estatísticas ficam numa fileira em cima. Os `.pcol` são `display:contents` no celular, então lá os blocos empilham na ordem do DOM (revisões, habilidade, palavra, turma, deck), idêntica à de antes.
+- O **topo do conteúdo** (logo, streak, perfil) ocupa a largura toda, à direita da barra lateral.
+- **Estudar** fica centrado num tamanho confortável — ler um flashcard de 1000px é pior, não melhor.
+- As **folhas** param de subir do rodapé e viram uma janela central.
 
 ## Estrutura técnica
 
@@ -203,9 +261,10 @@ Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (ag
 | `supabase/seed.py` | upsert do seed no banco (service key) |
 | `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~24KB; licença em `fonts/ARPHICPL.txt`) |
 | `strokes/strokes.json` | traçados dos caracteres (makemeahanzi) |
+| `strokes/radicals.json` | traço→componente de cada caractere, pro radical em azul da Grade (makemeahanzi) |
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
-| `tools/` | `build_font.py`, `build_strokes.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
+| `tools/` | `build_font.py`, `build_strokes.py`, `build_radicals.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
 | `sw.js` + `manifest.webmanifest` | PWA que funciona sem internet: casca pela rede com prazo de 3s e cópia se não vier, áudio da cópia atualizando por trás, Supabase fora do SW (as regras estão no cabeçalho do arquivo) |
 
 ### Por onde o conteúdo anda
@@ -228,7 +287,7 @@ Três consequências:
 
 1. Editar `seed/seed_cards.json` — preencher `fonte` com a origem (`cap3`, `extra-aula`, `duolingo`) — é o eixo 📖 — e `data_aula` (`"2026-08-13"`) com o dia da aula, quando veio de uma. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
-3. Caractere novo? `python3 tools/build_font.py` e `python3 tools/build_strokes.py`
+3. Caractere novo? `python3 tools/build_font.py`, `python3 tools/build_strokes.py` e `python3 tools/build_radicals.py`
 4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão pro passo 5
 5. Frase nova? `python3 tools/build_audio_frases.py` — gera a voz da ElevenLabs só das frases que ainda não têm arquivo (precisa da `ELEVEN_API_KEY` além das variáveis do passo 2)
 6. Commit + push — **os MP3s precisam estar publicados**, senão o `audio_url` aponta pra 404

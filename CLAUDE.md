@@ -178,6 +178,7 @@ Deu "nenhum"? Pule este passo — rodar à toa só gera diff binário. Se veio a
 
 ```bash
 python3 tools/build_strokes.py       # baixa ~14MB pro /tmp na primeira vez
+python3 tools/build_radicals.py      # traço→radical, pro azul da Grade (baixa ~2MB)
 python3 tools/build_font.py          # precisa do ukai.ttc em /tmp, ver abaixo
 ```
 
