@@ -468,6 +468,7 @@ color:var(--mut);font-size:11.5px;margin:8px 0 2px;}
 border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;line-height:1;}
 .gradetam button:active{border-color:var(--red);color:var(--red);}
 .gradetam button:disabled{opacity:.4;cursor:default;}
+.pcol{display:contents;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
 .lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
@@ -687,37 +688,43 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     font-weight:700;}
   .tab:not(.active):hover{background:var(--surface2);}
   header{margin-left:216px;}
+  .brandrow{max-width:none;} /* o topo do conteúdo ocupa a largura toda, como as telas */
   main{margin-left:216px;max-width:none;padding:22px 32px 60px;}
 
   /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior. A tela
      fica centrada num tamanho confortável, como no celular. */
   #view-estudar{max-width:600px;margin:0 auto;}
 
-  /* Cartas: uma LISTA, com as informações internas alinhadas em colunas — hanzi,
-     pinyin, tradução, tema, ações — como uma tabela que se lê de cima a baixo. */
+  /* Cartas: uma LISTA em largura cheia, com cada informação numa coluna alinhada de
+     linha em linha — pictograma, pinyin, significado, descrição, categoria, som, o
+     interruptor. A largura toda é o que tira a quebra de linha da descrição. */
   #view-cartas .search{max-width:520px;}
-  #cardlist{display:block;max-width:1000px;}
-  #cardlist .card{margin:0 0 8px;padding:12px 16px;}
+  #cardlist{display:block;max-width:none;}
+  #cardlist .card{margin:0 0 8px;padding:12px 18px;}
   #cardlist .rowline{display:grid;
-    grid-template-columns:52px minmax(0,1fr) 130px 40px 48px;align-items:center;gap:16px;}
+    grid-template-columns:52px minmax(0,1fr) 128px 40px 48px;align-items:center;gap:18px;}
   #cardlist .rowline .h{min-width:0;}
-  /* o miolo (pinyin | tradução) vira duas colunas dentro da sua célula; a nota desce
-     pra baixo ocupando as duas. O pinyin fixo em 150px alinha de linha em linha. */
-  #cardlist .mid{display:grid;grid-template-columns:150px minmax(0,1fr);
-    align-items:baseline;gap:16px;}
-  #cardlist .mid .n{grid-column:1/-1;margin-top:3px;}
+  /* pinyin | significado | descrição, três colunas dentro do miolo. A nota deixa de
+     descer pra baixo e vira a sua própria coluna, que a largura cheia agora comporta. */
+  #cardlist .mid{display:grid;
+    grid-template-columns:140px minmax(90px,0.8fr) minmax(0,2fr);
+    align-items:baseline;gap:18px;}
+  #cardlist .mid .n{margin-top:0;}
   #cardlist .rowline .pill{align-self:center;margin-top:0;}
   /* frase é uma linha longa, não cabe em colunas estreitas: volta a ocupar a largura */
   #cardlist.frases .rowline{display:flex;}
 
-  /* Progresso: os blocos se espalham em duas colunas (masonry por altura). As cinco
-     estatísticas viram uma fileira só em cima. */
-  #view-progresso{max-width:1000px;}
+  /* Progresso em três colunas de verdade (flex, cada uma empilhando seus blocos). A do
+     meio é só a "palavra por palavra" — a lista longa —, então ela para de empurrar o
+     resto pra baixo. As cinco estatísticas viram uma fileira em cima. */
+  #view-progresso{max-width:1400px;}
   #view-progresso .stats{grid-template-columns:repeat(5,1fr);}
   #view-progresso .stat.wide{grid-column:auto;}
-  .pgrid{columns:2;column-gap:20px;}
-  .pblock{break-inside:avoid;margin:0 0 6px;}
-  .pblock .sec{margin-top:0;}
+  .pgrid{display:flex;gap:22px;align-items:flex-start;}
+  .pcol{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
+  .pcol:nth-child(2){flex:1.3;}
+  .pblock{margin:0 0 6px;}
+  .pblock .sec{margin-top:8px;}
 
   /* Grade é a única que quer a largura toda — é a tela do "ver tudo". Só o botão e a
      linha do contador ficam centrados; a grade vai de ponta a ponta. O tamanho do
@@ -963,30 +970,40 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <!-- cada bloco (título + cartão) fica junto num .pblock; no PC o .pgrid espalha os
        blocos em duas colunas (break-inside:avoid mantém o cartão inteiro). No celular
        os dois são div sem estilo, então empilham igual a antes. -->
+  <!-- três colunas no PC. Os .pcol são display:contents no celular, então lá os blocos
+       viram filhos diretos do .pgrid e empilham NA ORDEM DO DOM — que é revisões,
+       habilidade, palavra, turma, deck: idêntica à de antes. A do meio é a "palavra por
+       palavra", que é a lista longa e ganha a coluna só pra ela. -->
   <div class="pgrid">
-    <div class="pblock">
-      <h3 class="sec">Revisões · últimos 14 dias</h3>
-      <div class="card">
-        <div class="bars" id="bars"></div>
-        <div class="barlabels" id="barlabels"></div>
+    <div class="pcol">
+      <div class="pblock">
+        <h3 class="sec">Revisões · últimos 14 dias</h3>
+        <div class="card">
+          <div class="bars" id="bars"></div>
+          <div class="barlabels" id="barlabels"></div>
+        </div>
+      </div>
+      <div class="pblock">
+        <h3 class="sec">Por habilidade</h3>
+        <div class="card" id="habstats"></div>
       </div>
     </div>
-    <div class="pblock">
-      <h3 class="sec">Por habilidade</h3>
-      <div class="card" id="habstats"></div>
+    <div class="pcol">
+      <div class="pblock">
+        <h3 class="sec">Palavra por palavra</h3>
+        <div class="chips" id="statsort"></div>
+        <div class="card" id="wordstats"></div>
+      </div>
     </div>
-    <div class="pblock">
-      <h3 class="sec">Palavra por palavra</h3>
-      <div class="chips" id="statsort"></div>
-      <div class="card" id="wordstats"></div>
-    </div>
-    <div class="pblock">
-      <h3 class="sec">A turma</h3>
-      <div class="card" id="turma"></div>
-    </div>
-    <div class="pblock">
-      <h3 class="sec">Por deck</h3>
-      <div class="card" id="deckstats"></div>
+    <div class="pcol">
+      <div class="pblock">
+        <h3 class="sec">A turma</h3>
+        <div class="card" id="turma"></div>
+      </div>
+      <div class="pblock">
+        <h3 class="sec">Por deck</h3>
+        <div class="card" id="deckstats"></div>
+      </div>
     </div>
   </div>
   <div style="text-align:center;margin-top:22px">

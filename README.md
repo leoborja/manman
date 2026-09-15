@@ -236,8 +236,9 @@ No PC ele deixa de imitar o telefone numa faixa central e vira layout de computa
 
 - **Menu na lateral esquerda** — as abas do topo viram uma barra vertical fixa, fundo claro (branco no tema claro, o tom escuro equivalente no escuro), e o conteúdo desloca pra depois dela.
 - **Grade** vai de ponta a ponta (é a tela do "ver tudo de uma vez"); só o botão e a linha do contador ficam centrados. O **A− / A+** ao lado do contador aumenta e diminui o cartão (menos/mais colunas) — vale no celular também, e cada aparelho guarda o seu tamanho (o `localStorage` é por navegador).
-- **Cartas** vira uma **lista com as informações em colunas** alinhadas — hanzi, pinyin, tradução, tema, ações —, como uma tabela que se lê de cima a baixo; a nota desce pra baixo. Frase, que é linha longa, volta a ocupar a largura.
-- **Progresso** espalha os blocos em **duas colunas** (masonry por altura), com as cinco estatísticas numa fileira em cima.
+- **Cartas** vira uma **lista em largura cheia com cada informação numa coluna** — pictograma, pinyin, significado, descrição, categoria, som, interruptor —, alinhadas de linha em linha como uma tabela. A largura toda é o que tira a quebra de linha da descrição, que agora é uma coluna e não desce mais pra baixo. Frase, que é linha longa, volta a ocupar a largura.
+- **Progresso** vira **três colunas** (flex), sendo a do meio só a "palavra por palavra" — a lista longa —, que assim para de empurrar o resto pra baixo; as cinco estatísticas ficam numa fileira em cima. Os `.pcol` são `display:contents` no celular, então lá os blocos empilham na ordem do DOM (revisões, habilidade, palavra, turma, deck), idêntica à de antes.
+- O **topo do conteúdo** (logo, streak, perfil) ocupa a largura toda, à direita da barra lateral.
 - **Estudar** fica centrado num tamanho confortável — ler um flashcard de 1000px é pior, não melhor.
 - As **folhas** param de subir do rodapé e viram uma janela central.
 
