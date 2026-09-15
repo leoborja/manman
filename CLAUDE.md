@@ -121,7 +121,7 @@ Regras que importam:
   tudo junto não dá erro — a frase simplesmente some desse exercício.
 - **`deck`** é o tema, em minúscula e sem acento. Os que já existem:
   `saudacoes, numeros, pronomes, verbos, uteis, estados, nomes, familia, comida, paises,
-  escola, identidade, gostos, animais`. Reaproveite um antes de inventar outro — cada
+  escola, identidade, gostos, animais, natureza`. Reaproveite um antes de inventar outro — cada
   deck novo é mais um chip na tela de filtro.
 - **`fonte`** é a origem da palavra, e vira o filtro 📖 do app. A turma estuda pelo
   *New Practical Chinese Reader 1* (o `book-1.pdf` da pasta), então é o capítulo:

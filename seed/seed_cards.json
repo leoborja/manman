@@ -15,7 +15,7 @@
 
   {"id":"jiao","hanzi":"叫","pinyin":"jiào","pt":"chamar-se","deck":"verbos","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我叫… = eu me chamo… (radical 口 boca)"},
   {"id":"shenme","hanzi":"什么","pinyin":"shénme","pt":"o que / qual","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"你叫什么名字? = como você se chama? — a pergunta que abre com o 叫 que você já tem. 什 leva 亻(pessoa), 么 tem 3 traços: os dois valem só pelo som, e a segunda sílaba fica neutra (shénme)"},
-  {"id":"mingzi","hanzi":"名字","pinyin":"míngzi","pt":"nome","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我的名字是… ou, mais comum na fala, 我叫… 名 é 夕 (anoitecer) + 口 (boca): o nome é o que se chama no escuro. 字 é o 子 (criança) que você já tem, debaixo de um teto 宀. Segunda sílaba em tom neutro: míngzi"},
+  {"id":"mingzi","hanzi":"名字","pinyin":"míngzi","pt":"nome","deck":"nomes","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我的名字是… ou, mais comum na fala, 我叫… 名 é 夕 (anoitecer) + 口 (boca): o nome é o que se chama no escuro. 字 é o 子 (criança) que você já tem, debaixo de um teto 宀. Segunda sílaba em tom neutro: míngzi"},
   {"id":"baxi","hanzi":"巴西","pinyin":"Bāxī","pt":"Brasil","deck":"paises","fonte":"duolingo","data_aula":"2026-08-06","nota":"我是巴西人 = eu sou brasileiro, pela mesma receita país + 人 de 中国人 e 美国人. É transcrição do som e não leva 国, como 日本. O 巴 é o mesmo do 爸爸, também só pelo som; 西 sozinho é oeste"},
 
   {"id":"hao","hanzi":"好","pinyin":"hǎo","pt":"bom / bem","deck":"uteis","fonte":"cap1","data_aula":"2026-08-06","nota":"Ideograma composto: 女 (mulher/feminino) + 子 (criança)"},
@@ -26,13 +26,13 @@
   {"id":"ren","hanzi":"人","pinyin":"rén","pt":"pessoa","deck":"uteis","fonte":"cap3","data_aula":"2026-08-12","nota":"Como radical à esquerda vira 亻(ex.: 你)"},
   {"id":"nu","hanzi":"女","pinyin":"nǚ","pt":"feminino","deck":"uteis","fonte":"cap1","data_aula":"2026-08-06","nota":"É atributo, não pessoa: mulher é 女人 nǚrén. Radical de 好 (bom) e 妈 (mãe)"},
   {"id":"nuren","hanzi":"女人","pinyin":"nǚrén","pt":"mulher","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"女 (mulher/feminino) + 人 (pessoa) — os dois você já sabia separados"},
-  {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"uteis","fonte":"cap1","data_aula":"2026-08-06","nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
+  {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"animais","fonte":"cap1","data_aula":"2026-08-06","nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
   {"id":"ma-mae","hanzi":"妈","pinyin":"mā","pt":"mãe (o caractere sozinho)","deck":"familia","fonte":"cap1","data_aula":"2026-08-06","nota":"女 (mulher/feminino) + 马 (cavalo, só pelo som mǎ→mā). Sozinho serve pra chamar — 妈！No dia a dia usa-se dobrado: 妈妈"},
   {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher/feminino) + 子 (criança) = bom. 孩子 háizi = criança"},
-  {"id":"mu","hanzi":"木","pinyin":"mù","pt":"madeira","deck":"uteis","fonte":"cap1","data_aula":"2026-08-12","nota":"Como radical carrega o sentido de árvore: dobra e vira bosque 林, triplica e vira floresta 森"},
-  {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"uteis","fonte":"cap1","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
-  {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},
-  {"id":"yu","hanzi":"雨","pinyin":"yǔ","pt":"chuva","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-12","nota":"下雨 xià yǔ = está chovendo. É o 雨 do nome do 陆雨平 (Lù Yǔpíng)"},
+  {"id":"mu","hanzi":"木","pinyin":"mù","pt":"madeira","deck":"natureza","fonte":"cap1","data_aula":"2026-08-12","nota":"Como radical carrega o sentido de árvore: dobra e vira bosque 林, triplica e vira floresta 森"},
+  {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"natureza","fonte":"cap1","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
+  {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"natureza","fonte":"extra-aula","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},
+  {"id":"yu","hanzi":"雨","pinyin":"yǔ","pt":"chuva","deck":"natureza","fonte":"extra-aula","data_aula":"2026-08-12","nota":"下雨 xià yǔ = está chovendo. É o 雨 do nome do 陆雨平 (Lù Yǔpíng)"},
 
   {"id":"bu","hanzi":"不","pinyin":"bù","pt":"não","deck":"uteis","fonte":"cap2","data_aula":"2026-08-14","nota":"我不忙 = eu não estou ocupado. Atenção: vira bú (2º tom) quando vem antes de 4º tom — 不是 bú shì"},
 
@@ -48,7 +48,7 @@
 
   {"id":"ta-ele","hanzi":"他","pinyin":"tā","pt":"ele","deck":"pronomes","fonte":"cap2","data_aula":"2026-08-17","nota":"亻(pessoa) + 也 (também). 他们 tāmen = eles"},
   {"id":"ta-ela","hanzi":"她","pinyin":"tā","pt":"ela","deck":"pronomes","fonte":"cap3","data_aula":"2026-08-17","nota":"女 (mulher/feminino) + 也. Som idêntico ao 他 (ele) — só a escrita distingue, nunca a fala"},
-  {"id":"huo","hanzi":"火","pinyin":"huǒ","pt":"fogo","deck":"uteis","fonte":"cap1","data_aula":"2026-08-17","nota":"Pictograma de uma chama com as fagulhas dos lados"},
+  {"id":"huo","hanzi":"火","pinyin":"huǒ","pt":"fogo","deck":"natureza","fonte":"cap1","data_aula":"2026-08-17","nota":"Pictograma de uma chama com as fagulhas dos lados"},
   {"id":"li","hanzi":"力","pinyin":"lì","pt":"força","deck":"uteis","fonte":"cap1","data_aula":"2026-08-17","nota":"É o 力 do 力波 (Lìbō) que você já conhece"},
   {"id":"men","hanzi":"门","pinyin":"mén","pt":"porta","deck":"uteis","fonte":"cap1","data_aula":"2026-08-17","nota":"Pictograma das duas folhas de uma porta. 门口 ménkǒu = entrada"},
 
@@ -67,7 +67,7 @@
   {"id":"dou","hanzi":"都","pinyin":"dōu","pt":"todos / ambos","deck":"uteis","fonte":"cap2","data_aula":"2026-08-19","nota":"我们都喝咖啡 = nós todos bebemos café. Vem antes do verbo, nunca depois"},
   {"id":"nan","hanzi":"男","pinyin":"nán","pt":"masculino","deck":"uteis","fonte":"cap2","data_aula":"2026-08-19","nota":"É atributo, não pessoa: homem é 男人 nánrén. 田 (campo) + 力 (força). 男朋友 nán péngyou = namorado"},
   {"id":"nanren","hanzi":"男人","pinyin":"nánrén","pt":"homem","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-19","nota":"男 (homem/masculino) + 人 (pessoa). Par de 女人 nǚrén (mulher)"},
-  {"id":"pengyou","hanzi":"朋友","pinyin":"péngyou","pt":"amigo","deck":"uteis","fonte":"cap2","data_aula":"2026-08-19","nota":"朋 são duas luas 月 lado a lado. Segunda sílaba em tom neutro: péngyou"},
+  {"id":"pengyou","hanzi":"朋友","pinyin":"péngyou","pt":"amigo","deck":"familia","fonte":"cap2","data_aula":"2026-08-19","nota":"朋 são duas luas 月 lado a lado. Segunda sílaba em tom neutro: péngyou"},
   {"id":"kafei","hanzi":"咖啡","pinyin":"kāfēi","pt":"café","deck":"comida","fonte":"cap2","data_aula":"2026-08-19","nota":"Transliteração do som estrangeiro — os dois caracteres levam 口 (boca) e valem só pelo som"},
   {"id":"yinliao","hanzi":"饮料","pinyin":"yǐnliào","pt":"bebidas","deck":"comida","fonte":"cap2","data_aula":"2026-08-19","nota":"饮 (beber) + 料 (matéria-prima): é a palavra de cardápio, bebida em geral. O 饣à esquerda é o mesmo radical de comida do 饭 (米饭) e do 饿 (com fome). Pra ação continua o 喝: 我要喝饮料"},
   {"id":"kele","hanzi":"可乐","pinyin":"kělè","pt":"Coca-Cola","deck":"comida","fonte":"cap2","data_aula":"2026-08-19","nota":"可 (poder) + 乐 (alegre), escolhidos pelo som — o nome completo é 可口可乐 Kěkǒu Kělè. Sozinho serve pra qualquer refrigerante de cola. Repare no 乐: aqui é lè, mas em 音乐 yīnyuè ele vira yuè"},
@@ -126,7 +126,7 @@
   {"id":"shuxue","hanzi":"数学","pinyin":"shùxué","pt":"matemática","deck":"escola","fonte":"duolingo","nota":"数 (número) + 学 (estudo), o mesmo 学 de 学生. A receita repete: 文学 wénxué = literatura"},
   {"id":"yinyue","hanzi":"音乐","pinyin":"yīnyuè","pt":"música","deck":"escola","fonte":"duolingo","nota":"音 (som) + 乐. Cuidado: sozinho 乐 é lè (alegre); dentro de 音乐 vira yuè"},
 
-  {"id":"lushi","hanzi":"律师","pinyin":"lǜshī","pt":"advogado","deck":"uteis","fonte":"cap3","nota":"我是律师, com o 是 novo. 师 é o sufixo de mestre num ofício — aparece também em 老师 lǎoshī (professor)"},
+  {"id":"lushi","hanzi":"律师","pinyin":"lǜshī","pt":"advogado","deck":"identidade","fonte":"cap3","nota":"我是律师, com o 是 novo. 师 é o sufixo de mestre num ofício — aparece também em 老师 lǎoshī (professor)"},
   {"id":"dui","hanzi":"对","pinyin":"duì","pt":"certo","deck":"uteis","fonte":"duolingo","nota":"Sozinho já responde \"isso mesmo\". Negativa: 不对 bú duì — o 不 vira 2º tom antes de 4º, como em 不是"},
   {"id":"duibudui","hanzi":"对不对","pinyin":"duì bu duì","pt":"é, não é? / certo?","deck":"uteis","fonte":"duolingo","nota":"Afirma + nega na mesma frase e dispensa o 吗. O 不 do meio fica em tom neutro. Mesmo padrão de 好不好 e 是不是"},
   {"id":"fr-brasileiro","tipo":"frase","hanzi":"我是巴西人","pinyin":"Wǒ shì Bāxī rén","pt":"Eu sou brasileiro","deck":"paises","fonte":"duolingo","data_aula":"2026-08-06","nota":"País + 人, a mesma receita de 中国人 e 美国人. O 是 liga substantivo a substantivo — com adjetivo seria 很"},
@@ -189,11 +189,11 @@
   {"id":"erzi","hanzi":"儿子","pinyin":"érzi","pt":"filho","deck":"familia","fonte":"duolingo","nota":"儿 (criança) + o 子 que você já tem sozinho. Segunda sílaba em tom neutro, como em 妻子 qīzi e 名字 míngzi"},
   {"id":"nuer","hanzi":"女儿","pinyin":"nǚ\u0027ér","pt":"filha","deck":"familia","fonte":"duolingo","nota":"女 (feminino) + 儿, a mesma receita de 女人 e 女朋友. O apóstrofo do pinyin não se fala: só avisa onde a segunda sílaba começa, nǚ-ér e não nǚr"},
 
-  {"id":"lao","hanzi":"老","pinyin":"lǎo","pt":"velho","deck":"radicais","fonte":"duolingo","nota":"A peça que você já vinha usando sem ter a carta: 老师 (professor), 老婆 (esposa), 老公 (marido). Em nenhuma das três ela fala de idade — fala de proximidade e de respeito"},
-  {"id":"da","hanzi":"大","pinyin":"dà","pt":"grande","deck":"radicais","fonte":"cap2","nota":"Um 人 (pessoa) de braços abertos, mostrando o tamanho. É o 大 de 大学生, o estudante da escola grande. Guarde o desenho: 夫 é este mesmo, com um traço a mais em cima","data_aula":"2026-09-09"},
-  {"id":"fu-marido","hanzi":"夫","pinyin":"fū","pt":"marido / homem adulto","deck":"radicais","fonte":"duolingo","nota":"O 大 com um traço atravessando a cabeça — o grampo que prendia o cabelo do homem adulto. É o 夫 de 丈夫"},
-  {"id":"fei","hanzi":"非","pinyin":"fēi","pt":"não / fora do comum","deck":"radicais","fonte":"duolingo","nota":"Duas metades espelhadas, uma de costas pra outra: é a ideia de contrário. Sozinho quase não aparece na fala — quem você vai usar é 非常"},
-  {"id":"chang","hanzi":"常","pinyin":"cháng","pt":"comum / frequente","deck":"radicais","fonte":"duolingo","nota":"O que acontece sempre, o normal. Junte com o 非 (não) e sai o contrário do normal: 非常"},
+  {"id":"lao","hanzi":"老","pinyin":"lǎo","pt":"velho","deck":"uteis","fonte":"duolingo","nota":"A peça que você já vinha usando sem ter a carta: 老师 (professor), 老婆 (esposa), 老公 (marido). Em nenhuma das três ela fala de idade — fala de proximidade e de respeito"},
+  {"id":"da","hanzi":"大","pinyin":"dà","pt":"grande","deck":"uteis","fonte":"cap2","nota":"Um 人 (pessoa) de braços abertos, mostrando o tamanho. É o 大 de 大学生, o estudante da escola grande. Guarde o desenho: 夫 é este mesmo, com um traço a mais em cima","data_aula":"2026-09-09"},
+  {"id":"fu-marido","hanzi":"夫","pinyin":"fū","pt":"marido / homem adulto","deck":"familia","fonte":"duolingo","nota":"O 大 com um traço atravessando a cabeça — o grampo que prendia o cabelo do homem adulto. É o 夫 de 丈夫"},
+  {"id":"fei","hanzi":"非","pinyin":"fēi","pt":"não / fora do comum","deck":"uteis","fonte":"duolingo","nota":"Duas metades espelhadas, uma de costas pra outra: é a ideia de contrário. Sozinho quase não aparece na fala — quem você vai usar é 非常"},
+  {"id":"chang","hanzi":"常","pinyin":"cháng","pt":"comum / frequente","deck":"uteis","fonte":"duolingo","nota":"O que acontece sempre, o normal. Junte com o 非 (não) e sai o contrário do normal: 非常"},
 
   {"id":"kuaile","hanzi":"快乐","pinyin":"kuàilè","pt":"feliz / alegre","deck":"estados","fonte":"duolingo","nota":"O 乐 é o mesmo de 音乐 — lá ele é yuè (música), aqui volta a ser lè (alegre). É o 快乐 das felicitações: 生日快乐, 新年快乐"},
   {"id":"gaoxing","hanzi":"高兴","pinyin":"gāoxìng","pt":"contente / animado","deck":"estados","fonte":"duolingo","nota":"高 (alto) + 兴 (ânimo): o astral lá em cima. É adjetivo, então leva 很 e não 是 — 我很高兴, nunca 我是高兴"},
@@ -213,14 +213,14 @@
   {"id":"fr-filha-feliz","tipo":"frase","hanzi":"我女儿很开心","pinyin":"Wǒ nǚ\u0027ér hěn kāixīn","pt":"Minha filha está feliz","deck":"familia","fonte":"duolingo","nota":"De novo o 很 fazendo a cola do adjetivo, e 女儿 sem 的 na frente"},
   {"id":"fr-muito-cansado","tipo":"frase","hanzi":"我非常累","pinyin":"Wǒ fēicháng lèi","pt":"Estou extremamente cansado","deck":"estados","fonte":"duolingo","nota":"O 非常 entra no lugar exato do 很 de 我很累 — mesma posição, volume maior"},
   {"id":"fr-porque-cerveja","tipo":"frase","hanzi":"你为什么不喝啤酒","pinyin":"Nǐ wèishénme bù hē píjiǔ","pt":"Por que você não bebe cerveja?","deck":"comida","fonte":"duolingo","nota":"O 为什么 fica depois do sujeito e antes do verbo, e a ordem da frase não muda. Sem 吗: pergunta que já tem palavra de pergunta não leva a partícula"},
-  {"id":"yisheng","hanzi":"医生","pinyin":"yīshēng","pt":"médico","deck":"uteis","fonte":"cap3","nota":"医 guarda uma flecha 矢 dentro de uma caixa 匚 — a aljava; a medicina antiga era, antes de tudo, tirar flecha de gente. 生 é o mesmo de 学生 e 先生. 我是医生, com o 是 ligando substantivo a substantivo igual em 我是律师"},
+  {"id":"yisheng","hanzi":"医生","pinyin":"yīshēng","pt":"médico","deck":"identidade","fonte":"cap3","nota":"医 guarda uma flecha 矢 dentro de uma caixa 匚 — a aljava; a medicina antiga era, antes de tudo, tirar flecha de gente. 生 é o mesmo de 学生 e 先生. 我是医生, com o 是 ligando substantivo a substantivo igual em 我是律师"},
 
   {"id":"jianada","hanzi":"加拿大","pinyin":"Jiānádà","pt":"Canadá","deck":"paises","fonte":"duolingo","nota":"Transcrição do som Ca-na-dá, sílaba por sílaba, e nenhum dos três caracteres vale pelo sentido — o 大 (grande) que você já tem está aqui só pelo som. Por isso não leva 国, como 日本 e 巴西 também não levam"},
   {"id":"jianadaren","hanzi":"加拿大人","pinyin":"Jiānádàrén","pt":"canadense","deck":"paises","fonte":"duolingo","nota":"加拿大 + 人, a mesma receita de 中国人 e 巴西人 — vale mesmo num país que dispensa o 国. E não existe 加文: no Canadá se fala 英文 e francês"},
 
-  {"id":"guo","hanzi":"国","pinyin":"guó","pt":"país","deck":"radicais","fonte":"cap3","nota":"Um 玉 (jade, o tesouro do rei) cercado pela muralha 囗. É o 国 de 中国, 美国 e 韩国 — e repare em quem NÃO leva: 日本, 巴西 e 加拿大 são transcrição de som e dispensam ele"},
-  {"id":"yu-lingua","hanzi":"语","pinyin":"yǔ","pt":"língua falada","deck":"radicais","fonte":"duolingo","nota":"讠(fala) — o mesmo radical de 说, 谢谢 e 课 — mais 吾 pelo som. É a língua que sai da boca: 英语 é o inglês de conversa. O par escrito dele é 文"},
-  {"id":"wen-escrita","hanzi":"文","pinyin":"wén","pt":"língua escrita / texto","deck":"radicais","fonte":"duolingo","nota":"Pictograma de linhas cruzadas: a marca, o risco, daí a escrita. É o 文 de 中文 e 英文 — a língua de livro, site e documento. O par falado dele é 语"},
+  {"id":"guo","hanzi":"国","pinyin":"guó","pt":"país","deck":"paises","fonte":"cap3","nota":"Um 玉 (jade, o tesouro do rei) cercado pela muralha 囗. É o 国 de 中国, 美国 e 韩国 — e repare em quem NÃO leva: 日本, 巴西 e 加拿大 são transcrição de som e dispensam ele"},
+  {"id":"yu-lingua","hanzi":"语","pinyin":"yǔ","pt":"língua falada","deck":"escola","fonte":"duolingo","nota":"讠(fala) — o mesmo radical de 说, 谢谢 e 课 — mais 吾 pelo som. É a língua que sai da boca: 英语 é o inglês de conversa. O par escrito dele é 文"},
+  {"id":"wen-escrita","hanzi":"文","pinyin":"wén","pt":"língua escrita / texto","deck":"escola","fonte":"duolingo","nota":"Pictograma de linhas cruzadas: a marca, o risco, daí a escrita. É o 文 de 中文 e 英文 — a língua de livro, site e documento. O par falado dele é 语"},
 
   {"id":"shang-frequentar","hanzi":"上","pinyin":"shàng","pt":"frequentar / ir a","deck":"verbos","fonte":"duolingo","nota":"O desenho é uma marca ACIMA da linha do chão: em cima, subir. Daí virou o verbo de comparecer a compromisso — 上课 (ir à aula), 上班 (ir trabalhar). Não serve pra frequentar um lugar qualquer: pra bar e restaurante o verbo é outro"},
   {"id":"you-ter","hanzi":"有","pinyin":"yǒu","pt":"ter","deck":"verbos","fonte":"duolingo","nota":"我今天有英文课 = hoje eu tenho aula de inglês. A negativa dele é a exceção do idioma: 没有 méiyǒu, nunca 不有 — é o único verbo que o 不 não nega"},
@@ -254,10 +254,10 @@
 
   {"id":"dao-faca","hanzi":"刀","pinyin":"dāo","pt":"faca","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"Pictograma de uma lâmina com o cabo. Espremido à direita ele vira 刂, e é assim que aparece dentro de outros caracteres"},
   {"id":"kou","hanzi":"口","pinyin":"kǒu","pt":"boca","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"O quadrado é a boca aberta. Você já vinha vendo ele à esquerda em 叫 (chamar-se), 喝 (beber), 咖啡 e 嗨 — ali ele marca caractere que tem a ver com boca, ou que vale só pelo som"},
-  {"id":"tu-terra","hanzi":"土","pinyin":"tǔ","pt":"terra / solo","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"Três traços: a linha do chão e o que brota dele. Não confunda com 士 (letrado), que tem o traço de cima MAIOR — aqui o de baixo é que é o mais longo"},
+  {"id":"tu-terra","hanzi":"土","pinyin":"tǔ","pt":"terra / solo","deck":"natureza","fonte":"cap2","data_aula":"2026-09-09","nota":"Três traços: a linha do chão e o que brota dele. Não confunda com 士 (letrado), que tem o traço de cima MAIOR — aqui o de baixo é que é o mais longo"},
   {"id":"you-denovo","hanzi":"又","pinyin":"yòu","pt":"de novo","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"O 'de novo' do que JÁ aconteceu: 他又喝啤酒了. Pro que ainda vai acontecer é 再 zài. O desenho é uma mão direita, e é a mesma peça que a simplificação enfiou no 汉 e no 爱"},
 
-  {"id":"ke-poder","hanzi":"可","pinyin":"kě","pt":"poder / pode ser","deck":"radicais","fonte":"cap2","data_aula":"2026-09-09","nota":"É o 可 de 可乐 (Coca), lá só pelo som. Sozinho quase não anda na fala: o que se usa é 可以 kěyǐ — 我可以喝啤酒吗? = posso beber cerveja?"},
+  {"id":"ke-poder","hanzi":"可","pinyin":"kě","pt":"poder / pode ser","deck":"verbos","fonte":"cap2","data_aula":"2026-09-09","nota":"É o 可 de 可乐 (Coca), lá só pelo som. Sozinho quase não anda na fala: o que se usa é 可以 kěyǐ — 我可以喝啤酒吗? = posso beber cerveja?"},
 
   {"id":"fr-tambem-bem","tipo":"frase","hanzi":"我也很好","pinyin":"Wǒ yě hěn hǎo","pt":"Eu também estou bem","deck":"saudacoes","fonte":"cap1","nota":"A resposta ao 你呢 da lição 1. O 也 vem antes do 很 — nunca 我很也好"},
   {"id":"fr-oi-voces","tipo":"frase","hanzi":"你们好","pinyin":"Nǐmen hǎo","pt":"Olá, pessoal","deck":"saudacoes","fonte":"cap1","nota":"O 你好 no plural: é como se cumprimenta a turma inteira"},
