@@ -3096,6 +3096,117 @@ function renderTurma() {
     '<p class="turmaleg">últimos 7 dias · <i></i> meta de ' + META_DIARIA + ' batida</p>';
 }
 
+// ── UI: competição (comparar os 4) ──────────────────────────
+// A aba Progresso é sobre VOCÊ; esta é sobre os quatro juntos. Puxa o progress de todo
+// mundo de uma vez (a policy de leitura é aberta, e não tem dado sensível ali — é acerto
+// e erro de flashcard), agrega por pessoa e compara. Sem coluna nova: tudo já está no
+// n_good/n_hard/n_again e no hab de cada linha.
+let compData = null;
+async function loadCompeticao() {
+  if (!sbConfigured()) { compData = null; return; }
+  try {
+    const r = await fetch(HW_CONFIG.SUPABASE_URL +
+      '/rest/v1/progress?select=user_name,card_id,ivl,reps,n_good,n_hard,n_again,hab',
+      { headers: sbHeaders() });
+    if (!r.ok) { compData = null; return; }
+    const by = {};
+    for (const row of await r.json()) {
+      const u = row.user_name;
+      if (!u || u === 'convidado') continue; // convidado não entra no placar
+      const d = by[u] || (by[u] = { seen: 0, learned: 0, g: 0, h: 0, a: 0, hab: {}, err: {} });
+      if ((row.reps || 0) > 0) d.seen++;
+      if ((row.ivl || 0) >= LEARNED_IVL) d.learned++;
+      d.g += row.n_good || 0; d.h += row.n_hard || 0; d.a += row.n_again || 0;
+      const err = (row.n_hard || 0) + (row.n_again || 0);
+      if (err) d.err[row.card_id] = err;               // erros por carta, pro ranking
+      if (row.hab) for (const k of Object.keys(row.hab)) {
+        const v = row.hab[k]; const t = d.hab[k] || (d.hab[k] = { n: 0, e: 0 });
+        t.n += v.n || 0; t.e += v.e || 0;
+      }
+    }
+    compData = by;
+  } catch (e) { compData = null; }
+}
+// os alunos com algum dado, do mais pro menos aprendido (a ordem do placar)
+function compUsuarios() {
+  return Object.keys(compData || {})
+    .filter(u => compData[u].seen || compData[u].g + compData[u].h + compData[u].a)
+    .sort((a, b) => compData[b].learned - compData[a].learned);
+}
+// uma célula da matriz: o vermelho cresce com o valor (erro é o que se quer achar), e a
+// coluna do próprio usuário fica marcada. `frac` (0–1) é a intensidade; null = sem dado.
+function compCel(txt, frac, eu) {
+  const bg = frac == null ? '' : 'background:rgba(200,16,46,' + (0.08 + 0.5 * frac).toFixed(2) + ')';
+  return '<span class="cmcel' + (eu ? ' eu' : '') + '" style="' + bg + '">' +
+    (txt == null ? '<i>–</i>' : txt) + '</span>';
+}
+function renderCompeticao() {
+  const box = $('view-competicao');
+  if (!sbConfigured()) {
+    $('comp-placar').innerHTML = '<p class="wempty">Sem conexão com o banco.</p>';
+    $('comp-hab').innerHTML = ''; $('comp-erram').innerHTML = ''; return;
+  }
+  const us = compData ? compUsuarios() : [];
+  if (!us.length) {
+    $('comp-placar').innerHTML = '<p class="wempty">Sem dados da turma agora (precisa de internet, e de pelo menos uma pessoa com progresso).</p>';
+    $('comp-hab').innerHTML = ''; $('comp-erram').innerHTML = ''; return;
+  }
+  const nome = u => USERS[u] || u;
+  const MEDALHA = ['🥇', '🥈', '🥉'];
+
+  // placar: um cartão por pessoa, do mais aprendido pro menos
+  $('comp-placar').innerHTML = '<div class="complacar">' + us.map((u, i) => {
+    const d = compData[u];
+    const tent = d.g + d.h + d.a;
+    const acerto = tent ? Math.round(d.g / tent * 100) : null;
+    return '<div class="compcard' + (u === settings.user ? ' eu' : '') + '">' +
+      '<div class="cptop"><span class="cppos">' + (MEDALHA[i] || (i + 1) + 'º') + '</span>' +
+      '<b class="cpnome">' + esc(nome(u)) + '</b></div>' +
+      '<div class="cpnums"><span><b>' + d.learned + '</b><small>aprendidas</small></span>' +
+      '<span><b>' + d.seen + '</b><small>vistas</small></span>' +
+      '<span><b>' + (acerto == null ? '–' : acerto + '%') + '</b><small>de acerto</small></span></div>' +
+      '</div>';
+  }).join('') + '</div>';
+
+  // cabeçalho comum das duas matrizes: as iniciais das pessoas, nas colunas
+  const cab = '<span class="cmlab"></span>' + us.map(u =>
+    '<span class="cmcel cmh' + (u === settings.user ? ' eu' : '') + '" title="' + esc(nome(u)) + '">' +
+    esc(nome(u).slice(0, 3)) + '</span>').join('');
+
+  // erro por habilidade: linha = habilidade, coluna = pessoa, célula = % de erro.
+  // A comparação é por COLUNA (quem erra menos naquela habilidade), então cada célula
+  // pinta pela própria taxa, não relativa às outras — 40% é 40% em qualquer coluna.
+  const habLinhas = HABS.filter(h => us.some(u => compData[u].hab[h.k] && compData[u].hab[h.k].n));
+  $('comp-hab').innerHTML = habLinhas.length
+    ? '<div class="cmatriz" style="--cn:' + us.length + '"><div class="cmrow cmhead">' + cab + '</div>' + habLinhas.map(h =>
+      '<div class="cmrow"><span class="cmlab">' + esc(h.nome) + '</span>' + us.map(u => {
+        const v = compData[u].hab[h.k];
+        if (!v || !v.n) return compCel(null, null, u === settings.user);
+        const pct = Math.round(v.e / v.n * 100);
+        return compCel(pct + '%', pct / 100, u === settings.user);
+      }).join('') + '</div>').join('') + '</div>'
+    : '<p class="wempty">Ainda sem medição por habilidade — ela enche conforme a turma estuda no 🔀 Aleatório.</p>';
+
+  // o que a turma mais erra: soma os erros de cada carta entre todos, pega o topo, e
+  // mostra quanto cada um errou nela. Célula pintada pelo maior valor da tabela.
+  const soma = {};
+  us.forEach(u => Object.keys(compData[u].err).forEach(id => {
+    soma[id] = (soma[id] || 0) + compData[u].err[id];
+  }));
+  const rank = Object.keys(soma)
+    .map(id => ({ id, c: cards.find(k => k.id === id), soma: soma[id] }))
+    .filter(x => x.c).sort((a, b) => b.soma - a.soma).slice(0, 15);
+  const maxErr = rank.reduce((m, x) => us.reduce((mm, u) => Math.max(mm, compData[u].err[x.id] || 0), m), 1);
+  $('comp-erram').innerHTML = rank.length
+    ? '<div class="cmatriz erram" style="--cn:' + us.length + '"><div class="cmrow cmhead">' + cab + '</div>' + rank.map(x =>
+      '<div class="cmrow"><span class="cmlab carta"><span class="zh" lang="zh-Hans">' + esc(x.c.hanzi) +
+      '</span><span class="cmpt">' + esc(x.c.pt) + '</span></span>' + us.map(u => {
+        const e = compData[u].err[x.id] || 0;
+        return compCel(e || null, e ? e / maxErr : null, u === settings.user);
+      }).join('') + '</div>').join('') + '</div>'
+    : '<p class="wempty">Ninguém errou nada ainda — ou o banco não trouxe os dados.</p>';
+}
+
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
   renderTurma();
@@ -3143,6 +3254,7 @@ function switchView(v) {
   }
   if (v === 'cartas') renderList();
   if (v === 'grade') renderGrade();
+  if (v === 'competicao') { renderCompeticao(); loadCompeticao().then(renderCompeticao); }
   if (v === 'estudar') resumeFlash(); else pauseFlash();
   // desligar uma carta na aba Cartas pode trocar a carta atual com a aba Estudar
   // escondida — e aí a grade nasceu sem largura pra medir. Volta, remede.

@@ -478,6 +478,36 @@ border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;
 .gradetgl{border:1px solid var(--line);background:var(--surface);color:var(--txt);
 border-radius:9px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;line-height:1;}
 .gradetgl.on{background:var(--red);border-color:var(--red);color:#fff;}
+
+/* competição */
+#view-competicao{max-width:820px;margin:0 auto;}
+.complacar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 6px;}
+.compcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+box-shadow:var(--shadow);padding:12px 14px;}
+.compcard.eu{border-color:var(--red);}
+.cptop{display:flex;align-items:center;gap:7px;margin:0 0 8px;}
+.cptop .cppos{font-size:17px;}
+.cptop .cpnome{font-size:14.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cpnums{display:flex;gap:10px;}
+.cpnums span{display:flex;flex-direction:column;}
+.cpnums b{font-size:17px;font-weight:800;line-height:1.1;}
+.cpnums small{font-size:10px;color:var(--mut);}
+/* a matriz: primeira coluna é o rótulo (habilidade ou carta), as outras são as pessoas */
+.cmatriz{display:flex;flex-direction:column;gap:3px;}
+.cmrow{display:grid;grid-template-columns:minmax(0,1fr) repeat(var(--cn,4),46px);
+align-items:center;gap:4px;}
+.cmlab{font-size:12.5px;color:var(--txt);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cmrow.cmhead .cmlab{}
+.cmcel{text-align:center;font-size:12px;font-weight:700;padding:7px 0;border-radius:8px;
+background:var(--surface2);color:var(--txt);}
+.cmcel i{color:var(--soft);font-style:normal;}
+.cmcel.cmh{background:none;color:var(--mut);font-size:11px;font-weight:800;
+text-transform:uppercase;letter-spacing:.3px;padding:2px 0;}
+.cmcel.eu{outline:2px solid var(--red);outline-offset:-2px;}
+.cmcel.cmh.eu{outline:0;color:var(--red);}
+.cmlab.carta{display:flex;align-items:baseline;gap:7px;}
+.cmlab.carta .zh{font-size:17px;flex:0 0 auto;}
+.cmlab.carta .cmpt{font-size:12px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .pcol{display:contents;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
@@ -789,6 +819,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <button class="tab active" data-v="estudar">Estudar</button>
   <button class="tab" data-v="cartas">Cartas</button>
   <button class="tab" data-v="grade">Grade</button>
+  <button class="tab" data-v="competicao">Competição</button>
   <button class="tab" data-v="progresso">Progresso</button>
 </div>
 
@@ -985,6 +1016,15 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     </div>
   </div>
 </div>
+
+<!-- ══════ COMPETIÇÃO (comparar os 4) ══════ -->
+<section class="view" id="view-competicao">
+  <div id="comp-placar"></div>
+  <h3 class="sec">Erro por habilidade</h3>
+  <div class="card" id="comp-hab"></div>
+  <h3 class="sec">O que a turma mais erra</h3>
+  <div class="card" id="comp-erram"></div>
+</section>
 
 <!-- ══════ PROGRESSO ══════ -->
 <section class="view" id="view-progresso">

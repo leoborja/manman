@@ -232,6 +232,16 @@ O botão **significado** (ao lado do A−/A+) acrescenta a tradução embaixo do
 
 A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
 
+## 🏆 Competição
+
+A aba Progresso é sobre **você**; a Competição é sobre os **quatro juntos**. Puxa o `progress` de todo mundo de uma vez (a policy de leitura é aberta e não há dado sensível — é acerto e erro de flashcard), agrega por pessoa e compara. **Sem coluna nova:** tudo já mora no `n_good/n_hard/n_again` e no `hab` de cada linha.
+
+- **Placar** — um cartão por pessoa (🥇🥈🥉), ordenado por aprendidas, com vistas e % de acerto. O seu fica destacado.
+- **Erro por habilidade** — uma matriz: linha = habilidade (reconhecer, som, ideograma, ordem, frase, tom…), coluna = pessoa, célula = % de erro, com o vermelho crescendo com a taxa. Dá pra ver de relance quem vai bem em quê.
+- **O que a turma mais erra** — o ranking das cartas que a turma toda mais tropeça, com quanto cada um errou em cada uma.
+
+Só leitura, e cai fora sem quebrar nada se o banco não responder.
+
 ## 🔥 Progresso
 
 Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥, gráfico das suas últimas 2 semanas e o **gráfico da turma** (uma linha por pessoa, ordenado por total — barra cheia = dia em que bateu a meta). Toque ou passe o mouse nas barras pra ver o número. "Zerar meu progresso" apaga local + nuvem (só o seu).
