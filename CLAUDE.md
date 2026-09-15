@@ -87,6 +87,7 @@ Palavra:
   "pinyin": "shū",
   "pt": "livro",
   "deck": "escola",
+  "fonte": "cap3",
   "data_aula": "2026-09-10",
   "nota": "O que a pessoa precisa lembrar — opcional"
 }
@@ -120,15 +121,21 @@ Regras que importam:
   tudo junto não dá erro — a frase simplesmente some desse exercício.
 - **`deck`** é o tema, em minúscula e sem acento. Os que já existem:
   `saudacoes, numeros, pronomes, verbos, uteis, estados, nomes, familia, comida, paises,
-  escola, identidade, gostos, animais`. Reaproveite um antes de inventar outro — cada
+  escola, identidade, gostos, animais, natureza`. Reaproveite um antes de inventar outro — cada
   deck novo é mais um chip na tela de filtro.
-- **`data_aula`** é o dia da aula em que a palavra entrou (`"2026-09-10"`), e vira o
-  filtro 📅. Palavra que veio de fora da aula não leva `data_aula`; leva `"fonte"`
-  (`"duolingo"`, `"treino"`).
+- **`fonte`** é a origem da palavra, e vira o filtro 📖 do app. A turma estuda pelo
+  *New Practical Chinese Reader 1* (o `book-1.pdf` da pasta), então é o capítulo:
+  `"cap1"`, `"cap2"`, `"cap3"`… — vale o que está no 生词 da lição, na seção de 汉字 e
+  nas palavras dos exercícios dela. Fora do livro: `"extra-aula"` (o professor trouxe
+  na aula) ou `"duolingo"`. Capítulo novo não precisa de código, o chip "Cap. 3" aparece
+  sozinho. Na dúvida sobre de onde veio, pergunte ao Leo em vez de chutar.
+- **`data_aula`** é o dia da aula em que a palavra entrou (`"2026-09-10"`). Fica como
+  registro — não é mais filtro. Palavra que não veio de aula não leva.
 - **`nota`** é opcional e aparece no verso.
 - **Não apague cartas do JSON.** O seed é upsert: insere e atualiza, nunca remove. A carta
-  fica viva no banco e no app, e some do JSON — que é o pior dos dois mundos. Se for
-  mesmo pra tirar, fale com o Leo.
+  fica viva no banco e no app, e some do JSON — que é o pior dos dois mundos. Pra tirar
+  de verdade (com o ok do Leo), marque `"deleted": true` na carta: o seed manda, e ela
+  sai do app de todo mundo sem sumir do registro.
 
 Antes de seguir, confira que o JSON continua válido e sem id repetido:
 
@@ -149,7 +156,9 @@ source ~/.config/manman.env && python3 supabase/seed.py
 ```
 
 Sobe as cartas novas e atualiza as que mudaram (upsert por `id`). O caminho do `.env` é
-o de cada máquina — o do Leo é `~/Documents/codes/cloud_local/manman_supabase.env`.
+o de cada máquina: `~/.config/manman.env` é a convenção deste repositório (é o que os
+scripts citam quando a chave falta), mas quem já tem as variáveis em outro arquivo usa o
+seu — o que não pode é o arquivo morar dentro de `manman/`.
 
 ### 3. Caractere novo? Fonte e traçados
 

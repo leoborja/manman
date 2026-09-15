@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Baixa audio/nativo/<id>.mp3 — gravações de falantes nativos do Wikimedia Commons
-(projeto Shtooka), convertidas de .ogg pra .mp3 porque o Safari do iPhone não toca ogg.
+(projetos Shtooka e Lingua Libre), convertidas pra .mp3 porque o Safari do iPhone não toca ogg.
 
 Decisão (14/08): o TTS não faz o 3º tom completo (só a descida, sem a subida) — o
 professor apontou. Gravação humana resolve; ver audio/nativo/CREDITS.md.
@@ -11,6 +11,11 @@ Rodar quando entrar carta nova:
 Os arquivos do Commons são nomeados por PINYIN, não por caractere — então uma carta
 pode receber a gravação de um homófono (九 jiǔ recebe a gravação de 久 jiǔ). O som é
 idêntico; o script registra o caractere real de cada arquivo no CREDITS pra ficar honesto.
+
+Lingua Libre (13/09): nomeia por CARACTERE (LL-Q9192 (cmn)-<falante>-中国.wav) e costuma
+ter várias vozes, então resolve o homófono e a palavra que o Shtooka não tem. Com mais de
+uma voz por palavra a escolha não é automática: mora em tools/audio_lingualibre.json
+(id da carta → arquivo), e o script usa o escolhido antes de procurar no Shtooka.
 Precisa de ffmpeg no PATH.
 """
 import os
@@ -59,9 +64,20 @@ def limpa(html):
     return " ".join(re.sub("<[^>]+>", "", html or "").split())
 
 
-def candidatos(pinyin, hanzi):
-    py = pinyin.replace(" ", "").lower()
-    return [f"File:Zh-{py}.ogg", f"File:Zh-{py}.oga", f"File:Zh-{hanzi}.ogg"]
+ESCOLHAS = os.path.join(here, "audio_lingualibre.json")
+escolhidas = {}
+if os.path.exists(ESCOLHAS):
+    with open(ESCOLHAS, encoding="utf-8") as f:
+        escolhidas = json.load(f)
+
+
+def candidatos(card):
+    py = card["pinyin"].replace(" ", "").lower()
+    lista = [f"File:Zh-{py}.ogg", f"File:Zh-{py}.oga", f"File:Zh-{card['hanzi']}.ogg"]
+    # a gravação escolhida da Lingua Libre vem na frente: é do caractere exato
+    if card["id"] in escolhidas:
+        lista.insert(0, escolhidas[card["id"]]["titulo"])
+    return lista
 
 
 def consulta_lote(cards):
@@ -70,7 +86,7 @@ def consulta_lote(cards):
     Devolve {titulo: (url, licenca, autor, caractere_gravado)}."""
     titulos = []
     for c in cards:
-        for t in candidatos(c["pinyin"], c["hanzi"]):
+        for t in candidatos(c):
             if t not in titulos:
                 titulos.append(t)
     achados = {}
@@ -86,10 +102,12 @@ def consulta_lote(cards):
             m = ii["extmetadata"]
             desc = limpa(m.get("ImageDescription", {}).get("value", ""))
             real = re.search(r"\(([^)]+)\)", desc)
+            # Lingua Libre: o nome do arquivo termina no que foi gravado (LL-…-中国.wav)
+            ll = re.match(r"File:LL-.+-([^-]+)\.\w+$", p["title"])
             dados = (ii["url"].split("?")[0],
                      m.get("LicenseShortName", {}).get("value", "?"),
                      limpa(m.get("Artist", {}).get("value", "")) or "—",
-                     real.group(1) if real else "?")
+                     ll.group(1) if ll else real.group(1) if real else "?")
             achados[p["title"]] = dados
             if p["title"] in norm:
                 achados[norm[p["title"]]] = dados
@@ -110,27 +128,49 @@ def main():
     # tom ISOLADO, e numa frase inteira não existe sílaba isolada.
     frases = [c for c in cards if c.get("tipo") == "frase"]
     cards = [c for c in cards if c.get("tipo", "palavra") != "frase"]
+    # carta tirada (deleted) não aparece no app: procurar gravação pra ela só engorda a
+    # lista de "sem gravação" com o que ninguém vai ouvir
+    cards = [c for c in cards if not c.get("deleted")]
     if frases:
         print(f"({len(frases)} frase(s) fora da busca — vão de TTS)")
     os.makedirs(dest, exist_ok=True)
 
     achados = consulta_lote(cards)
 
+    # que arquivo cada carta usava na rodada anterior — é o que diz se a escolha mudou e o
+    # MP3 precisa ser baixado de novo, sem --force (que rebaixaria o deck inteiro)
+    anterior = {}
+    cred = os.path.join(dest, "CREDITS.md")
+    if os.path.exists(cred):
+        with open(cred, encoding="utf-8") as f:
+            for ln in f:
+                m = re.match(r"\| (.+?) \| (.+?) \| \[(.+?)\]\(", ln)
+                if m:
+                    anterior[(m.group(1), m.group(2))] = "File:" + m.group(3)
+
     creditos, faltando, baixadas = [], [], 0
     for c in cards:
         out = os.path.join(dest, c["id"] + ".mp3")
-        titulo = next((t for t in candidatos(c["pinyin"], c["hanzi"]) if t in achados), None)
+        titulo = next((t for t in candidatos(c) if t in achados), None)
         if not titulo:
             faltando.append(f"{c['hanzi']} ({c['pinyin']})")
             continue
         url, lic, autor, real = achados[titulo]
         creditos.append((c["hanzi"], c["pinyin"], titulo, real, autor, lic))
-        if os.path.exists(out) and not force:
+        mudou = anterior.get((c["hanzi"], c["pinyin"])) not in (None, titulo)
+        if os.path.exists(out) and not force and not mudou:
             continue
-        tmp = out + ".ogg"
+        tmp = out + ".orig"
         with open(tmp, "wb") as f:
             f.write(busca(url))
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp,
+        filtro = []
+        if titulo.startswith("File:LL-"):
+            # a Lingua Libre grava com meio segundo de folga e o volume varia de voz pra
+            # voz: corta o silêncio das pontas e iguala o volume ao resto do deck
+            filtro = ["-af", "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05,"
+                             "areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.08,"
+                             "areverse,loudnorm=I=-18:TP=-1.5", "-ac", "1", "-ar", "44100"]
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp, *filtro,
                         "-codec:a", "libmp3lame", "-q:a", "4", out], check=True)
         os.remove(tmp)
         baixadas += 1
@@ -141,15 +181,19 @@ def main():
     with open(os.path.join(dest, "CREDITS.md"), "w", encoding="utf-8") as f:
         f.write("# Créditos — áudio de falantes nativos\n\n")
         f.write("Gravações do [Wikimedia Commons](https://commons.wikimedia.org) "
-                "(projeto Shtooka), convertidas de .ogg pra .mp3 — o Safari do iPhone não toca ogg.\n\n")
+                "(projetos Shtooka e Lingua Libre), convertidas pra .mp3 — o Safari do iPhone não toca ogg.\n\n")
         f.write("**Uso comercial:** permitido pelas duas licenças, exigindo atribuição — "
                 "que o app faz na tela Créditos (aba Progresso). A conversão de formato não "
                 "aciona o share-alike do CC BY-SA: a §3 da licença diz que *\"the above rights "
                 "include the right to make such modifications as are technically necessary to "
                 "exercise the rights in other media and formats\"*, ou seja, mudar de container "
                 "não cria obra derivada.\n\n")
-        f.write("Arquivos do Commons são nomeados por pinyin, não por caractere — quando a "
-                "gravação é de um homófono, a coluna 'gravação de' mostra qual.\n\n")
+        f.write("Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere — quando a "
+                "gravação é de um homófono, a coluna 'gravação de' mostra qual. Os da Lingua Libre "
+                "(LL-…) são por caractere, escolhidos um a um em tools/audio_lingualibre.json.\n\n")
+        f.write("**Modificação nos arquivos da Lingua Libre:** cortamos o silêncio do começo e do fim "
+                "e igualamos o volume ao do resto do deck. Fica indicado aqui, como a licença pede; "
+                "o MP3 resultante segue a licença do original (CC BY-SA 4.0 ou CC0).\n\n")
         f.write("| Carta | Pinyin | Arquivo | Gravação de | Autor | Licença |\n")
         f.write("|---|---|---|---|---|---|\n")
         for hz, py, tit, real, autor, lic in creditos:

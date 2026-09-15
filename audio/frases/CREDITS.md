@@ -1,6 +1,10 @@
 # Áudio das frases — voz sintética
 
-Gerado em 2026-09-01 pelo `tools/build_audio_frases.py`.
+Gerado pelo `tools/build_audio_frases.py`: as frases 1–65 em 2026-09-01, as 66–121 em 2026-09-13 e as 122–135 (capítulo 3) em 2026-09-14.
+Em 13/09 cada áudio novo passou pelo Whisper (transcrição automática) e foi gerado de novo quando a
+transcrição não batia com o texto — assim saiu, por exemplo, o 巴西 que a voz lia como "把戏".
+
+**Cinco frases usam outro modelo, `eleven_v3`, com a mesma voz:** 我们都要汉堡, 林娜，你好吗, 我叫力波, 力波，你好 e 她是哪国人. No `eleven_multilingual_v2` (e também no turbo e no flash v2.5) o 汉堡 saía "一包" e o 林娜 saía "李诺" e o 哪国人 saía "哪个人" em todas as tentativas. Os arquivos existem, então o script não os refaz; um `--force` voltaria as cinco pro modelo do `voice.json`.
 
 - **Provedor:** ElevenLabs, plano pago (uso comercial coberto pelo plano da conta)
 - **Voz:** Sage - Soothing & Gentle (zh standard)
@@ -82,3 +86,73 @@ campo `pt` termina em "?" exatamente quando a frase é pergunta.
 | 63 | 你说英语吗 | 你说英语吗？ | Você fala inglês? |
 | 64 | 我今天有英文课 | 我今天有英文课。 | Tenho aula de inglês hoje |
 | 65 | 我今天上课 | 我今天上课。 | Hoje eu tenho aula |
+| 66 | 我也很好 | 我也很好。 | Eu também estou bem |
+| 67 | 你们好 | 你们好。 | Olá, pessoal |
+| 68 | 他们都很好 | 他们都很好。 | Eles estão todos bem |
+| 69 | 你忙吗 | 你忙吗？ | Você está ocupado? |
+| 70 | 我不忙 | 我不忙。 | Não estou ocupado |
+| 71 | 他很忙 | 他很忙。 | Ele está ocupado |
+| 72 | 你男朋友呢 | 你男朋友呢？ | E o seu namorado? |
+| 73 | 你爸爸妈妈好吗 | 你爸爸妈妈好吗？ | Seus pais estão bem? |
+| 74 | 你爸爸妈妈都好吗 | 你爸爸妈妈都好吗？ | Seus pais estão bem, os dois? |
+| 75 | 你要咖啡吗 | 你要咖啡吗？ | Você quer café? |
+| 76 | 我要咖啡 | 我要咖啡。 | Eu quero café |
+| 77 | 我也要咖啡 | 我也要咖啡。 | Eu também quero café |
+| 78 | 我们都喝咖啡 | 我们都喝咖啡。 | Todos nós bebemos café |
+| 79 | 我很好 | 我很好。 | Estou bem |
+| 80 | 林娜，你好吗 | 林娜，你好吗？ | Lin Na, como vai? |
+| 81 | 力波，你好 | 力波，你好。 | Oi, Libo |
+| 82 | 我哥哥很忙 | 我哥哥很忙。 | Meu irmão mais velho está ocupado |
+| 83 | 我弟弟不忙 | 我弟弟不忙。 | Meu irmão mais novo não está ocupado |
+| 84 | 你妹妹好吗 | 你妹妹好吗？ | Sua irmã mais nova está bem? |
+| 85 | 我爷爷很好 | 我爷爷很好。 | Meu avô está bem |
+| 86 | 他们都不忙 | 他们都不忙。 | Nenhum deles está ocupado |
+| 87 | 你们都好吗 | 你们都好吗？ | Vocês estão todos bem? |
+| 88 | 我也不忙 | 我也不忙。 | Eu também não estou ocupado |
+| 89 | 你要可乐吗 | 你要可乐吗？ | Você quer Coca-Cola? |
+| 90 | 我不要咖啡 | 我不要咖啡。 | Não quero café |
+| 91 | 我要苹果 | 我要苹果。 | Eu quero maçã |
+| 92 | 我们都要汉堡 | 我们都要汉堡。 | Todos nós queremos hambúrguer |
+| 93 | 你喝咖啡吗 | 你喝咖啡吗？ | Você bebe café? |
+| 94 | 我不喝咖啡 | 我不喝咖啡。 | Eu não bebo café |
+| 95 | 我男朋友很忙 | 我男朋友很忙。 | Meu namorado está ocupado |
+| 96 | 你哥哥呢 | 你哥哥呢？ | E o seu irmão mais velho? |
+| 97 | 我叫力波 | 我叫力波。 | Eu me chamo Libo |
+| 98 | 她叫什么名字 | 她叫什么名字？ | Como ela se chama? |
+| 99 | 你姐姐叫什么名字 | 你姐姐叫什么名字？ | Como se chama sua irmã mais velha? |
+| 100 | 我很饿，你呢 | 我很饿，你呢？ | Estou com fome, e você? |
+| 101 | 我不累 | 我不累。 | Não estou cansado |
+| 102 | 你困吗 | 你困吗？ | Você está com sono? |
+| 103 | 我很渴，我要喝果汁 | 我很渴，我要喝果汁。 | Estou com sede, quero beber suco |
+| 104 | 你要喝牛奶吗 | 你要喝牛奶吗？ | Você quer beber leite? |
+| 105 | 我妹妹不喝汽水 | 我妹妹不喝汽水。 | Minha irmã mais nova não bebe refrigerante |
+| 106 | 打开书，第六页 | 打开书，第六页。 | Abram o livro na página 6 |
+| 107 | 他们都很累 | 他们都很累。 | Eles estão todos cansados |
+| 108 | 我弟弟很困 | 我弟弟很困。 | Meu irmão mais novo está com sono |
+| 109 | 我是巴西人，你呢 | 我是巴西人，你呢？ | Sou brasileiro, e você? |
+| 110 | 你有哥哥吗 | 你有哥哥吗？ | Você tem irmão mais velho? |
+| 111 | 我有姐姐 | 我有姐姐。 | Eu tenho irmã mais velha |
+| 112 | 我喜欢喝牛奶 | 我喜欢喝牛奶。 | Eu gosto de beber leite |
+| 113 | 你喜欢喝什么 | 你喜欢喝什么？ | O que você gosta de beber? |
+| 114 | 我今天很忙 | 我今天很忙。 | Hoje estou ocupado |
+| 115 | 你今天忙吗 | 你今天忙吗？ | Você está ocupado hoje? |
+| 116 | 谢谢老师 | 谢谢老师。 | Obrigado, professor |
+| 117 | 老师好 | 老师好。 | Olá, professor |
+| 118 | 我妈妈是医生 | 我妈妈是医生。 | Minha mãe é médica |
+| 119 | 我哥哥是律师 | 我哥哥是律师。 | Meu irmão mais velho é advogado |
+| 120 | 你爸爸是老师吗 | 你爸爸是老师吗？ | Seu pai é professor? |
+| 121 | 今天有课吗 | 今天有课吗？ | Hoje tem aula? |
+| 122 | 那是谁 | 那是谁？ | Quem é aquele? |
+| 123 | 那是我们老师 | 那是我们老师。 | Aquele é o nosso professor |
+| 124 | 她是哪国人 | 她是哪国人？ | De que país ela é? |
+| 125 | 她是中国人 | 她是中国人。 | Ela é chinesa |
+| 126 | 我们老师都是中国人 | 我们老师都是中国人。 | Nossos professores são todos chineses |
+| 127 | 陈老师，您好 | 陈老师，您好。 | Olá, professor Chen |
+| 128 | 这是我哥哥 | 这是我哥哥。 | Este é meu irmão mais velho |
+| 129 | 他是外语老师 | 他是外语老师。 | Ele é professor de língua estrangeira |
+| 130 | 这是我朋友 | 这是我朋友。 | Este é meu amigo |
+| 131 | 你也是老师吗 | 你也是老师吗？ | Você também é professor? |
+| 132 | 我不是老师，我是医生 | 我不是老师，我是医生。 | Não sou professor, sou médico |
+| 133 | 这是你奶奶吗 | 这是你奶奶吗？ | Esta é a sua avó? |
+| 134 | 不是，她是我外婆 | 不是，她是我外婆。 | Não, ela é minha avó materna |
+| 135 | 外婆，您好 | 外婆，您好。 | Olá, vovó |

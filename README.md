@@ -14,6 +14,8 @@ Um pouquinho todo dia é assim que se aprende mandarim.
 
 Vira um app de verdade: ícone 慢, tela cheia, funciona offline. **Atualiza sozinho** — toda vez que abre com internet, busca a versão mais nova (se parecer teimoso, feche o app no multitarefa e abra de novo).
 
+**Sem internet:** abra uma vez com internet e deixe aberto uns segundos — o app baixa sozinho os ~4 MB de áudio. Depois disso ele abre, estuda e toca todas as gravações em modo avião, e o que você responder fica guardado e sobe pro banco assim que a conexão voltar (sem precisar fechar o app). Sinal ruim também vale: se o banco não responder em 4 segundos, o app abre com as cartas salvas em vez de ficar em branco — e busca de novo sozinho quando a conexão volta, ou quando você volta pro app depois de 5 minutos fora (o iPhone deixa o app aberto na memória, e sem isso o deck reorganizado no banco não chegava). Instalar na Tela de Início não é só conforto: no iPhone, site que não está lá perde os dados salvos depois de uns 7 dias sem uso.
+
 ## Primeiro acesso
 
 Escolha seu nome (Leo / Henrique / David / Fraga). O progresso é individual e **sincroniza entre aparelhos** — estudou no ônibus, continua no computador.
@@ -46,13 +48,15 @@ A meta começou em 20 e subiu pra 30 no mesmo dia da correção do contador: os 
 
 ### Filtro — três eixos que se somam
 
-São três: **🏷️ tema** (Números, Pronomes, Família…), **📅 aula** (a data em que a palavra entrou, de `data_aula`, mais as origens de fora da aula) e **❌ erro** (as que você mais erra, por faixa).
+São três: **🏷️ tema** (Números, Pronomes, Família…), **📖 origem** (de onde a carta veio, de `fonte`: o capítulo do livro — Cap. 1, Cap. 2… —, os Extras da aula ou o Duolingo) e **❌ erro** (as que você mais erra, por faixa).
 
 **Eles somam.** Dá pra pedir "Família **e** Comida **e** só as que eu erro" numa sessão só — o resultado é a **interseção** dos eixos ligados. Dentro do mesmo eixo os chips se **somam**: marcar Família e Comida é pedir as duas, que é a leitura natural de marcar dois temas. Eixo sem nenhum chip marcado não filtra nada, e é assim que "Todos" volta a ser todos.
 
 Até 30/08 os três se excluíam: escolher a aula desligava o tema. A troca é o que permite "as frases da aula de ontem" e "as palavras de família que eu mais erro" — que são justamente as perguntas que a gente faz na véspera da prova.
 
-**Os ícones dizem duas coisas diferentes.** O "ligado" neutro (contorno escuro) é **qual fila de chips está na tela** — navegação, porque só cabe uma fileira e duas empilhadas comeriam o celular. O **ponto vermelho** é **quais eixos estão de fato cortando o deck**. Sem o ponto, marcar "Família" e ir olhar o 📅 esconderia que o 🏷️ continua valendo, e a sessão sairia menor do que os chips na tela explicam.
+Em 13/09 o 📅 aula virou **📖 origem**. A turma estuda pelos capítulos do *New Practical Chinese Reader 1*, e a data da aula não dizia de que capítulo a palavra era — nem separava o que veio do livro do que entrou pelo Duolingo. A `data_aula` continua gravada no JSON e no banco, só não vira mais chip. Capítulo novo não precisa de código: `"fonte": "cap3"` já aparece como "Cap. 3", na ordem certa. Quem tinha datas marcadas no 📅 volta sem filtro de origem, em vez de ficar com um corte que nenhum chip mostra.
+
+**Os ícones dizem duas coisas diferentes.** O "ligado" neutro (contorno escuro) é **qual fila de chips está na tela** — navegação, porque só cabe uma fileira e duas empilhadas comeriam o celular. O **ponto vermelho** é **quais eixos estão de fato cortando o deck**. Sem o ponto, marcar "Família" e ir olhar o 📖 esconderia que o 🏷️ continua valendo, e a sessão sairia menor do que os chips na tela explicam.
 
 O estado inteiro aparece de uma vez só num lugar: a linha do "O que estudar", que lê `Família + Comida · ≥1 erro`. E marcar um chip **não fecha mais a folha** — quem pode escolher vários precisa da lista aberta pra isso; quem fecha é o toque no fundo, com a sessão já remontada atrás.
 
@@ -176,7 +180,7 @@ No fim da rodada: *"Você acertou 41 de 57 — 72%"*. A nota é sobre o **deck i
 
 Consulta: busca, filtro por categoria, 🔊 por linha e o switch liga/desliga de cada carta.
 
-**A aba lista um tipo por vez, e abre em Palavras.** Frase e palavra dividem a mesma tabela, mas quem entra aqui está procurando o pictograma — e 59 frases embaralhadas com 129 palavras transformam a consulta numa rolagem. O par `汉 Palavras · 💬 Frases` no alto é o mesmo do escopo do estudar, então a escolha se faz do mesmo jeito nas duas telas, e some inteiro quando não há frase publicada. Tudo abaixo dele vive dentro do tipo escolhido: os temas (Identidade e Gostos só existem em frase, e não viram chip na lista de palavras), o eixo 📅, a contagem de desligadas e o contador, que voltou a dizer "129 palavras" em vez do "cartas" genérico que somava os dois. Trocar de tipo limpa a busca e o filtro, porque um filtro do outro lado quase nunca existe deste.
+**A aba lista um tipo por vez, e abre em Palavras.** Frase e palavra dividem a mesma tabela, mas quem entra aqui está procurando o pictograma — e 59 frases embaralhadas com 129 palavras transformam a consulta numa rolagem. O par `汉 Palavras · 💬 Frases` no alto é o mesmo do escopo do estudar, então a escolha se faz do mesmo jeito nas duas telas, e some inteiro quando não há frase publicada. Tudo abaixo dele vive dentro do tipo escolhido: os temas (Identidade e Gostos só existem em frase, e não viram chip na lista de palavras), o eixo 📖, a contagem de desligadas e o contador, que voltou a dizer "129 palavras" em vez do "cartas" genérico que somava os dois. Trocar de tipo limpa a busca e o filtro, porque um filtro do outro lado quase nunca existe deste.
 
 **Agrupar por, como na Grade.** A barra "Agrupar" (Sem grupo · 🏷️ Tema · 📅 Aula) separa a lista em seções com cabeçalho e contagem, sem tirar nada da tela. É **independente do filtro** 🏷️/📅 acima (que escolhe UM tema/aula): dá pra filtrar por uma aula e ainda ver o resultado agrupado por tema. Vale no celular e no PC; o padrão é "Sem grupo", então a lista corrida de sempre continua sendo o que abre.
 
@@ -259,7 +263,7 @@ No PC ele deixa de imitar o telefone numa faixa central e vira layout de computa
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
 | `tools/` | `build_font.py`, `build_strokes.py`, `build_radicals.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
-| `sw.js` + `manifest.webmanifest` | PWA network-first (sempre fresco online, funciona offline) |
+| `sw.js` + `manifest.webmanifest` | PWA que funciona sem internet: casca pela rede com prazo de 3s e cópia se não vier, áudio da cópia atualizando por trás, Supabase fora do SW (as regras estão no cabeçalho do arquivo) |
 
 ### Por onde o conteúdo anda
 
@@ -274,12 +278,12 @@ seed/seed_cards.json  ──(supabase/seed.py)──▶  Supabase  ──(fetch)
 Três consequências:
 
 - **Editar pelo painel do Supabase é perda de tempo.** O próximo `seed.py` sobrescreve com o que está no JSON.
-- **Nem toda coluna é do JSON.** O `seed.py` manda 11 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, fonte, tipo, created_by`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
-- **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. A coluna `deleted` existe no schema e o app já filtra por ela, mas o `seed.py` ainda não a marca — hoje some só editando o banco à mão.
+- **Nem toda coluna é do JSON.** O `seed.py` manda 11 campos (`id, hanzi, pinyin, pt, deck, tags, nota, data_aula, fonte, deleted, created_by` — o `tipo` do JSON vira a tag `frase`). O `audio_url` fica **de fora** de propósito — é por isso que rodar o seed não desliga as gravações nativas. Quem escreve nele é só o `build_audio_nativo.py`.
+- **Apagar não propaga.** O upsert insere e atualiza, nunca remove. Tirar uma palavra do JSON deixa ela viva no banco e no app. Pra tirar uma carta de todo mundo, marque `"deleted": true` nela no JSON: o `seed.py` manda a coluna, o banco entrega sem ela e o app some com a carta — e o JSON continua dizendo que ela existiu.
 
 ### Adicionar palavras novas (fluxo do Leo)
 
-1. Editar `seed/seed_cards.json` — preencher `data_aula` (`"2026-08-13"`) com o dia da aula; deixar de fora se a palavra veio por fora da aula. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
+1. Editar `seed/seed_cards.json` — preencher `fonte` com a origem (`cap3`, `extra-aula`, `duolingo`) — é o eixo 📖 — e `data_aula` (`"2026-08-13"`) com o dia da aula, quando veio de uma. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py`, `python3 tools/build_strokes.py` e `python3 tools/build_radicals.py`
 4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão pro passo 5
@@ -384,14 +388,16 @@ sobre eles depende do plano da conta.
 
 ## Roadmap
 
+As ideias novas (pesquisa de 14/09 com o Daily Hanzi e mais 14 apps), priorizadas e com esforço estimado, estão em [`docs/ideias.md`](docs/ideias.md).
+
 - [x] ~~Ranking da turma~~ — gráfico "A turma · últimos 14 dias" no Progresso, ordenado por total (18/08)
 - [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
-- [ ] Áudio das 6 sem gravação (妈, 森, 丁 e os 3 nomes) — caem no TTS. Provavelmente **fechar sem fazer nada**: o problema do TTS é 3º tom isolado, e nenhuma das seis é esse caso
+- [ ] Áudio das 30 palavras sem gravação nativa (não existem no Shtooka nem na Lingua Libre) — caem no TTS. Opções e lista em [`docs/ideias.md`](docs/ideias.md#pendências-abertas-1509)
 - [x] ~~Filtro por aula na tela de estudo~~ — feito em 17/08
 - [x] ~~Treino de reconhecimento rápido~~ — chave **⚡ Relâmpago** por cima de qualquer modo, com pausa (21/08)
-- [ ] Radical/decomposição nas cartas
+- [ ] Radical/decomposição nas cartas — segunda leva em [`docs/ideias.md`](docs/ideias.md#segunda-leva)
 - [ ] **Domínio próprio** — `manman.com.br` já registrado (Cloud Arbitration). Ordem: DNS primeiro (4 registros `A` da raiz pra `185.199.108.153`, `.109.153`, `.110.153`, `.111.153` e `CNAME` do `www` pra `leoborja.github.io`), depois o domínio em Settings → Pages, depois **Enforce HTTPS** (sem isso o PWA não instala). Três detalhes:
   - Se o DNS for pela Cloudflare, mantenha a **nuvem cinza** até o GitHub emitir o certificado — com o proxy ligado ele não valida o domínio. Só depois, se quiser proxy, use SSL **Full (strict)**: no Flexible dá loop de redirecionamento.
-  - Com proxy ligado, exclua `app.js`, `index.html` e `config.js` do cache. O service worker é network-first e conta com o servidor devolver a versão nova.
+  - Com proxy ligado, exclua `app.js`, `index.html` e `config.js` do cache. O service worker busca a casca na rede primeiro (com prazo de 3s) e conta com o servidor devolver a versão nova.
   - `localStorage` é por origem: no domínio novo o app abre com progresso zerado, mas **recupera** ao escolher o nome — o `syncPull` aceita o que vem do Supabase quando não há estado local. Só as preferências de tela (modo, tema, filtro) voltam ao padrão. Avisar os três pra reinstalar o atalho na tela de início.

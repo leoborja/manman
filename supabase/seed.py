@@ -23,11 +23,16 @@ with open(os.path.join(here, "..", "seed", "seed_cards.json")) as f:
     cards = json.load(f)
 
 # PostgREST exige as MESMAS chaves em todos os objetos do lote (PGRST102)
-# data_aula: 'YYYY-MM-DD' do dia da aula. fonte: de onde veio quando não foi da aula
-# ('duolingo', etc); ausente nos dois = palavra sem procedência registrada
+# fonte: a ORIGEM da carta, que é o eixo 📖 do app — 'cap1', 'cap2'… (capítulo do livro),
+# 'extra-aula' ou 'duolingo'. data_aula: 'YYYY-MM-DD' do dia da aula, guardada como registro.
+# deleted: true tira a carta do app pra todo mundo sem apagá-la do JSON — o seed é upsert
+# e nunca remove, então apagar do JSON deixaria a carta viva no banco.
 # audio_url fica DE FORA de propósito: quem escreve nele é o build_audio_nativo.py, e
 # mandá-lo daqui desligaria as gravações nativas a cada seed.
-KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fonte", "created_by"]
+KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fonte", "deleted",
+        "created_by"]
+# deleted é NOT NULL no banco: carta sem o campo precisa ir como false, não como null
+PADRAO = {"created_by": "leo", "tags": [], "deleted": False}
 
 # No JSON a frase se marca com "tipo":"frase", que é o que se quer escrever à mão. No
 # banco ela vira a tag 'frase', porque coluna nova exigiria DDL e ninguém do time tem —
@@ -39,8 +44,7 @@ def com_tags(c):
         tags.append("frase")
     return tags
 
-cards = [dict({k: c.get(k, "leo" if k == "created_by" else ([] if k == "tags" else None))
-               for k in KEYS}, tags=com_tags(c)) for c in cards]
+cards = [dict({k: c.get(k, PADRAO.get(k)) for k in KEYS}, tags=com_tags(c)) for c in cards]
 
 req = urllib.request.Request(
     URL + "/rest/v1/cards?on_conflict=id",
