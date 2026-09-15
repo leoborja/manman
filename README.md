@@ -184,6 +184,21 @@ Na lista de frases o hanzi sobe pra uma linha só dele. Na coluna de 58px que se
 
 Palavras novas entram pelo `seed/seed_cards.json` e são publicadas pelo `seed.py` — aparecem pra todo mundo sem ninguém atualizar nada.
 
+## 格 Grade
+
+O deck inteiro numa tela só — pictograma em cima, pinyin embaixo, sem escolher tema antes. A aba Cartas é ótima pra achar **uma** carta e cega pro conjunto: ela lista um tipo, um tema, uma linha por vez. A Grade é a visão de cima, pra enxergar a olho o que a lista só sabe contar — o que já está de pé, o que você mais erra, o que nunca abriu.
+
+Dois eixos, e os dois valem ao mesmo tempo: **Agrupar** (🏷️ tema · 📅 aula · 汉 tipo · ⬜ nada) e **Ordenar** dentro de cada monte (🔥 erros · 🌱 domínio · 🔤 pinyin · 📋 deck). A escolha fica salva no `settings`, porque numa tela de consulta você monta a vista uma vez e volta nela. O 💬 na ponta liga e desliga as frases, e some quando não há frase publicada.
+
+O que a tela pinta é o **seu** estado, não o conteúdo da carta, em duas codificações que não se atropelam:
+
+- **a opacidade é do texto** e diz o quanto você sabe — 0 = nunca vista, cheia = aprendida (o mesmo `LEARNED_IVL` de 21 dias do Progresso, pra que a palavra queira dizer a mesma coisa nas duas telas). O piso é alto de propósito: a nunca vista é justamente a que você vai querer ler
+- **o vermelho é do fundo** e diz o quanto você tropeça, nas mesmas quatro faixas do filtro 🔥 (1, 3, 5, 8). A já aprendida sai zerada pelo mesmo motivo que sai daquele filtro — o contador é histórico e não esquece, e 说 com 15 tropeços parar de ser vermelho é o que se quer ver acontecer
+
+Se a opacidade valesse no quadrado inteiro em vez de só no texto, a carta que você mais erra (pouco domínio) lavaria justamente o vermelho mais forte — exatamente o que a tela existe pra deixar você achar de longe. Borda verde = aprendida; borda tracejada e apagada = fora da rotação. Tocar fala a carta e abre o balão com a tradução, o domínio e a contagem de tropeços.
+
+A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
+
 ## 🔥 Progresso
 
 Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥, gráfico das suas últimas 2 semanas e o **gráfico da turma** (uma linha por pessoa, ordenado por total — barra cheia = dia em que bateu a meta). Toque ou passe o mouse nas barras pra ver o número. "Zerar meu progresso" apaga local + nuvem (só o seu).

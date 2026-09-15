@@ -435,6 +435,66 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 .switch input:checked + .knob:before{transform:translateX(18px);}
 .card.offrow{opacity:.55;}
 
+/* grade — o deck inteiro numa tela só */
+.gradebar{display:flex;flex-direction:column;gap:6px;margin:0 0 12px;}
+.gradebar .linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.gradebar .rot{flex:1 0 100%;font-size:10px;font-weight:800;color:var(--soft);
+text-transform:uppercase;letter-spacing:.6px;margin:2px 0 -1px;}
+.gradebar .filtros{display:flex;gap:6px;flex-wrap:wrap;}
+.gradebar .chip{font-size:12.5px;padding:6px 11px;}
+.gradebar .chip.gsep{margin-left:auto;}
+/* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
+   quer dizer nada pra quem abriu a tela pela primeira vez */
+.gradelegend{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;
+color:var(--mut);font-size:11px;margin:0 0 14px;}
+.gradelegend span{display:flex;align-items:center;gap:5px;}
+.gradelegend .lg{width:13px;height:13px;border-radius:4px;border:1px solid var(--line);
+background:var(--surface);flex:0 0 auto;}
+.gradelegend .lg-op{background:linear-gradient(90deg,rgba(107,112,120,.25),var(--txt));border:0;}
+.gradelegend .lg-err{background:linear-gradient(rgba(200,16,46,.28),rgba(200,16,46,.28)),var(--surface);
+border-color:var(--red);}
+.gradelegend .lg-ok{border-color:var(--ok);border-width:2px;}
+.gradegrupo{margin:0 0 16px;}
+.gradegrupo h3{display:flex;align-items:baseline;gap:7px;margin:0 0 8px;font-size:11.5px;
+font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
+.gradegrupo h3 span{font-size:11px;font-weight:700;color:var(--soft);letter-spacing:0;}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px;}
+.gcard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+padding:10px 6px 9px;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);font:inherit;}
+/* A opacidade é do TEXTO, não do quadrado: se valesse no quadrado inteiro, a carta que
+   você mais erra (pouco domínio) lavaria justamente o vermelho mais forte — que é o que
+   esta tela existe pra deixar você achar de longe. */
+.gcard .gh,.gcard .gp{opacity:var(--op,1);}
+.gcard .gh{font-size:30px;line-height:1.15;white-space:nowrap;}
+.gcard.n2 .gh{font-size:27px;}
+.gcard.n3 .gh{font-size:21px;}
+.gcard.n4 .gh{font-size:16px;}
+.gcard .gp{font-size:11px;font-weight:700;color:var(--red);line-height:1.25;
+max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* As quatro faixas do filtro 🔥 (1, 3, 5, 8 tropeços). Camada de cor POR CIMA do
+   --surface em vez de cor sólida: o mesmo vermelho serve nos dois temas. */
+.gcard.e1{background:linear-gradient(rgba(200,16,46,.07),rgba(200,16,46,.07)),var(--surface);
+border-color:rgba(200,16,46,.22);}
+.gcard.e2{background:linear-gradient(rgba(200,16,46,.14),rgba(200,16,46,.14)),var(--surface);
+border-color:rgba(200,16,46,.36);}
+.gcard.e3{background:linear-gradient(rgba(200,16,46,.21),rgba(200,16,46,.21)),var(--surface);
+border-color:rgba(200,16,46,.52);}
+.gcard.e4{background:linear-gradient(rgba(200,16,46,.3),rgba(200,16,46,.3)),var(--surface);
+border-color:var(--red);}
+.gcard.ok{border-color:var(--ok);border-width:2px;padding:9px 5px 8px;}
+.gcard.off{opacity:.45;border-style:dashed;box-shadow:none;}
+/* Frase não cabe em 76px: 我爸爸很喜欢喝啤酒 vira uma coluna de caracteres espremidos.
+   Ela toma a linha toda e fica deitada, do jeito que se lê. */
+.gradefrases{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
+.gcard.frase{align-items:flex-start;justify-content:center;gap:2px;text-align:left;
+padding:9px 13px 10px;}
+.gcard.frase .gh{font-size:21px;line-height:1.35;white-space:normal;}
+.gcard.frase .gp{white-space:normal;font-size:11.5px;text-align:left;}
+/* no escuro o --red do pinyin some em cima das faixas de vermelho mais fortes — aqui
+   ele clareia. Só na grade: é o único lugar do app onde os dois se sobrepõem. */
+html[data-theme="dark"] .gcard .gp{color:#f07b8c;}
+
 /* progresso */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px;}
 .stat.wide{grid-column:1/-1;}
@@ -588,6 +648,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <div class="tabs">
   <button class="tab active" data-v="estudar">Estudar</button>
   <button class="tab" data-v="cartas">Cartas</button>
+  <button class="tab" data-v="grade">Grade</button>
   <button class="tab" data-v="progresso">Progresso</button>
 </div>
 
@@ -719,6 +780,31 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   <div class="counter" id="cartas-count"></div>
   <div id="bulkbar"></div>
   <div id="cardlist"></div>
+</section>
+
+<!-- ══════ GRADE (o deck inteiro numa tela só) ══════ -->
+<section class="view" id="view-grade">
+  <!-- Dois eixos, e os dois valem ao mesmo tempo: em QUE montes as cartas caem, e em
+       que ordem dentro de cada monte. A aba Cartas filtra (esconde o resto); esta não
+       esconde nada — o ponto dela é o deck inteiro na mesma tela. -->
+  <div class="gradebar">
+    <div class="linha">
+      <span class="rot">Agrupar</span>
+      <div class="filtros" id="grade-grupo"></div>
+      <button class="chip gsep" id="grade-frases" title="Mostrar também as frases">💬</button>
+    </div>
+    <div class="linha">
+      <span class="rot">Ordenar</span>
+      <div class="filtros" id="grade-ordem"></div>
+    </div>
+  </div>
+  <div class="counter" id="grade-count"></div>
+  <div class="gradelegend">
+    <span><i class="lg lg-op"></i> mais firme = você sabe mais</span>
+    <span><i class="lg lg-err"></i> mais vermelho = você tropeça mais</span>
+    <span><i class="lg lg-ok"></i> aprendida</span>
+  </div>
+  <div id="gradewrap"></div>
 </section>
 
 <!-- ══════ PROGRESSO ══════ -->

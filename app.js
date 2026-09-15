@@ -1215,7 +1215,7 @@ async function selectUser(u) {
   gcSrs();
   await syncPull();
   flushDirty();
-  renderChips(); renderCartasChips(); renderList(); renderProgress();
+  renderChips(); renderCartasChips(); renderList(); renderGrade(); renderProgress();
   startSession();
 }
 
@@ -2156,7 +2156,7 @@ function renderBulk() {
     if (desligar && !confirm('Tirar da rotação as ' + ligadas + ' cartas de ' + rotulo +
       '? Elas somem do estudo até você religar. O progresso delas fica guardado.')) return;
     grupo.forEach(c => { if (isOff(c.id) === desligar) setOff(c.id, desligar); });
-    renderCartasChips(); renderList(); startSession();
+    renderCartasChips(); renderList(); renderGrade(); startSession();
   };
 }
 function renderList() {
@@ -2199,7 +2199,7 @@ function renderList() {
   });
   $('cardlist').querySelectorAll('.offtgl').forEach(t => t.onchange = () => {
     setOff(t.dataset.id, !t.checked);
-    renderCartasChips(); renderList();
+    renderCartasChips(); renderList(); renderGrade();
     if (phase !== 'quiz') { // realinha a fila de estudo mantendo a carta atual na frente
       if (phase === 'sched') buildQueue(); else enterPractice();
       if (current && !foraDaRotacao(current)) {
@@ -2211,6 +2211,148 @@ function renderList() {
       }
     }
   });
+}
+
+// ── UI: grade (o deck inteiro numa tela só) ─────────────────
+// A aba Cartas é o navegador do deck: um tipo por vez, um tema por vez, uma linha por
+// carta, com interruptor e busca. Ótima pra achar UMA carta, cega pro conjunto.
+// A grade é a visão de cima: as cartas todas juntas, sem escolher tema antes, pra
+// enxergar a olho o que a lista só sabe contar — o que já está de pé, o que você erra,
+// o que nunca abriu. Por isso ela não repete os filtros da Cartas: ela agrupa e ordena
+// o deck inteiro, e o que ela pinta é o SEU estado, não o conteúdo da carta.
+const GRADE_GRUPOS = [['tema', '🏷️ Tema'], ['aula', '📅 Aula'], ['tipo', '汉 Tipo'], ['nada', '⬜ Nada']];
+const GRADE_ORDENS = [['erro', '🔥 Erros'], ['dominio', '🌱 Domínio'], ['pinyin', '🔤 Pinyin'], ['seed', '📋 Deck']];
+// Mora dentro do settings pro arranjo sobreviver ao recarregamento, que é o ponto de
+// uma tela de consulta: você monta a vista uma vez e volta nela.
+function gradeCfg() {
+  const g = settings.grade || (settings.grade = {});
+  if (!GRADE_GRUPOS.some(([k]) => k === g.grupo)) g.grupo = 'tema';
+  if (!GRADE_ORDENS.some(([k]) => k === g.ordem)) g.ordem = 'erro';
+  if (g.frases === undefined) g.frases = true;
+  return g;
+}
+// Quanto da carta já está de pé: 0 = nunca vista, 1 = aprendida. A régua é o mesmo
+// LEARNED_IVL do Progresso, pra que "aprendida" queira dizer a mesma coisa nas duas
+// telas. Carta já vista mas de intervalo ainda zero não vale 0: tem um piso, senão
+// ficaria indistinguível da que você nunca abriu — e essas duas pedem coisas diferentes.
+function dominio(id) {
+  const s = srs[id];
+  if (!s || !s.reps) return 0;
+  return Math.max(0.15, Math.min(1, (s.ivl || 0) / LEARNED_IVL));
+}
+// A força do vermelho, nas mesmas faixas do filtro 🔥 (1, 3, 5, 8). A já aprendida sai
+// zerada pelo mesmo motivo que sai daquele filtro: o contador é histórico e não esquece,
+// e 说 com 15 tropeços parar de ser vermelho é justamente o que se quer ver acontecer.
+function erroTier(c) {
+  if (aprendida(c.id)) return 0;
+  const n = erroCount(c.id);
+  for (let i = ERRO_FAIXAS.length - 1; i >= 0; i--) if (n >= ERRO_FAIXAS[i]) return i + 1;
+  return 0;
+}
+// a aprendida vai pro FIM da ordem por erro, não pro meio junto das de zero: ela não
+// está "sem tropeço nenhum", está fora da conta
+function erroKey(c) { return aprendida(c.id) ? -1 : erroCount(c.id); }
+function gradeOrdena(list) {
+  const o = gradeCfg().ordem;
+  const arr = list.slice(); // sort estável: o empate cai na ordem do deck, que é a do seed
+  if (o === 'erro') return arr.sort((a, b) => erroKey(b) - erroKey(a));
+  if (o === 'dominio') return arr.sort((a, b) => dominio(a.id) - dominio(b.id));
+  if (o === 'pinyin') return arr.sort((a, b) =>
+    (a.pinyin || '').localeCompare(b.pinyin || '', 'pt', { sensitivity: 'base' }));
+  return arr;
+}
+// Ordena primeiro, agrupa depois — o filter é estável, então cada grupo herda a ordem
+// escolhida. Grupo vazio não vira título: com as frases desligadas, "Frases" sumiria
+// como cabeçalho de nada.
+function gradeGrupos(list) {
+  const g = gradeCfg().grupo;
+  if (g === 'nada') return [{ rot: '', cards: list }];
+  if (g === 'tipo') {
+    return TIPOS.map(t => ({ rot: TIPO_LABEL[t], cards: list.filter(c => ehFrase(c) === (t === 'frase')) }))
+      .filter(x => x.cards.length);
+  }
+  if (g === 'aula') {
+    return opcoesAula(list).filter(a => a !== 'todas')
+      .map(a => ({ rot: aulaLabel(a), cards: list.filter(c => casaAula(c, a)) }))
+      .filter(x => x.cards.length);
+  }
+  return [...new Set(list.map(c => c.deck))]
+    .sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt'))
+    .map(d => ({ rot: deckLabel(d), cards: list.filter(c => c.deck === d) }));
+}
+// O quadradinho: pictograma em cima, pinyin embaixo.
+// Duas codificações que não se atropelam — a opacidade é do TEXTO e diz o quanto você
+// sabe; o vermelho é do FUNDO e diz o quanto você tropeça. Se a opacidade valesse no
+// quadrado inteiro, a carta que você mais erra (pouco domínio) lavaria justamente o
+// vermelho mais forte, que é o que você precisa enxergar de longe.
+// Pinyin sem as cores de tom de propósito: em 76px, com fundo vermelho atrás, cinco
+// cores de sílaba viram ruído em cima do código que esta tela existe pra mostrar.
+function gradeTile(c) {
+  const d = dominio(c.id);
+  const tier = erroTier(c);
+  const fora = foraDaRotacao(c);
+  const erros = erroCount(c.id);
+  const tip = [c.pt,
+    srs[c.id] ? Math.round(d * 100) + '% de domínio' : 'nunca vista',
+    erros ? erros + (erros > 1 ? ' tropeços' : ' tropeço') : null,
+    fora ? '🚫 fora da rotação' : null].filter(Boolean).join(' · ');
+  // 30px só cabe no pictograma solto: 汉堡肉 nesse tamanho quebra em duas linhas e
+  // desalinha a fileira inteira. A palavra comprida encolhe a letra em vez de quebrar.
+  const n = Math.min(4, limpaHanzi(c.hanzi).length || 1);
+  return '<button class="gcard n' + n + (ehFrase(c) ? ' frase' : '') + (tier ? ' e' + tier : '') +
+    (aprendida(c.id) ? ' ok' : '') + (fora ? ' off' : '') +
+    '" style="--op:' + (0.52 + 0.48 * d).toFixed(2) + '"' +
+    ' data-id="' + esc(c.id) + '" data-tip="' + esc(tip) + '">' +
+    '<span class="gh zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
+    '<span class="gp">' + esc(c.pinyin) + '</span></button>';
+}
+// A frase ocupa a linha inteira, então intercalada com as palavras ela parte a grade:
+// cada palavra sobra sozinha na sua fileira e o bloco de pictogramas, que é o que se veio
+// ver, some. Dentro do grupo elas ficam depois, empilhadas.
+function gradeCorpo(list) {
+  const pal = list.filter(c => !ehFrase(c));
+  const fr = list.filter(ehFrase);
+  return (pal.length ? '<div class="grade">' + pal.map(gradeTile).join('') + '</div>' : '') +
+    (fr.length ? '<div class="gradefrases">' + fr.map(gradeTile).join('') + '</div>' : '');
+}
+function renderGrade() {
+  const cfg = gradeCfg();
+  const chips = (arr, sel, attr) => arr.map(([k, t]) =>
+    '<button class="chip' + (sel === k ? ' active' : '') + '" data-' + attr + '="' + k + '">' +
+    t + '</button>').join('');
+  $('grade-grupo').innerHTML = chips(GRADE_GRUPOS, cfg.grupo, 'g');
+  $('grade-ordem').innerHTML = chips(GRADE_ORDENS, cfg.ordem, 'o');
+  // sem frase publicada o chip some, igual ao da aba Cartas: botão que só liga uma
+  // lista vazia é pior que botão nenhum
+  const tem = temFrases();
+  $('grade-frases').style.display = tem ? '' : 'none';
+  $('grade-frases').classList.toggle('active', tem && cfg.frases);
+
+  let list = cards.slice();
+  if (!tem || !cfg.frases) list = list.filter(c => !ehFrase(c));
+  const apr = list.filter(c => aprendida(c.id)).length;
+  const nunca = list.filter(c => !srs[c.id]).length;
+  $('grade-count').innerHTML = '<b>' + list.length + '</b> cartas · <b>' + apr +
+    '</b> aprendidas · <b>' + nunca + '</b> nunca vistas';
+  $('gradewrap').innerHTML = gradeGrupos(gradeOrdena(list)).map(gr =>
+    '<div class="gradegrupo">' +
+    (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span></h3>' : '') +
+    gradeCorpo(gr.cards) + '</div>').join('') ||
+    '<p style="color:var(--mut);text-align:center">Nenhuma carta.</p>';
+  // tocar fala a carta; o balão com a tradução quem abre é o bindTips, pelo data-tip
+  $('gradewrap').querySelectorAll('.gcard').forEach(b => b.onclick = () => {
+    const c = cards.find(x => x.id === b.dataset.id);
+    if (c) speak(c);
+  });
+  $('grade-grupo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    cfg.grupo = ch.dataset.g; save(K.settings, settings); renderGrade();
+  });
+  $('grade-ordem').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    cfg.ordem = ch.dataset.o; save(K.settings, settings); renderGrade();
+  });
+  $('grade-frases').onclick = () => {
+    cfg.frases = !cfg.frases; save(K.settings, settings); renderGrade();
+  };
 }
 
 // ── tooltip dos gráficos ────────────────────────────────────
@@ -2446,6 +2588,7 @@ function switchView(v) {
     loadLogTurma().then(renderTurma); // busca a cada visita: o colega pode ter estudado agora
   }
   if (v === 'cartas') renderList();
+  if (v === 'grade') renderGrade();
   if (v === 'estudar') resumeFlash(); else pauseFlash();
   // desligar uma carta na aba Cartas pode trocar a carta atual com a aba Estudar
   // escondida — e aí a grade nasceu sem largura pra medir. Volta, remede.
@@ -2727,6 +2870,7 @@ async function init() {
   renderChips();
   renderCartasChips();
   renderList();
+  renderGrade();
   renderProgress();
   renderStreak();
   if (settings.user) {
@@ -2736,6 +2880,7 @@ async function init() {
     if (changed && gradedThisSession === 0) startSession();
     renderCartasChips();
     renderList();
+    renderGrade();
     renderProgress();
     renderStreak(); // o syncPull pode ter trazido revisões feitas em outro aparelho
     loadLogTurma().then(renderTurma);
