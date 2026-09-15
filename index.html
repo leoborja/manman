@@ -711,8 +711,15 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     align-items:baseline;gap:18px;}
   #cardlist .mid .n{margin-top:0;}
   #cardlist .rowline .pill{align-self:center;margin-top:0;}
-  /* frase é uma linha longa, não cabe em colunas estreitas: volta a ocupar a largura */
-  #cardlist.frases .rowline{display:flex;}
+  /* Frase segue a MESMA organização em colunas — hanzi, pinyin, tradução, descrição,
+     categoria, som, interruptor —, só que a frase é longa, então o hanzi ganha uma
+     coluna larga (não os 52px do pictograma solto) e o miolo divide em três em fr, não
+     em px fixo, porque o pinyin de uma frase inteira não cabe em 140. O que passar da
+     largura da célula quebra dentro dela, sem desalinhar as vizinhas. */
+  #cardlist.frases .rowline{display:grid;
+    grid-template-columns:minmax(120px,1.1fr) minmax(0,2.6fr) 128px 40px 48px;}
+  #cardlist.frases .rowline .h{flex:none;font-size:21px;line-height:1.35;}
+  #cardlist.frases .mid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.1fr);}
 
   /* Progresso em três colunas de verdade (flex, cada uma empilhando seus blocos). A do
      meio é só a "palavra por palavra" — a lista longa —, então ela para de empurrar o
