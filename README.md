@@ -228,6 +228,8 @@ Com um radical escolhido aparece **o que ele faz com a tela**, num segmentado de
 
 O dado é o campo `matches` do `dictionary.txt` do makemeahanzi, que diz a que componente de 1º nível cada traço pertence; o `tools/build_radicals.py` recorta isso pros caracteres do deck em `strokes/radicals.json` (5 KB). Os significados dos radicais ficam no `RADICAIS` do `app.js`, não no arquivo gerado: significado de radical é conhecimento, não recorte do deck.
 
+O botão **significado** (ao lado do A−/A+) acrescenta a tradução embaixo do pinyin em cada cartão — desligado por padrão, pra o cartão continuar sendo só pictograma + som. Fica salvo por aparelho, como o tamanho.
+
 A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
 
 ## 🔥 Progresso

@@ -475,6 +475,9 @@ color:var(--mut);font-size:11.5px;margin:8px 0 2px;}
 border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;line-height:1;}
 .gradetam button:active{border-color:var(--red);color:var(--red);}
 .gradetam button:disabled{opacity:.4;cursor:default;}
+.gradetgl{border:1px solid var(--line);background:var(--surface);color:var(--txt);
+border-radius:9px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;line-height:1;}
+.gradetgl.on{background:var(--red);border-color:var(--red);color:#fff;}
 .pcol{display:contents;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
@@ -514,6 +517,11 @@ padding:10px 6px 9px;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);fo
 .gcard.n4 .gh{font-size:16px;}
 .gcard .gp{font-size:11px;font-weight:700;color:var(--red);line-height:1.25;
 max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* o significado é opcional (o botão "significado" liga). Em 2 linhas com reticências,
+   pra a palavra comprida não esticar o cartão e desalinhar a fileira. */
+.gcard .gsig{margin-top:2px;font-size:10.5px;color:var(--mut);line-height:1.2;
+max-width:100%;overflow:hidden;text-overflow:ellipsis;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 /* As quatro faixas do filtro 🔥 (1, 3, 5, 8 tropeços). Camada de cor POR CIMA do
    --surface em vez de cor sólida: o mesmo vermelho serve nos dois temas. */
 .gcard.e1,.lg.e1{background:linear-gradient(var(--e1),var(--e1)),var(--surface);
@@ -541,6 +549,7 @@ border-color:var(--red);}
 padding:9px 13px 10px;}
 .gcard.frase .gh{font-size:21px;line-height:1.35;white-space:normal;}
 .gcard.frase .gp{white-space:normal;font-size:11.5px;text-align:left;}
+.gcard.frase .gsig{text-align:left;}
 /* no escuro o --red do pinyin some em cima das faixas de vermelho mais fortes — aqui
    ele clareia. Só na grade: é o único lugar do app onde os dois se sobrepõem. */
 html[data-theme="dark"] .gcard .gp{color:#f07b8c;}
@@ -934,6 +943,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
       <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
     </div>
+    <button class="gradetgl" id="grade-sig" title="Mostrar o significado embaixo do pinyin">significado</button>
   </div>
   <div id="gradewrap"></div>
 </section>

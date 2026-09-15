@@ -2581,6 +2581,7 @@ function gradeCfg() {
   if (g.tam != null && (typeof g.tam !== 'number' || g.tam < GTAM_MIN || g.tam > GTAM_MAX)) {
     g.tam = null;
   }
+  g.sig = !!g.sig; // mostrar o significado embaixo do pinyin
   delete g.frases;
   return g;
 }
@@ -2744,7 +2745,8 @@ function gradeTile(c) {
     (aprendida(c.id) && !rad ? ' ok' : '') + (fora ? ' off' : '') +
     '" data-id="' + esc(c.id) + '" data-tip="' + esc(tip) + '">' +
     '<span class="gh zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
-    '<span class="gp">' + esc(c.pinyin) + '</span></button>';
+    '<span class="gp">' + esc(c.pinyin) + '</span>' +
+    (gc.sig ? '<span class="gsig">' + esc(c.pt) + '</span>' : '') + '</button>';
 }
 // A frase ocupa a linha inteira, então intercalada com as palavras ela parte a grade:
 // cada palavra sobra sozinha na sua fileira e o bloco de pictogramas, que é o que se veio
@@ -2881,6 +2883,7 @@ function renderGrade() {
   const efet = cfg.tam != null ? cfg.tam : GTAM_BASE;
   $('grade-tam').querySelector('[data-d="-1"]').disabled = efet <= GTAM_MIN;
   $('grade-tam').querySelector('[data-d="1"]').disabled = efet >= GTAM_MAX;
+  $('grade-sig').classList.toggle('on', cfg.sig);
   $('grade-grupo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cfg.grupo = ch.dataset.g; save(K.settings, settings); renderGrade();
   });
@@ -3249,6 +3252,9 @@ function bindEvents() {
     cfg.tam = Math.max(GTAM_MIN, Math.min(GTAM_MAX, atual + (+b.dataset.d) * GTAM_PASSO));
     save(K.settings, settings); renderGrade();
   });
+  $('grade-sig').onclick = () => {
+    gradeCfg().sig = !gradeCfg().sig; save(K.settings, settings); renderGrade();
+  };
   $('escopo-toggle').onclick = () => {
     settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
     renderEscopo();
