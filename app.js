@@ -2222,13 +2222,32 @@ function renderList() {
 // o deck inteiro, e o que ela pinta é o SEU estado, não o conteúdo da carta.
 const GRADE_GRUPOS = [['tema', '🏷️ Tema'], ['aula', '📅 Aula'], ['tipo', '汉 Tipo'], ['nada', '⬜ Nada']];
 const GRADE_ORDENS = [['erro', '🔥 Erros'], ['dominio', '🌱 Domínio'], ['pinyin', '🔤 Pinyin'], ['seed', '📋 Deck']];
+// O terceiro eixo: cada chip ESCONDE uma classe de carta quando apagado. Todos nascem
+// ligados — a Grade abre no deck inteiro, que é a razão dela existir, e tirar coisa da
+// tela é o que você faz depois, de propósito. Esconder as 86 aprendidas é o caso que
+// pediu isto: o que sobra é exatamente o que ainda falta.
+// Carta que casa com MAIS DE UM chip apagado some do mesmo jeito (a frase aprendida sai
+// com o 💬 e sai com o ✅) — some se QUALQUER um a pegar, que é como se lê "esconder".
+const GRADE_MOSTRAR = [
+  ['frases', '💬 Frases', c => ehFrase(c)],
+  ['aprendidas', '✅ Aprendidas', c => aprendida(c.id)],
+  ['novas', '🌱 Nunca vistas', c => !srs[c.id]],
+  ['off', '🚫 Desligadas', c => foraDaRotacao(c)]
+];
 // Mora dentro do settings pro arranjo sobreviver ao recarregamento, que é o ponto de
 // uma tela de consulta: você monta a vista uma vez e volta nela.
 function gradeCfg() {
   const g = settings.grade || (settings.grade = {});
   if (!GRADE_GRUPOS.some(([k]) => k === g.grupo)) g.grupo = 'tema';
   if (!GRADE_ORDENS.some(([k]) => k === g.ordem)) g.ordem = 'erro';
-  if (g.frases === undefined) g.frases = true;
+  // o 💬 solto virou um chip do Mostrar: quem já tinha desligado as frases não vê elas
+  // voltarem sozinhas depois da atualização
+  if (!g.mostrar) {
+    g.mostrar = {};
+    GRADE_MOSTRAR.forEach(([k]) => { g.mostrar[k] = g.frases === false && k === 'frases' ? false : true; });
+  }
+  GRADE_MOSTRAR.forEach(([k]) => { if (g.mostrar[k] === undefined) g.mostrar[k] = true; });
+  delete g.frases;
   return g;
 }
 // Quanto da carta já está de pé: 0 = nunca vista, 1 = aprendida. A régua é o mesmo
@@ -2323,23 +2342,34 @@ function renderGrade() {
     t + '</button>').join('');
   $('grade-grupo').innerHTML = chips(GRADE_GRUPOS, cfg.grupo, 'g');
   $('grade-ordem').innerHTML = chips(GRADE_ORDENS, cfg.ordem, 'o');
-  // sem frase publicada o chip some, igual ao da aba Cartas: botão que só liga uma
-  // lista vazia é pior que botão nenhum
+  // sem frase publicada o chip de frase some, igual ao da aba Cartas: botão que só liga
+  // uma lista vazia é pior que botão nenhum
   const tem = temFrases();
-  $('grade-frases').style.display = tem ? '' : 'none';
-  $('grade-frases').classList.toggle('active', tem && cfg.frases);
+  $('grade-mostrar').innerHTML = GRADE_MOSTRAR.filter(([k]) => k !== 'frases' || tem)
+    .map(([k, t]) => '<button class="chip' + (cfg.mostrar[k] ? ' active' : '') +
+      '" data-m="' + k + '">' + t + '</button>').join('');
 
-  let list = cards.slice();
-  if (!tem || !cfg.frases) list = list.filter(c => !ehFrase(c));
+  const escondidos = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k]);
+  const list = escondidos.length
+    ? cards.filter(c => !escondidos.some(([, , pega]) => pega(c)))
+    : cards.slice();
   const apr = list.filter(c => aprendida(c.id)).length;
   const nunca = list.filter(c => !srs[c.id]).length;
-  $('grade-count').innerHTML = '<b>' + list.length + '</b> cartas · <b>' + apr +
-    '</b> aprendidas · <b>' + nunca + '</b> nunca vistas';
+  // com filtro ligado o total do deck continua na linha: sem ele, "178 cartas" parece o
+  // tamanho do deck, e não o que sobrou do que você escondeu.
+  // A categoria escondida sai do contador em vez de aparecer zerada — "0 aprendidas"
+  // logo abaixo do chip ✅ riscado se lê como "você não aprendeu nenhuma".
+  const partes = [list.length !== cards.length
+    ? '<b>' + list.length + '</b> de ' + cards.length + ' cartas'
+    : '<b>' + cards.length + '</b> cartas'];
+  if (cfg.mostrar.aprendidas) partes.push('<b>' + apr + '</b> aprendidas');
+  if (cfg.mostrar.novas) partes.push('<b>' + nunca + '</b> nunca vistas');
+  $('grade-count').innerHTML = partes.join(' · ');
   $('gradewrap').innerHTML = gradeGrupos(gradeOrdena(list)).map(gr =>
     '<div class="gradegrupo">' +
     (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span></h3>' : '') +
     gradeCorpo(gr.cards) + '</div>').join('') ||
-    '<p style="color:var(--mut);text-align:center">Nenhuma carta.</p>';
+    '<p style="color:var(--mut);text-align:center">Nenhuma carta sobrou — religue um chip do Mostrar.</p>';
   // tocar fala a carta; o balão com a tradução quem abre é o bindTips, pelo data-tip
   $('gradewrap').querySelectorAll('.gcard').forEach(b => b.onclick = () => {
     const c = cards.find(x => x.id === b.dataset.id);
@@ -2351,9 +2381,10 @@ function renderGrade() {
   $('grade-ordem').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cfg.ordem = ch.dataset.o; save(K.settings, settings); renderGrade();
   });
-  $('grade-frases').onclick = () => {
-    cfg.frases = !cfg.frases; save(K.settings, settings); renderGrade();
-  };
+  $('grade-mostrar').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    cfg.mostrar[ch.dataset.m] = !cfg.mostrar[ch.dataset.m];
+    save(K.settings, settings); renderGrade();
+  });
 }
 
 // ── tooltip dos gráficos ────────────────────────────────────

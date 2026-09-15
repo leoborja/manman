@@ -443,7 +443,7 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 text-transform:uppercase;letter-spacing:.6px;margin:2px 0 -1px;}
 .gradebar .filtros{display:flex;gap:6px;flex-wrap:wrap;}
 .gradebar .chip{font-size:12.5px;padding:6px 11px;}
-.gradebar .chip.gsep{margin-left:auto;}
+.gradebar #grade-mostrar .chip:not(.active){opacity:.55;text-decoration:line-through;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
 .gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
@@ -793,11 +793,17 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <div class="linha">
       <span class="rot">Agrupar</span>
       <div class="filtros" id="grade-grupo"></div>
-      <button class="chip gsep" id="grade-frases" title="Mostrar também as frases">💬</button>
     </div>
     <div class="linha">
       <span class="rot">Ordenar</span>
       <div class="filtros" id="grade-ordem"></div>
+    </div>
+    <!-- o terceiro eixo tira coisa da tela. Chip aceso = aparece; apagado e riscado =
+         escondido — sem o risco, um chip branco aqui se lê como "clique pra mostrar",
+         que é o contrário do que ele está dizendo. -->
+    <div class="linha">
+      <span class="rot">Mostrar</span>
+      <div class="filtros" id="grade-mostrar"></div>
     </div>
   </div>
   <div class="counter" id="grade-count"></div>
