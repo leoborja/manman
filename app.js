@@ -37,6 +37,7 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
   off: 'manman.off.v1',
   dirtyOff: 'manman.dirtyoff.v1',
   settings: 'manman.settings.v1',
+  arranjo: 'manman.arranjo.v1',   // os montes que você arrastou na Grade — por usuário
   dayOffset: 'manman.dayoffset'
 };
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
@@ -311,6 +312,11 @@ let srs = {};                    // id → {reps, ivl, ease, due, u}
 let stats = {};
 let log = {};                    // 'YYYY-MM-DD' → {rev, new}
 let dirty = [];                  // ids com sync pendente (SRS)
+// Os montes que o usuário arrastou na Grade: [{id, nome, ids:[...]}]. Mora só aqui, no
+// localStorage de cada aparelho, e não sobe pro banco: uma coluna nova exige DDL, que
+// ninguém do time tem (o mesmo motivo que fez a frase morar em `tags`). Então o arranjo
+// é seu e do seu celular — não segue pro computador nem aparece pros outros.
+let arranjo = { grupos: [] };
 let off = {};                    // id → {off: bool, u: ms} — cartas desligadas pelo usuário
 let dirtyOff = [];               // ids com sync de desligamento pendente
 let queue = [];                  // fila da sessão (ids)
@@ -1186,6 +1192,8 @@ function loadUserState() {
   off = load(uk(K.off), {});
   offVer++;
   dirtyOff = load(uk(K.dirtyOff), []);
+  arranjo = load(uk(K.arranjo), { grupos: [] });
+  if (!Array.isArray(arranjo.grupos)) arranjo = { grupos: [] };
   // migração: progresso antigo sem usuário vira do primeiro que logar
   if (!Object.keys(srs).length && localStorage.getItem(K.srs)) {
     srs = load(K.srs, {}); log = load(K.log, {});
@@ -2220,7 +2228,7 @@ function renderList() {
 // enxergar a olho o que a lista só sabe contar — o que já está de pé, o que você erra,
 // o que nunca abriu. Por isso ela não repete os filtros da Cartas: ela agrupa e ordena
 // o deck inteiro, e o que ela pinta é o SEU estado, não o conteúdo da carta.
-const GRADE_GRUPOS = [['tema', '🏷️ Tema'], ['aula', '📅 Aula'], ['tipo', '汉 Tipo'], ['nada', '⬜ Nada']];
+const GRADE_GRUPOS = [['tema', '🏷️ Tema'], ['aula', '📅 Aula'], ['tipo', '汉 Tipo'], ['meu', '✋ Meu arranjo'], ['nada', '⬜ Nada']];
 const GRADE_ORDENS = [['erro', '🔥 Erros'], ['dominio', '🌱 Domínio'], ['pinyin', '🔤 Pinyin'], ['seed', '📋 Deck']];
 // O terceiro eixo: cada chip ESCONDE uma classe de carta quando apagado. Todos nascem
 // ligados — a Grade abre no deck inteiro, que é a razão dela existir, e tirar coisa da
@@ -2236,6 +2244,199 @@ const GRADE_MOSTRAR = [
 ];
 // Mora dentro do settings pro arranjo sobreviver ao recarregamento, que é o ponto de
 // uma tela de consulta: você monta a vista uma vez e volta nela.
+// ── Grade: o arranjo à mão ──────────────────────────────────
+// Agrupar por tema, aula ou tipo responde perguntas que o deck já sabe responder. A
+// pergunta que ele não sabe é "quais destas eu confundo uma com a outra" — books 书 e
+// 书? 我 e 找? Isso não está em campo nenhum, está na sua cabeça, e a única forma de
+// botar na tela é você arrastar uma pra perto da outra.
+// Carta que você não arrastou fica no monte do fim; ela não some, só não foi arrumada.
+function arranjoOn() { return gradeCfg().grupo === 'meu'; }
+function salvaArranjo() { save(uk(K.arranjo), arranjo); }
+function grupoDe(id) { return arranjo.grupos.find(g => g.ids.indexOf(id) >= 0) || null; }
+function novoGrupo(nome) {
+  const g = { id: 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+    nome: nome || 'Monte ' + (arranjo.grupos.length + 1), ids: [] };
+  arranjo.grupos.push(g);
+  return g;
+}
+// Tira o id de onde ele estiver e põe no destino, na posição pedida. Um id só vive num
+// monte — arrastar é MOVER, não copiar; a mesma carta em dois montes desfaria o sentido
+// de "estas eu confundo".
+function moveCarta(id, destino, antesDe) {
+  arranjo.grupos.forEach(g => {
+    const i = g.ids.indexOf(id);
+    if (i >= 0) g.ids.splice(i, 1);
+  });
+  if (!destino) { salvaArranjo(); return; }  // destino nulo = volta pro monte do fim
+  const alvo = antesDe != null ? destino.ids.indexOf(antesDe) : -1;
+  if (alvo >= 0) destino.ids.splice(alvo, 0, id); else destino.ids.push(id);
+  salvaArranjo();
+}
+// Os montes do arranjo + o resto, na ordem escolhida no eixo Ordenar. Dentro de um monte
+// SEU a ordem é a que você arrastou — ordenar por erro ali desfaria o arranjo a cada
+// revisão, que é o oposto de arrumar.
+function gradeMeusGrupos(list) {
+  const dentro = new Set();
+  const porId = {};
+  list.forEach(c => { porId[c.id] = c; });
+  const out = arranjo.grupos.map(g => {
+    const cards = g.ids.map(id => { dentro.add(id); return porId[id]; }).filter(Boolean);
+    return { rot: g.nome, grupo: g, cards };
+  });
+  out.push({ rot: 'Sem monte', grupo: null, sem: true, cards: list.filter(c => !dentro.has(c.id)) });
+  return out;
+}
+// ── Grade: arrastar com o dedo ──────────────────────────────
+// Sem a API de drag-and-drop do HTML: ela não existe em toque, e o app vive no celular.
+// Isto é pointer event na mão, que serve o mouse e o dedo com o mesmo par de handlers.
+// No dedo o arrasto só começa depois de ~230ms PARADO. Sem essa espera não sobraria
+// como rolar uma tela de 300 cartas — o dedo que desliza é rolagem, o dedo que espera é
+// arrasto, e é a única forma de os dois caberem no mesmo gesto inicial.
+const DRAG_ESPERA = 230;         // ms parado até virar arrasto, no toque
+const DRAG_FOLGA = 10;           // px que ainda contam como "parado"
+let dragId = null, dragEl = null, dragGhost = null, dragTimer = null;
+let dragX = 0, dragY = 0, dragOff = null, dragAtivo = false;
+let dragScroll = null, dragAlvo = null, dragAntes = null, dragMexeu = false, dragTipo = '';
+
+function bindArranjo() {
+  const wrap = $('gradewrap');
+  wrap.onpointerdown = arrDown;
+  wrap.querySelectorAll('[data-ren]').forEach(b => b.onclick = () => {
+    const g = arranjo.grupos.find(x => x.id === b.dataset.ren);
+    const nome = prompt('Nome do monte:', g.nome);
+    if (nome && nome.trim()) { g.nome = nome.trim().slice(0, 30); salvaArranjo(); renderGrade(); }
+  });
+  wrap.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+    const g = arranjo.grupos.find(x => x.id === b.dataset.del);
+    // as cartas não somem com o monte: voltam pro "Sem monte" e continuam no deck.
+    // Por isso o aviso é leve — desfazer um monte não perde nada além do arranjo dele.
+    if (g.ids.length && !confirm('Desfazer "' + g.nome + '"? As ' + g.ids.length +
+      ' cartas voltam pro Sem monte.')) return;
+    arranjo.grupos = arranjo.grupos.filter(x => x.id !== g.id);
+    salvaArranjo(); renderGrade();
+  });
+  const novo = $('gnovo');
+  if (novo) novo.onclick = () => { novoGrupo(); salvaArranjo(); renderGrade(); };
+}
+function arrDown(e) {
+  const el = e.target.closest('.gcard');
+  if (!el || e.button > 0) return;
+  dragEl = el; dragId = el.dataset.id;
+  dragX = e.clientX; dragY = e.clientY; dragAtivo = false; dragTipo = e.pointerType;
+  // no mouse não há rolagem por arrasto pra desempatar, então não precisa da espera —
+  // mas também não começa no clique parado, senão todo toque pra ouvir a carta piscaria
+  // um fantasma. Ali quem manda é o primeiro pixel de movimento (ver arrMove).
+  if (dragTipo !== 'mouse') dragTimer = setTimeout(arrComeca, DRAG_ESPERA);
+  window.addEventListener('pointermove', arrMove, { passive: false });
+  window.addEventListener('pointerup', arrUp);
+  window.addEventListener('pointercancel', arrCancela);
+}
+function arrComeca() {
+  if (!dragEl) return;
+  dragAtivo = true;
+  const r = dragEl.getBoundingClientRect();
+  dragOff = { x: dragX - r.left, y: dragY - r.top };
+  dragGhost = dragEl.cloneNode(true);
+  dragGhost.classList.add('fantasma');
+  dragGhost.style.width = r.width + 'px';
+  dragGhost.style.height = r.height + 'px';
+  document.body.appendChild(dragGhost);
+  arrFantasma(dragX, dragY);
+  dragEl.classList.add('saindo');
+  // O touch-action:pan-y deixa o dedo rolar a página, e é o que faz a espera de 230ms
+  // funcionar. Mas depois que o arrasto pegou, arrastar pra baixo rolaria a tela com o
+  // fantasma junto. Um preventDefault no touchmove segura a rolagem do navegador — e só
+  // pega porque o dedo ficou parado até aqui: gesto de rolagem já começado é tarde.
+  // A rolagem do arrasto passa a ser a do arrRola, na borda da tela.
+  document.addEventListener('touchmove', arrSemRolar, { passive: false });
+  if (navigator.vibrate) navigator.vibrate(12); // o único aviso de que o arrasto pegou
+}
+function arrSemRolar(e) { if (dragAtivo) e.preventDefault(); }
+function arrFantasma(x, y) {
+  dragGhost.style.left = (x - dragOff.x) + 'px';
+  dragGhost.style.top = (y - dragOff.y) + 'px';
+}
+function arrMove(e) {
+  if (!dragEl) return;
+  if (!dragAtivo) {
+    const longe = Math.abs(e.clientX - dragX) > (dragTipo === 'mouse' ? 4 : DRAG_FOLGA) ||
+      Math.abs(e.clientY - dragY) > (dragTipo === 'mouse' ? 4 : DRAG_FOLGA);
+    if (!longe) return;
+    // no mouse, sair do lugar É o arrasto; no dedo, é a rolagem que o timer ia atrapalhar
+    if (dragTipo === 'mouse') { arrComeca(); dragMexeu = true; } else arrTermina();
+    return;
+  }
+  e.preventDefault();
+  dragMexeu = true;
+  arrFantasma(e.clientX, e.clientY);
+  arrMarca(e.clientX, e.clientY);
+  arrRola(e.clientY);
+}
+// Onde a carta vai cair. O fantasma tem pointer-events:none, então o elementFromPoint
+// enxerga o que está embaixo dele e não ele mesmo.
+function arrMarca(x, y) {
+  arrLimpa();
+  const sob = document.elementFromPoint(x, y);
+  const grupo = sob && sob.closest('.gradegrupo');
+  if (!grupo) { dragAlvo = null; return; }
+  dragAlvo = grupo;
+  grupo.classList.add('alvo');
+  dragAntes = null;
+  const carta = sob.closest('.gcard');
+  if (carta && carta !== dragEl) {
+    // metade esquerda entra ANTES dela; metade direita, antes da próxima — que é o
+    // mesmo que "depois desta", e não precisa de um segundo caso
+    const r = carta.getBoundingClientRect();
+    const prox = carta.nextElementSibling;
+    dragAntes = x < r.left + r.width / 2 ? carta.dataset.id
+      : prox && prox.classList.contains('gcard') ? prox.dataset.id : null;
+    carta.classList.add(x < r.left + r.width / 2 ? 'antes' : 'depois');
+  }
+}
+function arrLimpa() {
+  document.querySelectorAll('.gradegrupo.alvo').forEach(el => el.classList.remove('alvo'));
+  document.querySelectorAll('.gcard.antes,.gcard.depois').forEach(el =>
+    el.classList.remove('antes', 'depois'));
+}
+// arrastar até a borda rola a tela: com 300 cartas o monte de destino quase nunca está
+// na mesma tela que a carta que você pegou
+function arrRola(y) {
+  const zona = 90;
+  const v = y < zona ? -(zona - y) / 4
+    : y > window.innerHeight - zona ? (y - (window.innerHeight - zona)) / 4 : 0;
+  if (!v) { arrParaRolagem(); return; }
+  if (dragScroll) { dragScroll.v = v; return; }
+  dragScroll = { v, t: setInterval(() => window.scrollBy(0, dragScroll.v), 16) };
+}
+function arrParaRolagem() { if (dragScroll) { clearInterval(dragScroll.t); dragScroll = null; } }
+function arrUp() {
+  const solto = dragAtivo && dragAlvo;
+  const id = dragId, alvo = dragAlvo, antes = dragAntes;
+  arrTermina();
+  if (!solto) return;
+  // monte sem data-g é o "Sem monte": destino nulo tira a carta de todos os montes,
+  // que é exatamente o que "tirei do arranjo" quer dizer
+  const destino = alvo.dataset.g ? arranjo.grupos.find(g => g.id === alvo.dataset.g) : null;
+  moveCarta(id, destino, antes);
+  renderGrade();
+}
+function arrCancela() { arrTermina(); }
+function arrTermina() {
+  clearTimeout(dragTimer); dragTimer = null;
+  window.removeEventListener('pointermove', arrMove);
+  window.removeEventListener('pointerup', arrUp);
+  window.removeEventListener('pointercancel', arrCancela);
+  document.removeEventListener('touchmove', arrSemRolar, { passive: false });
+  if (dragGhost) { dragGhost.remove(); dragGhost = null; }
+  if (dragEl) dragEl.classList.remove('saindo');
+  arrLimpa(); arrParaRolagem();
+  dragEl = null; dragId = null; dragAlvo = null; dragAntes = null; dragAtivo = false;
+  // o pointerup vira um click logo em seguida, e sem isto soltar a carta também a faria
+  // falar. Volta a valer no próximo tique, pra que o toque seco continue tocando o som.
+  if (dragMexeu) { dragMexeu = false; dragClick = true; setTimeout(() => { dragClick = false; }, 0); }
+}
+let dragClick = false;
+
 // O rótulo de cada degrau da escala, derivado do próprio ERRO_FAIXAS: mexer nas faixas
 // do filtro 🔥 reescreve estes chips sozinho, em vez de deixar dois números divergindo.
 function faixaRot(t) {
@@ -2299,6 +2500,7 @@ function gradeOrdena(list) {
 // como cabeçalho de nada.
 function gradeGrupos(list) {
   const g = gradeCfg().grupo;
+  if (g === 'meu') return gradeMeusGrupos(list);
   if (g === 'nada') return [{ rot: '', cards: list }];
   if (g === 'tipo') {
     return TIPOS.map(t => ({ rot: TIPO_LABEL[t], cards: list.filter(c => ehFrase(c) === (t === 'frase')) }))
@@ -2343,10 +2545,15 @@ function gradeTile(c) {
 // A frase ocupa a linha inteira, então intercalada com as palavras ela parte a grade:
 // cada palavra sobra sozinha na sua fileira e o bloco de pictogramas, que é o que se veio
 // ver, some. Dentro do grupo elas ficam depois, empilhadas.
-function gradeCorpo(list) {
+function gradeCorpo(list, vazioVisivel) {
   const pal = list.filter(c => !ehFrase(c));
   const fr = list.filter(ehFrase);
-  return (pal.length ? '<div class="grade">' + pal.map(gradeTile).join('') + '</div>' : '') +
+  // monte recém-criado não tem carta nenhuma, e um monte de altura zero não dá onde
+  // soltar — no arranjo ele nasce com uma faixa tracejada que aceita o que cair nela
+  return (pal.length || vazioVisivel
+    ? '<div class="grade' + (pal.length ? '' : ' vazia') + '">' + pal.map(gradeTile).join('') +
+      (pal.length ? '' : '<span class="gdica">solte uma carta aqui</span>') + '</div>'
+    : '') +
     (fr.length ? '<div class="gradefrases">' + fr.map(gradeTile).join('') + '</div>' : '');
 }
 // O botão diz os três eixos em uma linha, porque é o único lugar onde eles aparecem
@@ -2419,13 +2626,23 @@ function renderGrade() {
   const r = gradeResumo();
   $('gradescope').textContent = r.escopo;
   $('gradecur').textContent = r.txt;
+  const arr = arranjoOn();
+  $('gradewrap').classList.toggle('arrastando', arr);
   $('gradewrap').innerHTML = gradeGrupos(gradeOrdena(list)).map(gr =>
-    '<div class="gradegrupo">' +
-    (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span></h3>' : '') +
-    gradeCorpo(gr.cards) + '</div>').join('') ||
+    // o "+ novo monte" vem antes do Sem monte, não depois de tudo: com 161 cartas no
+    // fim da lista, um botão embaixo delas é um botão que ninguém acha
+    (arr && gr.sem ? '<button class="gnovo" id="gnovo">+ novo monte</button>' : '') +
+    '<div class="gradegrupo"' + (gr.grupo ? ' data-g="' + esc(gr.grupo.id) + '"' : '') + '>' +
+    (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span>' +
+      (arr && gr.grupo ? '<button class="gbtn" data-ren="' + esc(gr.grupo.id) + '" title="Renomear">✏️</button>' +
+        '<button class="gbtn" data-del="' + esc(gr.grupo.id) + '" title="Desfazer o monte">✕</button>' : '') +
+      '</h3>' : '') +
+    gradeCorpo(gr.cards, arr && gr.grupo) + '</div>').join('') ||
     '<p style="color:var(--mut);text-align:center">Nenhuma carta sobrou — religue um chip do Mostrar.</p>';
+  if (arr) bindArranjo(); else $('gradewrap').onpointerdown = null;
   // tocar fala a carta; o balão com a tradução quem abre é o bindTips, pelo data-tip
   $('gradewrap').querySelectorAll('.gcard').forEach(b => b.onclick = () => {
+    if (dragClick) return; // acabou de soltar um arrasto: não é um toque pra ouvir
     const c = cards.find(x => x.id === b.dataset.id);
     if (c) speak(c);
   });

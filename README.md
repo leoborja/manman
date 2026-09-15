@@ -202,6 +202,16 @@ O que a tela pinta é o **seu** estado, não o conteúdo da carta. **Uma escala 
 
 Já teve uma segunda camada aqui — a opacidade do texto dizendo o quanto você sabe, por cima do vermelho do fundo. Duas escalas no mesmo quadrado não se leem: você olhava um tom mais claro e não sabia se ele queria dizer "ainda não sei" ou "não erro". Saiu (24/09). Com uma escala e duas bordas, que são coisas de natureza diferente, a tela inteira se lê de longe. O preço é que "nunca vista" agora parece igual a "vista e tranquila" — as duas são brancas; quem separa as duas é o 🌱 Domínio na ordenação e o balão de cada carta. Tocar fala a carta e abre esse balão, com a tradução, o domínio e a contagem de tropeços.
 
+### ✋ Meu arranjo
+
+O quinto agrupamento não vem do deck: vem de você. Agrupar por tema, aula ou tipo responde perguntas que o JSON já sabe responder; a pergunta que ele não sabe é **"quais destas eu confundo uma com a outra"** — 我 e 找, 书 e 出. Isso não está em campo nenhum, está na sua cabeça, e a única forma de botar na tela é arrastar uma pra perto da outra.
+
+`+ novo monte` cria um monte (✏️ renomeia, ✕ desfaz — as cartas voltam pro **Sem monte**, que é onde mora tudo que você ainda não arrumou). O botão fica **antes** do Sem monte: depois dele seriam 160 cartas de rolagem até um botão que ninguém acha. Dentro de um monte seu a ordem é a que você arrastou, e o eixo Ordenar não manda ali — ordenar por erro dentro do seu arranjo o desmancharia a cada revisão, que é o oposto de arrumar. Uma carta vive num monte só: arrastar **move**, não copia, senão "estas eu confundo" deixaria de querer dizer alguma coisa. Os filtros do Mostrar continuam valendo — a carta escondida só não aparece, o monte dela continua lá.
+
+**O arrasto é pointer event na mão**, não a API de drag-and-drop do HTML, que não existe em toque. No dedo ele só começa depois de **230ms parado**: sem essa espera não sobraria como rolar uma tela de 300 cartas — o dedo que desliza é rolagem, o dedo que espera é arrasto. Quando pega, vibra (12ms) e a página para de rolar sozinha (um `preventDefault` no `touchmove`, que só funciona porque o dedo ficou parado até ali — gesto de rolagem já começado é tarde). A rolagem passa a ser a do próprio arrasto, quando você chega na borda da tela. No mouse não existe esse empate, então lá quem começa o arrasto é o primeiro movimento — e não o clique parado, senão todo toque pra ouvir a carta piscaria um fantasma.
+
+**O arranjo mora só no `localStorage`, por usuário, e não sobe pro banco.** Uma coluna nova exige DDL, que ninguém do time tem — o mesmo motivo que fez a frase morar em `tags`. Então ele é seu e do seu aparelho: não segue pro computador e não aparece pros outros.
+
 A frase não entra na grade: ela toma a linha inteira, e intercalada com as palavras parte o bloco de pictogramas em fileiras de uma carta só. Dentro de cada grupo as frases ficam depois, empilhadas. E o pinyin aqui vai sem as cores de tom — em 76px, com fundo vermelho atrás, cinco cores de sílaba viram ruído em cima do código que a tela existe pra mostrar.
 
 ## 🔥 Progresso
