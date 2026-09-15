@@ -2236,6 +2236,15 @@ const GRADE_MOSTRAR = [
 ];
 // Mora dentro do settings pro arranjo sobreviver ao recarregamento, que é o ponto de
 // uma tela de consulta: você monta a vista uma vez e volta nela.
+// O rótulo de cada degrau da escala, derivado do próprio ERRO_FAIXAS: mexer nas faixas
+// do filtro 🔥 reescreve estes chips sozinho, em vez de deixar dois números divergindo.
+function faixaRot(t) {
+  if (t === 0) return 'sem tropeço';
+  const de = ERRO_FAIXAS[t - 1];
+  const ate = ERRO_FAIXAS[t] ? ERRO_FAIXAS[t] - 1 : null;
+  return ate === null ? de + '+' : de === ate ? String(de) : de + '–' + ate;
+}
+const GRADE_FAIXAS = [0, 1, 2, 3, 4];
 function gradeCfg() {
   const g = settings.grade || (settings.grade = {});
   if (!GRADE_GRUPOS.some(([k]) => k === g.grupo)) g.grupo = 'tema';
@@ -2247,6 +2256,11 @@ function gradeCfg() {
     GRADE_MOSTRAR.forEach(([k]) => { g.mostrar[k] = g.frases === false && k === 'frases' ? false : true; });
   }
   GRADE_MOSTRAR.forEach(([k]) => { if (g.mostrar[k] === undefined) g.mostrar[k] = true; });
+  // um liga/desliga por degrau da escala de vermelho — "quero ver só as que eu sou
+  // muito ruim" é apagar os degraus claros
+  if (!Array.isArray(g.faixas) || g.faixas.length !== GRADE_FAIXAS.length) {
+    g.faixas = GRADE_FAIXAS.map(() => true);
+  }
   delete g.frases;
   return g;
 }
@@ -2343,6 +2357,17 @@ function gradeResumo() {
   const rot = k => (GRADE_GRUPOS.concat(GRADE_ORDENS).find(([x]) => x === k) || [, k])[1];
   const escondido = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k] && (k !== 'frases' || temFrases()));
   const partes = [rot(cfg.ordem)];
+  // "≥5 tropeços" quando as faixas ligadas são as mais vermelhas em sequência — que é o
+  // caso que motivou o filtro. Fora disso, lista os degraus, que é sempre verdade.
+  if (!cfg.faixas.every(Boolean)) {
+    const ligadas = GRADE_FAIXAS.filter(t => cfg.faixas[t]);
+    const seguidasAteOFim = ligadas.length &&
+      ligadas[ligadas.length - 1] === GRADE_FAIXAS.length - 1 &&
+      ligadas.length === GRADE_FAIXAS.length - ligadas[0];
+    partes.push(!ligadas.length ? 'nenhuma faixa'
+      : seguidasAteOFim && ligadas[0] > 0 ? '≥' + ERRO_FAIXAS[ligadas[0] - 1] + ' tropeços'
+      : 'só ' + ligadas.map(faixaRot).join(', '));
+  }
   // "sem aprendidas" e não "aprendidas": o chip apagado ESCONDE, e o resumo tem que
   // dizer o que sumiu, senão ele lê como se estivesse mostrando só aquilo
   if (escondido.length) {
@@ -2364,9 +2389,20 @@ function renderGrade() {
     .map(([k, t]) => '<button class="chip' + (cfg.mostrar[k] ? ' active' : '') +
       '" data-m="' + k + '">' + t + '</button>').join('');
 
+  $('grade-faixas').innerHTML = GRADE_FAIXAS.map(t =>
+    '<button class="chip' + (cfg.faixas[t] ? ' active' : '') + '" data-t="' + t + '">' +
+    '<i class="lg' + (t ? ' e' + t : '') + '"></i>' + faixaRot(t) + '</button>').join('');
+
+  // Some se QUALQUER filtro ligado a pegar — é como se lê "esconder".
+  // A aprendida não passa pelas faixas: ela está FORA da escala do vermelho (é o que a
+  // borda verde diz), então quem manda nela é só o chip ✅. Sem essa exceção, apagar
+  // "sem tropeço" pra ver as difíceis levaria as aprendidas junto, e o ✅ ficaria aceso
+  // dizendo que elas estão na tela.
   const escondidos = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k]);
-  const list = escondidos.length
-    ? cards.filter(c => !escondidos.some(([, , pega]) => pega(c)))
+  const todasFaixas = cfg.faixas.every(Boolean);
+  const list = (escondidos.length || !todasFaixas)
+    ? cards.filter(c => !escondidos.some(([, , pega]) => pega(c)) &&
+        (aprendida(c.id) || cfg.faixas[erroTier(c)]))
     : cards.slice();
   const apr = list.filter(c => aprendida(c.id)).length;
   const nunca = list.filter(c => !srs[c.id]).length;
@@ -2401,6 +2437,11 @@ function renderGrade() {
   });
   $('grade-mostrar').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cfg.mostrar[ch.dataset.m] = !cfg.mostrar[ch.dataset.m];
+    save(K.settings, settings); renderGrade();
+  });
+  $('grade-faixas').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    const t = +ch.dataset.t;
+    cfg.faixas[t] = !cfg.faixas[t];
     save(K.settings, settings); renderGrade();
   });
 }

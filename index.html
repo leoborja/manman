@@ -439,7 +439,10 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 /* grade — o deck inteiro numa tela só */
 #gradesheet .filtros{display:flex;gap:6px;flex-wrap:wrap;}
 #gradesheet .chip{font-size:13px;padding:7px 12px;}
-#gradesheet #grade-mostrar .chip:not(.active){opacity:.55;text-decoration:line-through;}
+#gradesheet #grade-mostrar .chip:not(.active),
+#gradesheet #grade-faixas .chip:not(.active){opacity:.55;text-decoration:line-through;}
+/* o chip da faixa carrega o próprio quadradinho da escala — ele É a legenda dela */
+#gradesheet #grade-faixas .chip{display:inline-flex;align-items:center;gap:6px;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
 .gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
@@ -810,13 +813,15 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
          que é o contrário do que ele está dizendo. -->
     <div class="sheetsep">mostrar</div>
     <div class="filtros wrapchips" id="grade-mostrar"></div>
-    <!-- a legenda desenha a escala inteira, e não uma amostra dela: "mais vermelho =
-         mais tropeço" não diz onde começa nem quantos degraus são. Mora aqui porque é
-         referência: você lê uma vez e não precisa dela ocupando a tela depois. -->
-    <div class="sheetsep">o que a cor diz</div>
+    <!-- Os degraus da escala viraram filtro, e com isso a legenda dela: o chip leva o
+         quadradinho da cor e quantos tropeços ela quer dizer, então não existe mais uma
+         escala desenhada num canto pra você casar com os quadradinhos na tela. -->
+    <div class="sheetsep">…e quantos tropeços</div>
+    <div class="filtros wrapchips" id="grade-faixas"></div>
+    <!-- aprendida e fora da rotação falam por borda, não por cor de fundo, então não
+         entram na escala acima e continuam precisando de legenda -->
     <div class="gradelegend">
-      <span><span class="escala"><i class="lg"></i><i class="lg e1"></i><i class="lg e2"></i><i class="lg e3"></i><i class="lg e4"></i></span> tranquila → você tropeça muito</span>
-      <span><i class="lg ok"></i> aprendida</span>
+      <span><i class="lg ok"></i> aprendida (fora da escala — quem manda nela é o ✅)</span>
       <span><i class="lg off"></i> fora da rotação</span>
     </div>
   </div>
