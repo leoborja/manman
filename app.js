@@ -2483,9 +2483,15 @@ function gradeCfg() {
   }
   if (g.radical && !RADICAL_PT[g.radical]) g.radical = null; // radical que saiu da lista
   if (!['pintar', 'agrupar', 'so'].includes(g.radModo)) g.radModo = 'pintar';
+  // tamanho do cartão: null = deixa o CSS decidir (76 no celular, 96 no PC); número =
+  // escolha do usuário, que vale nos dois. Clampado pra não sumir nem virar pôster.
+  if (g.tam != null && (typeof g.tam !== 'number' || g.tam < GTAM_MIN || g.tam > GTAM_MAX)) {
+    g.tam = null;
+  }
   delete g.frases;
   return g;
 }
+const GTAM_MIN = 56, GTAM_MAX = 168, GTAM_PASSO = 16, GTAM_BASE = 96;
 const RAD_MODOS = [['pintar', '🖌️ Pintar'], ['agrupar', '📑 Agrupar'], ['so', '🔎 Só essas']];
 // os dois montes do modo Agrupar: com o radical em cima, sem embaixo. Substitui o eixo
 // Agrupar enquanto o radical está ligado — aninhar "tema dentro de com-氵" viraria
@@ -2776,6 +2782,12 @@ function renderGrade() {
     if (c) speak(c);
   });
   if (cfg.radical) pintaRadical(cfg.radical); // depois do innerHTML: SVG precisa do DOM pronto
+  if (cfg.tam != null) $('gradewrap').style.setProperty('--gtam', cfg.tam + 'px');
+  else $('gradewrap').style.removeProperty('--gtam');
+  // nos extremos o botão correspondente apaga, pra não parecer que ainda dá pra crescer
+  const efet = cfg.tam != null ? cfg.tam : GTAM_BASE;
+  $('grade-tam').querySelector('[data-d="-1"]').disabled = efet <= GTAM_MIN;
+  $('grade-tam').querySelector('[data-d="1"]').disabled = efet >= GTAM_MAX;
   $('grade-grupo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cfg.grupo = ch.dataset.g; save(K.settings, settings); renderGrade();
   });
@@ -3136,6 +3148,14 @@ function bindEvents() {
   // a folha se monta no próprio renderGrade, então abrir é só mostrar
   $('gradebtn').onclick = () => $('gradesheet').classList.add('show');
   $('gradesheet-bg').onclick = () => $('gradesheet').classList.remove('show');
+  // A−/A+ mexem no tamanho do cartão. Parte do efetivo (o escolhido, ou a base) e anda
+  // um passo; fica salvo, e vale no celular também (menos/mais colunas).
+  $('grade-tam').querySelectorAll('button').forEach(b => b.onclick = () => {
+    const cfg = gradeCfg();
+    const atual = cfg.tam != null ? cfg.tam : GTAM_BASE;
+    cfg.tam = Math.max(GTAM_MIN, Math.min(GTAM_MAX, atual + (+b.dataset.d) * GTAM_PASSO));
+    save(K.settings, settings); renderGrade();
+  });
   $('escopo-toggle').onclick = () => {
     settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
     renderEscopo();

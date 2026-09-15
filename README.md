@@ -232,12 +232,13 @@ Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (ag
 
 O app é o mesmo — HTML/JS num arquivo só, servido no Pages, aberto no navegador do celular ou do PC. Ele nasceu **mobile-first**: uma coluna de 720px no meio, e é assim que fica no telefone, que segue sendo a prioridade. Em tela larga (≥900px) entra um bloco de CSS que só **alarga**, nunca redesenha — nenhuma regra de celular muda, então o telefone fica byte a byte igual.
 
-Cada tela ganha a largura que a ajuda e trava onde largura demais atrapalha:
+No PC ele deixa de imitar o telefone numa faixa central e vira layout de computador:
 
-- **Grade** vai de ponta a ponta (é a tela do "ver tudo de uma vez") e abre uma dúzia de colunas; só o botão e o contador ficam centrados.
-- **Cartas** vira uma grade de cartões (2–3 colunas): uma linha de 1180px deixaria o 🔊 a um palmo do pinyin.
+- **Menu na lateral esquerda** — as abas do topo viram uma barra vertical fixa, fundo claro (branco no tema claro, o tom escuro equivalente no escuro), e o conteúdo desloca pra depois dela.
+- **Grade** vai de ponta a ponta (é a tela do "ver tudo de uma vez"); só o botão e a linha do contador ficam centrados. O **A− / A+** ao lado do contador aumenta e diminui o cartão (menos/mais colunas) — vale no celular também, e cada aparelho guarda o seu tamanho (o `localStorage` é por navegador).
+- **Cartas** vira uma **lista com as informações em colunas** alinhadas — hanzi, pinyin, tradução, tema, ações —, como uma tabela que se lê de cima a baixo; a nota desce pra baixo. Frase, que é linha longa, volta a ocupar a largura.
+- **Progresso** espalha os blocos em **duas colunas** (masonry por altura), com as cinco estatísticas numa fileira em cima.
 - **Estudar** fica centrado num tamanho confortável — ler um flashcard de 1000px é pior, não melhor.
-- **Progresso** fica num bloco centrado, pros gráficos seguirem legíveis.
 - As **folhas** param de subir do rodapé e viram uma janela central.
 
 ## Estrutura técnica

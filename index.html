@@ -461,6 +461,13 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
    quer dizer nada pra quem abriu a tela pela primeira vez */
 .gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
 color:var(--mut);font-size:11.5px;margin:8px 0 2px;}
+.gradetop{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 10px;}
+.gradetop .counter{margin:0;}
+.gradetam{display:inline-flex;gap:4px;flex:0 0 auto;}
+.gradetam button{border:1px solid var(--line);background:var(--surface);color:var(--txt);
+border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;line-height:1;}
+.gradetam button:active{border-color:var(--red);color:var(--red);}
+.gradetam button:disabled{opacity:.4;cursor:default;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
 .gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
 .lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
@@ -489,7 +496,7 @@ transform:scale(1.08);box-shadow:0 12px 32px rgba(0,0,0,.32);}
 .grade.vazia{display:flex;align-items:center;justify-content:center;min-height:62px;
 border:1.5px dashed var(--line);border-radius:14px;}
 .gdica{color:var(--soft);font-size:11.5px;}
-.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px;}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--gtam,76px),1fr));gap:8px;}
 .gcard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
 min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;
 padding:10px 6px 9px;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);font:inherit;}
@@ -663,46 +670,69 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 #debugbar button{background:#222;color:#0f0;border:1px solid #0f0;border-radius:6px;padding:4px 10px;cursor:pointer;}
 
 /* ══════ COMPUTADOR ══════
-   O app nasceu pro celular: uma coluna de 720px no meio. Tudo daqui pra baixo só
-   vale em tela larga (≥900px) e só ALARGA — nenhuma regra de celular muda, então o
-   telefone continua idêntico. A ideia é usar o espaço, não redesenhar: cada tela ganha
-   a largura que a ajuda, e trava onde largura demais atrapalha. */
+   O app é mobile-first: uma coluna de 720px no meio, e assim fica no celular, que é a
+   prioridade. Tudo daqui pra baixo só vale em tela larga (≥900px) — nenhuma regra de
+   celular muda. Aqui ele deixa de imitar o telefone numa faixa central e vira layout de
+   computador: menu numa barra à esquerda, e cada tela usando a largura do jeito que a
+   ajuda. */
 @media (min-width:900px){
-  .brandrow{max-width:1180px;}
-  main{max-width:1180px;padding:20px 24px 60px;}
+  /* — barra lateral: as abas do topo viram um menu vertical fixo, fundo claro (branco
+       no tema claro; o equivalente do tema escuro no escuro). O conteúdo desloca pra
+       depois dela. — */
+  .tabs{position:fixed;left:0;top:0;bottom:0;width:216px;z-index:60;
+    flex-direction:column;align-items:stretch;justify-content:flex-start;gap:4px;
+    background:var(--surface);border:0;border-right:1px solid var(--line);
+    border-radius:0;padding:74px 14px 20px;overflow-y:auto;}
+  .tab{flex:0 0 auto;text-align:left;padding:12px 16px;border-radius:12px;font-size:15px;
+    font-weight:700;}
+  .tab:not(.active):hover{background:var(--surface2);}
+  header{margin-left:216px;}
+  main{margin-left:216px;max-width:none;padding:22px 32px 60px;}
 
-  /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior, não
-     melhor. A tela toda fica centrada num tamanho confortável, como no celular. */
+  /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior. A tela
+     fica centrada num tamanho confortável, como no celular. */
   #view-estudar{max-width:600px;margin:0 auto;}
 
-  /* Cartas: as linhas viram uma grade de cartões. Uma linha de 1180px de largura deixa
-     o 🔊 e o interruptor a um palmo do pinyin — em coluna dupla/tripla a linha volta a
-     ter tamanho de linha. Os controles de cima ficam à esquerda, no tamanho de sempre. */
+  /* Cartas: uma LISTA, com as informações internas alinhadas em colunas — hanzi,
+     pinyin, tradução, tema, ações — como uma tabela que se lê de cima a baixo. */
   #view-cartas .search{max-width:520px;}
-  #cardlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
-    gap:10px;align-content:start;}
-  #cardlist .card{margin:0;}
-  #cardlist.frases{grid-template-columns:1fr;}
-  #cardlist > p{grid-column:1/-1;}
+  #cardlist{display:block;max-width:1000px;}
+  #cardlist .card{margin:0 0 8px;padding:12px 16px;}
+  #cardlist .rowline{display:grid;
+    grid-template-columns:52px minmax(0,1fr) 130px 40px 48px;align-items:center;gap:16px;}
+  #cardlist .rowline .h{min-width:0;}
+  /* o miolo (pinyin | tradução) vira duas colunas dentro da sua célula; a nota desce
+     pra baixo ocupando as duas. O pinyin fixo em 150px alinha de linha em linha. */
+  #cardlist .mid{display:grid;grid-template-columns:150px minmax(0,1fr);
+    align-items:baseline;gap:16px;}
+  #cardlist .mid .n{grid-column:1/-1;margin-top:3px;}
+  #cardlist .rowline .pill{align-self:center;margin-top:0;}
+  /* frase é uma linha longa, não cabe em colunas estreitas: volta a ocupar a largura */
+  #cardlist.frases .rowline{display:flex;}
 
-  /* Progresso é leitura, não grade infinita: os gráficos ficam legíveis num bloco
-     centrado em vez de esticados de ponta a ponta. */
-  #view-progresso{max-width:840px;margin:0 auto;}
+  /* Progresso: os blocos se espalham em duas colunas (masonry por altura). As cinco
+     estatísticas viram uma fileira só em cima. */
+  #view-progresso{max-width:1000px;}
+  #view-progresso .stats{grid-template-columns:repeat(5,1fr);}
+  #view-progresso .stat.wide{grid-column:auto;}
+  .pgrid{columns:2;column-gap:20px;}
+  .pblock{break-inside:avoid;margin:0 0 6px;}
+  .pblock .sec{margin-top:0;}
 
-  /* Grade é a única que QUER a largura toda: é a tela do "ver tudo de uma vez". Só o
-     botão e o contador ficam centrados; a grade em si vai de ponta a ponta e abre a
-     dúzia de colunas que no celular não cabia. */
-  #gradebtn,#grade-count{max-width:600px;margin-left:auto;margin-right:auto;}
-  .grade{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));}
+  /* Grade é a única que quer a largura toda — é a tela do "ver tudo". Só o botão e a
+     linha do contador ficam centrados; a grade vai de ponta a ponta. O tamanho do
+     cartão parte de um pouco maior no PC, e o A−/A+ ajusta a partir daí. */
+  #gradebtn{max-width:600px;margin-left:auto;margin-right:auto;}
+  .gradetop{max-width:600px;margin-left:auto;margin-right:auto;}
+  #gradewrap{--gtam:96px;}
 
-  /* As folhas param de subir do rodapé — num monitor largo isso fica deslocado — e
-     viram uma janela central, cantos arredondados dos quatro lados. */
+  /* As folhas param de subir do rodapé — deslocado num monitor — e viram janela central. */
   .sheet{position:fixed;left:50%;top:50%;right:auto;bottom:auto;
     transform:translate(-50%,-50%);width:min(520px,92vw);max-width:520px;
     border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.35);
     animation:sheetpop .2s cubic-bezier(.2,.7,.3,1);}
   .sheet.scroll{max-height:82vh;}
-  .sheet .handle{display:none;} /* não se arrasta uma janela central pra fechar */
+  .sheet .handle{display:none;}
   @keyframes sheetpop{from{opacity:0;transform:translate(-50%,-50%) scale(.97);}
     to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
 }
@@ -873,7 +903,13 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <span class="mcur" id="gradecur">🔥 Erros</span>
     <span class="marrow">▼</span>
   </button>
-  <div class="counter" id="grade-count"></div>
+  <div class="gradetop">
+    <div class="counter" id="grade-count"></div>
+    <div class="gradetam" id="grade-tam">
+      <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
+      <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
+    </div>
+  </div>
   <div id="gradewrap"></div>
 </section>
 
@@ -924,23 +960,35 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <div class="stat"><b id="s-aprendidas">–</b><small>aprendidas (≥21d)</small></div>
     <div class="stat"><b id="s-streak">–</b><small>dias seguidos 🔥</small></div>
   </div>
-  <h3 class="sec">Revisões · últimos 14 dias</h3>
-  <div class="card">
-    <div class="bars" id="bars"></div>
-    <div class="barlabels" id="barlabels"></div>
+  <!-- cada bloco (título + cartão) fica junto num .pblock; no PC o .pgrid espalha os
+       blocos em duas colunas (break-inside:avoid mantém o cartão inteiro). No celular
+       os dois são div sem estilo, então empilham igual a antes. -->
+  <div class="pgrid">
+    <div class="pblock">
+      <h3 class="sec">Revisões · últimos 14 dias</h3>
+      <div class="card">
+        <div class="bars" id="bars"></div>
+        <div class="barlabels" id="barlabels"></div>
+      </div>
+    </div>
+    <div class="pblock">
+      <h3 class="sec">Por habilidade</h3>
+      <div class="card" id="habstats"></div>
+    </div>
+    <div class="pblock">
+      <h3 class="sec">Palavra por palavra</h3>
+      <div class="chips" id="statsort"></div>
+      <div class="card" id="wordstats"></div>
+    </div>
+    <div class="pblock">
+      <h3 class="sec">A turma</h3>
+      <div class="card" id="turma"></div>
+    </div>
+    <div class="pblock">
+      <h3 class="sec">Por deck</h3>
+      <div class="card" id="deckstats"></div>
+    </div>
   </div>
-  <h3 class="sec">Por habilidade</h3>
-  <div class="card" id="habstats"></div>
-
-  <h3 class="sec">Palavra por palavra</h3>
-  <div class="chips" id="statsort"></div>
-  <div class="card" id="wordstats"></div>
-
-  <h3 class="sec">A turma</h3>
-  <div class="card" id="turma"></div>
-
-  <h3 class="sec">Por deck</h3>
-  <div class="card" id="deckstats"></div>
   <div style="text-align:center;margin-top:22px">
     <button class="btn danger" id="resetbtn">Zerar meu progresso</button>
   </div>
