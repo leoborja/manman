@@ -228,6 +228,18 @@ A frase não entra na grade: ela toma a linha inteira, e intercalada com as pala
 
 Total de palavras no deck, revisões de hoje, novas disponíveis, aprendidas (agendadas pra 21+ dias), sequência de dias 🔥, gráfico das suas últimas 2 semanas e o **gráfico da turma** (uma linha por pessoa, ordenado por total — barra cheia = dia em que bateu a meta). Toque ou passe o mouse nas barras pra ver o número. "Zerar meu progresso" apaga local + nuvem (só o seu).
 
+## 🖥️ No computador
+
+O app é o mesmo — HTML/JS num arquivo só, servido no Pages, aberto no navegador do celular ou do PC. Ele nasceu **mobile-first**: uma coluna de 720px no meio, e é assim que fica no telefone, que segue sendo a prioridade. Em tela larga (≥900px) entra um bloco de CSS que só **alarga**, nunca redesenha — nenhuma regra de celular muda, então o telefone fica byte a byte igual.
+
+Cada tela ganha a largura que a ajuda e trava onde largura demais atrapalha:
+
+- **Grade** vai de ponta a ponta (é a tela do "ver tudo de uma vez") e abre uma dúzia de colunas; só o botão e o contador ficam centrados.
+- **Cartas** vira uma grade de cartões (2–3 colunas): uma linha de 1180px deixaria o 🔊 a um palmo do pinyin.
+- **Estudar** fica centrado num tamanho confortável — ler um flashcard de 1000px é pior, não melhor.
+- **Progresso** fica num bloco centrado, pros gráficos seguirem legíveis.
+- As **folhas** param de subir do rodapé e viram uma janela central.
+
 ## Estrutura técnica
 
 | Arquivo | O quê |

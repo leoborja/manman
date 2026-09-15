@@ -661,6 +661,51 @@ box-shadow:0 4px 14px rgba(0,0,0,.25);}
 font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 #debugbar.show{display:flex;}
 #debugbar button{background:#222;color:#0f0;border:1px solid #0f0;border-radius:6px;padding:4px 10px;cursor:pointer;}
+
+/* ══════ COMPUTADOR ══════
+   O app nasceu pro celular: uma coluna de 720px no meio. Tudo daqui pra baixo só
+   vale em tela larga (≥900px) e só ALARGA — nenhuma regra de celular muda, então o
+   telefone continua idêntico. A ideia é usar o espaço, não redesenhar: cada tela ganha
+   a largura que a ajuda, e trava onde largura demais atrapalha. */
+@media (min-width:900px){
+  .brandrow{max-width:1180px;}
+  main{max-width:1180px;padding:20px 24px 60px;}
+
+  /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior, não
+     melhor. A tela toda fica centrada num tamanho confortável, como no celular. */
+  #view-estudar{max-width:600px;margin:0 auto;}
+
+  /* Cartas: as linhas viram uma grade de cartões. Uma linha de 1180px de largura deixa
+     o 🔊 e o interruptor a um palmo do pinyin — em coluna dupla/tripla a linha volta a
+     ter tamanho de linha. Os controles de cima ficam à esquerda, no tamanho de sempre. */
+  #view-cartas .search{max-width:520px;}
+  #cardlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+    gap:10px;align-content:start;}
+  #cardlist .card{margin:0;}
+  #cardlist.frases{grid-template-columns:1fr;}
+  #cardlist > p{grid-column:1/-1;}
+
+  /* Progresso é leitura, não grade infinita: os gráficos ficam legíveis num bloco
+     centrado em vez de esticados de ponta a ponta. */
+  #view-progresso{max-width:840px;margin:0 auto;}
+
+  /* Grade é a única que QUER a largura toda: é a tela do "ver tudo de uma vez". Só o
+     botão e o contador ficam centrados; a grade em si vai de ponta a ponta e abre a
+     dúzia de colunas que no celular não cabia. */
+  #gradebtn,#grade-count{max-width:600px;margin-left:auto;margin-right:auto;}
+  .grade{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));}
+
+  /* As folhas param de subir do rodapé — num monitor largo isso fica deslocado — e
+     viram uma janela central, cantos arredondados dos quatro lados. */
+  .sheet{position:fixed;left:50%;top:50%;right:auto;bottom:auto;
+    transform:translate(-50%,-50%);width:min(520px,92vw);max-width:520px;
+    border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+    animation:sheetpop .2s cubic-bezier(.2,.7,.3,1);}
+  .sheet.scroll{max-height:82vh;}
+  .sheet .handle{display:none;} /* não se arrasta uma janela central pra fechar */
+  @keyframes sheetpop{from{opacity:0;transform:translate(-50%,-50%) scale(.97);}
+    to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+}
 </style>
 </head>
 <body>
