@@ -3142,6 +3142,7 @@ async function loadCompeticao() {
     }
     compData = by;
     compLog = lr.ok ? await lr.json() : [];
+    logTurma = compLog; // a seção da turma agora vive aqui, e lê o mesmo review_log
   } catch (e) { compData = null; }
 }
 function compUsuarios() {
@@ -3312,7 +3313,6 @@ function compLogRegistro(u) {
 
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
-  renderTurma();
   renderHabStats();
   renderWordStats();
   const t = todayStr();
@@ -3351,13 +3351,14 @@ function renderProgress() {
 function switchView(v) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.v === v));
   document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v));
-  if (v === 'progresso') {
-    renderProgress();
-    loadLogTurma().then(renderTurma); // busca a cada visita: o colega pode ter estudado agora
-  }
+  if (v === 'progresso') renderProgress();
   if (v === 'cartas') renderList();
   if (v === 'grade') renderGrade();
-  if (v === 'competicao') { renderCompeticao(); loadCompeticao().then(renderCompeticao); }
+  if (v === 'competicao') {
+    renderCompeticao(); renderTurma();
+    // busca a cada visita: o colega pode ter estudado agora
+    loadCompeticao().then(() => { renderCompeticao(); renderTurma(); });
+  }
   if (v === 'estudar') resumeFlash(); else pauseFlash();
   // desligar uma carta na aba Cartas pode trocar a carta atual com a aba Estudar
   // escondida — e aí a grade nasceu sem largura pra medir. Volta, remede.
@@ -3667,7 +3668,6 @@ async function init() {
     renderGrade();
     renderProgress();
     renderStreak(); // o syncPull pode ter trazido revisões feitas em outro aparelho
-    loadLogTurma().then(renderTurma);
   } else {
     $('login').classList.add('show');
     startSession();
