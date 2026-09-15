@@ -331,13 +331,15 @@ sobre eles depende do plano da conta.
 
 ## Roadmap
 
+As ideias novas (pesquisa de 14/09 com o Daily Hanzi e mais 14 apps), priorizadas e com esforço estimado, estão em [`docs/ideias.md`](docs/ideias.md).
+
 - [x] ~~Ranking da turma~~ — gráfico "A turma · últimos 14 dias" no Progresso, ordenado por total (18/08)
 - [ ] Aba Progresso turbinada (heatmap, taxa de acerto, previsão)
 - [x] ~~Reativar voz gravada~~ — resolvido com gravação nativa do Wikimedia (14/08)
-- [ ] Áudio das 6 sem gravação (妈, 森, 丁 e os 3 nomes) — caem no TTS. Provavelmente **fechar sem fazer nada**: o problema do TTS é 3º tom isolado, e nenhuma das seis é esse caso
+- [ ] Áudio das 30 palavras sem gravação nativa (não existem no Shtooka nem na Lingua Libre) — caem no TTS. Opções e lista em [`docs/ideias.md`](docs/ideias.md#pendências-abertas-1509)
 - [x] ~~Filtro por aula na tela de estudo~~ — feito em 17/08
 - [x] ~~Treino de reconhecimento rápido~~ — chave **⚡ Relâmpago** por cima de qualquer modo, com pausa (21/08)
-- [ ] Radical/decomposição nas cartas
+- [ ] Radical/decomposição nas cartas — segunda leva em [`docs/ideias.md`](docs/ideias.md#segunda-leva)
 - [ ] **Domínio próprio** — `manman.com.br` já registrado (Cloud Arbitration). Ordem: DNS primeiro (4 registros `A` da raiz pra `185.199.108.153`, `.109.153`, `.110.153`, `.111.153` e `CNAME` do `www` pra `leoborja.github.io`), depois o domínio em Settings → Pages, depois **Enforce HTTPS** (sem isso o PWA não instala). Três detalhes:
   - Se o DNS for pela Cloudflare, mantenha a **nuvem cinza** até o GitHub emitir o certificado — com o proxy ligado ele não valida o domínio. Só depois, se quiser proxy, use SSL **Full (strict)**: no Flexible dá loop de redirecionamento.
   - Com proxy ligado, exclua `app.js`, `index.html` e `config.js` do cache. O service worker busca a casca na rede primeiro (com prazo de 3s) e conta com o servidor devolver a versão nova.
