@@ -347,6 +347,7 @@ let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 's
 let cartasDeck = 'todos';        // filtro da aba Cartas
 let cartasFiltro = 'tema';       // 'tema' | 'aula' — mesma ideia do filtro de estudo
 let cartasTipo = 'palavra';      // 'palavra' | 'frase' — a aba lista UM tipo por vez
+let cartasGrupo = 'nada';        // 'nada' | 'tema' | 'aula' — agrupa a lista em seções
 
 // ── helpers ─────────────────────────────────────────────────
 function load(key, fallback) {
@@ -2186,6 +2187,47 @@ function renderBulk() {
     renderCartasChips(); renderList(); renderGrade(); startSession();
   };
 }
+// uma linha da lista — separada pra servir tanto a lista corrida quanto os grupos
+function cartaLinha(c) {
+  // a frase bloqueada por palavra desligada fica apagada como as desligadas, mas com o
+  // interruptor ligado — porque ele é dela. A linha diz qual palavra a está segurando.
+  const bloq = palavraDesligada(c);
+  return '<div class="card' + (isOff(c.id) || bloq ? ' offrow' : '') + '"><div class="rowline">' +
+    '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
+    '<div class="mid"><div class="p">' + pinyinColored(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
+    (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') +
+    (bloq ? '<div class="n">🚫 fora da rotação: ' + esc(bloq) + ' está desligada</div>' : '') + '</div>' +
+    '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
+    '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
+    '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
+    (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
+    '</div></div>';
+}
+// as seções da lista quando "agrupar por" está ligado. Independente do filtro de cima:
+// agrupa o que quer que tenha sobrado dele. Grupo é ordenado (tema por rótulo, aula por
+// data); dentro dele a ordem é a do deck.
+function cartasGrupos(list) {
+  if (cartasGrupo === 'tema') {
+    return [...new Set(list.map(c => c.deck))]
+      .sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt'))
+      .map(d => ({ rot: deckLabel(d), cards: list.filter(c => c.deck === d) }));
+  }
+  if (cartasGrupo === 'aula') {
+    return opcoesAula(list).filter(a => a !== 'todas')
+      .map(a => ({ rot: aulaLabel(a), cards: list.filter(c => casaAula(c, a)) }))
+      .filter(g => g.cards.length);
+  }
+  return [{ rot: null, cards: list }];
+}
+const CARTAS_GRUPOS = [['nada', '⬜ Sem grupo'], ['tema', '🏷️ Tema'], ['aula', '📅 Aula']];
+function renderCartasGrupobar() {
+  $('cartas-grupobar').innerHTML = '<span class="rot">Agrupar</span>' + CARTAS_GRUPOS.map(([k, t]) =>
+    '<button class="chip' + (cartasGrupo === k ? ' active' : '') + '" data-g="' + k + '">' +
+    t + '</button>').join('');
+  $('cartas-grupobar').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
+    cartasGrupo = ch.dataset.g; renderList();
+  });
+}
 function renderList() {
   const q = $('search').value.trim().toLowerCase();
   const list = cartasFiltradas().filter(c =>
@@ -2204,22 +2246,12 @@ function renderList() {
     ? '<b>' + list.length + '</b> de ' + base + ' ' + nome
     : '<b>' + base + '</b> ' + nome + ' no deck';
   $('cardlist').className = cartasTipo === 'frase' ? 'frases' : '';
-  $('cardlist').innerHTML = list.map(c => {
-    // a frase bloqueada por palavra desligada fica apagada como as desligadas, mas com o
-    // interruptor ligado — porque ele é dela. A linha diz qual palavra a está segurando.
-    const bloq = palavraDesligada(c);
-    return '<div class="card' + (isOff(c.id) || bloq ? ' offrow' : '') + '"><div class="rowline">' +
-    '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
-    '<div class="mid"><div class="p">' + pinyinColored(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
-    (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') +
-    (bloq ? '<div class="n">🚫 fora da rotação: ' + esc(bloq) + ' está desligada</div>' : '') + '</div>' +
-    '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
-    '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
-    '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
-    (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
-    '</div></div>';
-  }).join('') || '<p style="color:var(--mut);text-align:center">Nenhuma ' +
+  renderCartasGrupobar();
+  const vazio = '<p style="color:var(--mut);text-align:center">Nenhuma ' +
       (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
+  $('cardlist').innerHTML = list.length ? cartasGrupos(list).map(g =>
+    (g.rot ? '<h3 class="cartas-sec">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></h3>' : '') +
+    g.cards.map(cartaLinha).join('')).join('') : vazio;
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
     if (c) speak(c);

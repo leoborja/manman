@@ -437,6 +437,13 @@ border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transitio
 .switch input:checked + .knob{background:var(--ok);}
 .switch input:checked + .knob:before{transform:translateX(18px);}
 .card.offrow{opacity:.55;}
+.grupobar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 10px;}
+.grupobar .rot{font-size:10.5px;font-weight:800;color:var(--soft);text-transform:uppercase;
+letter-spacing:.5px;margin-right:2px;}
+.cartas-sec{display:flex;align-items:baseline;gap:7px;margin:16px 0 8px;font-size:11.5px;
+font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
+.cartas-sec:first-child{margin-top:0;}
+.cartas-sec span{font-size:11px;font-weight:700;color:var(--soft);letter-spacing:0;}
 
 /* grade — o deck inteiro numa tela só */
 #gradesheet .filtros{display:flex;gap:6px;flex-wrap:wrap;}
@@ -901,6 +908,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <div class="chips" id="cartas-chips"></div>
   </div>
   <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
+  <!-- agrupar por, como na Grade: separa a lista em seções com cabeçalho, sem tirar
+       nada da tela. É independente do filtro/📅 acima (que escolhe UM), então dá pra
+       filtrar por aula e ainda ver agrupado por tema. -->
+  <div class="grupobar" id="cartas-grupobar"></div>
   <div class="counter" id="cartas-count"></div>
   <div id="bulkbar"></div>
   <div id="cardlist"></div>
