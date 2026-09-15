@@ -2281,19 +2281,21 @@ function gradeGrupos(list) {
     .map(d => ({ rot: deckLabel(d), cards: list.filter(c => c.deck === d) }));
 }
 // O quadradinho: pictograma em cima, pinyin embaixo.
-// Duas codificações que não se atropelam — a opacidade é do TEXTO e diz o quanto você
-// sabe; o vermelho é do FUNDO e diz o quanto você tropeça. Se a opacidade valesse no
-// quadrado inteiro, a carta que você mais erra (pouco domínio) lavaria justamente o
-// vermelho mais forte, que é o que você precisa enxergar de longe.
+// UMA codificação só, e ela é do fundo: branco = tranquila, e vai ficando vermelho
+// conforme você tropeça. Aprendida é fundo branco com borda verde — a carta saiu da
+// escala, não é o primeiro degrau dela.
+// Já teve uma segunda camada aqui, a opacidade do texto dizendo o quanto você sabe.
+// Duas escalas no mesmo quadrado não se leem: você olhava e não sabia se aquele tom
+// mais claro queria dizer "ainda não sei" ou "não erro". Uma escala e uma borda, que
+// são coisas de natureza diferente, a tela inteira se lê de longe.
 // Pinyin sem as cores de tom de propósito: em 76px, com fundo vermelho atrás, cinco
 // cores de sílaba viram ruído em cima do código que esta tela existe pra mostrar.
 function gradeTile(c) {
-  const d = dominio(c.id);
   const tier = erroTier(c);
   const fora = foraDaRotacao(c);
   const erros = erroCount(c.id);
   const tip = [c.pt,
-    srs[c.id] ? Math.round(d * 100) + '% de domínio' : 'nunca vista',
+    srs[c.id] ? Math.round(dominio(c.id) * 100) + '% de domínio' : 'nunca vista',
     erros ? erros + (erros > 1 ? ' tropeços' : ' tropeço') : null,
     fora ? '🚫 fora da rotação' : null].filter(Boolean).join(' · ');
   // 30px só cabe no pictograma solto: 汉堡肉 nesse tamanho quebra em duas linhas e
@@ -2301,8 +2303,7 @@ function gradeTile(c) {
   const n = Math.min(4, limpaHanzi(c.hanzi).length || 1);
   return '<button class="gcard n' + n + (ehFrase(c) ? ' frase' : '') + (tier ? ' e' + tier : '') +
     (aprendida(c.id) ? ' ok' : '') + (fora ? ' off' : '') +
-    '" style="--op:' + (0.52 + 0.48 * d).toFixed(2) + '"' +
-    ' data-id="' + esc(c.id) + '" data-tip="' + esc(tip) + '">' +
+    '" data-id="' + esc(c.id) + '" data-tip="' + esc(tip) + '">' +
     '<span class="gh zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
     '<span class="gp">' + esc(c.pinyin) + '</span></button>';
 }

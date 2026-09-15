@@ -18,7 +18,8 @@
 --line:#e7e9ee;--txt:#1b1d21;--mut:#6b7078;--soft:#8b9098;
 --pill:#eef0f4;--pilltx:#4a4f57;
 --shadow:0 1px 2px rgba(20,22,28,.05),0 6px 18px rgba(20,22,28,.06);
---radius:18px;}
+--radius:18px;
+--e1:rgba(200,16,46,.09);--e2:rgba(200,16,46,.19);--e3:rgba(200,16,46,.3);--e4:rgba(200,16,46,.42);}
 html[data-theme="dark"]{
 --bg:#0c0d0f;--surface:#17181c;--surface2:#1c1e23;
 --line:#2a2d33;--txt:#eceef2;--mut:#9a9ea6;--soft:#7c828b;
@@ -445,15 +446,12 @@ text-transform:uppercase;letter-spacing:.6px;margin:2px 0 -1px;}
 .gradebar .chip.gsep{margin-left:auto;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
-.gradelegend{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;
-color:var(--mut);font-size:11px;margin:0 0 14px;}
+.gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
+color:var(--mut);font-size:11px;margin:0 0 16px;}
 .gradelegend span{display:flex;align-items:center;gap:5px;}
-.gradelegend .lg{width:13px;height:13px;border-radius:4px;border:1px solid var(--line);
+.gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
+.lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
 background:var(--surface);flex:0 0 auto;}
-.gradelegend .lg-op{background:linear-gradient(90deg,rgba(107,112,120,.25),var(--txt));border:0;}
-.gradelegend .lg-err{background:linear-gradient(rgba(200,16,46,.28),rgba(200,16,46,.28)),var(--surface);
-border-color:var(--red);}
-.gradelegend .lg-ok{border-color:var(--ok);border-width:2px;}
 .gradegrupo{margin:0 0 16px;}
 .gradegrupo h3{display:flex;align-items:baseline;gap:7px;margin:0 0 8px;font-size:11.5px;
 font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
@@ -462,10 +460,6 @@ font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
 .gcard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
 min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;
 padding:10px 6px 9px;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);font:inherit;}
-/* A opacidade é do TEXTO, não do quadrado: se valesse no quadrado inteiro, a carta que
-   você mais erra (pouco domínio) lavaria justamente o vermelho mais forte — que é o que
-   esta tela existe pra deixar você achar de longe. */
-.gcard .gh,.gcard .gp{opacity:var(--op,1);}
 .gcard .gh{font-size:30px;line-height:1.15;white-space:nowrap;}
 .gcard.n2 .gh{font-size:27px;}
 .gcard.n3 .gh{font-size:21px;}
@@ -474,16 +468,24 @@ padding:10px 6px 9px;color:var(--txt);cursor:pointer;box-shadow:var(--shadow);fo
 max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* As quatro faixas do filtro 🔥 (1, 3, 5, 8 tropeços). Camada de cor POR CIMA do
    --surface em vez de cor sólida: o mesmo vermelho serve nos dois temas. */
-.gcard.e1{background:linear-gradient(rgba(200,16,46,.07),rgba(200,16,46,.07)),var(--surface);
-border-color:rgba(200,16,46,.22);}
-.gcard.e2{background:linear-gradient(rgba(200,16,46,.14),rgba(200,16,46,.14)),var(--surface);
-border-color:rgba(200,16,46,.36);}
-.gcard.e3{background:linear-gradient(rgba(200,16,46,.21),rgba(200,16,46,.21)),var(--surface);
-border-color:rgba(200,16,46,.52);}
-.gcard.e4{background:linear-gradient(rgba(200,16,46,.3),rgba(200,16,46,.3)),var(--surface);
+.gcard.e1,.lg.e1{background:linear-gradient(var(--e1),var(--e1)),var(--surface);
+border-color:rgba(200,16,46,.26);}
+.gcard.e2,.lg.e2{background:linear-gradient(var(--e2),var(--e2)),var(--surface);
+border-color:rgba(200,16,46,.4);}
+.gcard.e3,.lg.e3{background:linear-gradient(var(--e3),var(--e3)),var(--surface);
+border-color:rgba(200,16,46,.56);}
+.gcard.e4,.lg.e4{background:linear-gradient(var(--e4),var(--e4)),var(--surface);
 border-color:var(--red);}
-.gcard.ok{border-color:var(--ok);border-width:2px;padding:9px 5px 8px;}
-.gcard.off{opacity:.45;border-style:dashed;box-shadow:none;}
+/* Aprendida sai da escala do vermelho: fundo branco e borda verde. Não é "o degrau
+   zero de tropeço" — é outra coisa, e por isso fala por uma borda, não por um tom. */
+.gcard.ok,.lg.ok{background:var(--surface);border-color:var(--ok);border-width:2px;}
+.gcard.ok{padding:9px 5px 8px;}
+/* fora da rotação diz o que é pelo traço e pelo cinza, não por transparência: a tela
+   perdeu a opacidade como significado e não vale a pena trazê-la de volta pra um caso só */
+.gcard.off,.lg.off{border-style:dashed;}
+.gcard.off{box-shadow:none;background:var(--surface2);}
+.gcard.off .gh{color:var(--soft);}
+.gcard.off .gp{color:var(--mut);}
 /* Frase não cabe em 76px: 我爸爸很喜欢喝啤酒 vira uma coluna de caracteres espremidos.
    Ela toma a linha toda e fica deitada, do jeito que se lê. */
 .gradefrases{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
@@ -799,10 +801,12 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     </div>
   </div>
   <div class="counter" id="grade-count"></div>
+  <!-- a legenda desenha a escala inteira, e não uma amostra dela: "mais vermelho = mais
+       tropeço" não diz onde começa nem quantos degraus são -->
   <div class="gradelegend">
-    <span><i class="lg lg-op"></i> mais firme = você sabe mais</span>
-    <span><i class="lg lg-err"></i> mais vermelho = você tropeça mais</span>
-    <span><i class="lg lg-ok"></i> aprendida</span>
+    <span><span class="escala"><i class="lg"></i><i class="lg e1"></i><i class="lg e2"></i><i class="lg e3"></i><i class="lg e4"></i></span> tranquila → você tropeça muito</span>
+    <span><i class="lg ok"></i> aprendida</span>
+    <span><i class="lg off"></i> fora da rotação</span>
   </div>
   <div id="gradewrap"></div>
 </section>
