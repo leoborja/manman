@@ -208,3 +208,13 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 什 | shén | [Zh-shén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%A9n.ogg) | 神 | Yue Tan | CC BY-SA 3.0 us |
 | 喜 | xǐ | [Zh-xǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C7%90.ogg) | 洗 or 喜 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 打 | dǎ | [Zh-dǎ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C7%8E.ogg) | 打 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 贝 | bèi | [Zh-bèi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C3%A8i.ogg) | 被 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 玉 | yù | [Zh-yù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%B9.ogg) | 愈 | Yue Tan | CC BY-SA 3.0 us |
+| 矢 | shǐ | [Zh-shǐ.oga](https://commons.wikimedia.org/wiki/File%3AZh-sh%C7%90.oga) | 施 | Yue Tan | CC BY-SA 3.0 us |
+| 匕 | bǐ | [Zh-bǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C7%90.ogg) | 笔 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 意 | yì | [Zh-yì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%AC.ogg) | 亿 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 利 | lì | [Zh-lì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%AC.ogg) | 力 | Yue Tan | CC BY-SA 3.0 us |
+| 德 | dé | [Zh-dé.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%A9.ogg) | 得 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 萄 | táo | [Zh-táo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A1o.ogg) | 桃 | Yue Tan | CC BY-SA 3.0 us |
+| 牙 | yá | [Zh-yá.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A1.ogg) | 崖 | Yue Tan | CC BY-SA 3.0 us |
+| 泰 | tài | [Zh-tài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A0i.ogg) | 太 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
