@@ -218,3 +218,4 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 萄 | táo | [Zh-táo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A1o.ogg) | 桃 | Yue Tan | CC BY-SA 3.0 us |
 | 牙 | yá | [Zh-yá.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A1.ogg) | 崖 | Yue Tan | CC BY-SA 3.0 us |
 | 泰 | tài | [Zh-tài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A0i.ogg) | 太 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 和 | hé | [Zh-hé.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A9.ogg) | 和 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

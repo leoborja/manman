@@ -492,5 +492,7 @@
   {"id":"fr-medico-advogado","tipo":"frase","hanzi":"我是医生，他是律师","pinyin":"Wǒ shì yīshēng, tā shì lǜshī","pt":"Eu sou médico, ele é advogado","deck":"identidade","fonte":"cap3","nota":"医生 = 'nascido da medicina'; 律师 = 'mestre da lei'. Profissão é sempre um composto assim"},
   {"id":"fr-professor-mandarim","tipo":"frase","hanzi":"老师说汉语","pinyin":"Lǎoshī shuō Hànyǔ","pt":"O professor fala mandarim","deck":"escola","fonte":"cap3","nota":"说 é falar uma língua. O 讠do lado esquerdo é o radical de 'fala'"},
   {"id":"fr-mae-musica","tipo":"frase","hanzi":"我妈妈喜欢音乐","pinyin":"Wǒ māma xǐhuan yīnyuè","pt":"Minha mãe gosta de música","deck":"gostos","fonte":"cap2","nota":"音乐 = som + alegria. Aqui 乐 lê-se yuè, não lè como em 快乐 — mesmo desenho"},
-  {"id":"fr-obrigado-voce","tipo":"frase","hanzi":"谢谢你","pinyin":"Xièxie nǐ","pt":"Obrigado a você","deck":"saudacoes","fonte":"cap1","nota":"谢谢 dobrado suaviza; o 讠de 'fala' aparece nos dois"}
+  {"id":"fr-obrigado-voce","tipo":"frase","hanzi":"谢谢你","pinyin":"Xièxie nǐ","pt":"Obrigado a você","deck":"saudacoes","fonte":"cap1","nota":"谢谢 dobrado suaviza; o 讠de 'fala' aparece nos dois"},
+  {"id":"putao","hanzi":"葡萄","pinyin":"pútáo","pt":"uva","deck":"comida","fonte":"cap3","nota":"Os dois caracteres só existem nesta dupla — nenhum significa nada sozinho. 葡萄牙 (Portugal) é 'dente de uva', mas só pelo som."},
+  {"id":"he-e","hanzi":"和","pinyin":"hé","pt":"e (liga substantivos)","deck":"uteis","fonte":"extra-aula","nota":"Só liga COISAS: 牛奶和果汁. Não liga frases — 'eu como e bebo' não leva 和; o chinês encosta as duas com vírgula."}
 ]
