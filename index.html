@@ -627,6 +627,35 @@ h3.sec{font-size:13px;color:var(--red);margin:20px 0 10px;text-transform:upperca
 border:1px solid var(--line);overflow:hidden;margin-top:3px;}
 .habrow .hbar i{display:block;height:100%;background:var(--red);}
 .habrow.vazio .hnome,.habrow.vazio .hnum{opacity:.5;}
+/* domínio por capítulo — mesma anatomia da .habrow (nome à esquerda, número à direita,
+   barra ocupando a linha de baixo), porque as duas respondem a mesma forma de pergunta
+   e alinhá-las deixa a coluna inteira com um ritmo só. A diferença é que aqui a barra
+   é EMPILHADA: o cheio são as aprendidas, o desbotado são as que já foram vistas mas
+   ainda não fecharam 21 dias, e o que sobra é o que nunca saiu do baralho. É uma escala
+   só — o mesmo vermelho em três intensidades — pra dar pra ler de relance qual capítulo
+   está maduro sem precisar consultar legenda. */
+.caprow{display:grid;grid-template-columns:1fr auto;gap:3px 12px;padding:10px 2px;font-size:14px;}
+.caprow + .caprow{border-top:1px solid var(--line);}
+.caprow .cnome{font-weight:700;color:var(--txt);}
+.caprow .cnome small{display:block;font-weight:500;color:var(--mut);font-size:11.5px;line-height:1.3;}
+.caprow .cnum{text-align:right;color:var(--mut);font-size:12px;white-space:nowrap;}
+.caprow .cnum b{display:block;color:var(--txt);font-size:17px;line-height:1.2;}
+.caprow .cnum small{display:block;font-size:11.5px;}
+.caprow .cbar{grid-column:1/-1;height:7px;border-radius:99px;background:var(--surface2);
+border:1px solid var(--line);overflow:hidden;margin-top:3px;display:flex;}
+.caprow .cbar i{display:block;height:100%;background:var(--red);}
+.caprow .cbar i.vis{opacity:.28;}
+/* capítulo em que ninguém tocou ainda: some o peso do nome pra ele não competir com
+   os que têm barra pra mostrar */
+.caprow.vazio .cnome,.caprow.vazio .cnum{opacity:.5;}
+/* a régua do rodapé é o único texto que explica os três tons; fica embaixo de todas as
+   linhas, uma vez só, em vez de uma legenda por barra */
+.capleg{display:flex;flex-wrap:wrap;gap:4px 14px;border-top:1px solid var(--line);
+margin-top:8px;padding-top:10px;color:var(--mut);font-size:11.5px;font-weight:600;}
+.capleg span{display:flex;align-items:center;gap:5px;}
+.capleg i{width:10px;height:10px;border-radius:3px;background:var(--red);flex:0 0 auto;}
+.capleg i.vis{opacity:.28;}
+.capleg i.nao{background:var(--surface2);border:1px solid var(--line);}
 .tomx{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;}
 .tomx>b{display:block;font-size:13.5px;color:var(--txt);}
 .tomx p{margin:4px 0 10px;font-size:13px;color:var(--mut);line-height:1.45;}
@@ -1095,6 +1124,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
           <div class="bars" id="bars"></div>
           <div class="barlabels" id="barlabels"></div>
         </div>
+      </div>
+      <div class="pblock">
+        <h3 class="sec">Por capítulo</h3>
+        <div class="card" id="capstats"></div>
       </div>
       <div class="pblock">
         <h3 class="sec">Por habilidade</h3>
