@@ -3311,8 +3311,43 @@ function compLogRegistro(u) {
   return reg;
 }
 
+// Quanto de cada capítulo já está de pé. A pergunta aqui é COMPARATIVA — "vou melhor no
+// 2 ou no 3?" — e é por isso que este bloco não é um filtro em cima dos outros gráficos:
+// filtro mostra um capítulo por vez e obriga a decorar o anterior pra comparar.
+//
+// O denominador ignora carta desligada: ela saiu da rotação de propósito, então contá-la
+// como "falta aprender" seria cobrar por uma dívida que a pessoa já perdoou.
+function renderCapStats() {
+  const origens = [...new Set(cards.map(origemDe))]
+    .sort((a, b) => ordemOrigem(a) - ordemOrigem(b) || a.localeCompare(b));
+  const linhas = origens.map(o => {
+    const todas = cards.filter(c => origemDe(c) === o);
+    const nOff = todas.filter(c => isOff(c.id)).length;
+    const pool = todas.filter(c => !isOff(c.id));
+    if (!pool.length) return '';               // capítulo inteiro desligado não vira linha
+    const apr = pool.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
+    const vis = pool.filter(c => srs[c.id] && srs[c.id].ivl < LEARNED_IVL).length;
+    const pct = Math.round(apr / pool.length * 100);
+    // "12 de 34" em vez de "12/34": o segundo lê como fração e este número não é uma
+    const detalhe = apr + ' de ' + pool.length + (vis ? ' · ' + vis + ' começada' + (vis > 1 ? 's' : '') : '')
+      + (nOff ? ' · ' + nOff + ' 🚫' : '');
+    return '<div class="caprow' + (apr + vis ? '' : ' vazio') + '">' +
+      '<span class="cnome">' + esc(origemLabel(o)) + '<small>' + esc(detalhe) + '</small></span>' +
+      '<span class="cnum"><b>' + pct + '%</b><small>aprendido</small></span>' +
+      '<span class="cbar">' +
+        '<i style="width:' + (apr / pool.length * 100) + '%"></i>' +
+        '<i class="vis" style="width:' + (vis / pool.length * 100) + '%"></i>' +
+      '</span></div>';
+  }).join('');
+  $('capstats').innerHTML = linhas ? linhas +
+    '<div class="capleg"><span><i></i>aprendida (≥' + LEARNED_IVL + 'd)</span>' +
+    '<span><i class="vis"></i>começada</span><span><i class="nao"></i>nunca vista</span></div>'
+    : '<p class="wempty">O deck ainda não tem carta com capítulo marcado.</p>';
+}
+
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
+  renderCapStats();
   renderHabStats();
   renderWordStats();
   const t = todayStr();
