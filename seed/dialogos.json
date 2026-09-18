@@ -3,81 +3,144 @@
     "id": "dl-como-vai",
     "titulo": "Como vai?",
     "deck": "saudacoes",
-    "cena": "Você encontra um colega na porta da escola.",
+    "cena": "Você encontra a Lin Na na porta da escola. Ela vem falando antes de você.",
     "falas": [
+      { "quem": "outro", "card": "fr-oi-libo" },
+      { "quem": "voce", "card": "fr-como-vai", "dica": "cumprimente de volta perguntando se ela está bem" },
+      { "quem": "outro", "card": "fr-bem-obrigado" },
       { "quem": "outro", "card": "fr-como-vai" },
-      { "quem": "voce", "card": "fr-bem-e-voce", "dica": "diga que está bem — e devolva a pergunta com 你呢" },
-      { "quem": "outro", "card": "fr-tambem-bem" },
-      { "quem": "outro", "card": "fr-voce-ocupado" },
-      { "quem": "voce", "card": "fr-nao-ocupado", "dica": "diga que não está ocupado" }
+      { "quem": "voce", "card": "fr-cansado", "dica": "diga a verdade: você está muito cansado" },
+      { "quem": "outro", "card": "fr-voce-sono" },
+      { "quem": "voce", "card": "fr-sono-cafe", "dica": "diga que está com sono e quer beber café" },
+      { "quem": "outro", "card": "fr-quer-cafe" },
+      { "quem": "voce", "card": "fr-quero-cafe", "dica": "aceite: você quer café" },
+      { "quem": "outro", "card": "fr-pais-bem" },
+      { "quem": "voce", "card": "fr-todos-bem", "dica": "diga que eles estão todos bem — a resposta pede o 都" },
+      { "quem": "outro", "card": "fr-e-seu-irmao" },
+      { "quem": "voce", "card": "fr-meu-irmao-ocupado", "dica": "diga que seu irmão mais velho está ocupado" },
+      { "quem": "outro", "card": "fr-ele-ocupado" },
+      { "quem": "voce", "card": "fr-todos-ocupados", "dica": "feche a conversa: estamos todos ocupados" }
     ]
   },
   {
     "id": "dl-me-chamo",
     "titulo": "Como você se chama?",
     "deck": "nomes",
-    "cena": "Primeiro dia de aula. Você é o 力波 (Libo) e alguém puxa conversa.",
+    "cena": "Primeiro dia de aula. Você é o 力波 (Libo) e a colega do lado puxa conversa.",
     "falas": [
       { "quem": "outro", "card": "fr-como-chama" },
       { "quem": "voce", "card": "fr-me-chamo-libo", "dica": "diga seu nome: você é o 力波" },
       { "quem": "outro", "card": "fr-chamo-linna" },
       { "quem": "outro", "card": "fr-brasileiro-e-voce" },
       { "quem": "voce", "card": "fr-tambem-brasil", "dica": "você também é brasileiro — a resposta pede o 也" },
-      { "quem": "outro", "card": "fr-somos-amigos" }
+      { "quem": "outro", "card": "fr-voce-prof" },
+      { "quem": "voce", "card": "fr-medico-nao-prof", "dica": "corrija nas duas partes: não é professor, é médico" },
+      { "quem": "outro", "card": "fr-mae-medica" },
+      { "quem": "outro", "card": "fr-quem-e" },
+      { "quem": "voce", "card": "fr-este-amigo", "dica": "apresente: este é meu amigo" },
+      { "quem": "outro", "card": "fr-ela-pais" },
+      { "quem": "voce", "card": "fr-ela-chinesa", "dica": "diga que ela é chinesa" },
+      { "quem": "outro", "card": "fr-ding-china" },
+      { "quem": "voce", "card": "fr-professores-chineses", "dica": "diga que os nossos professores são todos chineses" },
+      { "quem": "outro", "card": "fr-somos-amigos" },
+      { "quem": "voce", "card": "fr-obrigado-voce", "dica": "agradeça a ela" }
     ]
   },
   {
     "id": "dl-no-cafe",
     "titulo": "No café",
     "deck": "comida",
-    "cena": "Você senta com um amigo e o garçom já vem vindo.",
+    "cena": "Vocês dois sentam e o garçom já vem vindo.",
     "falas": [
       { "quem": "outro", "card": "fr-beber-oque" },
       { "quem": "voce", "card": "fr-quero-cafe", "dica": "peça um café" },
       { "quem": "outro", "card": "fr-quer-cerveja" },
       { "quem": "voce", "card": "fr-nao-cerveja", "dica": "recuse: você não bebe cerveja" },
       { "quem": "outro", "card": "fr-porque-cerveja" },
-      { "quem": "voce", "card": "fr-sono-cafe", "dica": "explique: está com sono e quer é café" }
+      { "quem": "voce", "card": "fr-sono-cafe", "dica": "explique: está com sono, e o que quer é café" },
+      { "quem": "outro", "card": "fr-alemao-cerveja" },
+      { "quem": "outro", "card": "fr-frances-cafe" },
+      { "quem": "voce", "card": "fr-todos-cafe", "dica": "diga que todos nós bebemos café" },
+      { "quem": "outro", "card": "fr-quer-coca" },
+      { "quem": "voce", "card": "fr-sede-suco", "dica": "diga que está com sede e quer suco" },
+      { "quem": "outro", "card": "fr-quer-leite" },
+      { "quem": "voce", "card": "fr-gosto-leite", "dica": "diga que gosta de beber leite" },
+      { "quem": "outro", "card": "fr-gosta-beber-oque" },
+      { "quem": "voce", "card": "fr-gosto-cha", "dica": "diga que você gosta mesmo é de chá" },
+      { "quem": "outro", "card": "fr-ele-cha" },
+      { "quem": "voce", "card": "fr-suco-nao-cerveja", "dica": "feche o pedido: não quero cerveja, quero suco" }
     ]
   },
   {
     "id": "dl-com-fome",
     "titulo": "Com fome",
     "deck": "comida",
-    "cena": "Meio-dia, e alguém da turma chama você pra comer.",
+    "cena": "Meio-dia. Alguém da turma chama você pra comer.",
     "falas": [
       { "quem": "outro", "card": "fr-fome" },
       { "quem": "voce", "card": "fr-quero-arroz", "dica": "diga que está com fome e quer arroz" },
+      { "quem": "outro", "card": "fr-irmao-arroz" },
+      { "quem": "outro", "card": "fr-tailandes-arroz" },
+      { "quem": "voce", "card": "fr-gosto-carne", "dica": "diga do que VOCÊ gosta: carne" },
+      { "quem": "outro", "card": "fr-quero-hamburguer" },
+      { "quem": "voce", "card": "fr-todos-hamburguer", "dica": "diga que todos nós queremos hambúrguer" },
       { "quem": "outro", "card": "fr-qual-bebida" },
       { "quem": "voce", "card": "fr-sede-suco", "dica": "diga que está com sede e quer suco" },
       { "quem": "outro", "card": "fr-gosta-tofu" },
-      { "quem": "voce", "card": "fr-nao-tofu", "dica": "seja sincero: você não gosta de tofu" }
+      { "quem": "voce", "card": "fr-nao-tofu", "dica": "seja sincero: você não gosta de tofu" },
+      { "quem": "outro", "card": "fr-irma-refri" },
+      { "quem": "outro", "card": "fr-pai-refrigerante" },
+      { "quem": "voce", "card": "fr-quero-maca", "dica": "diga que você quer uma maçã" },
+      { "quem": "outro", "card": "fr-quer-cafe" },
+      { "quem": "voce", "card": "fr-tambem-cafe", "dica": "diga que você também quer café" }
     ]
   },
   {
     "id": "dl-familia",
     "titulo": "A família na foto",
     "deck": "familia",
-    "cena": "Alguém está vendo uma foto da sua família.",
+    "cena": "Vocês estão vendo fotos de família no celular.",
     "falas": [
       { "quem": "outro", "card": "fr-sua-avo" },
       { "quem": "voce", "card": "fr-avo-materna", "dica": "corrija: não é a 奶奶, é a avó materna" },
       { "quem": "outro", "card": "fr-pais-bem" },
       { "quem": "voce", "card": "fr-todos-bem", "dica": "diga que eles estão todos bem" },
+      { "quem": "outro", "card": "fr-tem-irmao" },
+      { "quem": "voce", "card": "fr-tenho-irma", "dica": "diga o que você tem: uma irmã mais velha" },
       { "quem": "outro", "card": "fr-e-seu-irmao" },
-      { "quem": "voce", "card": "fr-meu-irmao-ocupado", "dica": "diga que seu irmão mais velho está ocupado" }
+      { "quem": "voce", "card": "fr-meu-irmao-ocupado", "dica": "diga que seu irmão mais velho está ocupado" },
+      { "quem": "outro", "card": "fr-irmao-nao-ocupado" },
+      { "quem": "outro", "card": "fr-este-irmao" },
+      { "quem": "voce", "card": "fr-irmao-alto", "dica": "elogie: meu irmão mais velho é alto" },
+      { "quem": "outro", "card": "fr-irma-rapida" },
+      { "quem": "voce", "card": "fr-irma-estudante", "dica": "diga que sua irmã mais nova é estudante" },
+      { "quem": "outro", "card": "fr-filha-feliz" },
+      { "quem": "voce", "card": "fr-amo-avo", "dica": "diga que você ama sua avó materna" },
+      { "quem": "outro", "card": "fr-avos-bem" },
+      { "quem": "voce", "card": "fr-avo-bem", "dica": "diga que o seu avô está bem" }
     ]
   },
   {
     "id": "dl-na-aula",
     "titulo": "Na aula",
     "deck": "escola",
-    "cena": "A aula vai começar e o professor chega.",
+    "cena": "O professor chega e a aula vai começar.",
     "falas": [
       { "quem": "voce", "card": "fr-bom-dia-prof", "dica": "cumprimente o professor — são duas sílabas só" },
+      { "quem": "outro", "card": "fr-oi-voces" },
       { "quem": "outro", "card": "fr-estuda-o-que" },
       { "quem": "voce", "card": "fr-estudo-chines", "dica": "diga que você estuda chinês" },
+      { "quem": "outro", "card": "fr-todos-mandarim" },
+      { "quem": "outro", "card": "fr-fala-ingles" },
+      { "quem": "voce", "card": "fr-falo-chines", "dica": "desconverse: diga que você fala chinês" },
+      { "quem": "outro", "card": "fr-abre-livro" },
+      { "quem": "voce", "card": "fr-quero-livro", "dica": "você não trouxe o seu: peça um livro" },
       { "quem": "outro", "card": "fr-pagina-20" },
+      { "quem": "outro", "card": "fr-pagina-6" },
+      { "quem": "voce", "card": "fr-aula-ingles-hoje", "dica": "avise que hoje você tem aula de inglês" },
+      { "quem": "outro", "card": "fr-prof-lingua" },
+      { "quem": "voce", "card": "fr-nao-gosto-mat", "dica": "admita: você não gosta de matemática" },
+      { "quem": "outro", "card": "fr-aula-musica" },
       { "quem": "voce", "card": "fr-obrigado-prof", "dica": "agradeça ao professor" }
     ]
   },
@@ -90,9 +153,18 @@
       { "quem": "outro", "card": "fr-ocupado-hoje" },
       { "quem": "voce", "card": "fr-hoje-ocupado", "dica": "diga que hoje você está muito ocupado" },
       { "quem": "outro", "card": "fr-voce-sono" },
-      { "quem": "voce", "card": "fr-muito-cansado", "dica": "diga que está extremamente cansado (非常)" },
+      { "quem": "voce", "card": "fr-muito-cansado", "dica": "diga que está extremamente cansado — use o 非常" },
       { "quem": "outro", "card": "fr-sono-cafe" },
-      { "quem": "voce", "card": "fr-tambem-cafe", "dica": "diga que você também quer café" }
+      { "quem": "voce", "card": "fr-tambem-cafe", "dica": "diga que você também quer café" },
+      { "quem": "outro", "card": "fr-todos-cansados" },
+      { "quem": "voce", "card": "fr-todos-ocupados", "dica": "diga que estamos todos ocupados" },
+      { "quem": "outro", "card": "fr-hoje-quente" },
+      { "quem": "voce", "card": "fr-porta-calor", "dica": "peça pra abrir a porta, porque você está com calor" },
+      { "quem": "outro", "card": "fr-nao-sede" },
+      { "quem": "voce", "card": "fr-sede-cerveja", "dica": "diga que VOCÊ está com sede e quer cerveja" },
+      { "quem": "outro", "card": "fr-hoje-contente" },
+      { "quem": "voce", "card": "fr-hoje-feliz", "dica": "diga que hoje você está muito feliz" },
+      { "quem": "outro", "card": "fr-todos-alegres" }
     ]
   },
   {
@@ -101,11 +173,22 @@
     "deck": "paises",
     "cena": "Vocês dois olham a turma nova e tentam adivinhar de onde cada um é.",
     "falas": [
+      { "quem": "outro", "card": "fr-quem-e" },
+      { "quem": "voce", "card": "fr-este-amigo", "dica": "responda: este é meu amigo" },
       { "quem": "outro", "card": "fr-ela-alema" },
       { "quem": "voce", "card": "fr-ela-chinesa", "dica": "corrija: ela é chinesa" },
       { "quem": "outro", "card": "fr-amigo-frances" },
       { "quem": "voce", "card": "fr-frances-cafe", "dica": "pergunte se francês bebe café" },
-      { "quem": "outro", "card": "fr-todos-cafe" }
+      { "quem": "outro", "card": "fr-todos-cafe" },
+      { "quem": "outro", "card": "fr-voce-brasil" },
+      { "quem": "voce", "card": "fr-brasileiro", "dica": "confirme: eu sou brasileiro" },
+      { "quem": "outro", "card": "fr-ele-canadense" },
+      { "quem": "voce", "card": "fr-libo-canadense", "dica": "diga que o 力波 é canadense" },
+      { "quem": "outro", "card": "fr-ele-coreano" },
+      { "quem": "voce", "card": "fr-tambem-tailandes", "dica": "discorde: ele também é tailandês" },
+      { "quem": "outro", "card": "fr-professor-alemao" },
+      { "quem": "voce", "card": "fr-nao-italiano", "dica": "deixe claro o que você não é: italiano" },
+      { "quem": "outro", "card": "fr-italiano-ocupado" }
     ]
   },
   {
@@ -117,7 +200,19 @@
       { "quem": "outro", "card": "fr-gosta-beber-oque" },
       { "quem": "voce", "card": "fr-gosto-cha", "dica": "diga que você gosta de beber chá" },
       { "quem": "outro", "card": "fr-quer-leite" },
-      { "quem": "voce", "card": "fr-gosto-leite", "dica": "diga que gosta de beber leite" }
+      { "quem": "voce", "card": "fr-gosto-leite", "dica": "diga que gosta de beber leite" },
+      { "quem": "outro", "card": "fr-gosta-musica" },
+      { "quem": "voce", "card": "fr-musica-chinesa", "dica": "diga que você gosta de música chinesa" },
+      { "quem": "outro", "card": "fr-mae-musica" },
+      { "quem": "voce", "card": "fr-aula-musica", "dica": "diga que você gosta da aula de música" },
+      { "quem": "outro", "card": "fr-nao-gosto-mat" },
+      { "quem": "voce", "card": "fr-nao-estudo-mat", "dica": "diga que você nem estuda matemática" },
+      { "quem": "outro", "card": "fr-amo-mae" },
+      { "quem": "voce", "card": "fr-amo-avo", "dica": "diga que você ama sua avó materna" },
+      { "quem": "outro", "card": "fr-gosto-carne" },
+      { "quem": "voce", "card": "fr-nao-tofu", "dica": "diga do que você não gosta: tofu" },
+      { "quem": "outro", "card": "fr-pai-cerveja" },
+      { "quem": "voce", "card": "fr-irmao-arroz", "dica": "conte do seu irmão mais novo: ele gosta de arroz" }
     ]
   }
 ]

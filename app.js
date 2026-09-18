@@ -2443,6 +2443,19 @@ function renderDialogo() {
   }
   ligaBotoesDialogo(c);
   renderCounter();
+  rolaAteAVez();
+}
+// A conversa cresce pra baixo, e a vez de falar está sempre no fim dela: numa de quinze
+// falas o campo de escrever nasce fora da tela, e sem isto a pessoa rolaria a página a
+// cada turno pra achar onde responder. Só rola quando já existe histórico — no começo a
+// conversa cabe inteira, e puxar a tela ali seria movimento sem motivo.
+function rolaAteAVez() {
+  if (!dialFeito.length) return;
+  const t = $('dialturno');
+  // sem `behavior: 'smooth'` de propósito: a animação depende de quadro pra rodar e não
+  // sobrevive a duas falas seguidas (a segunda cancela a primeira no meio). Aqui o salto
+  // é de um turno, e `end` deixa a fala anterior visível em cima — não desorienta.
+  if (t && t.scrollIntoView) t.scrollIntoView({ block: 'end' });
 }
 function ligaBotoesDialogo(c) {
   const em = (id, fn) => { const b = $(id); if (b) b.onclick = (e) => { e.stopPropagation(); fn(); }; };
@@ -2501,6 +2514,7 @@ function renderFimDoDialogo() {
                   : '<button class="typeskip" id="dial-fim">terminar</button>') + '</div>';
   ligaBotoesDialogo(cardDaFala(dialAtual.falas[dialAtual.falas.length - 1]));
   renderCounter();
+  rolaAteAVez(); // o placar também nasce no fim de uma tela e meia de conversa
 }
 
 // ── relâmpago ───────────────────────────────────────────────
