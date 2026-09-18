@@ -1143,15 +1143,28 @@ const GRADE_KEY = { good: 'g', hard: 'h', again: 'a' };
 // V2.7 — erro por HABILIDADE, não por modo. "Errei no teclado" é ambíguo: pode ser não
 // lembrar o som ou trocar o ideograma entre dois homófonos, e são fraquezas diferentes,
 // com treinos diferentes. O app já sabe qual das duas metades falhou — só não guardava.
+// O `alvo` diz só ONDE a habilidade aparece enquanto ainda não tem medição nenhuma. A
+// contagem de verdade é agrupada pela CARTA que a gerou, não por este campo: reconhecer
+// é 'ambos' porque o flashcard mostra frase e palavra, e cada uma conta do seu lado.
+// O `porGrupo` é pra esse caso: é a MESMA medida, mas na frase ela não se chama a mesma
+// coisa — falar em "ideograma" no meio de uma frase inteira descreve o exercício errado.
 const HABS = [
-  { k: 'rec',  nome: 'reconhecer o 汉字',   dica: 'vê o ideograma e lembra o que é' },
-  { k: 'som',  nome: 'lembrar o som',       dica: 'no teclado, digitar o pinyin certo' },
-  { k: 'ideo', nome: 'achar o ideograma',   dica: 'com o pinyin certo, escolher entre os homófonos' },
-  { k: 'esc',  nome: 'escrever de memória', dica: 'desenho com menos de ' + DRAW_OK + '% de proximidade' },
-  { k: 'ordem', nome: 'a ordem da frase',   dica: 'montar a frase com as palavras na ordem certa' },
-  { k: 'frase', nome: 'escrever a frase',   dica: 'digitar a frase inteira no teclado' },
-  { k: 'tomM', nome: 'tom de memória',      dica: 'marcar o tom vendo o ideograma' },
-  { k: 'tomO', nome: 'tom de ouvido',       dica: 'marcar o tom só ouvindo' }
+  { k: 'rec',   alvo: 'ambos',   nome: 'reconhecer o 汉字',   dica: 'vê o ideograma e lembra o que é',
+    porGrupo: { frase: { nome: 'ler a frase', dica: 'vê a frase e entende o que ela diz' } } },
+  { k: 'som',   alvo: 'palavra', nome: 'lembrar o som',       dica: 'no teclado, digitar o pinyin certo' },
+  { k: 'ideo',  alvo: 'palavra', nome: 'achar o ideograma',   dica: 'com o pinyin certo, escolher entre os homófonos' },
+  { k: 'esc',   alvo: 'palavra', nome: 'escrever de memória', dica: 'desenho com menos de ' + DRAW_OK + '% de proximidade' },
+  { k: 'ordem', alvo: 'frase',   nome: 'a ordem da frase',    dica: 'montar a frase com as palavras na ordem certa' },
+  { k: 'frase', alvo: 'frase',   nome: 'escrever a frase',    dica: 'digitar a frase inteira no teclado' },
+  { k: 'tomM',  alvo: 'palavra', nome: 'tom de memória',      dica: 'marcar o tom vendo o ideograma' },
+  { k: 'tomO',  alvo: 'palavra', nome: 'tom de ouvido',       dica: 'marcar o tom só ouvindo' }
+];
+// Palavra e frase são duas coisas diferentes de aprender, e numa lista só pareciam
+// concorrer na mesma escala — "a ordem da frase" com 40% de erro ao lado de "lembrar o
+// som" com 12% comparava alhos com bugalhos. Separadas, cada metade se lê por si.
+const HAB_GRUPOS = [
+  { g: 'palavra', titulo: 'Palavras', dica: 'o 汉字, o som e o tom de cada palavra' },
+  { g: 'frase',   titulo: 'Frases',   dica: 'pôr as palavras juntas, na ordem certa' }
 ];
 const TOM_CURTO = { 1: '1º', 2: '2º', 3: '3º', 4: '4º', 5: 'neutro' };
 function bumpStat(id, grade) {
@@ -3011,37 +3024,50 @@ function renderWordStats() {
 // valem pra palavra de um caractere: "14 erros de tom" sozinho não diz nada, "38% de erro
 // em 21 tentativas" diz. Por isso a tentativa aparece do lado de toda porcentagem.
 function renderHabStats() {
-  const tot = {};
-  HABS.forEach(h => tot[h.k] = { n: 0, e: 0 });
+  const tot = { palavra: {}, frase: {} };
+  HABS.forEach(h => { tot.palavra[h.k] = { n: 0, e: 0 }; tot.frase[h.k] = { n: 0, e: 0 }; });
   const conf = {};
   let nConf = 0;
   cards.forEach(c => {
     const s = stats[c.id];
     if (!s) return;
+    // o grupo sai da carta, não da habilidade: o mesmo 'rec' que a frase mediu não pode
+    // entrar na conta das palavras, senão a taxa de cada lado deixa de ser daquele lado
+    const t = tot[ehFrase(c) ? 'frase' : 'palavra'];
     if (s.hab) HABS.forEach(h => {
       const v = s.hab[h.k];
-      if (v) { tot[h.k].n += v.n || 0; tot[h.k].e += v.e || 0; }
+      if (v) { t[h.k].n += v.n || 0; t[h.k].e += v.e || 0; }
     });
     if (s.tomX) for (const par of Object.keys(s.tomX)) {
       conf[par] = (conf[par] || 0) + s.tomX[par];
       nConf += s.tomX[par];
     }
   });
-  if (!HABS.some(h => tot[h.k].n)) {
+  if (!HABS.some(h => tot.palavra[h.k].n || tot.frase[h.k].n)) {
     $('habstats').innerHTML = '<p class="wempty">Ainda sem medição, e ela só enxerga daqui ' +
       'pra frente: as revisões antigas não sabem de que modo vieram. O 🔀 Aleatório é o que ' +
       'enche isto mais rápido, porque te expõe aos quatro modos na mesma sessão.</p>';
     return;
   }
-  const linhas = HABS.map(h => {
-    const v = tot[h.k];
-    if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(h.nome) +
-      '<small>' + esc(h.dica) + '</small></span><span class="hnum">sem dados</span></div>';
+  const habrow = (h, v, g) => {
+    const r = (h.porGrupo && h.porGrupo[g]) || h;
+    if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(r.nome) +
+      '<small>' + esc(r.dica) + '</small></span><span class="hnum">sem dados</span></div>';
     const pct = Math.round(v.e / v.n * 100);
-    return '<div class="habrow"><span class="hnome">' + esc(h.nome) +
-      '<small>' + esc(h.dica) + '</small></span>' +
+    return '<div class="habrow"><span class="hnome">' + esc(r.nome) +
+      '<small>' + esc(r.dica) + '</small></span>' +
       '<span class="hnum"><b>' + pct + '%</b><small>de erro · ' + v.e + ' de ' + v.n + '</small></span>' +
       '<span class="hbar"><i style="width:' + Math.max(2, pct) + '%"></i></span></div>';
+  };
+  // Deck sem frase nenhuma não ganha um grupo inteiro de "sem dados" — mas se houver
+  // medição ali (frase apagada do deck, carta que trocou de tipo), ela continua visível.
+  const linhas = HAB_GRUPOS.map(gr => {
+    const t = tot[gr.g];
+    const hs = HABS.filter(h => t[h.k].n || ((h.alvo === gr.g || h.alvo === 'ambos') &&
+      (gr.g !== 'frase' || temFrases())));
+    if (!hs.length) return '';
+    return '<div class="habgrp"><b>' + esc(gr.titulo) + '</b><small>' + esc(gr.dica) +
+      '</small></div>' + hs.map(h => habrow(h, t[h.k], gr.g)).join('');
   }).join('');
   // A lista de pares é a resposta à pergunta que a contagem de erros não responde.
   // Duas ou três confusões concentram quase tudo — por isso só as cinco maiores.
