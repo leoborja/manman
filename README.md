@@ -134,13 +134,33 @@ A carta vira uma **grade 田字格**: um quadrado com uma cruz pontilhada no mei
 
 A pergunta é a palavra inteira **menos o ideograma**: o pinyin, a tradução e o áudio, os três juntos na mesma linha. Já foram três modos separados, um por pista — mas escrever é difícil o bastante sem também ter que adivinhar de que palavra se está falando.
 
-**A nota.** Validou, o app compara o seu traço com o traçado oficial e dá uma porcentagem de proximidade. **90% ou mais conta como certo.** O caractere certo aparece em cinza por baixo do seu desenho, então dá pra ver exatamente onde saiu do lugar ou o que faltou — e tocar na carta vira pro traçado animado, na ordem certa.
+#### Três níveis, e dois deles medem outra coisa
+
+Escrever de cabeça é o exercício certo pra quem já conhece o caractere e o exercício errado pra quem viu o 汉字 pela primeira vez na aula de ontem: a grade fica em branco, e grade em branco não ensina. Então a carta tem três chips, e trocar custa um toque — porque o nível certo é o da **palavra**, não o da pessoa: 人 se escreve de cabeça, 谢 não.
+
+| nível | a grade | o que ele cobra |
+| --- | --- | --- |
+| ✍️ **memória** | vazia | a proximidade — o desenho de sempre |
+| 👣 **guiado** | o ideograma apagado por baixo | você cobre inteiro e o **✓** dá a **% da ordem** |
+| 🚦 **ao vivo** | o mesmo fantasma | cada traço é conferido ao sair do dedo, e o **errado não cola** |
+
+**Os dois fáceis não são o difícil com desconto — é outra nota.** Com o ideograma na tela a proximidade para de medir: qualquer um cobre o fantasma e tira 100. O que sobra pra cobrar é justamente o que a nota de memória **não enxerga**, porque ela compara nuvens de pontos e nuvem de pontos não tem ordem: a **ordem** e o **sentido** dos traços — que é metade do que se aprende num 汉字 e o que o professor corrige na lousa.
+
+No **👣 guiado** o resultado pinta traço a traço: verde no que está na ordem, vermelho no que não está, e em cima do vermelho um **número** dizendo que traço ele era de verdade ("esse que você fez em terceiro é o quinto"). No **🚦 ao vivo** não existe ✓ — o traço fora da vez pisca em vermelho e some, e o que cola vira tinta de verdade; errou duas vezes no mesmo traço, ele **acende** na grade com uma bolinha em cima de onde se começa. A nota é quantos traços colaram **de primeira**, então acertar depois de ver a dica não conta.
+
+**Contadores separados.** "Escrever de memória" (o `esc` do Progresso) só conta o nível de memória — no guiado o ideograma está na tela, e jogar isso no mesmo número estragaria o diagnóstico que ele existe pra dar. Os dois fáceis alimentam **"a ordem dos traços"**, que é a habilidade que eles treinam.
+
+**A nota do ✍️ memória.** Validou, o app compara o seu traço com o traçado oficial e dá uma porcentagem de proximidade. **90% ou mais conta como certo.** O caractere certo aparece em cinza por baixo do seu desenho, então dá pra ver exatamente onde saiu do lugar ou o que faltou — e tocar na carta vira pro traçado animado, na ordem certa.
 
 A nota já vem com um dos botões sugerido (≥90% → Acertei, 75–89% → Difícil, abaixo → Errei), mas **quem decide é você**: é uma revisão normal, conta na meta de 30 e mexe no agendamento como qualquer outra.
 
 Como funciona por dentro: o app reamostra as **medianas** do caractere (o esqueleto, do makemeahanzi) e os seus traços em pontos igualmente espaçados, e mede os dois lados — quanto do caractere você cobriu **e** quanto do que você desenhou é caractere. Só o primeiro premiaria o rabisco que passa por tudo; só o segundo premiaria o traço caprichado que esquece metade. Antes de comparar, corrige **um pouco** de tamanho e de posição (até ±12% e ±7% do quadro), porque escrever com o dedo nunca cai no lugar exato — mas com trava, senão desenhar minúsculo num canto valeria 100%.
 
-A tolerância não é chute: o `tools/test_nota.js` roda a nota contra os 57 caracteres do deck deformados de três jeitos (aluno caprichado, médio e desengonçado) e contra todos os pares de caracteres trocados. Com a tolerância atual nenhum caractere errado passa dos 90% — o mais perigoso é 吗 na carta de 喝, que dá 88 porque dividem o 口 e quase toda a estrutura. A primeira tolerância que testei era três vezes mais frouxa e aprovava **38%** dos caracteres errados.
+**Como funciona a nota da ordem.** Cada traço seu vira o traço oficial **mais parecido** (a mesma média harmônica de cobertura e precisão, mas de um traço só contra um traço só), e só entra na conta se também estiver no **sentido** certo — 一 escrito da direita pra esquerda é o mesmo desenho e o traço errado, e é erro que a nuvem de pontos nunca pegaria. Depois o app conta quantos dos seus traços estão em ordem **entre si** (maior subsequência crescente), sobre o maior dos dois números de traços. Contar assim é mais justo que exigir "o seu 3º é o 3º oficial": quem parte um traço em dois erra **um** traço, não todos os que vêm depois dele.
+
+O `tools/test_ordem.js` calibra o quanto um traço do dedo tem que parecer com o oficial pra casar com ele. As duas faixas encostam — o pior traço certo dá 0.52 e o melhor traço de fora da vez dá 0.69 — e o dedo de verdade treme mais que o dedo do teste, então existe o traço certo que o app teima em recusar. Ficar preso no 3º traço de 谢 achando que o app quebrou é pior que deixar passar um traço torto, então **a partir da terceira tentativa a régua afrouxa** (e nessa altura o traço já está aceso na grade). Não é nota de graça: quem chegou ali já perdeu o "de primeira".
+
+A tolerância do ✍️ memória também não é chute: o `tools/test_nota.js` roda a nota contra os 57 caracteres do deck deformados de três jeitos (aluno caprichado, médio e desengonçado) e contra todos os pares de caracteres trocados. Com a tolerância atual nenhum caractere errado passa dos 90% — o mais perigoso é 吗 na carta de 喝, que dá 88 porque dividem o 口 e quase toda a estrutura. A primeira tolerância que testei era três vezes mais frouxa e aprovava **38%** dos caracteres errados.
 
 **Só palavras de um caractere — e só as que têm traçado.** A grade é uma só, então 你好 e 谢谢 ficam de fora. E a nota compara o seu traço com o traçado oficial: carta cujo caractere ainda não está no `strokes.json` (palavra nova antes de o `build_strokes.py` rodar, ou caractere que o makemeahanzi não tem) sai da sessão em vez de entrar nela com o "✓ Validar" mudo. Os dois quizzes de tom têm a mesma restrição, por outro motivo — o tom é de uma sílaba — e o de áudio ainda tira o tom neutro, que o TTS fala com tom cheio quando isolado. O contador no alto já mostra só o que a sessão vai perguntar, e quando o filtro não sobra nada o app diz qual é a restrição em vez de mostrar uma sessão vazia.
 
@@ -279,7 +299,7 @@ No PC ele deixa de imitar o telefone numa faixa central e vira layout de computa
 | `strokes/radicals.json` | traço→componente de cada caractere, pro radical em azul da Grade (makemeahanzi) |
 | `audio/nativo/*.mp3` | **em uso** — gravações de falantes nativos (Wikimedia/Shtooka); créditos em `audio/nativo/CREDITS.md` |
 | `audio/nativo/CREDITS.md` | atribuição por arquivo — autor, licença e qual caractere foi gravado |
-| `tools/` | `build_font.py`, `build_strokes.py`, `build_radicals.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho) |
+| `tools/` | `build_font.py`, `build_strokes.py`, `build_radicals.py`, `build_audio_nativo.py`, `build_audio.py`, `test_nota.js` (calibração da nota do desenho), `test_ordem.js` (calibração da nota da ordem dos traços) |
 | `sw.js` + `manifest.webmanifest` | PWA que funciona sem internet: casca pela rede com prazo de 3s e cópia se não vier, áudio da cópia atualizando por trás, Supabase fora do SW (as regras estão no cabeçalho do arquivo) |
 
 ### Por onde o conteúdo anda

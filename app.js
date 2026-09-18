@@ -112,6 +112,24 @@ const MODE_TITLES = {
   zh_tom: '🎯 汉字 → tom',
   tons: '🎧 áudio → tom'
 };
+// ── os três níveis do desenho ───────────────────────────────
+// Escrever de memória é o exercício certo pra quem já conhece o caractere e o exercício
+// errado pra quem viu o 汉字 pela primeira vez ontem: a grade fica em branco, e grade em
+// branco não ensina. Os dois níveis fáceis põem o ideograma apagado por baixo e cobram
+// OUTRA COISA — a ordem e o sentido dos traços, que é o que a nota de memória não
+// consegue ver (ela compara nuvens de pontos, e nuvem de pontos não tem ordem).
+//   memoria = grade vazia, nota de proximidade — o modo de sempre
+//   guiado  = fantasma na grade; você escreve inteiro e o ✓ diz quanto da ordem acertou
+//   aovivo  = fantasma na grade; cada traço é conferido ao sair do dedo e o errado não cola
+// É nível, não modo: fica no seletor do próprio desenho e não multiplica a lista de
+// modos (que o aleatório sorteia e o tipo filtra) por três.
+const ESCRITAS = ['memoria', 'guiado', 'aovivo'];
+const ESCRITA_LABEL = { memoria: '✍️ memória', guiado: '👣 guiado', aovivo: '🚦 ao vivo' };
+const ESCRITA_DICA = {
+  memoria: 'a grade vazia — escreva de cabeça',
+  guiado: 'cubra o ideograma apagado; o ✓ dá a nota da ordem',
+  aovivo: 'cubra na ordem certa; traço fora de ordem não cola'
+};
 
 // ── tons: detecção e cores ──────────────────────────────────
 // Convenção de cores (estilo MDBG/Pleco): 1º vermelho, 2º laranja, 3º verde, 4º azul, neutro cinza
@@ -301,6 +319,8 @@ if (settings.pron === undefined) settings.pron = true;   // idem
 if (settings.lento === undefined) settings.lento = false; // idem
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
 settings.flash = !!settings.flash;
+// quem já usava o app não tem o campo, e quem não tem escreve de memória, como antes
+if (!ESCRITAS.includes(settings.escrita)) settings.escrita = 'memoria';
 // No aleatório quem manda é o modo sorteado pra CARTA ATUAL; fora dele, o escolhido no
 // seletor. Tudo que pergunta "que modo é este?" passa por aqui, então a carta se monta,
 // se responde e se avalia como se aquele modo estivesse ligado sozinho.
@@ -308,6 +328,9 @@ function mixOn() { return settings.mode === 'mix'; }
 function modoKey() { return (mixOn() && modoCarta) ? modoCarta : settings.mode; }
 function modo() { return MODES[modoKey()] || MODES.zh_all; }
 function drawOn() { return !!modo().draw; }
+// O nível só existe dentro do desenho: fora dele não há grade pra ter fantasma.
+function escritaFacil() { return drawOn() && settings.escrita !== 'memoria'; }
+function aoVivoOn() { return drawOn() && settings.escrita === 'aovivo'; }
 function typeOn() { return !!modo().type; }
 function quizOn() { return !!modo().quiz; }
 function ordenarOn() { return !!modo().ordenar; }
@@ -347,6 +370,11 @@ let drawTrecho = null;           // traço em andamento (o dedo ainda na tela)
 let drawScore = null;            // nota da carta atual; null = ainda não validou
 let drawCtx = null;              // contexto 2d da grade
 let drawPx = 0;                  // lado da grade em px de CSS
+// ── só nos níveis fáceis ──
+let drawFeitos = 0;              // traços oficiais que o ao vivo já aceitou
+let drawPrimeira = 0;            // ...destes, quantos colaram na primeira tentativa
+let drawTentativas = 0;          // recusas seguidas no traço da vez (2 acende a dica)
+let drawRecusado = null;         // traço recusado agora há pouco, pra piscar em vermelho
 let ordPool = [];                // pílulas ainda não usadas, embaralhadas
 let ordEscolhido = [];           // a frase que você está montando, em ordem
 let ordResult = null;            // {ok} da carta atual; null = ainda não conferiu
@@ -642,6 +670,80 @@ function notaDesenho(ch, tracos) { // tracos: lista de polilinhas já em 0–102
   };
 }
 
+// ── desenho fácil: a nota da ORDEM ──────────────────────────
+// Com o ideograma na tela a nota de proximidade deixa de medir: qualquer um cobre o
+// fantasma e tira 100. O que sobra pra cobrar é justamente o que a outra nota não
+// enxerga — a ORDEM e o SENTIDO dos traços, que é metade do que se aprende num 汉字 e o
+// que o professor corrige na lousa. Duas notas diferentes porque são duas perguntas
+// diferentes, não porque uma é a outra com desconto.
+const ORD_MIN = 0.55;   // abaixo disto o traço não casa com traço oficial nenhum
+// A válvula do ao vivo. O tools/test_ordem.js mostra que as duas faixas encostam (o pior
+// traço certo dá 0.52 e o melhor traço de fora da vez dá 0.69), e o dedo de verdade treme
+// mais que o dedo do teste — então existe o traço certo que o app teima em recusar. Ficar
+// preso no 3º traço de 谢 achando que o app quebrou é pior que deixar passar um traço
+// torto, então a partir da terceira tentativa (com o traço da vez já aceso na grade) a
+// régua afrouxa. Não é nota de graça: quem chegou aqui já perdeu o "de primeira".
+const ORD_SOS = 0.40;
+const ORD_OK = 90;      // a partir daqui é acerto
+const ORD_QUASE = 70;   // ...e daqui, "quase"
+function medianaTela(d, i) { // traço oficial i, com o Y já virado pro sentido da tela
+  return d.m[i].map(p => [p[0], 900 - p[1]]);
+}
+// O quanto um traço do dedo e um traço oficial são o MESMO traço: média harmônica de
+// cobertura e precisão, igual à nota do desenho, mas de um traço só contra um traço só.
+function pareceTraco(tinta, oficial) {
+  const a = reamostra(tinta, DRAW_PASSO), b = reamostra(oficial, DRAW_PASSO);
+  if (!a.length || !b.length) return 0;
+  const cob = proximidade(b, a), pre = proximidade(a, b);
+  return cob + pre ? 2 * cob * pre / (cob + pre) : 0;
+}
+// 一 escrito da direita pra esquerda é o mesmo desenho e o traço errado — e é erro que a
+// nuvem de pontos nunca pegaria. Compara as duas pontas com as duas do oficial, direto e
+// invertido: ganha o que estiver mais perto.
+function mesmaDirecao(tinta, oficial) {
+  const a0 = tinta[0], a1 = tinta[tinta.length - 1];
+  const b0 = oficial[0], b1 = oficial[oficial.length - 1];
+  const d = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+  return d(a0, b0) + d(a1, b1) <= d(a0, b1) + d(a1, b0);
+}
+// Quais dos seus traços estão em ordem ENTRE SI (maior subsequência crescente). É mais
+// justo que exigir "o seu 3º é o 3º oficial": quem parte um traço em dois erra UM traço e
+// não todos os que vêm depois, e quem troca dois de lugar erra os dois. O(n²), e n é 9.
+function maiorCrescente(seq) {
+  const dp = seq.map(() => 0), pai = seq.map(() => -1);
+  let fim = -1, melhor = 0;
+  for (let i = 0; i < seq.length; i++) {
+    if (seq[i] < 0) continue; // traço que não casou com nada não entra em ordem nenhuma
+    dp[i] = 1;
+    for (let j = 0; j < i; j++)
+      if (seq[j] >= 0 && seq[j] < seq[i] && dp[j] + 1 > dp[i]) { dp[i] = dp[j] + 1; pai[i] = j; }
+    if (dp[i] > melhor) { melhor = dp[i]; fim = i; }
+  }
+  const dentro = new Set();
+  for (let i = fim; i >= 0; i = pai[i]) dentro.add(i);
+  return dentro;
+}
+function notaOrdem(ch, tracos) { // tracos: lista de polilinhas já em 0–1024
+  const d = strokesDB[ch];
+  if (!d || !d.m || !tracos || !tracos.length) return null;
+  const of = d.m.map((_, i) => medianaTela(d, i));
+  // cada traço seu vira o traço oficial mais parecido; o que não parece com nenhum, e o
+  // que foi feito ao contrário, fica de fora da contagem de ordem
+  const passos = tracos.map(t => {
+    let achou = -1, sim = 0;
+    of.forEach((o, j) => { const v = pareceTraco(t, o); if (v > sim) { sim = v; achou = j; } });
+    if (sim < ORD_MIN) achou = -1;
+    const dir = achou >= 0 && mesmaDirecao(t, of[achou]);
+    return { achou, dir, alvo: achou >= 0 && dir ? achou : -1 };
+  });
+  const dentro = maiorCrescente(passos.map(p => p.alvo));
+  passos.forEach((p, i) => p.ok = dentro.has(i));
+  // o denominador é o maior dos dois: traço a menos e traço a mais custam igual
+  const total = Math.max(tracos.length, of.length);
+  return { ordem: true, nota: Math.round(dentro.size / total * 100), certos: dentro.size,
+    total, tracos: tracos.length, oficial: of.length, passos };
+}
+
 // ── desenho: a grade e a tinta ──────────────────────────────
 function corVar(nome, alt) {
   const v = getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
@@ -675,26 +777,54 @@ function repintaPad() {
   c.moveTo(3, L / 2); c.lineTo(L - 3, L / 2);
   c.stroke();
   c.restore();
-  // depois de validar, o caractere certo aparece por baixo: dá pra ver onde saiu do lugar
-  if (drawScore && current && strokesDB[current.hanzi]) {
+  // O fantasma do caractere. Nos níveis fáceis ele está lá desde o começo — é ele que se
+  // cobre; no de memória aparece só depois de validar, pra mostrar onde o traço saiu do
+  // lugar. Cinza translúcido e não --pill: tem que ficar POR BAIXO da tinta, senão a
+  // parte que você acertou o esconde e some justamente a comparação.
+  if ((drawScore || escritaFacil()) && current && strokesDB[current.hanzi]) {
+    const d = strokesDB[current.hanzi];
+    const vivo = aoVivoOn();
     c.save();
-    // cinza translúcido, não --pill: o fantasma tem que aparecer POR BAIXO da tinta,
-    // senão a parte que você acertou o esconde e some justamente a comparação
-    c.globalAlpha = 0.22;
-    c.fillStyle = corVar('--txt', '#1b1d21');
     c.scale(k, k); c.translate(0, 900); c.scale(1, -1); // o Y do makemeahanzi é invertido
-    strokesDB[current.hanzi].s.forEach(p => c.fill(new Path2D(p)));
+    c.fillStyle = corVar('--txt', '#1b1d21');
+    c.globalAlpha = drawScore ? 0.22 : 0.14; // antes de validar é só um guia: bem apagado
+    // no ao vivo o traço que já colou sai do fantasma e vira tinta de verdade, logo abaixo
+    d.s.forEach((pd, i) => { if (!(vivo && i < drawFeitos)) c.fill(new Path2D(pd)); });
+    if (vivo) {
+      c.globalAlpha = 1;
+      c.fillStyle = corVar('--ok', '#2e9e5b');
+      for (let i = 0; i < drawFeitos; i++) c.fill(new Path2D(d.s[i]));
+      // errou duas vezes no mesmo traço: ele acende, e a bolinha diz por onde se começa.
+      // Duas e não uma: a primeira recusa ainda é chance de lembrar sozinho.
+      if (drawTentativas >= 2 && drawFeitos < d.s.length) {
+        c.globalAlpha = 0.45;
+        c.fillStyle = corVar('--red', '#c8102e');
+        c.fill(new Path2D(d.s[drawFeitos]));
+      }
+    }
     c.restore();
+    if (vivo && drawTentativas >= 2 && drawFeitos < d.m.length) {
+      const p0 = d.m[drawFeitos][0];
+      c.save();
+      c.fillStyle = corVar('--red', '#c8102e');
+      c.beginPath();
+      c.arc(p0[0] * k, (900 - p0[1]) * k, Math.max(5, L * 0.026), 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+    }
   }
   // a tinta do dedo
   c.save();
   c.lineWidth = Math.max(7, L * 0.05);
   c.lineCap = 'round'; c.lineJoin = 'round';
-  c.strokeStyle = c.fillStyle = !drawScore ? corVar('--txt', '#1b1d21')
-    : drawScore.nota >= DRAW_OK ? corVar('--ok', '#2e9e5b')
-    : drawScore.nota >= DRAW_QUASE ? corVar('--warn', '#d98a00')
+  // No guiado a nota é por traço, então a cor também é: cada traço fica verde ou vermelho
+  // conforme entrou na ordem ou não. Nos outros a cor é uma só, a da nota inteira.
+  const passos = drawScore && drawScore.passos;
+  const corBase = !drawScore ? corVar('--txt', '#1b1d21')
+    : drawScore.nota >= (drawScore.ordem ? ORD_OK : DRAW_OK) ? corVar('--ok', '#2e9e5b')
+    : drawScore.nota >= (drawScore.ordem ? ORD_QUASE : DRAW_QUASE) ? corVar('--warn', '#d98a00')
     : corVar('--err', '#c8102e');
-  drawInk.forEach(t => {
+  const risca = (t) => {
     if (t.length === 1) { // toque seco: um ponto (o 、 é isso mesmo)
       c.beginPath();
       c.arc(t[0][0] * k, t[0][1] * k, c.lineWidth / 2, 0, Math.PI * 2);
@@ -704,8 +834,35 @@ function repintaPad() {
     c.beginPath();
     t.forEach((p, i) => i ? c.lineTo(p[0] * k, p[1] * k) : c.moveTo(p[0] * k, p[1] * k));
     c.stroke();
+  };
+  drawInk.forEach((t, i) => {
+    const pas = passos && passos[i];
+    c.strokeStyle = c.fillStyle = pas
+      ? (pas.ok ? corVar('--ok', '#2e9e5b') : corVar('--err', '#c8102e')) : corBase;
+    risca(t);
   });
+  // o traço que o ao vivo acabou de recusar: pisca em vermelho e some
+  if (drawRecusado) {
+    c.strokeStyle = c.fillStyle = corVar('--err', '#c8102e');
+    c.globalAlpha = 0.55;
+    risca(drawRecusado);
+    c.globalAlpha = 1;
+  }
   c.restore();
+  // No guiado, o número em cima do traço errado diz que traço ele era de verdade: "esse
+  // que você fez em terceiro é o quinto". Só nos errados — nos nove todos viraria sopa.
+  if (passos) {
+    c.save();
+    c.font = '700 ' + Math.max(10, Math.round(L * 0.055)) + 'px system-ui, sans-serif';
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = corVar('--err', '#c8102e');
+    passos.forEach((pas, i) => {
+      if (pas.ok || !drawInk[i] || !drawInk[i].length) return;
+      const p0 = drawInk[i][0];
+      c.fillText(pas.achou >= 0 ? String(pas.achou + 1) : '?', p0[0] * k, p0[1] * k - L * 0.045);
+    });
+    c.restore();
+  }
 }
 function padXY(e) { // px da tela → o quadro 0–1024, que é onde a tinta é guardada
   const r = $('drawpad').getBoundingClientRect();
@@ -720,6 +877,7 @@ function padXY(e) { // px da tela → o quadro 0–1024, que é onde a tinta é 
 // difícil o bastante sem também ter que adivinhar de que palavra se está falando.
 function montaDesenho(card) {
   drawInk = []; drawTrecho = null; drawScore = null;
+  zeraFacil();
   const ask = $('drawask');
   ask.className = 'drawask';
   ask.innerHTML = '<span class="py">' + pinyinColored(card.pinyin) + '</span>' +
@@ -728,31 +886,98 @@ function montaDesenho(card) {
   $('drawspk').onclick = (e) => { e.stopPropagation(); speak(card); };
   $('drawfb').className = 'drawfb';
   $('drawfb').innerHTML = '';
+  renderEscritaChips();
   montaPad();
   renderDrawTools();
+}
+function zeraFacil() {
+  drawFeitos = 0; drawPrimeira = 0; drawTentativas = 0; drawRecusado = null;
+}
+// Os três níveis ficam na própria carta, e não no menu: o nível certo é o da PALAVRA —
+// 人 se escreve de cabeça, 谢 não — então trocar tem que custar um toque, no meio da
+// sessão, com a carta na frente.
+function renderEscritaChips() {
+  const box = $('drawlvl');
+  // com a nota na tela eles apagam: trocar a régua embaixo de uma nota já dada deixaria
+  // um número que não quer dizer mais nada, e chip que não faz nada tem que parecer isso
+  box.innerHTML = ESCRITAS.map(k =>
+    '<button data-esc="' + k + '" title="' + esc(ESCRITA_DICA[k]) + '"' +
+    (drawScore ? ' disabled' : '') +
+    (settings.escrita === k ? ' class="on"' : '') + '>' + ESCRITA_LABEL[k] + '</button>').join('');
+  box.querySelectorAll('button').forEach(b =>
+    b.onclick = (e) => { e.stopPropagation(); trocaEscrita(b.dataset.esc); });
+}
+function trocaEscrita(k) {
+  // depois de validar não troca: a nota na tela é de uma régua, e mudar a régua embaixo
+  // dela deixaria uma nota que não quer dizer mais nada
+  if (!ESCRITAS.includes(k) || k === settings.escrita || drawScore) return;
+  settings.escrita = k;
+  save(K.settings, settings);
+  if (!current || !drawOn()) return;
+  montaDesenho(current); // régua nova, desenho novo: recomeça a carta do zero
+  $('hint-f').textContent = dicaDesenho();
+  ajustaAltura();
+}
+function dicaDesenho() {
+  return settings.escrita === 'aovivo' ? 'cubra os traços na ordem — o errado não cola'
+    : settings.escrita === 'guiado' ? 'cubra o ideograma e toque em Validar'
+    : 'escreva o ideograma na grade e toque em Validar';
 }
 function renderDrawTools() {
   const vale = drawOn() && !!current && !drawScore;
   $('drawtools').classList.toggle('show', vale);
   const vazio = !drawInk.length;
+  // No ao vivo cada traço já foi conferido quando saiu do dedo: não sobra o que validar
+  // no fim, e desfazer um traço que o app aceitou seria desfazer a correção. Sobra o ✕,
+  // que ali quer dizer recomeçar a palavra — e ocupa a linha sozinho.
+  const vivo = aoVivoOn();
+  $('draw-undo').style.display = vivo ? 'none' : '';
+  $('draw-check').style.display = vivo ? 'none' : '';
+  $('draw-clear').classList.toggle('soz', vivo);
+  $('draw-clear').textContent = vivo ? '✕ Recomeçar' : '✕';
   $('draw-undo').disabled = vazio;
-  $('draw-clear').disabled = vazio;
+  $('draw-clear').disabled = vivo ? !drawFeitos && !drawTentativas : vazio;
   $('draw-check').disabled = vazio;
 }
 function validaDesenho() {
-  if (!current || drawScore || !drawInk.length) return;
-  const r = notaDesenho(current.hanzi, drawInk);
+  // o ao vivo não tem botão: ele fecha sozinho quando o último traço cola
+  if (!current || drawScore || !drawInk.length || aoVivoOn()) return;
+  const r = escritaFacil() ? notaOrdem(current.hanzi, drawInk) : notaDesenho(current.hanzi, drawInk);
   if (!r) return;
   drawScore = r;
-  bumpHab(current.id, 'esc', r.nota < DRAW_OK); // a nota, não o botão que você aperta depois
+  mostraNota();
+}
+function mostraNota() {
+  const r = drawScore;
+  const facil = escritaFacil();
+  const ok = facil ? ORD_OK : DRAW_OK, quase = facil ? ORD_QUASE : DRAW_QUASE;
+  // Duas notas, dois contadores. O 'esc' é "escrever de memória", e só o nível de memória
+  // o alimenta: no guiado o ideograma está na tela, e jogar isso no mesmo número
+  // estragaria o diagnóstico que ele existe pra dar. O que os fáceis treinam tem contador
+  // próprio — e a nota, não o botão que você aperta depois.
+  bumpHab(current.id, facil ? 'traco' : 'esc', r.nota < ok);
   repintaPad();
-  const g = r.nota >= DRAW_OK ? 'good' : r.nota >= DRAW_QUASE ? 'hard' : 'again';
+  renderEscritaChips(); // a nota apaga os chips
+  const g = r.nota >= ok ? 'good' : r.nota >= quase ? 'hard' : 'again';
   ajustaAltura(); // a nota entrou embaixo da grade
   const fb = $('drawfb');
+  const cab = (g === 'good' ? '对! ' : g === 'hard' ? 'Quase — ' : '');
   fb.className = 'drawfb ' + (g === 'good' ? 'ok' : g === 'hard' ? 'quase' : 'ruim');
-  fb.innerHTML = (g === 'good' ? '对! ' : g === 'hard' ? 'Quase — ' : '') + r.nota + '% de proximidade' +
-    '<small>' + esc(current.hanzi) + ' · ' + r.tracos + ' traço' + (r.tracos > 1 ? 's' : '') +
-    ' seus, ' + r.oficial + ' no ideograma</small>';
+  if (r.vivo) {
+    fb.innerHTML = cab + r.nota + '% de primeira' +
+      '<small>' + esc(current.hanzi) + ' · ' + r.certos + ' de ' + r.total +
+      ' traços colaram sem errar a vez</small>';
+  } else if (r.ordem) {
+    fb.innerHTML = cab + r.nota + '% da ordem' +
+      '<small>' + esc(current.hanzi) + ' · ' + r.certos + ' de ' + r.total +
+      ' traços na ordem certa' +
+      (r.tracos !== r.oficial ? ' · você fez ' + r.tracos + ', o ideograma tem ' + r.oficial : '') +
+      '</small>';
+  } else {
+    fb.innerHTML = cab + r.nota + '% de proximidade' +
+      '<small>' + esc(current.hanzi) + ' · ' + r.tracos + ' traço' + (r.tracos > 1 ? 's' : '') +
+      ' seus, ' + r.oficial + ' no ideograma</small>';
+  }
   $('hint-f').textContent = 'toque na carta pra ver o traçado certo';
   $('grades').classList.add('show');
   $('g-' + g).classList.add('sugerido'); // sugestão da nota; quem decide ainda é você
@@ -760,14 +985,47 @@ function validaDesenho() {
   if (settings.autoSpeak) speak(current, true);
 }
 function desfazTraco() {
-  if (drawScore || !drawInk.length) return;
+  if (drawScore || aoVivoOn() || !drawInk.length) return;
   drawInk.pop();
   repintaPad(); renderDrawTools();
 }
 function limpaDesenho() {
   if (drawScore) return;
   drawInk = []; drawTrecho = null;
+  zeraFacil();
   repintaPad(); renderDrawTools();
+}
+// Fim do traço. No ao vivo é aqui que o app confere, e a conferência é uma pergunta só:
+// este é o PRÓXIMO traço da ordem oficial, no sentido certo? Se não for, ele não cola —
+// é a recusa na hora que ensina a ordem, em vez de contar o estrago no fim.
+function fechaTraco() {
+  const t = drawTrecho;
+  drawTrecho = null;
+  if (!t || !aoVivoOn() || !current || drawScore) return;
+  const d = strokesDB[current.hanzi];
+  if (!d || drawFeitos >= d.m.length) return;
+  const alvo = medianaTela(d, drawFeitos);
+  // o sentido continua valendo sempre: 一 ao contrário é erro que não tem "quase"
+  const limite = drawTentativas >= 2 ? ORD_SOS : ORD_MIN;
+  const passou = pareceTraco(t, alvo) >= limite && mesmaDirecao(t, alvo);
+  drawInk.pop(); // a tinta solta nunca fica: ou vira traço aceito, ou some
+  if (passou) {
+    if (!drawTentativas) drawPrimeira++; // "de primeira" é a nota: acertar depois de ver a dica não conta
+    drawFeitos++; drawTentativas = 0;
+    repintaPad(); renderDrawTools();
+    if (drawFeitos >= d.m.length) fechaAoVivo();
+    return;
+  }
+  drawTentativas++;
+  drawRecusado = t;
+  repintaPad(); renderDrawTools();
+  setTimeout(() => { if (drawRecusado === t) { drawRecusado = null; repintaPad(); } }, 450);
+}
+function fechaAoVivo() {
+  const total = strokesDB[current.hanzi].m.length;
+  drawScore = { vivo: true, nota: Math.round(drawPrimeira / total * 100),
+    certos: drawPrimeira, total, tracos: total, oficial: total };
+  mostraNota();
 }
 // No DEDO o desenho é feito com eventos de toque, não com Pointer Events. Duas tentativas
 // de segurar a rolagem no iOS falharam antes desta, e as duas pelo mesmo motivo de fundo:
@@ -813,7 +1071,7 @@ function bindPad() {
     e.preventDefault();
     continuaTraco(padXY(e.changedTouches[0]));
   }, { passive: false });
-  const largou = () => { drawTrecho = null; };
+  const largou = () => { fechaTraco(); };
   pad.addEventListener('touchend', largou);
   pad.addEventListener('touchcancel', largou);
   // ── mouse e caneta ──
@@ -1143,15 +1401,29 @@ const GRADE_KEY = { good: 'g', hard: 'h', again: 'a' };
 // V2.7 — erro por HABILIDADE, não por modo. "Errei no teclado" é ambíguo: pode ser não
 // lembrar o som ou trocar o ideograma entre dois homófonos, e são fraquezas diferentes,
 // com treinos diferentes. O app já sabe qual das duas metades falhou — só não guardava.
+// O `alvo` diz só ONDE a habilidade aparece enquanto ainda não tem medição nenhuma. A
+// contagem de verdade é agrupada pela CARTA que a gerou, não por este campo: reconhecer
+// é 'ambos' porque o flashcard mostra frase e palavra, e cada uma conta do seu lado.
+// O `porGrupo` é pra esse caso: é a MESMA medida, mas na frase ela não se chama a mesma
+// coisa — falar em "ideograma" no meio de uma frase inteira descreve o exercício errado.
 const HABS = [
-  { k: 'rec',  nome: 'reconhecer o 汉字',   dica: 'vê o ideograma e lembra o que é' },
-  { k: 'som',  nome: 'lembrar o som',       dica: 'no teclado, digitar o pinyin certo' },
-  { k: 'ideo', nome: 'achar o ideograma',   dica: 'com o pinyin certo, escolher entre os homófonos' },
-  { k: 'esc',  nome: 'escrever de memória', dica: 'desenho com menos de ' + DRAW_OK + '% de proximidade' },
-  { k: 'ordem', nome: 'a ordem da frase',   dica: 'montar a frase com as palavras na ordem certa' },
-  { k: 'frase', nome: 'escrever a frase',   dica: 'digitar a frase inteira no teclado' },
-  { k: 'tomM', nome: 'tom de memória',      dica: 'marcar o tom vendo o ideograma' },
-  { k: 'tomO', nome: 'tom de ouvido',       dica: 'marcar o tom só ouvindo' }
+  { k: 'rec',   alvo: 'ambos',   nome: 'reconhecer o 汉字',   dica: 'vê o ideograma e lembra o que é',
+    porGrupo: { frase: { nome: 'ler a frase', dica: 'vê a frase e entende o que ela diz' } } },
+  { k: 'som',   alvo: 'palavra', nome: 'lembrar o som',       dica: 'no teclado, digitar o pinyin certo' },
+  { k: 'ideo',  alvo: 'palavra', nome: 'achar o ideograma',   dica: 'com o pinyin certo, escolher entre os homófonos' },
+  { k: 'esc',   alvo: 'palavra', nome: 'escrever de memória', dica: 'desenho com menos de ' + DRAW_OK + '% de proximidade' },
+  { k: 'traco', alvo: 'palavra', nome: 'a ordem dos traços',  dica: 'cobrindo o ideograma, seguir a ordem e o sentido certos' },
+  { k: 'ordem', alvo: 'frase',   nome: 'a ordem da frase',    dica: 'montar a frase com as palavras na ordem certa' },
+  { k: 'frase', alvo: 'frase',   nome: 'escrever a frase',    dica: 'digitar a frase inteira no teclado' },
+  { k: 'tomM',  alvo: 'palavra', nome: 'tom de memória',      dica: 'marcar o tom vendo o ideograma' },
+  { k: 'tomO',  alvo: 'palavra', nome: 'tom de ouvido',       dica: 'marcar o tom só ouvindo' }
+];
+// Palavra e frase são duas coisas diferentes de aprender, e numa lista só pareciam
+// concorrer na mesma escala — "a ordem da frase" com 40% de erro ao lado de "lembrar o
+// som" com 12% comparava alhos com bugalhos. Separadas, cada metade se lê por si.
+const HAB_GRUPOS = [
+  { g: 'palavra', titulo: 'Palavras', dica: 'o 汉字, o som e o tom de cada palavra' },
+  { g: 'frase',   titulo: 'Frases',   dica: 'pôr as palavras juntas, na ordem certa' }
 ];
 const TOM_CURTO = { 1: '1º', 2: '2º', 3: '3º', 4: '4º', 5: 'neutro' };
 function bumpStat(id, grade) {
@@ -1807,6 +2079,7 @@ function showCard(card) {
   // carta nova zera tinta, nota e resposta do teclado SEMPRE, mesmo saindo do modo: sem
   // isto os botões ↶ ✕ ✓ continuavam na tela depois de trocar pra um modo que não desenha
   drawInk = []; drawTrecho = null; drawScore = null;
+  zeraFacil();
   typeResult = null;
   ordResult = null; ordEscolhido = []; ordPool = [];
   renderDrawTools();
@@ -1830,7 +2103,7 @@ function showCard(card) {
   $('quizfb').innerHTML = '';
   $('tones').classList.toggle('show', !!m.quiz);
   $('tones').querySelectorAll('button').forEach(bt => bt.classList.remove('hit', 'miss'));
-  $('hint-f').textContent = desenho ? 'escreva o ideograma na grade e toque em Validar'
+  $('hint-f').textContent = desenho ? dicaDesenho()
     : ordena ? 'monte a frase e toque em conferir'
     : teclado ? (ehFrase(card) ? 'escreva a frase no teclado de mandarim'
                                : 'digite o som e escolha o ideograma')
@@ -3011,37 +3284,50 @@ function renderWordStats() {
 // valem pra palavra de um caractere: "14 erros de tom" sozinho não diz nada, "38% de erro
 // em 21 tentativas" diz. Por isso a tentativa aparece do lado de toda porcentagem.
 function renderHabStats() {
-  const tot = {};
-  HABS.forEach(h => tot[h.k] = { n: 0, e: 0 });
+  const tot = { palavra: {}, frase: {} };
+  HABS.forEach(h => { tot.palavra[h.k] = { n: 0, e: 0 }; tot.frase[h.k] = { n: 0, e: 0 }; });
   const conf = {};
   let nConf = 0;
   cards.forEach(c => {
     const s = stats[c.id];
     if (!s) return;
+    // o grupo sai da carta, não da habilidade: o mesmo 'rec' que a frase mediu não pode
+    // entrar na conta das palavras, senão a taxa de cada lado deixa de ser daquele lado
+    const t = tot[ehFrase(c) ? 'frase' : 'palavra'];
     if (s.hab) HABS.forEach(h => {
       const v = s.hab[h.k];
-      if (v) { tot[h.k].n += v.n || 0; tot[h.k].e += v.e || 0; }
+      if (v) { t[h.k].n += v.n || 0; t[h.k].e += v.e || 0; }
     });
     if (s.tomX) for (const par of Object.keys(s.tomX)) {
       conf[par] = (conf[par] || 0) + s.tomX[par];
       nConf += s.tomX[par];
     }
   });
-  if (!HABS.some(h => tot[h.k].n)) {
+  if (!HABS.some(h => tot.palavra[h.k].n || tot.frase[h.k].n)) {
     $('habstats').innerHTML = '<p class="wempty">Ainda sem medição, e ela só enxerga daqui ' +
       'pra frente: as revisões antigas não sabem de que modo vieram. O 🔀 Aleatório é o que ' +
       'enche isto mais rápido, porque te expõe aos quatro modos na mesma sessão.</p>';
     return;
   }
-  const linhas = HABS.map(h => {
-    const v = tot[h.k];
-    if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(h.nome) +
-      '<small>' + esc(h.dica) + '</small></span><span class="hnum">sem dados</span></div>';
+  const habrow = (h, v, g) => {
+    const r = (h.porGrupo && h.porGrupo[g]) || h;
+    if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(r.nome) +
+      '<small>' + esc(r.dica) + '</small></span><span class="hnum">sem dados</span></div>';
     const pct = Math.round(v.e / v.n * 100);
-    return '<div class="habrow"><span class="hnome">' + esc(h.nome) +
-      '<small>' + esc(h.dica) + '</small></span>' +
+    return '<div class="habrow"><span class="hnome">' + esc(r.nome) +
+      '<small>' + esc(r.dica) + '</small></span>' +
       '<span class="hnum"><b>' + pct + '%</b><small>de erro · ' + v.e + ' de ' + v.n + '</small></span>' +
       '<span class="hbar"><i style="width:' + Math.max(2, pct) + '%"></i></span></div>';
+  };
+  // Deck sem frase nenhuma não ganha um grupo inteiro de "sem dados" — mas se houver
+  // medição ali (frase apagada do deck, carta que trocou de tipo), ela continua visível.
+  const linhas = HAB_GRUPOS.map(gr => {
+    const t = tot[gr.g];
+    const hs = HABS.filter(h => t[h.k].n || ((h.alvo === gr.g || h.alvo === 'ambos') &&
+      (gr.g !== 'frase' || temFrases())));
+    if (!hs.length) return '';
+    return '<div class="habgrp"><b>' + esc(gr.titulo) + '</b><small>' + esc(gr.dica) +
+      '</small></div>' + hs.map(h => habrow(h, t[h.k], gr.g)).join('');
   }).join('');
   // A lista de pares é a resposta à pergunta que a contagem de erros não responde.
   // Duas ou três confusões concentram quase tudo — por isso só as cinco maiores.
