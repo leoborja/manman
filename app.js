@@ -378,6 +378,7 @@ let drawFeitos = 0;              // traços oficiais que o ao vivo já aceitou
 let drawPrimeira = 0;            // ...destes, quantos colaram na primeira tentativa
 let drawTentativas = 0;          // recusas seguidas no traço da vez (2 acende a dica)
 let drawRecusado = null;         // traço recusado agora há pouco, pra piscar em vermelho
+let drawErros = 0;               // recusas somadas na carta inteira, pro resultado do ao vivo
 let dialogos = [];               // os roteiros do seed/dialogos.json
 let dialAtual = null;            // o roteiro em andamento
 let dialFala = 0;                // índice da fala que está na vez
@@ -909,7 +910,7 @@ function montaDesenho(card) {
   renderDrawTools();
 }
 function zeraFacil() {
-  drawFeitos = 0; drawPrimeira = 0; drawTentativas = 0; drawRecusado = null;
+  drawFeitos = 0; drawPrimeira = 0; drawTentativas = 0; drawErros = 0; drawRecusado = null;
 }
 // Os três níveis ficam na própria carta, e não no menu: o nível certo é o da PALAVRA —
 // 人 se escreve de cabeça, 谢 não — então trocar tem que custar um toque, no meio da
@@ -969,22 +970,30 @@ function mostraNota() {
   const r = drawScore;
   const facil = escritaFacil();
   const ok = facil ? ORD_OK : DRAW_OK, quase = facil ? ORD_QUASE : DRAW_QUASE;
+  // No ao vivo o caractere SEMPRE sai inteiro e na ordem — o traço errado não cola. Então
+  // a linha de corte é outra: "Errei" não tem o que querer dizer aqui, e o que varia é
+  // quanta ajuda foi preciso. Sair sem tropeço nenhum é Acertei; um tropeço que seja é
+  // Difícil, e a carta volta mais cedo. Nos outros dois a nota tem as três faixas.
+  const limpo = r.vivo ? r.nota >= 100 : r.nota >= ok;
   // Duas notas, dois contadores. O 'esc' é "escrever de memória", e só o nível de memória
   // o alimenta: no guiado o ideograma está na tela, e jogar isso no mesmo número
   // estragaria o diagnóstico que ele existe pra dar. O que os fáceis treinam tem contador
-  // próprio — e a nota, não o botão que você aperta depois.
-  bumpHab(current.id, facil ? 'traco' : 'esc', r.nota < ok);
+  // próprio — e quem conta é a nota, não o botão que você aperta depois.
+  bumpHab(current.id, facil ? 'traco' : 'esc', !limpo);
   repintaPad();
   renderEscritaChips(); // a nota apaga os chips
-  const g = r.nota >= ok ? 'good' : r.nota >= quase ? 'hard' : 'again';
+  const g = r.vivo ? (limpo ? 'good' : 'hard')
+    : r.nota >= ok ? 'good' : r.nota >= quase ? 'hard' : 'again';
   ajustaAltura(); // a nota entrou embaixo da grade
   const fb = $('drawfb');
   const cab = (g === 'good' ? '对! ' : g === 'hard' ? 'Quase — ' : '');
   fb.className = 'drawfb ' + (g === 'good' ? 'ok' : g === 'hard' ? 'quase' : 'ruim');
   if (r.vivo) {
-    fb.innerHTML = cab + r.nota + '% de primeira' +
+    // "de primeira" é a nota: o traço que só colou depois de o app acender a dica não conta
+    const rec = r.erros ? ' · ' + r.erros + ' recusa' + (r.erros > 1 ? 's' : '') + ' no caminho' : '';
+    fb.innerHTML = (limpo ? '对! ' : '') + 'acertou ' + r.nota + '% da ordem' +
       '<small>' + esc(current.hanzi) + ' · ' + r.certos + ' de ' + r.total +
-      ' traços colaram sem errar a vez</small>';
+      ' traços de primeira' + rec + '</small>';
   } else if (r.ordem) {
     fb.innerHTML = cab + r.nota + '% da ordem' +
       '<small>' + esc(current.hanzi) + ' · ' + r.certos + ' de ' + r.total +
@@ -1034,7 +1043,7 @@ function fechaTraco() {
     if (drawFeitos >= d.m.length) fechaAoVivo();
     return;
   }
-  drawTentativas++;
+  drawTentativas++; drawErros++;
   drawRecusado = t;
   repintaPad(); renderDrawTools();
   setTimeout(() => { if (drawRecusado === t) { drawRecusado = null; repintaPad(); } }, 450);
@@ -1042,7 +1051,7 @@ function fechaTraco() {
 function fechaAoVivo() {
   const total = strokesDB[current.hanzi].m.length;
   drawScore = { vivo: true, nota: Math.round(drawPrimeira / total * 100),
-    certos: drawPrimeira, total, tracos: total, oficial: total };
+    certos: drawPrimeira, total, tracos: total, oficial: total, erros: drawErros };
   mostraNota();
 }
 // No DEDO o desenho é feito com eventos de toque, não com Pointer Events. Duas tentativas
