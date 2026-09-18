@@ -332,6 +332,38 @@ box-shadow:var(--shadow);}
 .ordpill:active{background:var(--pill);}
 .ordline .ordpill{box-shadow:none;background:var(--pill);border-color:var(--pill);}
 .ordpill.travada{pointer-events:none;opacity:.85;}
+
+/* ── modo diálogo ──────────────────────────────────────────
+   A conversa mora FORA da carta: não há frente e verso pra virar, e o que já foi dito
+   precisa continuar na tela — é a fala anterior que faz a próxima ter resposta certa.
+   Balão à esquerda é o outro, à direita é você, como em qualquer app de mensagem. */
+.dialwrap{display:none;flex-direction:column;gap:12px;background:var(--surface);
+border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:15px 13px;}
+.dialwrap.show{display:flex;}
+.dialhead{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding-bottom:9px;}
+.dialhead b{font-size:16px;font-weight:800;letter-spacing:-.2px;}
+.dialhead span{font-size:12.5px;color:var(--mut);line-height:1.4;}
+.dialhist{display:flex;flex-direction:column;gap:9px;}
+.dialhist:empty{display:none;}
+.dialbolha{max-width:88%;align-self:flex-start;border:1px solid var(--line);background:var(--surface2);
+border-radius:16px;border-bottom-left-radius:5px;padding:8px 11px;}
+.dialbolha.voce{align-self:flex-end;background:var(--pill);
+border-bottom-left-radius:16px;border-bottom-right-radius:5px;}
+.dialbolha.atual{border-color:var(--red);}
+.dialbolha.errou{border-color:var(--err);}
+.dialbolha .zhl{font-size:25px;line-height:1.4;}
+.dialbolha.atual .zhl{font-size:30px;}
+.dialbolha .py{font-size:13px;font-weight:700;margin-top:2px;}
+.dialbolha .pt{font-size:12.5px;color:var(--mut);margin-top:1px;line-height:1.35;}
+.dialbolha .marca{float:right;margin-left:8px;font-size:14px;}
+.dialturno{display:flex;flex-direction:column;gap:9px;}
+.dialdica{font-size:16px;font-weight:800;line-height:1.3;}
+.dialdica small{display:block;font-size:12.5px;font-weight:700;color:var(--mut);margin-top:3px;}
+.dialrow{display:flex;gap:8px;flex-wrap:wrap;}
+.dialrow .typein{flex:1 1 100%;}
+.dialrow .typeskip{flex:1 1 0;}
+.dialfim{text-align:center;font-size:14px;line-height:1.5;color:var(--mut);}
+.dialfim b{color:var(--txt);}
 .ordfbline{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:1px 0;}
 .ordfbpill{font-size:24px;line-height:1.25;border-radius:8px;padding:1px 6px;
 background:var(--pill);color:var(--txt);}
@@ -940,6 +972,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <span class="flashtag" id="flashtag" style="display:none"></span>
       </div>
     </div>
+    <!-- modo diálogo: a conversa inteira, uma fala por vez. O histórico fica na tela de
+         propósito — a fala anterior É a pergunta, e escondê-la tiraria o que faz a sua
+         resposta ser resposta. -->
+    <div class="dialwrap" id="dialwrap">
+      <div class="dialhead"><b id="dialtitulo"></b><span id="dialcena"></span></div>
+      <div class="dialhist" id="dialhist"></div>
+      <div class="dialturno" id="dialturno"></div>
+    </div>
   </div>
 
   <!-- etapa 2 do relâmpago: a explicação está na tela e ele diz se acertou -->
@@ -1287,6 +1327,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <button class="modeopt" data-m="ordenar">
       <span class="zhx">🧩</span>
       <span class="info"><b>tradução → ordenar as palavras</b><small>vê o português e monta a frase tocando nas palavras embaralhadas — é o treino da ordem, que só a frase tem</small></span>
+      <span class="check"></span>
+    </button>
+    <button class="modeopt" data-m="dialogo">
+      <span class="zhx">💬</span>
+      <span class="info"><b>diálogo — a conversa inteira</b><small>uma conversa montada com as frases que você já tem: você ouve e lê o que o outro diz, e escreve a sua resposta no teclado de mandarim</small></span>
       <span class="check"></span>
     </button>
     <button class="modeopt" data-m="draw">

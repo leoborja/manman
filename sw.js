@@ -27,7 +27,7 @@ const CASCA = 'manman-casca-v2';
 const AUDIO = 'manman-audio';   // sem versão: trocar a casca não rebaixa os 4 MB de áudio
 const PRAZO_MS = 3000;
 const ARQUIVOS_CASCA = ['./', './index.html', './app.js', './config.js', './manifest.webmanifest',
-  './fonts/hanzi.woff2', './strokes/strokes.json', './icons/icon-192.png', './icons/icon-512.png'];
+  './fonts/hanzi.woff2', './strokes/strokes.json', './seed/dialogos.json', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
   // um arquivo que falhe não pode derrubar a instalação inteira — o resto já serve offline
