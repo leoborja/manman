@@ -379,6 +379,7 @@ let drawPrimeira = 0;            // ...destes, quantos colaram na primeira tenta
 let drawTentativas = 0;          // recusas seguidas no traço da vez (2 acende a dica)
 let drawRecusado = null;         // traço recusado agora há pouco, pra piscar em vermelho
 let drawErros = 0;               // recusas somadas na carta inteira, pro resultado do ao vivo
+let drawFimEm = 0;               // instante em que o ao vivo fechou a carta sozinho
 let dialogos = [];               // os roteiros do seed/dialogos.json
 let dialAtual = null;            // o roteiro em andamento
 let dialFala = 0;                // índice da fala que está na vez
@@ -910,7 +911,8 @@ function montaDesenho(card) {
   renderDrawTools();
 }
 function zeraFacil() {
-  drawFeitos = 0; drawPrimeira = 0; drawTentativas = 0; drawErros = 0; drawRecusado = null;
+  drawFeitos = 0; drawPrimeira = 0; drawTentativas = 0; drawErros = 0;
+  drawRecusado = null; drawFimEm = 0;
 }
 // Os três níveis ficam na própria carta, e não no menu: o nível certo é o da PALAVRA —
 // 人 se escreve de cabeça, 谢 não — então trocar tem que custar um toque, no meio da
@@ -1049,6 +1051,7 @@ function fechaTraco() {
   setTimeout(() => { if (drawRecusado === t) { drawRecusado = null; repintaPad(); } }, 450);
 }
 function fechaAoVivo() {
+  drawFimEm = Date.now(); // ver o listener de click do pad: o gesto que fecha não pode virar a carta
   const total = strokesDB[current.hanzi].m.length;
   drawScore = { vivo: true, nota: Math.round(drawPrimeira / total * 100),
     certos: drawPrimeira, total, tracos: total, oficial: total, erros: drawErros };
@@ -1117,7 +1120,15 @@ function bindPad() {
   // Enquanto não validou, o toque na grade não pode virar a carta — entregaria a
   // resposta. Depois de validar pode: a grade é o maior alvo da tela e a dica manda
   // tocar na carta pra ver o traçado.
-  pad.addEventListener('click', (e) => { if (!drawScore) e.stopPropagation(); });
+  //
+  // Menos num instante: no ao vivo quem fecha a carta é o último traço, e o navegador
+  // dispara o `click` logo DEPOIS do pointerup que encaixou esse traço. Aí a nota já
+  // existe, o clique passava direto pro fcard e a carta virava no mesmo gesto — a pessoa
+  // nunca via o quanto acertou. Então o clique que vem colado no fechamento é engolido.
+  // Janela curta, e não uma trava: o toque SEGUINTE tem que virar, que é o que a dica manda.
+  pad.addEventListener('click', (e) => {
+    if (!drawScore || Date.now() - drawFimEm < 500) e.stopPropagation();
+  });
 }
 
 // ── teclado: um IME chinês de mentirinha ────────────────────
@@ -2443,6 +2454,19 @@ function renderDialogo() {
   }
   ligaBotoesDialogo(c);
   renderCounter();
+  rolaAteAVez();
+}
+// A conversa cresce pra baixo, e a vez de falar está sempre no fim dela: numa de quinze
+// falas o campo de escrever nasce fora da tela, e sem isto a pessoa rolaria a página a
+// cada turno pra achar onde responder. Só rola quando já existe histórico — no começo a
+// conversa cabe inteira, e puxar a tela ali seria movimento sem motivo.
+function rolaAteAVez() {
+  if (!dialFeito.length) return;
+  const t = $('dialturno');
+  // sem `behavior: 'smooth'` de propósito: a animação depende de quadro pra rodar e não
+  // sobrevive a duas falas seguidas (a segunda cancela a primeira no meio). Aqui o salto
+  // é de um turno, e `end` deixa a fala anterior visível em cima — não desorienta.
+  if (t && t.scrollIntoView) t.scrollIntoView({ block: 'end' });
 }
 function ligaBotoesDialogo(c) {
   const em = (id, fn) => { const b = $(id); if (b) b.onclick = (e) => { e.stopPropagation(); fn(); }; };
@@ -2501,6 +2525,7 @@ function renderFimDoDialogo() {
                   : '<button class="typeskip" id="dial-fim">terminar</button>') + '</div>';
   ligaBotoesDialogo(cardDaFala(dialAtual.falas[dialAtual.falas.length - 1]));
   renderCounter();
+  rolaAteAVez(); // o placar também nasce no fim de uma tela e meia de conversa
 }
 
 // ── relâmpago ───────────────────────────────────────────────
