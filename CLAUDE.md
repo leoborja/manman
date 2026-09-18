@@ -223,10 +223,51 @@ tipo, conferência do id antes do PATCH e pasta própria. A versão antiga dele
 desligava as gravações humanas de uma vez — se você encontrar esse nome em algum texto
 velho, é a versão que não existe mais.
 
+### 5b. Diálogo novo? Só o roteiro
+
+O modo 💬 diálogo lê `seed/dialogos.json`, que **não tem conteúdo**: é a lista dos ids de
+frases que já existem, na ordem em que são ditas.
+
+```json
+{ "id": "dl-no-cafe", "titulo": "No café", "deck": "comida",
+  "cena": "Você senta com um amigo e o garçom já vem vindo.",
+  "falas": [ { "quem": "outro", "card": "fr-beber-oque" },
+             { "quem": "voce",  "card": "fr-quero-cafe", "dica": "peça um café" } ] }
+```
+
+Regras que importam:
+
+- **Todo `card` tem que existir no `seed_cards.json` e ser frase.** Roteiro com um id que
+  não existe (ou que a pessoa desligou) simplesmente não aparece no app — some inteiro,
+  sem erro na tela. Se o diálogo que você acabou de escrever não aparece, é isto.
+- **Escreva a conversa, não a lista.** A pergunta e a resposta precisam fechar de verdade:
+  你饿吗 → 我很饿，我要米饭. Pareamento por tema ("as duas são de comida") produz diálogo
+  que ensina errado, e foi justamente por isso que o roteiro é à mão.
+- **`dica` é o que DIZER em português**, não a tradução da frase (essa o app já mostra
+  embaixo, menor). "diga que está bem e devolva a pergunta" ensina; "Estou bem, e você?"
+  só entrega.
+- **`deck`** é o tema do roteiro, e é o único filtro que vale no modo — uma conversa no
+  café atravessa comida e estados, então escolha o tema da CONVERSA.
+- Conferir antes de commitar:
+
+```bash
+python3 -c "
+import json
+cards={c['id']:c for c in json.load(open('seed/seed_cards.json'))}
+for d in json.load(open('seed/dialogos.json')):
+  for f in d['falas']:
+    c=cards.get(f['card'])
+    if not c or c.get('tipo')!='frase': print('!!!', d['id'], f['card'])
+print('conferido')"
+```
+
+Não precisa de banco, de áudio nem de fonte: as frases do roteiro já passaram por tudo
+isso quando entraram. Um diálogo novo é conteúdo — vai direto no `main`, com o JSON.
+
 ### 6. Commitar e publicar
 
 ```bash
-git add seed/seed_cards.json audio/nativo/ audio/frases/ fonts/ strokes/
+git add seed/seed_cards.json seed/dialogos.json audio/nativo/ audio/frases/ fonts/ strokes/
 git commit -m "..."
 git push origin main
 ```

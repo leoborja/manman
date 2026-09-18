@@ -86,15 +86,50 @@ No resultado, a ordem certa vem em cima e a **sua** embaixo, com cada peça verd
 
 As peças são identificadas por chave e não pelo que está escrito nelas, porque frase repete palavra: 对不对 tem dois 对, e sem chave própria clicar num moveria o outro.
 
+### 💬 Diálogo
+
+Os outros modos perguntam de **uma** frase, solta. Conversa não é isso: o que faz 我很好，你呢 ser a resposta certa é a pergunta que veio antes — e nenhum campo da carta sabe disso. Então o roteiro mora fora do deck, em [`seed/dialogos.json`](seed/dialogos.json): a lista dos **ids das frases que já existem**, na ordem em que são ditas, com quem diz cada uma.
+
+A conversa anda uma fala por vez, e o que já foi dito **fica na tela** — é a fala anterior que faz a sua resposta ser resposta.
+
+- **Fala do outro:** o app fala (o MP3 da frase) e mostra o 汉字. A tradução só aparece se você tocar em "não entendi" — a primeira pergunta é se você entendeu de ouvido e de vista.
+- **Sua vez:** vem a dica do que dizer em português ("diga que está bem — e devolva a pergunta com 你呢"), e você escreve a frase no teclado de mandarim do aparelho. O resultado marca caractere por caractere, como no ⌨️, e a fala certa toca no fim do turno — inclusive quando você errou.
+
+**Nada de conteúdo novo entra por aqui.** O diálogo só reordena frases que já estão no `seed_cards.json`, com áudio e tudo. Roteiro que tenha uma frase que você não tem — ou que você desligou na aba Cartas — **não aparece**: meia conversa não é conversa, e completar o buraco com uma frase parecida ensinaria a conversa errada.
+
+**A rodada é fechada**, como o quiz de tons e o relâmpago: conta o que a máquina viu (acertou ou não a frase, e isso entra no erro por habilidade) e **não mexe no agendamento**. Quem manda no SRS é a ordem do SRS — reagendar 我很好 porque ela calhou de ser a terceira fala de um roteiro bagunçaria a fila de quem estuda pelas revisões.
+
+Dos três eixos de filtro, só o 🏷️ tema vale aqui, e ele fatia pelo tema **do roteiro**: uma conversa no café atravessa comida e estados, e não é a soma dos temas das falas que diz do que ela é. O 📖 capítulo e o ❌ erro são de cada frase e partiriam a conversa no meio, então ficam de fora — e o contador diz isso na tela, pra ninguém ficar procurando o filtro que não pegou.
+
+#### Escrever um diálogo novo
+
+Só ids, na ordem. Nenhuma linha de código, nenhuma carta nova:
+
+```json
+{
+  "id": "dl-no-cafe",
+  "titulo": "No café",
+  "deck": "comida",
+  "cena": "Você senta com um amigo e o garçom já vem vindo.",
+  "falas": [
+    { "quem": "outro", "card": "fr-beber-oque" },
+    { "quem": "voce",  "card": "fr-quero-cafe", "dica": "peça um café" }
+  ]
+}
+```
+
+`dica` é opcional: sem ela, a dica vira a própria tradução da frase.
+
 ### Modos (botão MODO)
 
-São **cinco modos**, e só um deles vira a carta. Nos outros quatro responder é uma **ação** — digitar, desenhar, marcar o tom. Mais o **🔀 Aleatório**, que não é um sexto exercício: é um sorteio entre quatro deles, carta a carta.
+São **seis modos**, e só um deles vira a carta. Nos outros quatro responder é uma **ação** — digitar, desenhar, marcar o tom. Mais o **🔀 Aleatório**, que não é um sexto exercício: é um sorteio entre quatro deles, carta a carta.
 
 | Modo | Frente | Como se responde |
 |---|---|---|
 | 🔀 **Aleatório** | sorteia um dos quatro a cada carta | do jeito do modo sorteado |
 | ⌨️ **tradução → escrever no teclado** | português | escreve o 汉字 (ou a frase) no teclado de mandarim do aparelho |
 | 🧩 **tradução → ordenar as palavras** *(só frase)* | português | toca nas palavras embaralhadas na ordem certa |
+| 💬 **diálogo** *(só frase)* | a fala do outro, falada e escrita | escreve a sua resposta no teclado, fala a fala |
 | **汉字 → pinyin + tradução** | ideograma | toca na carta e ela vira, revelando tudo de uma vez |
 | ✍️ **pinyin + tradução + áudio → desenhar 汉字** | o som (escrito e falado) e o significado | escreve o ideograma na grade |
 | 🎯 **汉字 → tom** | ideograma, em silêncio | marca o tom (1º ˉ 2º ˊ 3º ˇ 4º ˋ neutro) |
@@ -292,6 +327,7 @@ No PC ele deixa de imitar o telefone numa faixa central e vira layout de computa
 | `index.html` + `app.js` | app inteiro — HTML/CSS/JS puro, sem build, sem dependências |
 | `config.js` | URL + anon key do Supabase (pública por design; RLS protege) |
 | `seed/seed_cards.json` | **a fonte de verdade do deck** — editado à mão; o banco é a cópia (ver o fluxo abaixo) |
+| `seed/dialogos.json` | roteiros do modo 💬 diálogo — só ids de frases que já existem, na ordem falada. Não vai pro banco: é ordem, não carta |
 | `supabase/schema.sql` | tabelas `cards` (read-only via anon; `tipo` = `palavra`/`frase`), `progress`, `review_log` |
 | `supabase/seed.py` | upsert do seed no banco (service key) |
 | `fonts/hanzi.woff2` | fonte caligráfica 楷书 (AR PL UKai CN, subset ~24KB; licença em `fonts/ARPHICPL.txt`) |
@@ -421,6 +457,7 @@ sobre eles depende do plano da conta.
 - Frase entra como **carta com `tipo`**, não como tabela nova (30/08): frase e palavra têm os mesmos campos, então uma tabela separada duplicaria SRS, sincronização, meta, streak e a aba Cartas pra ganhar o quê. O que precisava separar era a **fila**, e uma coluna resolve. O `tipo` tem default `'palavra'`, então as 108 cartas antigas não precisaram de migração nenhuma
 - "Palavras / Frases" **acima** dos eixos 🏷️📅❌, e não como um quarto ícone ao lado deles (30/08): os três são maneiras de fatiar uma lista, e frase é outra lista. Lado a lado, escolher "frases" custaria poder escolher a aula — e "as frases da aula de ontem" é justamente o filtro que a gente vai querer. Coube sem gastar altura porque o "O que estudar" já mora dentro da folha do MODO, que rola
 - Segmentação da frase **calculada do pinyin**, não digitada (30/08): mesma decisão da pronúncia aproximada de 25/08. `Wǒ shì Bāxī rén` já tem a separação escrita nele, e sílaba de pinyin é caractere — então `我|是|巴西|人` sai de graça, sem coluna nova e sem ninguém preencher campo por frase. O `seg` existe como escape, não como rotina
+- Diálogo como **roteiro fora do deck** (17/09): a alternativa era o app parear pergunta e resposta sozinho, olhando tema e palavras em comum — e aí "Você está com fome?" seria respondida com "Meu pai gosta de beber cerveja". Coerência de conversa não está escrita em campo nenhum da carta, e inventá-la a partir do que está gera diálogo que ensina errado. O roteiro à mão custa dez minutos por conversa, não inventa conteúdo (são ids de frases que já existem, com áudio e tudo) e some sozinho quando alguém desliga uma das frases. Arquivo estático como os traçados, e não coluna no banco: é **ordem**, não carta — e coluna nova exigiria DDL, que ninguém do time tem
 - Aula gravada como **data** (`data_aula`), não número — a data já existe, não precisa de controle manual de numeração. Coluna e não tag: ordena certo e vira filtro sem parsing
 
 ## Roadmap

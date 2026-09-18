@@ -71,7 +71,8 @@ const MODES = {
   ordenar: { front: 'ord',   ordenar: true },
   draw:    { front: 'draw',  draw: true },
   zh_tom:  { front: 'hanzi', quiz: true },
-  tons:    { front: 'audio', quiz: true }
+  tons:    { front: 'audio', quiz: true },
+  dialogo: { front: 'dial',  dialogo: true }
 };
 // O aleatório sorteia um destes A CADA CARTA. O desenho fica de fora de propósito: leva
 // dez vezes mais tempo que os outros e só serve pra 43 das 100 palavras, então cairia
@@ -87,7 +88,7 @@ const MIX_MODOS_FRASE = ['pt_type', 'zh_all', 'ordenar'];
 // avisar. Pelo mesmo motivo o ordenar não aparece na palavra: não há o que ordenar.
 const MODOS_TIPO = {
   palavra: ['mix', 'pt_type', 'zh_all', 'draw', 'zh_tom', 'tons'],
-  frase:   ['mix', 'pt_type', 'zh_all', 'ordenar']
+  frase:   ['mix', 'pt_type', 'zh_all', 'ordenar', 'dialogo']
 };
 function modosDoTipo() { return MODOS_TIPO[settings.tipo] || MODOS_TIPO.palavra; }
 // Modos que existiram e saíram da lista. Quem tinha um deles salvo não pode abrir o app
@@ -110,7 +111,8 @@ const MODE_TITLES = {
   ordenar: '🧩 tradução → ordenar as palavras',
   draw: '✍️ pinyin + tradução + áudio → desenhar 汉字',
   zh_tom: '🎯 汉字 → tom',
-  tons: '🎧 áudio → tom'
+  tons: '🎧 áudio → tom',
+  dialogo: '💬 diálogo — a conversa inteira'
 };
 // ── os três níveis do desenho ───────────────────────────────
 // Escrever de memória é o exercício certo pra quem já conhece o caractere e o exercício
@@ -334,11 +336,12 @@ function aoVivoOn() { return drawOn() && settings.escrita === 'aovivo'; }
 function typeOn() { return !!modo().type; }
 function quizOn() { return !!modo().quiz; }
 function ordenarOn() { return !!modo().ordenar; }
+function dialogoOn() { return !!modo().dialogo; }
 // O relâmpago só vale onde responder é virar a carta. Nos outros quatro modos responder
 // já é outra coisa — digitar, desenhar, marcar o tom — e o raio não teria o que cronometrar.
 // (o aleatório também fica de fora: três dos quatro modos que ele sorteia não têm virada
 // pra cronometrar, e piscar só numa carta em cada quatro não é rodada de relâmpago)
-function flashOn() { return settings.flash && !mixOn() && !quizOn() && !drawOn() && !typeOn() && !ordenarOn(); }
+function flashOn() { return settings.flash && !mixOn() && !quizOn() && !drawOn() && !typeOn() && !ordenarOn() && !dialogoOn(); }
 let srs = {};                    // id → {reps, ivl, ease, due, u}
 // id → {g, h, a} — quantas vezes acertou, marcou difícil e errou, desde sempre.
 // Fica FORA do srs de propósito: na prática livre você avalia carta que nunca foi
@@ -375,6 +378,13 @@ let drawFeitos = 0;              // traços oficiais que o ao vivo já aceitou
 let drawPrimeira = 0;            // ...destes, quantos colaram na primeira tentativa
 let drawTentativas = 0;          // recusas seguidas no traço da vez (2 acende a dica)
 let drawRecusado = null;         // traço recusado agora há pouco, pra piscar em vermelho
+let dialogos = [];               // os roteiros do seed/dialogos.json
+let dialAtual = null;            // o roteiro em andamento
+let dialFala = 0;                // índice da fala que está na vez
+let dialResult = null;           // {ok, escrito} da SUA fala; null = ainda não respondeu
+let dialRevelado = false;        // você pediu a tradução da fala do outro
+let dialFeito = [];              // o que já foi dito: [{fala, ok}] — ok null na fala do outro
+let dialScore = { ok: 0, n: 0 }; // placar da rodada inteira, somando os diálogos
 let ordPool = [];                // pílulas ainda não usadas, embaralhadas
 let ordEscolhido = [];           // a frase que você está montando, em ordem
 let ordResult = null;            // {ok} da carta atual; null = ainda não conferiu
@@ -482,6 +492,14 @@ let svgUid = 0;
 // traço → componente de cada caractere (gerado pelo tools/build_radicals.py). É o que
 // deixa a Grade pintar um radical de azul dentro do pictograma.
 let radicalsDB = {};
+// Os roteiros de conversa. Arquivo estático como os traçados, e não tabela no banco:
+// é ORDEM de frases que já existem, não carta nova — e coluna nova exigiria DDL, que
+// ninguém do time tem. Falhou o fetch (primeira abertura offline), o modo simplesmente
+// não tem o que abrir e diz isso na tela.
+async function loadDialogos() {
+  try { dialogos = await (await fetch('./seed/dialogos.json')).json(); }
+  catch (e) { dialogos = []; }
+}
 async function loadStrokes() {
   try { strokesDB = await (await fetch('./strokes/strokes.json')).json(); }
   catch (e) { strokesDB = {}; }
@@ -2038,7 +2056,18 @@ function renderChips() {
 function renderCounter() {
   renderStreak();
   const { due, news } = dueCount(poolSessao()); // o contador conta o que a sessão vai mostrar
-  if (phase === 'quiz') {
+  if (phase === 'dialogo') {
+    const n = dialAtual ? dialAtual.falas.length : 0;
+    // os dois eixos que o diálogo não usa são ditos aqui: sem isto a pílula do modo
+    // mostraria "❌ ≥3 erros" e a conversa viria inteira, sem ninguém entender por quê
+    const ignora = [settings.origens.length ? '📖' : '', settings.erro ? '❌' : ''].filter(Boolean);
+    // a fila ainda tem o diálogo da tela dentro dela até ele acabar (é o queue[0]), então
+    // o "faltam" desconta ele — senão a última conversa diria que ainda há uma pela frente
+    const restam = Math.max(0, queue.length - (dialAtual && dialFala < n ? 1 : 0));
+    $('counter').innerHTML = '<b>💬 ' + esc(dialAtual ? dialAtual.titulo : 'diálogo') + '</b> · fala ' +
+      Math.min(dialFala + 1, n) + ' de ' + n + (restam ? ' · mais ' + restam + ' na fila' : ' · última') +
+      (ignora.length ? ' · ' + ignora.join('') + ' não valem aqui' : '');
+  } else if (phase === 'quiz') {
     $('counter').innerHTML = '<b>quiz de tons · ' + (settings.mode === 'tons' ? 'áudio' : '汉字') +
       '</b> · ' + quizScore.ok + '/' + quizScore.n + ' certas · ' + queue.length + ' restantes';
   } else if (phase === 'flash') {
@@ -2057,6 +2086,8 @@ function renderCounter() {
 }
 function showCard(card) {
   clearFlash(); // carta nova: mata relógio e resposta pendentes da anterior
+  $('dialwrap').classList.remove('show'); // veio do diálogo: a carta volta pro palco
+  $('fcard').style.display = '';
   current = card;
   quizAnswered = false;
   // o sorteio vem ANTES do modo() — é ele que decide o que este modo() vai responder
@@ -2167,10 +2198,28 @@ function finishSession() {
   $('drawwrap').classList.remove('show');
   $('typewrap').classList.remove('show');
   $('ordwrap').classList.remove('show');
+  $('dialwrap').classList.remove('show');
+  $('fcard').style.display = '';
   $('nextbtn').classList.remove('show');
   $('offbtn').style.display = 'none';
   $('done').classList.add('show');
-  if (flashOn() && flashScore.n) {
+  if (dialogoOn()) {
+    const disp = dialogosDisponiveis().length;
+    if (!disp) {
+      $('done-title').textContent = 'Nenhuma conversa por aqui';
+      $('done-sub').textContent = 'Um roteiro só entra quando você tem TODAS as frases dele ligadas — ' +
+        (settings.decks.length ? 'e nenhum roteiro é do tema que você marcou. Desmarque o tema no MODO'
+                               : 'e nenhum fecha a conta agora. Religue frases na aba Cartas') + '.';
+      $('freebtn').style.display = 'none';
+    } else {
+      $('done-title').textContent = 'Fim das conversas!';
+      $('done-sub').textContent = 'Você escreveu ' + dialScore.ok + ' de ' + dialScore.n +
+        ' falas certas. ' + (dialScore.n && dialScore.ok / dialScore.n >= 0.8
+          ? '厉害 (lìhai — mandou bem)!' : '慢慢来 (mànmàn lái — de novo, com calma).');
+      $('freebtn').textContent = '💬 Conversar de novo';
+      $('freebtn').style.display = '';
+    }
+  } else if (flashOn() && flashScore.n) {
     // a nota é sobre o deck INTEIRO da rodada, não só sobre o que foi respondido:
     // deixar o tempo acabar sem dizer nada é resultado, não carta que não existiu
     const total = flashScore.total || flashScore.n;
@@ -2216,6 +2265,7 @@ function finishSession() {
 function startSession() {
   clearFlash();
   modoCarta = null; // senão a última carta do aleatório decidiria que sessão começa agora
+  if (dialogoOn()) { startDialogo(); return; }
   if (quizOn()) { startToneQuiz(); return; }
   if (flashOn()) { startFlash(); return; }
   buildQueue();
@@ -2261,6 +2311,189 @@ function answerTone(t) {
   }
   renderCounter();
 }
+// ── diálogo: a conversa inteira ─────────────────────────────
+// Os outros modos perguntam de UMA frase, solta. Conversa não é isso: o que faz
+// 我很好，你呢 ser a resposta certa é a pergunta que veio antes — e nenhum campo da carta
+// sabe disso. Então o roteiro mora fora do deck, no seed/dialogos.json: a lista dos ids
+// das frases que JÁ existem, na ordem em que são ditas, e quem diz cada uma.
+//
+//   outro = o app fala e mostra o 汉字; a tradução só aparece se você pedir
+//   voce  = a dica em português, e você escreve a frase no teclado de mandarim
+//
+// Isso mantém a regra de sempre: conteúdo novo entra pelo seed_cards.json, e o diálogo
+// só REORDENA o que já está lá. Roteiro que tem uma frase que você não tem (ou que você
+// desligou) não aparece: meia conversa não é conversa, e completar o buraco com uma
+// frase parecida ensinaria a conversa errada.
+//
+// A rodada é fechada, como o quiz de tons e o relâmpago: conta o que a máquina viu
+// (acertou ou não a frase) e NÃO mexe no agendamento. Quem manda no SRS é a ordem do
+// SRS, não a ordem do roteiro — reagendar 我很好 porque ela calhou de ser a terceira
+// fala de um diálogo bagunçaria a fila de quem estuda pelas revisões.
+function cardDaFala(f) { return f ? cards.find(c => c.id === f.card) : null; }
+function dialogoPronto(d) {
+  return Array.isArray(d.falas) && d.falas.length > 0 &&
+    d.falas.every(f => { const c = cardDaFala(f); return c && ehFrase(c) && !foraDaRotacao(c); });
+}
+// O tema fatia os diálogos pelo tema DO ROTEIRO (uma conversa no café atravessa comida e
+// estados, e não é a soma dos temas das falas que diz do que ela é). Os outros dois eixos
+// ficam de fora: 📖 é o capítulo de cada frase, e ❌ é o seu erro em cada uma — nenhum
+// dos dois recorta uma conversa sem parti-la no meio. O contador diz isso na tela, pra
+// ninguém ficar procurando o filtro que não pegou.
+function dialogosDisponiveis() {
+  const list = dialogos.filter(dialogoPronto);
+  return settings.decks.length ? list.filter(d => settings.decks.includes(d.deck)) : list;
+}
+function startDialogo() {
+  dialScore = { ok: 0, n: 0 };
+  queue = shuffle(dialogosDisponiveis().map(d => d.id));
+  phase = 'dialogo';
+  abreDialogo();
+}
+function abreDialogo() {
+  if (!queue.length) { finishSession(); return; }
+  dialAtual = dialogos.find(d => d.id === queue[0]) || null;
+  if (!dialAtual) { queue.shift(); abreDialogo(); return; }
+  dialFala = 0; dialResult = null; dialRevelado = false; dialFeito = [];
+  palcoDialogo();
+  renderDialogo();
+  falaDaVez(); // a primeira fala do outro já entra falando
+}
+// A conversa não é uma carta: não tem frente e verso pra virar, e o que já foi dito
+// precisa continuar na tela. Então o palco troca a carta pelo diálogo inteiro, e some
+// com tudo que pertence à carta (as três notas, os tons, o "desligar esta carta").
+function palcoDialogo() {
+  $('stage').style.display = '';
+  $('fcard').style.display = 'none';
+  $('dialwrap').classList.add('show');
+  $('done').classList.remove('show');
+  $('grades').classList.remove('show');
+  $('tones').classList.remove('show');
+  $('drawtools').classList.remove('show');
+  $('nextbtn').classList.remove('show');
+  $('offbtn').style.display = 'none';
+}
+function falaDaVez() {
+  const f = dialAtual && dialAtual.falas[dialFala];
+  const c = cardDaFala(f);
+  // a fala do outro toca sozinha: sem o som o exercício vira leitura, e metade do que a
+  // conversa treina é reconhecer a frase de ouvido
+  if (f && c && f.quem === 'outro') speak(c, true);
+}
+function bolhaDialogo(f, c, res) {
+  const sua = f.quem === 'voce';
+  const marca = res && res.ok != null ? '<span class="marca">' + (res.ok ? '✅' : '❌') + '</span>' : '';
+  return '<div class="dialbolha ' + (sua ? 'voce' : 'outro') + (res && res.ok === false ? ' errou' : '') + '">' +
+    marca + '<div class="zhl zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
+    '<div class="py">' + pinyinColored(c.pinyin) + '</div>' +
+    '<div class="pt">' + esc(c.pt) + '</div></div>';
+}
+function renderDialogo() {
+  const d = dialAtual;
+  if (!d) return;
+  $('dialtitulo').textContent = '💬 ' + d.titulo;
+  $('dialcena').textContent = d.cena || '';
+  $('dialhist').innerHTML = dialFeito
+    .map(r => { const c = cardDaFala(r.fala); return c ? bolhaDialogo(r.fala, c, r) : ''; }).join('');
+  const f = d.falas[dialFala];
+  const t = $('dialturno');
+  if (!f) { renderFimDoDialogo(); return; }
+  const c = cardDaFala(f);
+  if (!c) { proximaFala(); return; } // carta sumiu do deck no meio da conversa
+  current = c; // é dela que o 🔊 e o 🐢 falam agora
+  if (f.quem === 'outro') {
+    t.innerHTML = '<div class="dialbolha outro atual">' +
+      '<div class="zhl zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
+      (dialRevelado ? '<div class="py">' + pinyinColored(c.pinyin) + '</div>' +
+                      '<div class="pt">' + esc(c.pt) + '</div>' : '') +
+      '</div>' +
+      '<div class="dialrow">' +
+      '<button class="typeskip" id="dial-ouvir">🔊 de novo</button>' +
+      (dialRevelado ? '' : '<button class="typeskip" id="dial-revela">não entendi</button>') +
+      '<button class="typeskip" id="dial-seguir">continuar →</button></div>';
+  } else if (!dialResult) {
+    // a dica é o que DIZER, não a tradução da frase: é ela que faz você escolher as
+    // palavras. A tradução vem embaixo, menor, pra quem travou no meio do caminho.
+    t.innerHTML = '<div class="dialdica">🗣️ sua vez — ' + esc(f.dica || c.pt) +
+      (f.dica ? '<small>ao pé da letra: ' + esc(c.pt) + '</small>' : '') + '</div>' +
+      '<div class="dialrow"><input class="typein" id="dialin" type="text" enterkeyhint="done" ' +
+      'lang="zh-Hans" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" ' +
+      'placeholder="escreva a frase"></div>' +
+      '<div class="dialrow"><button class="typeskip" id="dial-check">conferir</button>' +
+      '<button class="typeskip" id="dial-skip">não lembro</button></div>';
+  } else {
+    const alvo = limpaHanzi(c.hanzi);
+    const dado = limpaHanzi(dialResult.escrito);
+    t.innerHTML = '<div class="typefb frase ' + (dialResult.ok ? 'ok' : 'ruim') + '">' +
+      '<div class="l"><span class="lbl">' + (dialResult.ok ? '对!' : 'era') + '</span></div>' +
+      charDiff(alvo, dialResult.ok ? alvo : dado) +
+      (!dialResult.ok && dado ? '<div class="l no"><span class="lbl">você</span></div>' +
+        charDiff(dado, alvo) : '') +
+      '<div class="py">' + pinyinColored(c.pinyin) + '</div></div>' +
+      '<div class="dialrow"><button class="typeskip" id="dial-ouvir">🔊 ouvir a fala</button>' +
+      '<button class="typeskip" id="dial-seguir">continuar →</button></div>';
+  }
+  ligaBotoesDialogo(c);
+  renderCounter();
+}
+function ligaBotoesDialogo(c) {
+  const em = (id, fn) => { const b = $(id); if (b) b.onclick = (e) => { e.stopPropagation(); fn(); }; };
+  em('dial-ouvir', () => speak(c));
+  em('dial-revela', () => { dialRevelado = true; renderDialogo(); });
+  em('dial-seguir', proximaFala);
+  em('dial-check', confereDialogo);
+  em('dial-skip', () => respondeDialogo(null));
+  em('dial-prox', () => { abreDialogo(); });
+  em('dial-repete', () => { queue.unshift(dialAtual.id); abreDialogo(); });
+  em('dial-fim', finishSession);
+  const inp = $('dialin');
+  if (inp) inp.onkeydown = (e) => {
+    if (e.key !== 'Enter' || e.isComposing) return; // Enter dentro do IME é dele, não nosso
+    e.preventDefault();
+    confereDialogo();
+  };
+}
+function confereDialogo() {
+  const inp = $('dialin');
+  const v = inp ? inp.value.trim() : '';
+  if (v) respondeDialogo(v);
+}
+function respondeDialogo(hanzi) {
+  const f = dialAtual && dialAtual.falas[dialFala];
+  const c = cardDaFala(f);
+  if (!c || dialResult) return;
+  // mesma régua do teclado: pontuação e espaço não são a pergunta
+  const ok = !!limpaHanzi(hanzi) && limpaHanzi(hanzi) === limpaHanzi(c.hanzi);
+  dialResult = { ok: ok, escrito: hanzi || '' };
+  dialScore.n++;
+  if (ok) dialScore.ok++;
+  bumpHab(c.id, 'frase', !ok);
+  syncPush(c.id); // a rodada não passa pelo grade(), então o push é por conta própria
+  renderDialogo();
+  speak(c, true); // ouvir a fala certa é o fecho do turno, mesmo tendo errado
+}
+function proximaFala() {
+  const f = dialAtual && dialAtual.falas[dialFala];
+  if (f) dialFeito.push({ fala: f, ok: dialResult ? dialResult.ok : null });
+  dialFala++;
+  dialResult = null;
+  dialRevelado = false;
+  renderDialogo();
+  falaDaVez();
+}
+function renderFimDoDialogo() {
+  queue.shift(); // este acabou; o que sobrou na fila é o que ainda dá pra conversar
+  const suas = dialFeito.filter(r => r.ok != null);
+  const acertos = suas.filter(r => r.ok).length;
+  $('dialturno').innerHTML = '<div class="dialfim">🎉 <b>' + esc(dialAtual.titulo) +
+    '</b> — conversa inteira. Suas falas: ' + acertos + ' de ' + suas.length + ' certas.</div>' +
+    '<div class="dialrow">' +
+    '<button class="typeskip" id="dial-repete">repetir esta</button>' +
+    (queue.length ? '<button class="typeskip" id="dial-prox">próxima conversa →</button>'
+                  : '<button class="typeskip" id="dial-fim">terminar</button>') + '</div>';
+  ligaBotoesDialogo(cardDaFala(dialAtual.falas[dialAtual.falas.length - 1]));
+  renderCounter();
+}
+
 // ── relâmpago ───────────────────────────────────────────────
 // Duas etapas por carta, cada uma com seu relógio:
 //   1. exposição — a carta aparece pelo tempo escolhido e some
@@ -3725,7 +3958,7 @@ function queueKind() {
   // o ordenar tem pool próprio (só frase que a segmentação fecha), então é família à
   // parte: trocar pra ele ou sair dele remonta a fila em vez de reaproveitar a atual
   return quizOn() ? 'quiz:' + settings.mode : drawOn() ? 'draw'
-    : ordenarOn() ? 'ordenar' : flashOn() ? 'flash' : 'normal';
+    : ordenarOn() ? 'ordenar' : dialogoOn() ? 'dialogo' : flashOn() ? 'flash' : 'normal';
 }
 function renderModeSheet() {
   renderChips(); // as faixas de erro mudam sozinhas conforme você estuda
@@ -3744,7 +3977,7 @@ function renderModeSheet() {
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
   // só um modo vira a carta; nos outros responder já é outra coisa (digitar, desenhar,
   // marcar o tom) e a chave do relâmpago fica visivelmente sem efeito
-  const semEfeito = mixOn() || quizOn() || drawOn() || typeOn() || ordenarOn();
+  const semEfeito = mixOn() || quizOn() || drawOn() || typeOn() || ordenarOn() || dialogoOn();
   $('flash-opt').classList.toggle('disabled', semEfeito);
   // só apaga o tempo quando o modo não aceita relâmpago; com a chave desligada ele
   // continua clicável, e tocar num tempo liga a chave
@@ -3842,7 +4075,7 @@ function bindEvents() {
     else if (current) showCard(current);
   });
   $('flash-opt').onclick = () => { // a chave do relâmpago: liga por cima do modo atual
-    if (quizOn() || drawOn() || typeOn() || ordenarOn()) return;
+    if (quizOn() || drawOn() || typeOn() || ordenarOn() || dialogoOn()) return;
     settings.flash = !settings.flash; save(K.settings, settings);
     renderModeSheet(); renderModeUI();
     startSession(); // ligar ou desligar troca o tipo de fila
@@ -3914,7 +4147,8 @@ function bindEvents() {
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
   $('freebtn').onclick = () => {
-    if (quizOn()) startToneQuiz();
+    if (dialogoOn()) startDialogo();
+    else if (quizOn()) startToneQuiz();
     else if (flashOn()) startFlash();
   };
   $('flashpause').onclick = togglePausa;
@@ -3962,7 +4196,7 @@ async function init() {
   bindEvents();
   bindTips();
   renderModeUI();
-  await Promise.all([loadCards(), loadStrokes()]);
+  await Promise.all([loadCards(), loadStrokes(), loadDialogos()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
   else if (dataSource === 'vazio') showBanner('error', 'Não consegui carregar nenhuma carta. Verifique a conexão e recarregue.');
