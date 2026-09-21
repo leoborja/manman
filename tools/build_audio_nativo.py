@@ -118,6 +118,9 @@ def consulta_lote(cards):
 def main():
     if not shutil.which("ffmpeg"):
         sys.exit("ffmpeg não encontrado — brew install ffmpeg")
+    if not shutil.which("ffprobe"):
+        sys.exit("ffprobe não encontrado (vem com o ffmpeg) — é ele que mede a duração "
+                 "e barra o arquivo que não é palavra")
     force = "--force" in sys.argv
     with open(os.path.join(root, "seed", "seed_cards.json"), encoding="utf-8") as f:
         cards = json.load(f)
@@ -148,7 +151,23 @@ def main():
                 if m:
                     anterior[(m.group(1), m.group(2))] = "File:" + m.group(3)
 
-    creditos, faltando, baixadas = [], [], 0
+    # Uma palavra gravada dura 1-2s; a mais longa do deck não passa de 3. O Commons
+    # tem, no MESMO acervo e com nome parecido, artigos falados de 50 minutos — foi o
+    # que voltou quando pedi 俄罗斯, e 29 MB entraram no repositório público sem um
+    # pio. O limite é generoso de propósito: qualquer coisa acima disto não é a
+    # pronúncia de uma palavra, e a carta fica melhor no TTS do que com o arquivo errado.
+    MAX_SEG = 8.0
+
+    def duracao(caminho):
+        """Segundos do arquivo, ou None se o ffprobe não souber dizer."""
+        r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                            "-of", "csv=p=0", caminho], capture_output=True, text=True)
+        try:
+            return float(r.stdout.strip())
+        except ValueError:
+            return None
+
+    creditos, faltando, baixadas, longas = [], [], 0, []
     for c in cards:
         out = os.path.join(dest, c["id"] + ".mp3")
         titulo = next((t for t in candidatos(c) if t in achados), None)
@@ -163,6 +182,15 @@ def main():
         tmp = out + ".orig"
         with open(tmp, "wb") as f:
             f.write(busca(url))
+        seg = duracao(tmp)
+        if seg is not None and seg > MAX_SEG:
+            # antes de converter: transcodificar 50 minutos custa caro e o
+            # resultado vai pro lixo de qualquer jeito
+            os.remove(tmp)
+            creditos.pop()
+            longas.append((c["hanzi"], c["pinyin"], titulo, seg))
+            print(f"🚫 {c['hanzi']} {c['pinyin']:<9} {seg/60:.0f} min — não é palavra, descartado")
+            continue
         filtro = []
         if titulo.startswith("File:LL-"):
             # a Lingua Libre grava com meio segundo de folga e o volume varia de voz pra
@@ -200,6 +228,13 @@ def main():
             nome = tit.replace("File:", "")
             link = f"https://commons.wikimedia.org/wiki/{urllib.parse.quote(tit.replace(' ', '_'))}"
             f.write(f"| {hz} | {py} | [{nome}]({link}) | {real} | {autor} | {lic} |\n")
+
+    if longas:
+        print(f"\ndescartados por duração ({len(longas)}) — o Commons devolveu outra coisa:")
+        for hz, py, tit, seg in longas:
+            print(f"  {hz} ({py}): {seg/60:.0f} min em {tit.replace('File:', '')}")
+        print("→ essas cartas ficam no TTS. Se houver gravação boa com outro nome, "
+              "aponte-a em tools/audio_lingualibre.json")
 
     print(f"\n{len(creditos)} cartas com gravação nativa ({baixadas} baixadas agora)")
     if faltando:
