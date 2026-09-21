@@ -364,10 +364,10 @@
   {"id":"sheng","hanzi":"生","pinyin":"shēng","pt":"nascer / viver / cru","deck":"escola","fonte":"cap3","nota":"学生 (estudante), 医生 (médico), 先生 (senhor) — quem 'nasceu' de algo."},
   {"id":"shi-mestre","hanzi":"师","pinyin":"shī","pt":"mestre / professor","deck":"escola","fonte":"cap3","nota":"老师 (professor), 律师 (advogado) — quem domina um ofício."},
   {"id":"shu-numero","hanzi":"数","pinyin":"shù","pt":"número","deck":"escola","fonte":"caractere","nota":"数学 = estudo dos números = matemática. Lido shǔ é 'contar'."},
-  {"id":"xue","hanzi":"学","pinyin":"xué","pt":"aprender","deck":"escola","fonte":"caractere","nota":"学中文 = aprender chinês. 'Estudar' com método é 学习. Aparece em 学生, 学院, 数学"},
+  {"id":"xue","hanzi":"学","pinyin":"xué","pt":"aprender","deck":"escola","fonte":"cap4","nota":"学中文 = aprender chinês. 'Estudar' com método é 学习. Aparece em 学生, 学院, 数学"},
   {"id":"yin-som","hanzi":"音","pinyin":"yīn","pt":"som","deck":"escola","fonte":"caractere","nota":"音乐 = som + alegria = música."},
   {"id":"ying","hanzi":"英","pinyin":"yīng","pt":"(som) Inglaterra / herói","deck":"escola","fonte":"caractere","nota":"Em 英国 e 英语 vale só pelo som, de 'Eng-'. O sentido 'herói' existe, mas vive em 英雄 yīngxióng"},
-  {"id":"gao","hanzi":"高","pinyin":"gāo","pt":"alto","deck":"estados","fonte":"caractere","nota":"他很高 = ele é alto. Em 高兴 é o ânimo que está lá em cima"},
+  {"id":"gao","hanzi":"高","pinyin":"gāo","pt":"alto","deck":"estados","fonte":"cap4","nota":"他很高 = ele é alto. Em 高兴 é o ânimo que está lá em cima"},
   {"id":"kuai","hanzi":"快","pinyin":"kuài","pt":"rápido","deck":"estados","fonte":"caractere","nota":"快到了 = está quase chegando — aqui 快 vira 'quase', não 'rápido'. Em 快乐 é a alegria que vem rápido"},
   {"id":"xin","hanzi":"心","pinyin":"xīn","pt":"coração","deck":"estados","fonte":"cap4","nota":"开心 = coração aberto = feliz. O desenho é um coração com as aurículas."},
   {"id":"xing","hanzi":"兴","pinyin":"xìng","pt":"ânimo / disposição","deck":"estados","fonte":"caractere","nota":"高兴 = 'ânimo alto' = contente. Lido xīng quer dizer prosperar."},
@@ -517,5 +517,6 @@
   {"id":"gui-caro","hanzi":"贵","pinyin":"guì","pt":"caro / valioso","deck":"uteis","fonte":"cap4","data_aula":"2026-09-21","nota":"贵 → 中 + 一 + 贝, e o 贝 é a concha que servia de dinheiro — daí 'caro'. 太贵了 = está caro demais. É o mesmo 贵 de 您贵姓, onde o preço vira cortesia: 'seu honroso sobrenome'"},
   {"id":"taitai","hanzi":"太太","pinyin":"tàitai","pt":"senhora (Sra.) / esposa","deck":"familia","fonte":"cap4","data_aula":"2026-09-21","nota":"Vem DEPOIS do sobrenome, como 先生: 杨太太 = Sra. Yang. Também é a própria esposa: 我太太. Pressupõe casada — quando não se sabe, o certo é 女士. Segunda sílaba em tom neutro: tàitai"},
   {"id":"nushi","hanzi":"女士","pinyin":"nǚshì","pt":"senhora (formal)","deck":"identidade","fonte":"cap4","data_aula":"2026-09-21","nota":"女 (mulher) + 士 (pessoa de posição). É o tratamento que NÃO diz se ela é casada — o 'Ms.' do inglês, e o mais seguro quando você não sabe. Abre discurso: 女士们，先生们 = senhoras e senhores"},
-  {"id":"xiaojie","hanzi":"小姐","pinyin":"xiǎojiě","pt":"senhorita","deck":"identidade","fonte":"cap4","data_aula":"2026-09-21","nota":"小 (pequena) + 姐 (irmã mais velha): 林小姐 = senhorita Lin. Cuidado no continente — dependendo do contexto a palavra soa mal, e 女士 nunca erra"}
+  {"id":"xiaojie","hanzi":"小姐","pinyin":"xiǎojiě","pt":"senhorita","deck":"identidade","fonte":"cap4","data_aula":"2026-09-21","nota":"小 (pequena) + 姐 (irmã mais velha): 林小姐 = senhorita Lin. Cuidado no continente — dependendo do contexto a palavra soa mal, e 女士 nunca erra"},
+  {"id":"eluosi","hanzi":"俄罗斯","pinyin":"Éluósī","pt":"Rússia","deck":"paises","fonte":"cap4","data_aula":"2026-09-21","nota":"Transcrição do som É-luó-sī, e nenhum dos três caracteres vale pelo sentido. Não leva 国 — como 巴西 e 日本 também não levam. O idioma é 俄语 Éyǔ"}
 ]
