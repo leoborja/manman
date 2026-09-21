@@ -219,3 +219,17 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 牙 | yá | [Zh-yá.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A1.ogg) | 崖 | Yue Tan | CC BY-SA 3.0 us |
 | 泰 | tài | [Zh-tài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A0i.ogg) | 太 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 和 | hé | [Zh-hé.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A9.ogg) | 和 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 认识 | rènshi | [Zh-rènshi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-r%C3%A8nshi.ogg) | 认识 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 可以 | kěyǐ | [Zh-kěyǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%9By%C7%90.ogg) | 可以 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 进 | jìn | [Zh-jìn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-j%C3%ACn.ogg) | 进 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 来 | lái | [Zh-lái.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%A1i.ogg) | 来 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 请 | qǐng | [Zh-qǐng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-q%C7%90ng.ogg) | 请 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 请问 | qǐngwèn | [Zh-qǐngwèn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-q%C7%90ngw%C3%A8n.ogg) | 请问 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 问 | wèn | [Zh-wèn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8n.ogg) | 问 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 贵姓 | guìxìng | [Zh-guìxìng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%ACx%C3%ACng.ogg) | 贵姓 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 姓 | xìng | [Zh-xìng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C3%ACng.ogg) | 姓 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 杨 | Yáng | [Zh-yáng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A1ng.ogg) | 羊 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 语言 | yǔyán | [Zh-yǔyán.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C7%94y%C3%A1n.ogg) | 语言 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 学院 | xuéyuàn | [Zh-xuéyuàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9yu%C3%A0n.ogg) | 学院 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 的 | de | [Zh-de.ogg](https://commons.wikimedia.org/wiki/File%3AZh-de.ogg) | 的 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 学习 | xuéxí | [Zh-xuéxí.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9x%C3%AD.ogg) | 学习 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

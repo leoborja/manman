@@ -13,8 +13,8 @@
   {"id":"wo","hanzi":"我","pinyin":"wǒ","pt":"eu","deck":"pronomes","fonte":"cap1","data_aula":"2026-08-06"},
   {"id":"ni","hanzi":"你","pinyin":"nǐ","pt":"você","deck":"pronomes","fonte":"cap1","data_aula":"2026-08-06","nota":"Leva o radical 亻(pessoa) à esquerda"},
 
-  {"id":"jiao","hanzi":"叫","pinyin":"jiào","pt":"chamar-se","deck":"verbos","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我叫… = eu me chamo… (radical 口 boca)"},
-  {"id":"shenme","hanzi":"什么","pinyin":"shénme","pt":"o que / qual","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"你叫什么名字? = como você se chama? — a pergunta que abre com o 叫 que você já tem. 什 leva 亻(pessoa), 么 tem 3 traços: os dois valem só pelo som, e a segunda sílaba fica neutra (shénme)"},
+  {"id":"jiao","hanzi":"叫","pinyin":"jiào","pt":"chamar-se","deck":"verbos","fonte":"cap4","data_aula":"2026-08-06","nota":"我叫… = eu me chamo… (radical 口 boca)"},
+  {"id":"shenme","hanzi":"什么","pinyin":"shénme","pt":"o que / qual","deck":"uteis","fonte":"cap4","data_aula":"2026-08-06","nota":"你叫什么名字? = como você se chama? — a pergunta que abre com o 叫 que você já tem. 什 leva 亻(pessoa), 么 tem 3 traços: os dois valem só pelo som, e a segunda sílaba fica neutra (shénme)"},
   {"id":"mingzi","hanzi":"名字","pinyin":"míngzi","pt":"nome","deck":"nomes","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我的名字是… ou, mais comum na fala, 我叫… 名 é 夕 (anoitecer) + 口 (boca): o nome é o que se chama no escuro. 字 é o 子 (criança) que você já tem, debaixo de um teto 宀. Segunda sílaba em tom neutro: míngzi"},
   {"id":"baxi","hanzi":"巴西","pinyin":"Bāxī","pt":"Brasil","deck":"paises","fonte":"duolingo","data_aula":"2026-08-06","nota":"我是巴西人 = eu sou brasileiro, pela mesma receita país + 人 de 中国人 e 美国人. É transcrição do som e não leva 国, como 日本. O 巴 é o mesmo do 爸爸, também só pelo som; 西 sozinho é oeste"},
 
@@ -120,7 +120,7 @@
   {"id":"hanguoren","hanzi":"韩国人","pinyin":"Hánguórén","pt":"coreano (pessoa)","deck":"paises","fonte":"duolingo","nota":"韩国 + 人. Idioma: 韩文 Hánwén"},
 
   {"id":"laoshi","hanzi":"老师","pinyin":"lǎoshī","pt":"professor","deck":"escola","fonte":"cap3","nota":"老 (velho, aqui de respeito e não de idade) + 师, o mesmo sufixo de mestre num ofício do 律师 (advogado). É como se chama a pessoa na sala: 老师！"},
-  {"id":"xuesheng","hanzi":"学生","pinyin":"xuésheng","pt":"estudante","deck":"escola","fonte":"duolingo","nota":"学 (estudar) + 生 (nascer/vida). Segunda sílaba em tom neutro, como em 朋友 péngyou"},
+  {"id":"xuesheng","hanzi":"学生","pinyin":"xuésheng","pt":"estudante","deck":"escola","fonte":"cap4","nota":"学 (estudar) + 生 (nascer/vida). Segunda sílaba em tom neutro, como em 朋友 péngyou"},
   {"id":"daxuesheng","hanzi":"大学生","pinyin":"dàxuéshēng","pt":"universitário","deck":"escola","fonte":"duolingo","nota":"大 (grande) + 学生: o estudante da escola grande, a universidade 大学 dàxué"},
   {"id":"ke-aula","hanzi":"课","pinyin":"kè","pt":"aula","deck":"escola","fonte":"duolingo","nota":"讠(fala) + 果 pelo som. 上课 shàng kè = ter aula. Não confunda com 渴 kě (com sede), que leva 氵água"},
   {"id":"shuxue","hanzi":"数学","pinyin":"shùxué","pt":"matemática","deck":"escola","fonte":"duolingo","nota":"数 (número) + 学 (estudo), o mesmo 学 de 学生. A receita repete: 文学 wénxué = literatura"},
@@ -185,7 +185,7 @@
   {"id":"num-yibai","hanzi":"一百","pinyin":"yìbǎi","pt":"cem (100), com o 一 na frente","deck":"numeros","fonte":"extra-aula","nota":"O 一 troca de tom antes do 3º tom de bǎi: yìbǎi, não yībǎi — a mesma família de regra que faz 不 virar bú antes de 4º tom"},
   {"id":"laogong","hanzi":"老公","pinyin":"lǎogōng","pt":"marido (coloquial)","deck":"familia","fonte":"duolingo","nota":"O par exato de 老婆 lǎopo, que já cita ele na nota: é o do dia a dia, e serve pra chamar o próprio marido, como \"amor\". O 老 aqui não fala de idade — fala de intimidade e respeito, o mesmo de 老师"},
   {"id":"zhangfu","hanzi":"丈夫","pinyin":"zhàngfu","pt":"marido (formal)","deck":"familia","fonte":"duolingo","nota":"O de documento e formulário, como 妻子 é pra esposa. 丈 era uma medida antiga de comprimento e 夫 é homem adulto: ao pé da letra, o homem de um 丈 de altura. Segunda sílaba em tom neutro: zhàngfu"},
-  {"id":"xiansheng","hanzi":"先生","pinyin":"xiānsheng","pt":"esposo / senhor","deck":"familia","fonte":"duolingo","nota":"Ao pé da letra \"nascido antes\": 先 (antes) + o 生 de 学生. Daí virou \"Senhor\", e daí virou o jeito elegante de a mulher falar do próprio marido em público. Segunda sílaba neutra, como em 学生 xuésheng"},
+  {"id":"xiansheng","hanzi":"先生","pinyin":"xiānsheng","pt":"senhor (Sr.) / esposo","deck":"familia","fonte":"cap4","nota":"Ao pé da letra \"nascido antes\": 先 (antes) + o 生 de 学生. Na aula é o tratamento — 杨先生, 陆先生 — e vem DEPOIS do sobrenome, ao contrário do português. Daí também virou o jeito elegante de a mulher falar do próprio marido. Segunda sílaba neutra, como em 学生 xuésheng"},
   {"id":"erzi","hanzi":"儿子","pinyin":"érzi","pt":"filho","deck":"familia","fonte":"duolingo","nota":"儿 (criança) + o 子 que você já tem sozinho. Segunda sílaba em tom neutro, como em 妻子 qīzi e 名字 míngzi"},
   {"id":"nuer","hanzi":"女儿","pinyin":"nǚ\u0027ér","pt":"filha","deck":"familia","fonte":"duolingo","nota":"女 (feminino) + 儿, a mesma receita de 女人 e 女朋友. O apóstrofo do pinyin não se fala: só avisa onde a segunda sílaba começa, nǚ-ér e não nǚr"},
 
@@ -196,7 +196,7 @@
   {"id":"chang","hanzi":"常","pinyin":"cháng","pt":"comum / frequente","deck":"uteis","fonte":"duolingo","nota":"O que acontece sempre, o normal. Junte com o 非 (não) e sai o contrário do normal: 非常"},
 
   {"id":"kuaile","hanzi":"快乐","pinyin":"kuàilè","pt":"feliz / alegre","deck":"estados","fonte":"duolingo","nota":"O 乐 é o mesmo de 音乐 — lá ele é yuè (música), aqui volta a ser lè (alegre). É o 快乐 das felicitações: 生日快乐, 新年快乐"},
-  {"id":"gaoxing","hanzi":"高兴","pinyin":"gāoxìng","pt":"contente / animado","deck":"estados","fonte":"duolingo","nota":"高 (alto) + 兴 (ânimo): o astral lá em cima. É adjetivo, então leva 很 e não 是 — 我很高兴, nunca 我是高兴"},
+  {"id":"gaoxing","hanzi":"高兴","pinyin":"gāoxìng","pt":"contente / animado","deck":"estados","fonte":"cap4","nota":"高 (alto) + 兴 (ânimo): o astral lá em cima. É adjetivo, então leva 很 e não 是 — 我很高兴, nunca 我是高兴. 认识你很高兴 = prazer em conhecer você"},
   {"id":"kaixin","hanzi":"开心","pinyin":"kāixīn","pt":"feliz (de coração aberto)","deck":"estados","fonte":"duolingo","nota":"开 (abrir, o mesmo de 打开) + 心 (coração): abrir o coração. Dos três, é o mais do dia a dia — 快乐 puxa pra felicitação, 高兴 pro momento"},
 
   {"id":"feichang","hanzi":"非常","pinyin":"fēicháng","pt":"muito / extremamente","deck":"uteis","fonte":"duolingo","nota":"非 (não) + 常 (o comum) = fora do comum. Ocupa o mesmo lugar do 很 e sobe o volume: 我很累 é estou cansado, 我非常累 é estou acabado"},
@@ -215,7 +215,7 @@
   {"id":"fr-porque-cerveja","tipo":"frase","hanzi":"你为什么不喝啤酒","pinyin":"Nǐ wèishénme bù hē píjiǔ","pt":"Por que você não bebe cerveja?","deck":"comida","fonte":"duolingo","nota":"O 为什么 fica depois do sujeito e antes do verbo, e a ordem da frase não muda. Sem 吗: pergunta que já tem palavra de pergunta não leva a partícula"},
   {"id":"yisheng","hanzi":"医生","pinyin":"yīshēng","pt":"médico","deck":"identidade","fonte":"cap3","nota":"医 guarda uma flecha 矢 dentro de uma caixa 匚 — a aljava; a medicina antiga era, antes de tudo, tirar flecha de gente. 生 é o mesmo de 学生 e 先生. 我是医生, com o 是 ligando substantivo a substantivo igual em 我是律师"},
 
-  {"id":"jianada","hanzi":"加拿大","pinyin":"Jiānádà","pt":"Canadá","deck":"paises","fonte":"duolingo","nota":"Transcrição do som Ca-na-dá, sílaba por sílaba, e nenhum dos três caracteres vale pelo sentido — o 大 (grande) que você já tem está aqui só pelo som. Por isso não leva 国, como 日本 e 巴西 também não levam"},
+  {"id":"jianada","hanzi":"加拿大","pinyin":"Jiānádà","pt":"Canadá","deck":"paises","fonte":"cap4","nota":"Transcrição do som Ca-na-dá, sílaba por sílaba, e nenhum dos três caracteres vale pelo sentido — o 大 (grande) que você já tem está aqui só pelo som. Por isso não leva 国, como 日本 e 巴西 também não levam"},
   {"id":"jianadaren","hanzi":"加拿大人","pinyin":"Jiānádàrén","pt":"canadense","deck":"paises","fonte":"duolingo","nota":"加拿大 + 人, a mesma receita de 中国人 e 巴西人 — vale mesmo num país que dispensa o 国. E não existe 加文: no Canadá se fala 英文 e francês"},
 
   {"id":"guo","hanzi":"国","pinyin":"guó","pt":"país","deck":"paises","fonte":"cap3","nota":"Um 玉 (jade, o tesouro do rei) cercado pela muralha 囗. É o 国 de 中国, 美国 e 韩国 — e repare em quem NÃO leva: 日本, 巴西 e 加拿大 são transcrição de som e dispensam ele"},
@@ -231,7 +231,7 @@
   {"id":"yingyu","hanzi":"英语","pinyin":"Yīngyǔ","pt":"inglês (falado)","deck":"escola","fonte":"duolingo","nota":"Mesmo idioma que 英文, pelo outro lado: 语 é o que se fala. No dia a dia os dois se misturam, mas 英语 é o da conversa. 你说英语吗?"},
   {"id":"riwen","hanzi":"日文","pinyin":"Rìwén","pt":"japonês (idioma)","deck":"escola","fonte":"duolingo","nota":"日本 → 日文, a mesma receita de 中文. Já estava citado na nota de 日本人"},
   {"id":"hanwen","hanzi":"韩文","pinyin":"Hánwén","pt":"coreano (idioma)","deck":"escola","fonte":"duolingo","nota":"韩国 → 韩文, e o conjunto fecha com 中文, 日文 e 英文"},
-  {"id":"hanyu","hanzi":"汉语","pinyin":"Hànyǔ","pt":"chinês / mandarim (falado)","deck":"escola","fonte":"duolingo","nota":"O outro nome da mesma língua, e o que mais aparece em sala: 汉 é a etnia han, 语 é a língua falada. 汉语 puxa pra fala e 中文 pro escrito, mas ninguém corrige quem trocar. O 汉 é o mesmo de 汉堡包, lá só pelo som"},
+  {"id":"hanyu","hanzi":"汉语","pinyin":"Hànyǔ","pt":"chinês / mandarim (falado)","deck":"escola","fonte":"cap4","nota":"O outro nome da mesma língua, e o que mais aparece em sala: 汉 é a etnia han, 语 é a língua falada. 汉语 puxa pra fala e 中文 pro escrito, mas ninguém corrige quem trocar. O 汉 é o mesmo de 汉堡包, lá só pelo som"},
   {"id":"yingwenke","hanzi":"英文课","pinyin":"yīngwén kè","pt":"aula de inglês","deck":"escola","fonte":"duolingo","nota":"英文 + 课, e o pinyin vai separado porque são duas palavras. 英语课 vale igual. 我今天有英文课","deleted":true},
 
   {"id":"jintian","hanzi":"今天","pinyin":"jīntiān","pt":"hoje","deck":"uteis","fonte":"duolingo","nota":"今 (agora) + 天 (dia). A mesma peça 天 monta 明天 míngtiān (amanhã) e 昨天 zuótiān (ontem). E repare: em chinês o verbo não muda por causa do tempo — quem diz quando é a palavra, e ela vem ANTES do verbo"},
@@ -494,5 +494,24 @@
   {"id":"fr-mae-musica","tipo":"frase","hanzi":"我妈妈喜欢音乐","pinyin":"Wǒ māma xǐhuan yīnyuè","pt":"Minha mãe gosta de música","deck":"gostos","fonte":"cap2","nota":"音乐 = som + alegria. Aqui 乐 lê-se yuè, não lè como em 快乐 — mesmo desenho"},
   {"id":"fr-obrigado-voce","tipo":"frase","hanzi":"谢谢你","pinyin":"Xièxie nǐ","pt":"Obrigado a você","deck":"saudacoes","fonte":"cap1","nota":"谢谢 dobrado suaviza; o 讠de 'fala' aparece nos dois"},
   {"id":"putao","hanzi":"葡萄","pinyin":"pútáo","pt":"uva","deck":"comida","fonte":"cap3","nota":"Os dois caracteres só existem nesta dupla — nenhum significa nada sozinho. 葡萄牙 (Portugal) é 'dente de uva', mas só pelo som."},
-  {"id":"he-e","hanzi":"和","pinyin":"hé","pt":"e (liga substantivos)","deck":"uteis","fonte":"extra-aula","nota":"Só liga COISAS: 牛奶和果汁. Não liga frases — 'eu como e bebo' não leva 和; o chinês encosta as duas com vírgula."}
+  {"id":"he-e","hanzi":"和","pinyin":"hé","pt":"e (liga substantivos)","deck":"uteis","fonte":"extra-aula","nota":"Só liga COISAS: 牛奶和果汁. Não liga frases — 'eu como e bebo' não leva 和; o chinês encosta as duas com vírgula."},
+
+  {"id":"renshi","hanzi":"认识","pinyin":"rènshi","pt":"conhecer (alguém)","deck":"verbos","fonte":"cap4","nota":"认 → 讠+ 人 e 识 → 讠+ 只: os dois levam o radical da fala 讠, o mesmo de 说, 课 e 谢谢. É conhecer PESSOA — saber uma coisa é outro verbo. 认识你很高兴 fecha toda apresentação"},
+  {"id":"keyi","hanzi":"可以","pinyin":"kěyǐ","pt":"poder (ter permissão)","deck":"verbos","fonte":"cap4","nota":"É permissão, não capacidade: 可以进来吗? = posso entrar? Quem responde diz só 可以. Para saber FAZER algo o chinês usa outro verbo"},
+  {"id":"jinlai","hanzi":"进来","pinyin":"jìnlai","pt":"entrar (vir para dentro)","deck":"verbos","fonte":"cap4","nota":"进 (entrar) + 来 (vir): entrar vindo na direção de quem fala. De fora se pede 可以进来吗?; de dentro se responde 请进. Segunda sílaba em tom neutro: jìnlai"},
+  {"id":"jin-entrar","hanzi":"进","pinyin":"jìn","pt":"entrar","deck":"verbos","fonte":"cap4","nota":"Sozinho já é o convite: 请进! = entre, por favor. Leva 辶, o radical do caminho — o mesmo de 这 e 那"},
+  {"id":"lai","hanzi":"来","pinyin":"lái","pt":"vir","deck":"verbos","fonte":"cap4","nota":"Vir para cá, na direção de quem fala. É ele que dá essa direção ao 进来: sem ele, 进 é só entrar"},
+  {"id":"qing","hanzi":"请","pinyin":"qǐng","pt":"por favor / convidar","deck":"uteis","fonte":"cap4","nota":"讠(fala) + 青 pelo som. Abre todo pedido educado: 请进, 请问. O 讠é o mesmo de 说, 课 e 谢谢. Num restaurante, 我请你 quer dizer que a conta é sua"},
+  {"id":"jizhe","hanzi":"记者","pinyin":"jìzhě","pt":"repórter / jornalista","deck":"identidade","fonte":"cap4","nota":"记 (registrar, com o 讠de fala) + 者 (quem faz): quem registra. O 者 monta profissão, como o -ista do português"},
+  {"id":"qingwen","hanzi":"请问","pinyin":"qǐngwèn","pt":"com licença, posso perguntar?","deck":"uteis","fonte":"cap4","nota":"请 + 问, ao pé da letra 'peço perguntar'. Não é a pergunta — vem ANTES dela, para abrir com estranho: 请问，您贵姓?"},
+  {"id":"wen","hanzi":"问","pinyin":"wèn","pt":"perguntar","deck":"verbos","fonte":"cap4","nota":"口 (boca) dentro de 门 (porta): a boca que chega à porta e pergunta. O 门 aqui vale pelo som e pelo desenho ao mesmo tempo"},
+  {"id":"guixing","hanzi":"贵姓","pinyin":"guìxìng","pt":"qual é o seu sobrenome? (cortês)","deck":"nomes","fonte":"cap4","nota":"贵 → 中 + 一 + 贝 (a concha, que era dinheiro): 'caro, valioso'. Só combina com 你 ou 您 — 您贵姓? Nunca sobre si mesmo: responde-se 我姓…, sem o 贵"},
+  {"id":"xing-sobrenome","hanzi":"姓","pinyin":"xìng","pt":"ter por sobrenome / sobrenome","deck":"nomes","fonte":"cap4","nota":"女 (mulher) + 生 (nascer): o nome que vem do nascimento — os clãs antigos se contavam pela mãe. É verbo e substantivo: 我姓陆. Em chinês o sobrenome vem PRIMEIRO"},
+  {"id":"yang-sobrenome","hanzi":"杨","pinyin":"Yáng","pt":"Yang (sobrenome)","deck":"nomes","fonte":"cap4","nota":"木 (árvore) + 昜 pelo som: era o salgueiro. Vira sobrenome, como 陆, 丁 e 陈 que você já tem. 杨老师 = professor Yang"},
+  {"id":"yuyan","hanzi":"语言","pinyin":"yǔyán","pt":"língua, idioma","deck":"escola","fonte":"cap4","nota":"语 → 讠+ 五 + 口, e 言 sozinho já é a fala. Dobrado, é o idioma como objeto de estudo: 语言学院. O 语 é o mesmo de 汉语"},
+  {"id":"xueyuan","hanzi":"学院","pinyin":"xuéyuàn","pt":"instituto, faculdade","deck":"escola","fonte":"cap4","nota":"学 (estudar) + 院 (pátio murado): a unidade dentro da universidade. 大学 é a universidade inteira, 语言学院 é um pedaço dela"},
+  {"id":"de-particula","hanzi":"的","pinyin":"de","pt":"partícula de posse","deck":"uteis","fonte":"cap4","nota":"的 → 白 + 勺. Não se traduz: liga dono e coisa, na ordem dono + 的 + coisa. 我的朋友 = meu amigo; 语言学院的学生 = estudante do Instituto de Línguas. Tom neutro, e some entre parente próximo — 我妈妈, não 我的妈妈"},
+  {"id":"xuexi","hanzi":"学习","pinyin":"xuéxí","pt":"estudar, aprender","deck":"verbos","fonte":"cap4","nota":"学 (o de 学生) + 习 (praticar, repetir). 我学习汉语. Serve pra matéria inteira; 学 sozinho também vale e é mais curto"},
+  {"id":"yingguo","hanzi":"英国","pinyin":"Yīngguó","pt":"Reino Unido, Inglaterra","deck":"paises","fonte":"cap4","nota":"英 pelo som de 'Ing' + 国 (país) — a mesma receita de 美国 e 中国. O idioma é 英语 Yīngyǔ"},
+  {"id":"madawei","hanzi":"马大为","pinyin":"Mǎ Dàwéi","pt":"Ma Dawei (personagem do livro)","deck":"nomes","fonte":"cap4","nota":"Nome chinês de um americano: 马 (cavalo) é o sobrenome e vem primeiro, 大为 é o nome. Estuda no 语言学院, como 力波 e 林娜"}
 ]
