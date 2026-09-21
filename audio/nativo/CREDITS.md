@@ -233,3 +233,5 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 学院 | xuéyuàn | [Zh-xuéyuàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9yu%C3%A0n.ogg) | 学院 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 的 | de | [Zh-de.ogg](https://commons.wikimedia.org/wiki/File%3AZh-de.ogg) | 的 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 学习 | xuéxí | [Zh-xuéxí.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9x%C3%AD.ogg) | 学习 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 贵 | guì | [Zh-guì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%AC.ogg) | 贵 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 小姐 | xiǎojiě | [Zh-xiǎojiě.oga](https://commons.wikimedia.org/wiki/File%3AZh-xi%C7%8Eoji%C4%9B.oga) | 小姐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
