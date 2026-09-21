@@ -34,14 +34,19 @@ KEYS = ["id", "hanzi", "pinyin", "pt", "deck", "tags", "nota", "data_aula", "fon
 # deleted é NOT NULL no banco: carta sem o campo precisa ir como false, não como null
 PADRAO = {"created_by": "leo", "tags": [], "deleted": False}
 
-# No JSON a frase se marca com "tipo":"frase", que é o que se quer escrever à mão. No
-# banco ela vira a tag 'frase', porque coluna nova exigiria DDL e ninguém do time tem —
-# ver o comentário no schema.sql. A tradução mora aqui, num lugar só, e o JSON não
+# No JSON o tipo da carta se escreve à mão em "tipo" — 'frase', ou 'caractere' para o
+# ideograma que só entrou no deck por ser pedaço de uma palavra maior (啡 de 咖啡, 朋 de
+# 朋友). No banco os dois viram TAG, porque coluna nova exigiria DDL e ninguém do time
+# tem — ver o comentário no schema.sql. A tradução mora aqui, num lugar só, e o JSON não
 # precisa saber dessa limitação.
+TIPOS = ("frase", "caractere")
+
+
 def com_tags(c):
     tags = list(c.get("tags") or [])
-    if c.get("tipo") == "frase" and "frase" not in tags:
-        tags.append("frase")
+    t = c.get("tipo")
+    if t in TIPOS and t not in tags:
+        tags.append(t)
     return tags
 
 cards = [dict({k: c.get(k, PADRAO.get(k)) for k in KEYS}, tags=com_tags(c)) for c in cards]
