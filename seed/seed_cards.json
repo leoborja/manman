@@ -16,7 +16,7 @@
   {"id":"jiao","hanzi":"叫","pinyin":"jiào","pt":"chamar-se","deck":"verbos","fonte":"cap4","data_aula":"2026-08-06","nota":"我叫… = eu me chamo… (radical 口 boca)"},
   {"id":"shenme","hanzi":"什么","pinyin":"shénme","pt":"o que / qual","deck":"uteis","fonte":"cap4","data_aula":"2026-08-06","nota":"你叫什么名字? = como você se chama? — a pergunta que abre com o 叫 que você já tem. 什 leva 亻(pessoa), 么 tem 3 traços: os dois valem só pelo som, e a segunda sílaba fica neutra (shénme)"},
   {"id":"mingzi","hanzi":"名字","pinyin":"míngzi","pt":"nome","deck":"nomes","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我的名字是… ou, mais comum na fala, 我叫… 名 é 夕 (anoitecer) + 口 (boca): o nome é o que se chama no escuro. 字 é o 子 (criança) que você já tem, debaixo de um teto 宀. Segunda sílaba em tom neutro: míngzi"},
-  {"id":"baxi","hanzi":"巴西","pinyin":"Bāxī","pt":"Brasil","deck":"paises","fonte":"duolingo","data_aula":"2026-08-06","nota":"我是巴西人 = eu sou brasileiro, pela mesma receita país + 人 de 中国人 e 美国人. É transcrição do som e não leva 国, como 日本. O 巴 é o mesmo do 爸爸, também só pelo som; 西 sozinho é oeste"},
+  {"id":"baxi","hanzi":"巴西","pinyin":"Bāxī","pt":"Brasil","deck":"paises","fonte":"extra-aula","data_aula":"2026-08-06","nota":"我是巴西人 = eu sou brasileiro, pela mesma receita país + 人 de 中国人 e 美国人. É transcrição do som e não leva 国, como 日本. O 巴 é o mesmo do 爸爸, também só pelo som; 西 sozinho é oeste"},
 
   {"id":"hao","hanzi":"好","pinyin":"hǎo","pt":"bom / bem","deck":"uteis","fonte":"cap1","data_aula":"2026-08-06","nota":"Ideograma composto: 女 (mulher/feminino) + 子 (criança)"},
   {"id":"hen","hanzi":"很","pinyin":"hěn","pt":"muito","deck":"uteis","fonte":"cap1","data_aula":"2026-08-12","nota":"我很好 = eu estou muito bem"},
@@ -71,7 +71,7 @@
   {"id":"kafei","hanzi":"咖啡","pinyin":"kāfēi","pt":"café","deck":"comida","fonte":"cap2","data_aula":"2026-08-19","nota":"Transliteração do som estrangeiro — os dois caracteres levam 口 (boca) e valem só pelo som"},
   {"id":"yinliao","hanzi":"饮料","pinyin":"yǐnliào","pt":"bebidas","deck":"comida","fonte":"cap2","data_aula":"2026-08-19","nota":"饮 (beber) + 料 (matéria-prima): é a palavra de cardápio, bebida em geral. O 饣à esquerda é o mesmo radical de comida do 饭 (米饭) e do 饿 (com fome). Pra ação continua o 喝: 我要喝饮料"},
   {"id":"kele","hanzi":"可乐","pinyin":"kělè","pt":"Coca-Cola","deck":"comida","fonte":"cap2","data_aula":"2026-08-19","nota":"可 (poder) + 乐 (alegre), escolhidos pelo som — o nome completo é 可口可乐 Kěkǒu Kělè. Sozinho serve pra qualquer refrigerante de cola. Repare no 乐: aqui é lè, mas em 音乐 yīnyuè ele vira yuè"},
-  {"id":"hanbaobao","hanzi":"汉堡包","pinyin":"hànbǎobāo","pt":"hambúrguer","deck":"comida","fonte":"duolingo","data_aula":"2026-08-19","nota":"汉堡 vale só pelo som de \"Hamburgo\" e 包 é pão/embrulho — o pão fecha a palavra. No dia a dia se diz só 汉堡. O 汉 é o mesmo de 汉字 hànzì (os caracteres) e de 汉语 Hànyǔ (a língua chinesa)"},
+  {"id":"hanbaobao","hanzi":"汉堡包","pinyin":"hànbǎobāo","pt":"hambúrguer","deck":"comida","fonte":"extra-aula","data_aula":"2026-08-19","nota":"汉堡 vale só pelo som de \"Hamburgo\" e 包 é pão/embrulho — o pão fecha a palavra. No dia a dia se diz só 汉堡. O 汉 é o mesmo de 汉字 hànzì (os caracteres) e de 汉语 Hànyǔ (a língua chinesa)"},
 
   {"id":"yao","hanzi":"要","pinyin":"yào","pt":"querer","deck":"verbos","fonte":"cap2","data_aula":"2026-08-19","nota":"你要咖啡吗? = você quer café?"},
   {"id":"he-beber","hanzi":"喝","pinyin":"hē","pt":"beber","deck":"verbos","fonte":"cap2","data_aula":"2026-08-19","nota":"Radical 口 (boca) à esquerda — como 吗, 呢 e 叫"},
@@ -94,30 +94,30 @@
   {"id":"zhou","hanzi":"粥","pinyin":"zhōu","pt":"mingau (de arroz)","deck":"comida","fonte":"duolingo","nota":"米 (arroz, o do 米饭) espremido entre dois 弓 (arco). Mingau se bebe: 喝粥, nunca 吃粥"},
   {"id":"tang","hanzi":"汤","pinyin":"tāng","pt":"sopa","deck":"comida","fonte":"duolingo","nota":"氵(água) + 昜. Sopa também se bebe: 喝汤"},
   {"id":"doufu","hanzi":"豆腐","pinyin":"dòufu","pt":"tofu","deck":"comida","fonte":"duolingo","nota":"豆 é a soja e 腐 é COALHADO — 'coalhada de soja', ao pé da letra. Não fermenta nada. Segunda sílaba em tom neutro: dòufu"},
-  {"id":"pijiu","hanzi":"啤酒","pinyin":"píjiǔ","pt":"cerveja","deck":"comida","fonte":"duolingo","nota":"啤 vale só pelo som de \"beer\", com 口 (boca) à esquerda como em 咖啡. 酒 jiǔ é bebida alcoólica em geral"},
+  {"id":"pijiu","hanzi":"啤酒","pinyin":"píjiǔ","pt":"cerveja","deck":"comida","fonte":"extra-aula","nota":"啤 vale só pelo som de \"beer\", com 口 (boca) à esquerda como em 咖啡. 酒 jiǔ é bebida alcoólica em geral"},
 
   {"id":"re","hanzi":"热","pinyin":"rè","pt":"quente / com calor","deck":"estados","fonte":"duolingo","nota":"我很热 = estou com calor. As quatro gotinhas embaixo (灬) são o 火 (fogo) achatado. Serve pra coisa quente também: 热茶"},
 
-  {"id":"weihunqi","hanzi":"未婚妻","pinyin":"wèihūnqī","pt":"noiva (prometida)","deck":"familia","fonte":"duolingo","nota":"未 (ainda não) + 婚 (casar) + 妻 (esposa) = esposa ainda não casada. O 未 é o mesmo do 妹妹, a irmã que ainda não cresceu"},
-  {"id":"qizi","hanzi":"妻子","pinyin":"qīzi","pt":"esposa","deck":"familia","fonte":"duolingo","nota":"O termo padrão e neutro, serve em qualquer contexto. O 子 aqui só fecha a palavra, sem o sentido de criança"},
-  {"id":"laopo","hanzi":"老婆","pinyin":"lǎopo","pt":"esposa (coloquial)","deck":"familia","fonte":"duolingo","nota":"Afetuoso e o mais usado no dia a dia — 妻子 é o de formulário. 婆 leva 女 embaixo. O par masculino é 老公 lǎogōng (marido)"},
+  {"id":"weihunqi","hanzi":"未婚妻","pinyin":"wèihūnqī","pt":"noiva (prometida)","deck":"familia","fonte":"extra-aula","nota":"未 (ainda não) + 婚 (casar) + 妻 (esposa) = esposa ainda não casada. O 未 é o mesmo do 妹妹, a irmã que ainda não cresceu"},
+  {"id":"qizi","hanzi":"妻子","pinyin":"qīzi","pt":"esposa","deck":"familia","fonte":"extra-aula","nota":"O termo padrão e neutro, serve em qualquer contexto. O 子 aqui só fecha a palavra, sem o sentido de criança"},
+  {"id":"laopo","hanzi":"老婆","pinyin":"lǎopo","pt":"esposa (coloquial)","deck":"familia","fonte":"extra-aula","nota":"Afetuoso e o mais usado no dia a dia — 妻子 é o de formulário. 婆 leva 女 embaixo. O par masculino é 老公 lǎogōng (marido)"},
 
   {"id":"shi","hanzi":"是","pinyin":"shì","pt":"ser / sou","deck":"verbos","fonte":"cap3","nota":"我是律师 = eu sou advogado. Só liga substantivo a substantivo: com adjetivo o certo é 很 (我很累, nunca 我是累). Negativa: 不是 bú shì"},
   {"id":"ai","hanzi":"爱","pinyin":"ài","pt":"amar","deck":"verbos","fonte":"extra-aula","nota":"我爱你 = eu te amo. Na forma tradicional 愛 havia um 心 (coração) no meio; a simplificação trocou pelo 友 do 朋友"},
-  {"id":"xihuan","hanzi":"喜欢","pinyin":"xǐhuan","pt":"gostar","deck":"verbos","fonte":"duolingo","nota":"我喜欢咖啡 = eu gosto de café. 喜欢 serve pra qualquer coisa; 爱 guarda-se pra pessoa ou pra ênfase forte"},
+  {"id":"xihuan","hanzi":"喜欢","pinyin":"xǐhuan","pt":"gostar","deck":"verbos","fonte":"extra-aula","nota":"我喜欢咖啡 = eu gosto de café. 喜欢 serve pra qualquer coisa; 爱 guarda-se pra pessoa ou pra ênfase forte"},
   {"id":"shuo","hanzi":"说","pinyin":"shuō","pt":"falar","deck":"verbos","fonte":"duolingo","nota":"我说中文 = eu falo chinês. Radical 讠(fala) à esquerda — o mesmo do 课 (aula)"},
 
   {"id":"hai","hanzi":"嗨","pinyin":"hāi","pt":"oi","deck":"saudacoes","fonte":"duolingo","nota":"Empréstimo do inglês \"hi\": o 口 (boca) à esquerda marca caractere que vale pelo som, como em 咖啡. Informal — o padrão continua 你好"},
-  {"id":"xiexie","hanzi":"谢谢","pinyin":"xièxie","pt":"obrigado","deck":"saudacoes","fonte":"duolingo","nota":"Dobrado como 妈妈 e 哥哥, e a segunda sílaba perde o tom: xièxie. O 讠(fala) à esquerda é o mesmo de 说 e 课. Responde-se 不客气 bú kèqi (de nada)"},
+  {"id":"xiexie","hanzi":"谢谢","pinyin":"xièxie","pt":"obrigado","deck":"saudacoes","fonte":"extra-aula","nota":"Dobrado como 妈妈 e 哥哥, e a segunda sílaba perde o tom: xièxie. O 讠(fala) à esquerda é o mesmo de 说 e 课. Responde-se 不客气 bú kèqi (de nada)"},
 
   {"id":"zhongguo","hanzi":"中国","pinyin":"Zhōngguó","pt":"China","deck":"paises","fonte":"cap3","nota":"中 (meio) + 国 (país): o país do meio. O 中 é um traço vertical cortando um quadrado bem no meio"},
   {"id":"meiguo","hanzi":"美国","pinyin":"Měiguó","pt":"Estados Unidos","deck":"paises","fonte":"cap3","nota":"美 (belo) + 国 (país), mas é transcrição do som de a-MÉ-rica, não elogio"},
   {"id":"riben","hanzi":"日本","pinyin":"Rìběn","pt":"Japão","deck":"paises","fonte":"cap3","nota":"日 (sol) + 本 (origem): a origem do sol. Repare que não leva 国. O 本 é o 木 (madeira) com um traço marcando a raiz"},
-  {"id":"hanguo","hanzi":"韩国","pinyin":"Hánguó","pt":"Coreia (do Sul)","deck":"paises","fonte":"duolingo","nota":"韩 + 国. A do Norte tem nome próprio, 朝鲜 Cháoxiǎn — não é 韩国 com prefixo"},
-  {"id":"zhongguoren","hanzi":"中国人","pinyin":"Zhōngguórén","pt":"chinês (pessoa)","deck":"paises","fonte":"duolingo","nota":"país + 人 (pessoa) — a receita vale pra todos. 我是中国人. O idioma é outra palavra: 中文 Zhōngwén"},
-  {"id":"meiguoren","hanzi":"美国人","pinyin":"Měiguórén","pt":"americano (pessoa)","deck":"paises","fonte":"duolingo","nota":"美国 + 人. Aqui não existe 美文: o idioma é 英文 Yīngwén (inglês)"},
-  {"id":"ribenren","hanzi":"日本人","pinyin":"Rìběnrén","pt":"japonês (pessoa)","deck":"paises","fonte":"duolingo","nota":"日本 + 人. Idioma: 日文 Rìwén"},
-  {"id":"hanguoren","hanzi":"韩国人","pinyin":"Hánguórén","pt":"coreano (pessoa)","deck":"paises","fonte":"duolingo","nota":"韩国 + 人. Idioma: 韩文 Hánwén"},
+  {"id":"hanguo","hanzi":"韩国","pinyin":"Hánguó","pt":"Coreia (do Sul)","deck":"paises","fonte":"extra-aula","nota":"韩 + 国. A do Norte tem nome próprio, 朝鲜 Cháoxiǎn — não é 韩国 com prefixo"},
+  {"id":"zhongguoren","hanzi":"中国人","pinyin":"Zhōngguórén","pt":"chinês (pessoa)","deck":"paises","fonte":"extra-aula","nota":"país + 人 (pessoa) — a receita vale pra todos. 我是中国人. O idioma é outra palavra: 中文 Zhōngwén"},
+  {"id":"meiguoren","hanzi":"美国人","pinyin":"Měiguórén","pt":"americano (pessoa)","deck":"paises","fonte":"extra-aula","nota":"美国 + 人. Aqui não existe 美文: o idioma é 英文 Yīngwén (inglês)"},
+  {"id":"ribenren","hanzi":"日本人","pinyin":"Rìběnrén","pt":"japonês (pessoa)","deck":"paises","fonte":"extra-aula","nota":"日本 + 人. Idioma: 日文 Rìwén"},
+  {"id":"hanguoren","hanzi":"韩国人","pinyin":"Hánguórén","pt":"coreano (pessoa)","deck":"paises","fonte":"extra-aula","nota":"韩国 + 人. Idioma: 韩文 Hánwén"},
 
   {"id":"laoshi","hanzi":"老师","pinyin":"lǎoshī","pt":"professor","deck":"escola","fonte":"cap3","nota":"老 (velho, aqui de respeito e não de idade) + 师, o mesmo sufixo de mestre num ofício do 律师 (advogado). É como se chama a pessoa na sala: 老师！"},
   {"id":"xuesheng","hanzi":"学生","pinyin":"xuésheng","pt":"estudante","deck":"escola","fonte":"cap4","nota":"学 (estudar) + 生 (nascer/vida). Segunda sílaba em tom neutro, como em 朋友 péngyou"},
@@ -183,7 +183,7 @@
   {"id":"num-30","hanzi":"三十","pinyin":"sānshí","pt":"trinta (30)","deck":"numeros","fonte":"extra-aula","nota":"A unidade vem depois, colada: 三十五 sānshíwǔ = trinta e cinco. É assim que se diz a página 35"},
   {"id":"num-40","hanzi":"四十","pinyin":"sìshí","pt":"quarenta (40)","deck":"numeros","fonte":"extra-aula"},
   {"id":"num-yibai","hanzi":"一百","pinyin":"yìbǎi","pt":"cem (100), com o 一 na frente","deck":"numeros","fonte":"extra-aula","nota":"O 一 troca de tom antes do 3º tom de bǎi: yìbǎi, não yībǎi — a mesma família de regra que faz 不 virar bú antes de 4º tom"},
-  {"id":"laogong","hanzi":"老公","pinyin":"lǎogōng","pt":"marido (coloquial)","deck":"familia","fonte":"duolingo","nota":"O par exato de 老婆 lǎopo, que já cita ele na nota: é o do dia a dia, e serve pra chamar o próprio marido, como \"amor\". O 老 aqui não fala de idade — fala de intimidade e respeito, o mesmo de 老师"},
+  {"id":"laogong","hanzi":"老公","pinyin":"lǎogōng","pt":"marido (coloquial)","deck":"familia","fonte":"extra-aula","nota":"O par exato de 老婆 lǎopo, que já cita ele na nota: é o do dia a dia, e serve pra chamar o próprio marido, como \"amor\". O 老 aqui não fala de idade — fala de intimidade e respeito, o mesmo de 老师"},
   {"id":"zhangfu","hanzi":"丈夫","pinyin":"zhàngfu","pt":"marido (formal)","deck":"familia","fonte":"duolingo","nota":"O de documento e formulário, como 妻子 é pra esposa. 丈 era uma medida antiga de comprimento e 夫 é homem adulto: ao pé da letra, o homem de um 丈 de altura. Segunda sílaba em tom neutro: zhàngfu"},
   {"id":"xiansheng","hanzi":"先生","pinyin":"xiānsheng","pt":"senhor (Sr.) / esposo","deck":"familia","fonte":"cap4","nota":"Ao pé da letra \"nascido antes\": 先 (antes) + o 生 de 学生. Na aula é o tratamento — 杨先生, 陆先生 — e vem DEPOIS do sobrenome, ao contrário do português. Daí também virou o jeito elegante de a mulher falar do próprio marido. Segunda sílaba neutra, como em 学生 xuésheng"},
   {"id":"erzi","hanzi":"儿子","pinyin":"érzi","pt":"filho","deck":"familia","fonte":"duolingo","nota":"儿 (criança) + o 子 que você já tem sozinho. Segunda sílaba em tom neutro, como em 妻子 qīzi e 名字 míngzi"},
@@ -199,9 +199,9 @@
   {"id":"gaoxing","hanzi":"高兴","pinyin":"gāoxìng","pt":"contente / animado","deck":"estados","fonte":"cap4","nota":"高 (alto) + 兴 (ânimo): o astral lá em cima. É adjetivo, então leva 很 e não 是 — 我很高兴, nunca 我是高兴. 认识你很高兴 = prazer em conhecer você"},
   {"id":"kaixin","hanzi":"开心","pinyin":"kāixīn","pt":"feliz (de coração aberto)","deck":"estados","fonte":"duolingo","nota":"开 (abrir, o mesmo de 打开) + 心 (coração): abrir o coração. Dos três, é o mais do dia a dia — 快乐 puxa pra felicitação, 高兴 pro momento"},
 
-  {"id":"feichang","hanzi":"非常","pinyin":"fēicháng","pt":"muito / extremamente","deck":"uteis","fonte":"duolingo","nota":"非 (não) + 常 (o comum) = fora do comum. Ocupa o mesmo lugar do 很 e sobe o volume: 我很累 é estou cansado, 我非常累 é estou acabado"},
+  {"id":"feichang","hanzi":"非常","pinyin":"fēicháng","pt":"muito / extremamente","deck":"uteis","fonte":"extra-aula","nota":"非 (não) + 常 (o comum) = fora do comum. Ocupa o mesmo lugar do 很 e sobe o volume: 我很累 é estou cansado, 我非常累 é estou acabado"},
   {"id":"wei-para","hanzi":"为","pinyin":"wèi","pt":"por / para","deck":"uteis","fonte":"duolingo","nota":"Preposição, e vem antes do verbo: diz pra quem a ação vai (为你 = por você) ou por qual motivo ela acontece. Em 为什么 é esse segundo sentido"},
-  {"id":"weishenme","hanzi":"为什么","pinyin":"wèishénme","pt":"por quê","deck":"uteis","fonte":"duolingo","nota":"为 (para) + 什么 (o que), os dois você já tem: \"para quê\". Fica depois do sujeito e antes do verbo, e não pede 吗 — a frase já é pergunta por causa dele"},
+  {"id":"weishenme","hanzi":"为什么","pinyin":"wèishénme","pt":"por quê","deck":"uteis","fonte":"extra-aula","nota":"为 (para) + 什么 (o que), os dois você já tem: \"para quê\". Fica depois do sujeito e antes do verbo, e não pede 吗 — a frase já é pergunta por causa dele"},
 
   {"id":"fr-feliz-aniversario","tipo":"frase","hanzi":"生日快乐","pinyin":"Shēngrì kuàilè","pt":"Feliz aniversário","deck":"saudacoes","fonte":"duolingo","nota":"生日 é 生 (nascer) + 日 (sol/dia): o dia de nascer. A felicitação inteira é substantivo + 快乐, sem verbo nenhum"},
   {"id":"fr-feliz-ano-novo","tipo":"frase","hanzi":"新年快乐","pinyin":"Xīnnián kuàilè","pt":"Feliz ano novo","deck":"saudacoes","fonte":"duolingo","nota":"新 (novo) + 年 (ano), e a mesma receita de 生日快乐. Serve pro ano novo chinês e pro 1º de janeiro"},
@@ -216,7 +216,7 @@
   {"id":"yisheng","hanzi":"医生","pinyin":"yīshēng","pt":"médico","deck":"identidade","fonte":"cap3","nota":"医 guarda uma flecha 矢 dentro de uma caixa 匚 — a aljava; a medicina antiga era, antes de tudo, tirar flecha de gente. 生 é o mesmo de 学生 e 先生. 我是医生, com o 是 ligando substantivo a substantivo igual em 我是律师"},
 
   {"id":"jianada","hanzi":"加拿大","pinyin":"Jiānádà","pt":"Canadá","deck":"paises","fonte":"cap4","nota":"Transcrição do som Ca-na-dá, sílaba por sílaba, e nenhum dos três caracteres vale pelo sentido — o 大 (grande) que você já tem está aqui só pelo som. Por isso não leva 国, como 日本 e 巴西 também não levam"},
-  {"id":"jianadaren","hanzi":"加拿大人","pinyin":"Jiānádàrén","pt":"canadense","deck":"paises","fonte":"duolingo","nota":"加拿大 + 人, a mesma receita de 中国人 e 巴西人 — vale mesmo num país que dispensa o 国. E não existe 加文: no Canadá se fala 英文 e francês"},
+  {"id":"jianadaren","hanzi":"加拿大人","pinyin":"Jiānádàrén","pt":"canadense","deck":"paises","fonte":"extra-aula","nota":"加拿大 + 人, a mesma receita de 中国人 e 巴西人 — vale mesmo num país que dispensa o 国. E não existe 加文: no Canadá se fala 英文 e francês"},
 
   {"id":"guo","hanzi":"国","pinyin":"guó","pt":"país","deck":"paises","fonte":"cap3","nota":"Um 玉 (jade, o tesouro do rei) cercado pela muralha 囗. É o 国 de 中国, 美国 e 韩国 — e repare em quem NÃO leva: 日本, 巴西 e 加拿大 são transcrição de som e dispensam ele"},
   {"id":"yu-lingua","hanzi":"语","pinyin":"yǔ","pt":"língua falada","deck":"escola","fonte":"cap3","nota":"讠(fala) — o mesmo radical de 说, 谢谢 e 课 — mais 吾 pelo som. É a língua que sai da boca: 英语 é o inglês de conversa. O par escrito dele é 文"},
@@ -248,7 +248,7 @@
   {"id":"jiu-bebida","hanzi":"酒","pinyin":"jiǔ","pt":"bebida alcoólica","deck":"comida","fonte":"extra-aula","data_aula":"2026-09-09","nota":"Você já usava ele dentro de 啤酒 (cerveja). Sozinho é qualquer bebida alcoólica. 氵(água) + 酉, que era o desenho de um jarro de vinho"},
   {"id":"pingguo","hanzi":"苹果","pinyin":"píngguǒ","pt":"maçã","deck":"comida","fonte":"cap2","data_aula":"2026-09-09","nota":"苹 leva 艹 (grama) em cima, o mesmo chapéu de 茶 — marca de planta. Com 果 (fruta) embaixo. O mesmo 果 de 果汁"},
   {"id":"hanbao","hanzi":"汉堡","pinyin":"hànbǎo","pt":"hambúrguer","deck":"comida","fonte":"cap2","data_aula":"2026-09-09","nota":"A forma curta de 汉堡包, que você já tem — as duas dizem a mesma coisa, e esta é a que se fala. Transcrição do som de Hamburgo, a cidade; o 汉 é o mesmo de 汉语, aqui só pelo som"},
-  {"id":"hanbaorou","hanzi":"汉堡肉","pinyin":"hànbǎoròu","pt":"carne do hambúrguer","deck":"comida","fonte":"duolingo","data_aula":"2026-09-09","nota":"汉堡 + 肉 (carne): o disco de carne sozinho, sem o pão. É a distinção que 汉堡 e 汉堡包 não fazem — os dois são o sanduíche inteiro"},
+  {"id":"hanbaorou","hanzi":"汉堡肉","pinyin":"hànbǎoròu","pt":"carne do hambúrguer","deck":"comida","fonte":"extra-aula","data_aula":"2026-09-09","nota":"汉堡 + 肉 (carne): o disco de carne sozinho, sem o pão. É a distinção que 汉堡 e 汉堡包 não fazem — os dois são o sanduíche inteiro"},
 
   {"id":"gonggong","hanzi":"公公","pinyin":"gōnggong","pt":"sogro (pai do marido)","deck":"familia","fonte":"extra-aula","data_aula":"2026-09-09","nota":"O 公 de 老公 (marido), dobrado — como 爸爸 e 哥哥, e com a segunda sílaba em tom neutro. É quem a mulher casada chama assim: o pai DELE. O pai da esposa é outra palavra, 岳父 yuèfù"},
 
