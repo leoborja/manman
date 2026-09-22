@@ -128,9 +128,11 @@ Regras que importam:
   `"cap1"`, `"cap2"`, `"cap3"`… — vale o que está no 生词 da lição, na seção de 汉字 e
   nas palavras dos exercícios dela. Fora do livro: `"extra-aula"` (o professor trouxe
   na aula) ou `"duolingo"`. Capítulo novo não precisa de código, o chip "Cap. 3" aparece
-  sozinho. `"ideogramas"` é a exceção que não é capítulo nem fonte de fora: é o caractere
-  estudado por ele mesmo, venha de onde vier — por isso o chip fica logo depois dos
-  capítulos, antes de "Extras da aula". Na dúvida sobre de onde veio, pergunte ao Leo em vez de chutar.
+  sozinho. `"caractere"` é a sala de espera: o ideograma que só entrou no deck por ter
+  sido quebrado de uma palavra maior (啡 de 咖啡, 朋 e 友 de 朋友) e que a turma ainda
+  não estudou. Quando o livro o ensinar, a carta SAI de `caractere` e vai pro capítulo —
+  o critério é estar listado na seção 生词 ou 汉字 da lição. Por isso o chip fica logo
+  depois dos capítulos, antes de "Extras da aula". Na dúvida sobre de onde veio, pergunte ao Leo em vez de chutar.
 - **`data_aula`** é o dia da aula em que a palavra entrou (`"2026-09-10"`). Fica como
   registro — não é mais filtro. Palavra que não veio de aula não leva.
 - **`nota`** é opcional e aparece no verso.

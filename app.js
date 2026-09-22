@@ -48,11 +48,13 @@ const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: '
 // Reader 1) ela saiu, ou se veio de fora dele. Mora na coluna `fonte`, que já existia —
 // ninguém do time tem DDL pra criar coluna nova (ver o schema.sql). Capítulo novo não
 // precisa de código: "fonte": "cap3" no JSON já vira o chip "Cap. 3", na ordem certa.
-const ORIGEM_LABELS = { ideogramas: 'Ideogramas', 'extra-aula': 'Extras da aula',
+const ORIGEM_LABELS = { caractere: 'Caractere', 'extra-aula': 'Extras da aula',
   duolingo: 'Duolingo', treino: 'Treino', fora: 'Sem origem' };
-// 'ideogramas' vem logo depois dos capítulos porque não é uma fonte de fora do livro
-// como as outras três: é o caractere estudado por ele mesmo, venha do capítulo que vier.
-const ORIGEM_FIM = ['ideogramas', 'extra-aula', 'duolingo', 'treino']; // depois dos capítulos, nesta ordem
+// 'caractere' é a sala de espera: o ideograma que entrou no deck por ter sido quebrado de
+// uma palavra maior (啡 de 咖啡) e que a turma ainda não estudou. Quando o livro o ensinar,
+// ele sai daqui e vai pro capítulo. Por isso fica logo depois dos capítulos, e não junto
+// das outras três — elas dizem DE ONDE a carta veio, esta diz que ela ainda não tem lugar.
+const ORIGEM_FIM = ['caractere', 'extra-aula', 'duolingo', 'treino']; // depois dos capítulos, nesta ordem
 // Uma frase É uma carta: mesmos campos, mesmo SRS, mesma sincronização, mesma meta de
 // 30. O que separa as duas é a FILA — o app nunca mistura, porque frase chega em bloco
 // (uma aula inteira de uma vez) e afogaria a sessão de vocabulário em cartas novas.
