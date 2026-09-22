@@ -580,11 +580,11 @@
   {"id":"bing","hanzi":"冰","pinyin":"bīng","pt":"gelo","deck":"comida","fonte":"duolingo","nota":"冫 (dois pingos) é o radical de gelo e frio. Antes da bebida vira gelado: 冰咖啡, 冰水"},
   {"id":"tang-acucar","hanzi":"糖","pinyin":"táng","pt":"açúcar","deck":"comida","fonte":"duolingo","nota":"米 (arroz, grão) + 唐. Cuidado com 汤 tāng (sopa): mesmo som, mas 糖 é 2º tom, e o radical muda: 米 no açúcar, 氵 na sopa"},
   {"id":"fanguan","hanzi":"饭馆","pinyin":"fànguǎn","pt":"restaurante","deck":"lugares","fonte":"duolingo","nota":"饭 (refeição) + 馆 (estabelecimento). Os dois levam 饣, o radical de comida"},
-  {"id":"chi","hanzi":"吃","pinyin":"chī","pt":"comer","deck":"verbos","fonte":"duolingo","nota":"口 (boca) + 乞. 吃饭 é comer, fazer a refeição: o 饭 vem junto mesmo sem ser arroz"},
+  {"id":"chi","hanzi":"吃","pinyin":"chī","pt":"comer","deck":"verbos","fonte":"duolingo","nota":"口 (boca) + 乞. O que se come vem logo depois: 吃中国菜, 吃米饭"},
   {"id":"mai","hanzi":"买","pinyin":"mǎi","pt":"comprar","deck":"verbos","fonte":"duolingo","nota":"3º tom. Vender é 卖 mài, 4º tom, com um 十 a mais em cima: o tom é que separa comprar de vender"},
   {"id":"fr-cafe-gelado","tipo":"frase","hanzi":"我要冰咖啡","pinyin":"Wǒ yào bīng kāfēi","pt":"Eu quero café gelado","deck":"comida","fonte":"duolingo","nota":"冰 antes da bebida = gelada. Mesmo jeito do 热咖啡 (café quente)"},
   {"id":"fr-cafe-sem-acucar","tipo":"frase","hanzi":"我的咖啡不要糖","pinyin":"Wǒ de kāfēi bú yào táng","pt":"Meu café sem açúcar","deck":"comida","fonte":"duolingo","nota":"不要 = não quero: o jeito de tirar algo do pedido"},
-  {"id":"fr-vamos-restaurante","tipo":"frase","hanzi":"我们去饭馆吃饭","pinyin":"Wǒmen qù fànguǎn chīfàn","pt":"Vamos ao restaurante comer","deck":"lugares","fonte":"duolingo","nota":"Dois verbos seguidos, na ordem em que acontecem: primeiro 去 (ir), depois 吃饭 (comer)"},
+  {"id":"fr-vamos-restaurante","tipo":"frase","hanzi":"我们去饭馆吃中国菜","pinyin":"Wǒmen qù fànguǎn chī Zhōngguó cài","pt":"Vamos ao restaurante comer comida chinesa","deck":"lugares","fonte":"duolingo","nota":"Dois verbos seguidos, na ordem em que acontecem: primeiro 去 (ir), depois 吃 (comer)"},
   {"id":"fr-voce-come-oque","tipo":"frase","hanzi":"你吃什么","pinyin":"Nǐ chī shénme","pt":"O que você vai comer?","deck":"comida","fonte":"duolingo","nota":"什么 fica onde a resposta ficaria: 我吃米饭 → 你吃什么"},
-  {"id":"fr-comprar-agua","tipo":"frase","hanzi":"我去超市买水","pinyin":"Wǒ qù chāoshì mǎi shuǐ","pt":"Vou ao supermercado comprar água","deck":"lugares","fonte":"duolingo","nota":"Ir + lugar + o que vai fazer lá. É a mesma ordem de 去饭馆吃饭"}
+  {"id":"fr-comprar-agua","tipo":"frase","hanzi":"我去超市买水","pinyin":"Wǒ qù chāoshì mǎi shuǐ","pt":"Vou ao supermercado comprar água","deck":"lugares","fonte":"duolingo","nota":"Ir + lugar + o que vai fazer lá. É a mesma ordem de 去饭馆吃中国菜"}
 ]
