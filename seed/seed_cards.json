@@ -28,7 +28,7 @@
   {"id":"nuren","hanzi":"女人","pinyin":"nǚrén","pt":"mulher","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"女 (mulher/feminino) + 人 (pessoa) — os dois você já sabia separados"},
   {"id":"ma-cavalo","hanzi":"马","pinyin":"mǎ","pt":"cavalo","deck":"animais","fonte":"cap1","data_aula":"2026-08-06","nota":"Empresta o som em 妈 mā (mãe) e 吗 ma (pergunta)"},
   {"id":"ma-mae","hanzi":"妈","pinyin":"mā","pt":"mãe (o caractere sozinho)","deck":"familia","fonte":"cap1","data_aula":"2026-08-06","nota":"女 (mulher/feminino) + 马 (cavalo, só pelo som mǎ→mā). Sozinho serve pra chamar — 妈！No dia a dia usa-se dobrado: 妈妈"},
-  {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","fonte":"extra-aula","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher/feminino) + 子 (criança) = bom. 孩子 háizi = criança"},
+  {"id":"zi","hanzi":"子","pinyin":"zǐ","pt":"criança / filho","deck":"uteis","fonte":"caractere","data_aula":"2026-08-06","nota":"É a metade direita de 好: 女 (mulher/feminino) + 子 (criança) = bom. 孩子 háizi = criança"},
   {"id":"mu","hanzi":"木","pinyin":"mù","pt":"madeira","deck":"natureza","fonte":"cap1","data_aula":"2026-08-12","nota":"Como radical carrega o sentido de árvore: dobra e vira bosque 林, triplica e vira floresta 森"},
   {"id":"lin","hanzi":"林","pinyin":"lín","pt":"bosque","deck":"natureza","fonte":"cap1","data_aula":"2026-08-12","nota":"Duas árvores: 木 + 木"},
   {"id":"sen","hanzi":"森","pinyin":"sēn","pt":"floresta","deck":"natureza","fonte":"extra-aula","data_aula":"2026-08-12","nota":"Três árvores! 森林 sēnlín = floresta"},
@@ -79,7 +79,7 @@
   {"id":"ding","hanzi":"丁","pinyin":"Dīng","pt":"Ding (sobrenome)","deck":"nomes","fonte":"cap2","data_aula":"2026-08-19","nota":"O sobrenome do 丁力波 — o 力波 que você já tem no deck. Só 2 traços"},
 
   {"id":"dakai","hanzi":"打开","pinyin":"dǎkāi","pt":"abrir","deck":"verbos","fonte":"extra-aula","data_aula":"2026-08-19","nota":"打开书 = abra o livro. 打 (bater, com o radical 扌 mão) + 开 — é a forma do dia a dia pra livro, caixa, garrafa"},
-  {"id":"kai","hanzi":"开","pinyin":"kāi","pt":"abrir (o caractere sozinho)","deck":"verbos","fonte":"extra-aula","data_aula":"2026-08-19","nota":"A metade do 打开. Sozinho vale pra porta — 开门 kāi mén, com o 门 que você já tem — e também pra ligar a luz ou dirigir o carro"},
+  {"id":"kai","hanzi":"开","pinyin":"kāi","pt":"abrir (o caractere sozinho)","deck":"verbos","fonte":"caractere","data_aula":"2026-08-19","nota":"A metade do 打开. Sozinho vale pra porta — 开门 kāi mén, com o 门 que você já tem — e também pra ligar a luz ou dirigir o carro"},
   {"id":"shu","hanzi":"书","pinyin":"shū","pt":"livro","deck":"escola","fonte":"extra-aula","data_aula":"2026-08-19","nota":"打开书 = abra o livro. Simplificação de 書, que trazia um pincel 聿 desenhado em cima"},
   {"id":"ye-pagina","hanzi":"页","pinyin":"yè","pt":"página","deck":"escola","fonte":"extra-aula","data_aula":"2026-08-19","nota":"第一页 dì-yī yè = primeira página. Cuidado pra não confundir com 也 yě (também), que você já tem — parecidos na escrita, tons diferentes"},
   {"id":"num-100","hanzi":"百","pinyin":"bǎi","pt":"cem (100)","deck":"numeros","fonte":"extra-aula","data_aula":"2026-08-19","nota":"Depois do 十 (dez) vem o 百: 一百 yìbǎi = cem — repare que o 一 troca de tom antes do 3º tom de bǎi. Pra página cem: 第一百页"},
