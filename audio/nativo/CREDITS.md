@@ -104,6 +104,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 律师 | lǜshī | [LL-Q9192 (cmn)-Jouketou-律师.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Jouketou-%E5%BE%8B%E5%B8%88.wav) | 律师 | Speaker: Jouketou Recorder: Jouketou | CC BY-SA 4.0 |
 | 对 | duì | [Zh-duì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-du%C3%AC.ogg) | 对 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 第 | dì | [Zh-dì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%AC.ogg) | 第 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 二十 | èrshí | [LL-Q727694 (cmn)-Shangkuanlc-二十.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q727694_%28cmn%29-Shangkuanlc-%E4%BA%8C%E5%8D%81.wav) | 二十 | Speaker: Shangkuanlc Recorder: Shangkuanlc | CC BY-SA 4.0 |
 | 先生 | xiānsheng | [Zh-xiānsheng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C4%81nsheng.ogg) | 先生 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 儿子 | érzi | [Zh-érzi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-%C3%A9rzi.ogg) | 儿子 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 老 | lǎo | [Zh-lǎo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C7%8Eo.ogg) | 老 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
@@ -212,18 +213,27 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 玉 | yù | [Zh-yù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%B9.ogg) | 愈 | Yue Tan | CC BY-SA 3.0 us |
 | 矢 | shǐ | [Zh-shǐ.oga](https://commons.wikimedia.org/wiki/File%3AZh-sh%C7%90.oga) | 施 | Yue Tan | CC BY-SA 3.0 us |
 | 匕 | bǐ | [Zh-bǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C7%90.ogg) | 笔 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 很好 | hěn hǎo | [LL-Q9192 (cmn)-Luilui6666-很好.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E5%BE%88%E5%A5%BD.wav) | 很好 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
+| 法国 | Fǎguó | [LL-Q9192 (cmn)-Luilui6666-法国.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E6%B3%95%E5%9B%BD.wav) | 法国 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
+| 法国人 | Fǎguórén | [LL-Q9192 (cmn)-Luilui6666-法国人.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E6%B3%95%E5%9B%BD%E4%BA%BA.wav) | 法国人 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
+| 意大利 | Yìdàlì | [LL-Q727694 (cmn)-Shangkuanlc-意大利.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q727694_%28cmn%29-Shangkuanlc-%E6%84%8F%E5%A4%A7%E5%88%A9.wav) | 意大利 | Speaker: Shangkuanlc Recorder: Shangkuanlc | CC BY-SA 4.0 |
+| 德国 | Déguó | [LL-Q9192 (cmn)-Luilui6666-德国.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E5%BE%B7%E5%9B%BD.wav) | 德国 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
+| 德国人 | Déguórén | [LL-Q9192 (cmn)-Luilui6666-德国人.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E5%BE%B7%E5%9B%BD%E4%BA%BA.wav) | 德国人 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
+| 葡萄牙 | Pútáoyá | [LL-Q9192 (cmn)-Jouketou-葡萄牙.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Jouketou-%E8%91%A1%E8%90%84%E7%89%99.wav) | 葡萄牙 | Speaker: Jouketou Recorder: Jouketou | CC BY-SA 4.0 |
 | 意 | yì | [Zh-yì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%AC.ogg) | 亿 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 利 | lì | [Zh-lì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%AC.ogg) | 力 | Yue Tan | CC BY-SA 3.0 us |
 | 德 | dé | [Zh-dé.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%A9.ogg) | 得 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 萄 | táo | [Zh-táo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A1o.ogg) | 桃 | Yue Tan | CC BY-SA 3.0 us |
 | 牙 | yá | [Zh-yá.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%A1.ogg) | 崖 | Yue Tan | CC BY-SA 3.0 us |
 | 泰 | tài | [Zh-tài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A0i.ogg) | 太 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 葡萄 | pútáo | [LL-Q9192 (cmn)-Jouketou-葡萄.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Jouketou-%E8%91%A1%E8%90%84.wav) | 葡萄 | Speaker: Jouketou Recorder: Jouketou | CC BY-SA 4.0 |
 | 和 | hé | [Zh-hé.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A9.ogg) | 和 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 认识 | rènshi | [Zh-rènshi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-r%C3%A8nshi.ogg) | 认识 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 可以 | kěyǐ | [Zh-kěyǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%9By%C7%90.ogg) | 可以 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 进 | jìn | [Zh-jìn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-j%C3%ACn.ogg) | 进 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 来 | lái | [Zh-lái.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%A1i.ogg) | 来 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 请 | qǐng | [Zh-qǐng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-q%C7%90ng.ogg) | 请 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 记者 | jìzhě | [LL-Q9192 (cmn)-CanonNi-记者.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-CanonNi-%E8%AE%B0%E8%80%85.wav) | 记者 | Speaker: CanonNi Recorder: CanonNi | CC0 |
 | 请问 | qǐngwèn | [Zh-qǐngwèn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-q%C7%90ngw%C3%A8n.ogg) | 请问 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 问 | wèn | [Zh-wèn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8n.ogg) | 问 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 贵姓 | guìxìng | [Zh-guìxìng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%ACx%C3%ACng.ogg) | 贵姓 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
@@ -233,5 +243,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 学院 | xuéyuàn | [Zh-xuéyuàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9yu%C3%A0n.ogg) | 学院 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 的 | de | [Zh-de.ogg](https://commons.wikimedia.org/wiki/File%3AZh-de.ogg) | 的 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 学习 | xuéxí | [Zh-xuéxí.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9x%C3%AD.ogg) | 学习 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 英国 | Yīngguó | [LL-Q9192 (cmn)-Luilui6666-英国.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E8%8B%B1%E5%9B%BD.wav) | 英国 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
 | 贵 | guì | [Zh-guì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%AC.ogg) | 贵 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 女士 | nǚshì | [LL-Q9192 (cmn)-Jouketou-女士.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Jouketou-%E5%A5%B3%E5%A3%AB.wav) | 女士 | Speaker: Jouketou Recorder: Jouketou | CC BY-SA 4.0 |
 | 小姐 | xiǎojiě | [Zh-xiǎojiě.oga](https://commons.wikimedia.org/wiki/File%3AZh-xi%C7%8Eoji%C4%9B.oga) | 小姐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
