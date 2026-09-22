@@ -253,6 +253,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 书店 | shūdiàn | [LL-Q9192 (cmn)-Luilui6666-书店.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E4%B9%A6%E5%BA%97.wav) | 书店 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
 | 菜 | cài | [Zh-cài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-c%C3%A0i.ogg) | 菜 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 杯 | bēi | [Zh-bēi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C4%93i.ogg) | 杯 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 冰 | bīng | [LL-Q9192 (cmn)-Jouketou-冰.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Jouketou-%E5%86%B0.wav) | 冰 | Speaker: Jouketou Recorder: Jouketou | CC BY-SA 4.0 |
 | 糖 | táng | [Zh-táng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A1ng.ogg) | 糖 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 饭馆 | fànguǎn | [LL-Q9192 (cmn)-Luilui6666-饭馆.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E9%A5%AD%E9%A6%86.wav) | 饭馆 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
 | 吃 | chī | [Zh-chī.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C4%AB.ogg) | 吃 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
