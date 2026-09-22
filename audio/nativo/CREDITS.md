@@ -147,6 +147,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 哪 | nǎ | [Zh-nǎ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C7%8E.ogg) | 哪 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 谁 | shéi | [LL-Q9192 (cmn)-Luilui6666-谁.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E8%B0%81.wav) | 谁 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
 | 外语 | wàiyǔ | [Zh-wàiyǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A0iy%C7%94.ogg) | 外语 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 外公 | wàigōng | [LL-Q9192 (cmn)-CanonNi-外公.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-CanonNi-%E5%A4%96%E5%85%AC.wav) | 外公 | Speaker: CanonNi Recorder: CanonNi | CC0 |
 | 陈 | Chén | [Zh-chén.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C3%A9n.ogg) | 沉 | Yue Tan | CC BY-SA 3.0 us |
 | 堡 | bǎo | [Zh-bǎo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C7%8Eo.ogg) | 饱 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 啡 | fēi | [Zh-fēi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-f%C4%93i.ogg) | 飞 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
