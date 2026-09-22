@@ -254,10 +254,10 @@
 
   {"id":"dao-faca","hanzi":"刀","pinyin":"dāo","pt":"faca","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"Pictograma de uma lâmina com o cabo. Espremido à direita ele vira 刂, e é assim que aparece dentro de outros caracteres"},
   {"id":"kou","hanzi":"口","pinyin":"kǒu","pt":"boca","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"O quadrado é a boca aberta. Você já vinha vendo ele à esquerda em 叫 (chamar-se), 喝 (beber), 咖啡 e 嗨 — ali ele marca caractere que tem a ver com boca, ou que vale só pelo som"},
-  {"id":"tu-terra","hanzi":"土","pinyin":"tǔ","pt":"terra / solo","deck":"natureza","fonte":"cap2","data_aula":"2026-09-09","nota":"Três traços: a linha do chão e o que brota dele. Não confunda com 士 (letrado), que tem o traço de cima MAIOR — aqui o de baixo é que é o mais longo"},
+  {"id":"tu-terra","hanzi":"土","pinyin":"tǔ","pt":"terra / solo","deck":"natureza","fonte":"caractere","data_aula":"2026-09-09","nota":"Três traços: a linha do chão e o que brota dele. Não confunda com 士 (letrado), que tem o traço de cima MAIOR — aqui o de baixo é que é o mais longo"},
   {"id":"you-denovo","hanzi":"又","pinyin":"yòu","pt":"de novo","deck":"uteis","fonte":"cap2","data_aula":"2026-09-09","nota":"O 'de novo' do que JÁ aconteceu: 他又喝啤酒了. Pro que ainda vai acontecer é 再 zài. O desenho é uma mão direita, e é a mesma peça que a simplificação enfiou no 汉 e no 爱"},
 
-  {"id":"ke-poder","hanzi":"可","pinyin":"kě","pt":"poder / pode ser","deck":"verbos","fonte":"cap2","data_aula":"2026-09-09","nota":"É o 可 de 可乐 (Coca), lá só pelo som. Sozinho quase não anda na fala: o que se usa é 可以 kěyǐ — 我可以喝啤酒吗? = posso beber cerveja?"},
+  {"id":"ke-poder","hanzi":"可","pinyin":"kě","pt":"poder / pode ser","deck":"verbos","fonte":"caractere","data_aula":"2026-09-09","nota":"É o 可 de 可乐 (Coca), lá só pelo som. Sozinho quase não anda na fala: o que se usa é 可以 kěyǐ — 我可以喝啤酒吗? = posso beber cerveja?"},
 
   {"id":"fr-tambem-bem","tipo":"frase","hanzi":"我也很好","pinyin":"Wǒ yě hěn hǎo","pt":"Eu também estou bem","deck":"saudacoes","fonte":"cap1","nota":"A resposta ao 你呢 da lição 1. O 也 vem antes do 很 — nunca 我很也好"},
   {"id":"fr-oi-voces","tipo":"frase","hanzi":"你们好","pinyin":"Nǐmen hǎo","pt":"Olá, pessoal","deck":"saudacoes","fonte":"cap1","nota":"O 你好 no plural: é como se cumprimenta a turma inteira"},
@@ -373,7 +373,7 @@
   {"id":"xing","hanzi":"兴","pinyin":"xìng","pt":"ânimo / disposição","deck":"estados","fonte":"caractere","nota":"高兴 = 'ânimo alto' = contente. Lido xīng quer dizer prosperar."},
   {"id":"ba-pai","hanzi":"爸","pinyin":"bà","pt":"pai","deck":"familia","fonte":"caractere","data_aula":"2026-08-19","nota":"我爸 é coloquial e comum; a forma padrão é dobrada, 爸爸. Mesmo padrão de 妈, 哥, 姐, 弟, 妹"},
   {"id":"di-irmao","hanzi":"弟","pinyin":"dì","pt":"irmão mais novo","deck":"familia","fonte":"caractere","data_aula":"2026-08-19","nota":"我弟 é coloquial; o padrão é 弟弟"},
-  {"id":"ge-irmao","hanzi":"哥","pinyin":"gē","pt":"irmão mais velho","deck":"familia","fonte":"cap2","data_aula":"2026-08-19"},
+  {"id":"ge-irmao","hanzi":"哥","pinyin":"gē","pt":"irmão mais velho","deck":"familia","fonte":"caractere","data_aula":"2026-08-19"},
   {"id":"mei-irma","hanzi":"妹","pinyin":"mèi","pt":"irmã mais nova","deck":"familia","fonte":"caractere","data_aula":"2026-08-19","nota":"我妹 é coloquial; o padrão é 妹妹. O 未 à direita é 'ainda não' — a irmã que ainda não cresceu"},
   {"id":"peng","hanzi":"朋","pinyin":"péng","pt":"companheiro","deck":"familia","fonte":"caractere","data_aula":"2026-08-19","nota":"Dois 月 lado a lado. Só aparece em 朋友 e derivados."},
   {"id":"ye-avo","hanzi":"爷","pinyin":"yé","pt":"avô / senhor","deck":"familia","fonte":"caractere","data_aula":"2026-08-19","nota":"爷爷 = avô paterno."},
