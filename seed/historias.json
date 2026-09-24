@@ -1,0 +1,1265 @@
+[
+  {
+    "id": "h-conhecer",
+    "titulo": "认识你很高兴",
+    "pinyin": "Rènshi nǐ hěn gāoxìng",
+    "pt": "Prazer em te conhecer",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4"
+    ],
+    "linhas": [
+      {
+        "hanzi": "马大为是美国人。",
+        "pinyin": "Mǎ Dàwéi shì Měiguó rén.",
+        "pt": "O Ma Dawei é americano."
+      },
+      {
+        "hanzi": "他是语言学院的学生，他学习汉语。",
+        "pinyin": "Tā shì Yǔyán Xuéyuàn de xuésheng, tā xuéxí Hànyǔ.",
+        "pt": "Ele é aluno do Instituto de Línguas e estuda mandarim."
+      },
+      {
+        "hanzi": "他的老师姓杨，杨老师是中国人。",
+        "pinyin": "Tā de lǎoshī xìng Yáng, Yáng lǎoshī shì Zhōngguó rén.",
+        "pt": "O professor dele se chama Yang, e o professor Yang é chinês."
+      },
+      {
+        "hanzi": "林娜是马大为的朋友。",
+        "pinyin": "Lín Nà shì Mǎ Dàwéi de péngyou.",
+        "pt": "A Lin Na é amiga do Ma Dawei."
+      },
+      {
+        "hanzi": "她是英国人，也是语言学院的学生。",
+        "pinyin": "Tā shì Yīngguó rén, yě shì Yǔyán Xuéyuàn de xuésheng.",
+        "pt": "Ela é inglesa e também é aluna do Instituto de Línguas."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "林娜，这是谁？",
+        "pinyin": "Lín Nà, zhè shì shéi?",
+        "pt": "Lin Na, quem é este?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "这是我朋友，他叫陆雨平。他是记者。",
+        "pinyin": "Zhè shì wǒ péngyou, tā jiào Lù Yǔpíng. Tā shì jìzhě.",
+        "pt": "Este é meu amigo, ele se chama Lu Yuping. Ele é repórter."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "你好！认识你很高兴。",
+        "pinyin": "Nǐ hǎo! Rènshi nǐ hěn gāoxìng.",
+        "pt": "Olá! Prazer em te conhecer."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "认识你，我也很高兴。你是哪国人？",
+        "pinyin": "Rènshi nǐ, wǒ yě hěn gāoxìng. Nǐ shì nǎ guó rén?",
+        "pt": "O prazer é meu. De que país você é?"
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "我是中国人。你们要喝什么？",
+        "pinyin": "Wǒ shì Zhōngguó rén. Nǐmen yào hē shénme?",
+        "pt": "Sou chinês. O que vocês querem beber?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "我要咖啡。林娜，你呢？",
+        "pinyin": "Wǒ yào kāfēi. Lín Nà, nǐ ne?",
+        "pt": "Quero café. E você, Lin Na?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我不喝咖啡，我要牛奶。",
+        "pinyin": "Wǒ bù hē kāfēi, wǒ yào niúnǎi.",
+        "pt": "Não bebo café, quero leite."
+      },
+      {
+        "hanzi": "他们都很高兴。",
+        "pinyin": "Tāmen dōu hěn gāoxìng.",
+        "pt": "Todos estão contentes."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "马大为是哪国人？",
+        "pinyin": "Mǎ Dàwéi shì nǎ guó rén?",
+        "pt": "De que país é o Ma Dawei?",
+        "opcoes": [
+          {
+            "hanzi": "他是美国人。",
+            "pinyin": "Tā shì Měiguó rén.",
+            "pt": "Ele é americano."
+          },
+          {
+            "hanzi": "他是英国人。",
+            "pinyin": "Tā shì Yīngguó rén.",
+            "pt": "Ele é inglês."
+          },
+          {
+            "hanzi": "他是中国人。",
+            "pinyin": "Tā shì Zhōngguó rén.",
+            "pt": "Ele é chinês."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "陆雨平是老师吗？",
+        "pinyin": "Lù Yǔpíng shì lǎoshī ma?",
+        "pt": "O Lu Yuping é professor?",
+        "opcoes": [
+          {
+            "hanzi": "是，他是老师。",
+            "pinyin": "Shì, tā shì lǎoshī.",
+            "pt": "Sim, ele é professor."
+          },
+          {
+            "hanzi": "不是，他是记者。",
+            "pinyin": "Bú shì, tā shì jìzhě.",
+            "pt": "Não, ele é repórter."
+          },
+          {
+            "hanzi": "不是，他是学生。",
+            "pinyin": "Bú shì, tā shì xuésheng.",
+            "pt": "Não, ele é aluno."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "林娜要喝什么？",
+        "pinyin": "Lín Nà yào hē shénme?",
+        "pt": "O que a Lin Na quer beber?",
+        "opcoes": [
+          {
+            "hanzi": "她要咖啡。",
+            "pinyin": "Tā yào kāfēi.",
+            "pt": "Ela quer café."
+          },
+          {
+            "hanzi": "她要可乐。",
+            "pinyin": "Tā yào kělè.",
+            "pt": "Ela quer coca."
+          },
+          {
+            "hanzi": "她要牛奶。",
+            "pinyin": "Tā yào niúnǎi.",
+            "pt": "Ela quer leite."
+          }
+        ],
+        "certa": 2
+      }
+    ]
+  },
+  {
+    "id": "h-lina-ocupada",
+    "titulo": "今天林娜很忙",
+    "pinyin": "Jīntiān Lín Nà hěn máng",
+    "pt": "Hoje a Lin Na está ocupada",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "extra-aula",
+      "duolingo"
+    ],
+    "linhas": [
+      {
+        "hanzi": "林娜是英国人，她是大学生。",
+        "pinyin": "Lín Nà shì Yīngguó rén, tā shì dàxuéshēng.",
+        "pt": "A Lin Na é inglesa, ela é universitária."
+      },
+      {
+        "hanzi": "她常常去书店，她非常喜欢书。",
+        "pinyin": "Tā chángcháng qù shūdiàn, tā fēicháng xǐhuan shū.",
+        "pt": "Ela vai muito à livraria, ela adora livros."
+      },
+      {
+        "hanzi": "今天她很忙，也很累。",
+        "pinyin": "Jīntiān tā hěn máng, yě hěn lèi.",
+        "pt": "Hoje ela está muito ocupada e cansada."
+      },
+      {
+        "hanzi": "她去超市买水和苹果。",
+        "pinyin": "Tā qù chāoshì mǎi shuǐ hé píngguǒ.",
+        "pt": "Ela vai ao supermercado comprar água e maçã."
+      },
+      {
+        "hanzi": "她很饿，她去饭馆吃中国菜。",
+        "pinyin": "Tā hěn è, tā qù fànguǎn chī Zhōngguó cài.",
+        "pt": "Ela está com fome e vai ao restaurante comer comida chinesa."
+      },
+      {
+        "hanzi": "她要米饭、汤和豆腐。",
+        "pinyin": "Tā yào mǐfàn, tāng hé dòufu.",
+        "pt": "Ela pede arroz, sopa e tofu."
+      },
+      {
+        "hanzi": "她也要一杯冰奶茶，不要糖。",
+        "pinyin": "Tā yě yào yì bēi bīng nǎichá, bú yào táng.",
+        "pt": "Também pede um chá com leite gelado, sem açúcar."
+      },
+      {
+        "hanzi": "她的朋友力波也来。",
+        "pinyin": "Tā de péngyou Lìbō yě lái.",
+        "pt": "O amigo dela, Libo, também vem."
+      },
+      {
+        "quem": "力波",
+        "hanzi": "我不饿，我很渴。我要一杯热茶。",
+        "pinyin": "Wǒ bú è, wǒ hěn kě. Wǒ yào yì bēi rè chá.",
+        "pt": "Não estou com fome, estou com sede. Quero um chá quente."
+      },
+      {
+        "hanzi": "林娜很开心。",
+        "pinyin": "Lín Nà hěn kāixīn.",
+        "pt": "A Lin Na fica feliz."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "林娜去超市买什么？",
+        "pinyin": "Lín Nà qù chāoshì mǎi shénme?",
+        "pt": "O que a Lin Na vai comprar no supermercado?",
+        "opcoes": [
+          {
+            "hanzi": "她买咖啡和茶。",
+            "pinyin": "Tā mǎi kāfēi hé chá.",
+            "pt": "Ela compra café e chá."
+          },
+          {
+            "hanzi": "她买水和苹果。",
+            "pinyin": "Tā mǎi shuǐ hé píngguǒ.",
+            "pt": "Ela compra água e maçã."
+          },
+          {
+            "hanzi": "她买米饭和汤。",
+            "pinyin": "Tā mǎi mǐfàn hé tāng.",
+            "pt": "Ela compra arroz e sopa."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "林娜的奶茶要糖吗？",
+        "pinyin": "Lín Nà de nǎichá yào táng ma?",
+        "pt": "O chá com leite da Lin Na leva açúcar?",
+        "opcoes": [
+          {
+            "hanzi": "要，她要糖。",
+            "pinyin": "Yào, tā yào táng.",
+            "pt": "Leva, ela quer açúcar."
+          },
+          {
+            "hanzi": "不要，她不要糖。",
+            "pinyin": "Bú yào, tā bú yào táng.",
+            "pt": "Não, ela não quer açúcar."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "力波饿吗？他要什么？",
+        "pinyin": "Lìbō è ma? Tā yào shénme?",
+        "pt": "O Libo está com fome? O que ele quer?",
+        "opcoes": [
+          {
+            "hanzi": "他很饿，他要豆腐。",
+            "pinyin": "Tā hěn è, tā yào dòufu.",
+            "pt": "Está com muita fome, quer tofu."
+          },
+          {
+            "hanzi": "他不饿，他要一杯热茶。",
+            "pinyin": "Tā bú è, tā yào yì bēi rè chá.",
+            "pt": "Não está com fome, quer um chá quente."
+          },
+          {
+            "hanzi": "他不饿，他要一杯冰奶茶。",
+            "pinyin": "Tā bú è, tā yào yì bēi bīng nǎichá.",
+            "pt": "Não está com fome, quer um chá com leite gelado."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  },
+  {
+    "id": "h-todos-ocupados",
+    "titulo": "我们都很忙",
+    "pinyin": "Wǒmen dōu hěn máng",
+    "pt": "Estamos todos ocupados",
+    "escopo": [
+      "cap1",
+      "cap2"
+    ],
+    "linhas": [
+      {
+        "quem": "林娜",
+        "hanzi": "力波，你好！",
+        "pinyin": "Lìbō, nǐ hǎo!",
+        "pt": "Oi, Libo!"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "林娜，你好吗？",
+        "pinyin": "Lín Nà, nǐ hǎo ma?",
+        "pt": "Lin Na, tudo bem?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我很好。你呢？",
+        "pinyin": "Wǒ hěn hǎo. Nǐ ne?",
+        "pt": "Estou bem. E você?"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "我很忙。",
+        "pinyin": "Wǒ hěn máng.",
+        "pt": "Estou muito ocupado."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "你爸爸妈妈好吗？",
+        "pinyin": "Nǐ bàba māma hǎo ma?",
+        "pt": "Seus pais estão bem?"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "他们都很好。他们也很忙。",
+        "pinyin": "Tāmen dōu hěn hǎo. Tāmen yě hěn máng.",
+        "pt": "Estão os dois bem. Também estão ocupados."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "你哥哥呢？",
+        "pinyin": "Nǐ gēge ne?",
+        "pt": "E o seu irmão mais velho?"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "我哥哥不忙。",
+        "pinyin": "Wǒ gēge bù máng.",
+        "pt": "Meu irmão não está ocupado."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "你要咖啡吗？",
+        "pinyin": "Nǐ yào kāfēi ma?",
+        "pt": "Quer um café?"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "我不要咖啡，我要可乐。",
+        "pinyin": "Wǒ bú yào kāfēi, wǒ yào kělè.",
+        "pt": "Não quero café, quero coca."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我也不喝咖啡。我要苹果。",
+        "pinyin": "Wǒ yě bù hē kāfēi. Wǒ yào píngguǒ.",
+        "pt": "Eu também não bebo café. Quero uma maçã."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "力波忙吗？",
+        "pinyin": "Lìbō máng ma?",
+        "pt": "O Libo está ocupado?",
+        "opcoes": [
+          {
+            "hanzi": "他很忙。",
+            "pinyin": "Tā hěn máng.",
+            "pt": "Está muito ocupado."
+          },
+          {
+            "hanzi": "他不忙。",
+            "pinyin": "Tā bù máng.",
+            "pt": "Não está ocupado."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "力波哥哥忙吗？",
+        "pinyin": "Lìbō gēge máng ma?",
+        "pt": "O irmão mais velho do Libo está ocupado?",
+        "opcoes": [
+          {
+            "hanzi": "他很忙。",
+            "pinyin": "Tā hěn máng.",
+            "pt": "Está muito ocupado."
+          },
+          {
+            "hanzi": "他不忙。",
+            "pinyin": "Tā bù máng.",
+            "pt": "Não está ocupado."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "力波要什么？",
+        "pinyin": "Lìbō yào shénme?",
+        "pt": "O que o Libo quer?",
+        "opcoes": [
+          {
+            "hanzi": "他要咖啡。",
+            "pinyin": "Tā yào kāfēi.",
+            "pt": "Quer café."
+          },
+          {
+            "hanzi": "他要可乐。",
+            "pinyin": "Tā yào kělè.",
+            "pt": "Quer coca."
+          },
+          {
+            "hanzi": "他要苹果。",
+            "pinyin": "Tā yào píngguǒ.",
+            "pt": "Quer uma maçã."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  },
+  {
+    "id": "h-muito-cansada",
+    "titulo": "我非常累",
+    "pinyin": "Wǒ fēicháng lèi",
+    "pt": "Estou morta de cansaço",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "extra-aula"
+    ],
+    "linhas": [
+      {
+        "quem": "陆雨平",
+        "hanzi": "林娜，你好！你累吗？",
+        "pinyin": "Lín Nà, nǐ hǎo! Nǐ lèi ma?",
+        "pt": "Oi, Lin Na! Está cansada?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我非常累，也很饿。",
+        "pinyin": "Wǒ fēicháng lèi, yě hěn è.",
+        "pt": "Estou cansadíssima, e com muita fome."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "你要汉堡包吗？",
+        "pinyin": "Nǐ yào hànbǎobāo ma?",
+        "pt": "Quer um hambúrguer?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "要，谢谢！你呢？你饿吗？",
+        "pinyin": "Yào, xièxie! Nǐ ne? Nǐ è ma?",
+        "pt": "Quero, obrigada! E você? Está com fome?"
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "我不饿，我很渴。",
+        "pinyin": "Wǒ bú è, wǒ hěn kě.",
+        "pt": "Não estou com fome, estou com muita sede."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "你要喝啤酒吗？",
+        "pinyin": "Nǐ yào hē píjiǔ ma?",
+        "pt": "Quer beber uma cerveja?"
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "我不喝啤酒。我要果汁。",
+        "pinyin": "Wǒ bù hē píjiǔ. Wǒ yào guǒzhī.",
+        "pt": "Não bebo cerveja. Quero um suco."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我姐姐也喜欢果汁。",
+        "pinyin": "Wǒ jiějie yě xǐhuan guǒzhī.",
+        "pt": "Minha irmã mais velha também gosta de suco."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "你姐姐和你妹妹都好吗？",
+        "pinyin": "Nǐ jiějie hé nǐ mèimei dōu hǎo ma?",
+        "pt": "Suas irmãs estão bem?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我姐姐很好，我妹妹很困。",
+        "pinyin": "Wǒ jiějie hěn hǎo, wǒ mèimei hěn kùn.",
+        "pt": "A mais velha está bem, a mais nova está com sono."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "林娜饿吗？",
+        "pinyin": "Lín Nà è ma?",
+        "pt": "A Lin Na está com fome?",
+        "opcoes": [
+          {
+            "hanzi": "林娜很饿。",
+            "pinyin": "Lín Nà hěn è.",
+            "pt": "Está com muita fome."
+          },
+          {
+            "hanzi": "林娜不饿。",
+            "pinyin": "Lín Nà bú è.",
+            "pt": "Não está com fome."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "陆雨平要喝什么？",
+        "pinyin": "Lù Yǔpíng yào hē shénme?",
+        "pt": "O que o Lu Yuping quer beber?",
+        "opcoes": [
+          {
+            "hanzi": "他要喝啤酒。",
+            "pinyin": "Tā yào hē píjiǔ.",
+            "pt": "Quer cerveja."
+          },
+          {
+            "hanzi": "他要喝果汁。",
+            "pinyin": "Tā yào hē guǒzhī.",
+            "pt": "Quer suco."
+          },
+          {
+            "hanzi": "他要喝咖啡。",
+            "pinyin": "Tā yào hē kāfēi.",
+            "pt": "Quer café."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "林娜妹妹困吗？",
+        "pinyin": "Lín Nà mèimei kùn ma?",
+        "pt": "A irmã mais nova da Lin Na está com sono?",
+        "opcoes": [
+          {
+            "hanzi": "林娜妹妹很困。",
+            "pinyin": "Lín Nà mèimei hěn kùn.",
+            "pt": "Está com muito sono."
+          },
+          {
+            "hanzi": "林娜妹妹不困。",
+            "pinyin": "Lín Nà mèimei bú kùn.",
+            "pt": "Não está com sono."
+          }
+        ],
+        "certa": 0
+      }
+    ]
+  },
+  {
+    "id": "h-libo-supermercado",
+    "titulo": "力波去超市",
+    "pinyin": "Lìbō qù chāoshì",
+    "pt": "O Libo vai ao supermercado",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "duolingo"
+    ],
+    "linhas": [
+      {
+        "hanzi": "今天很热。",
+        "pinyin": "Jīntiān hěn rè.",
+        "pt": "Hoje está muito calor."
+      },
+      {
+        "hanzi": "力波去超市，他弟弟也去。",
+        "pinyin": "Lìbō qù chāoshì, tā dìdi yě qù.",
+        "pt": "O Libo vai ao supermercado, e o irmão mais novo vai junto."
+      },
+      {
+        "hanzi": "力波买苹果，也买可乐。",
+        "pinyin": "Lìbō mǎi píngguǒ, yě mǎi kělè.",
+        "pt": "O Libo compra maçã e também coca."
+      },
+      {
+        "quem": "弟弟",
+        "hanzi": "哥哥，我很热！我要冰奶茶。",
+        "pinyin": "Gēge, wǒ hěn rè! Wǒ yào bīng nǎichá.",
+        "pt": "Irmão, estou com calor! Quero um chá com leite gelado."
+      },
+      {
+        "quem": "力波",
+        "hanzi": "好。你要糖吗？",
+        "pinyin": "Hǎo. Nǐ yào táng ma?",
+        "pt": "Tá bom. Quer açúcar?"
+      },
+      {
+        "quem": "弟弟",
+        "hanzi": "不要糖，谢谢。",
+        "pinyin": "Bú yào táng, xièxie.",
+        "pt": "Sem açúcar, obrigado."
+      },
+      {
+        "hanzi": "他们去饭馆吃米饭，喝汤。",
+        "pinyin": "Tāmen qù fànguǎn chī mǐfàn, hē tāng.",
+        "pt": "Eles vão ao restaurante comer arroz e tomar sopa."
+      },
+      {
+        "hanzi": "力波弟弟非常喜欢豆腐。",
+        "pinyin": "Lìbō dìdi fēicháng xǐhuan dòufu.",
+        "pt": "O irmão do Libo adora tofu."
+      },
+      {
+        "hanzi": "今天他们都很开心。",
+        "pinyin": "Jīntiān tāmen dōu hěn kāixīn.",
+        "pt": "Hoje os dois estão muito contentes."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "力波去超市买什么？",
+        "pinyin": "Lìbō qù chāoshì mǎi shénme?",
+        "pt": "O que o Libo compra no supermercado?",
+        "opcoes": [
+          {
+            "hanzi": "他买苹果，也买可乐。",
+            "pinyin": "Tā mǎi píngguǒ, yě mǎi kělè.",
+            "pt": "Maçã e coca."
+          },
+          {
+            "hanzi": "他买米饭。",
+            "pinyin": "Tā mǎi mǐfàn.",
+            "pt": "Arroz."
+          },
+          {
+            "hanzi": "他买冰奶茶。",
+            "pinyin": "Tā mǎi bīng nǎichá.",
+            "pt": "Chá com leite gelado."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "力波弟弟要糖吗？",
+        "pinyin": "Lìbō dìdi yào táng ma?",
+        "pt": "O irmão do Libo quer açúcar?",
+        "opcoes": [
+          {
+            "hanzi": "他要糖。",
+            "pinyin": "Tā yào táng.",
+            "pt": "Quer açúcar."
+          },
+          {
+            "hanzi": "他不要糖。",
+            "pinyin": "Tā bú yào táng.",
+            "pt": "Não quer açúcar."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "力波弟弟喜欢什么？",
+        "pinyin": "Lìbō dìdi xǐhuan shénme?",
+        "pt": "Do que o irmão do Libo gosta?",
+        "opcoes": [
+          {
+            "hanzi": "他非常喜欢豆腐。",
+            "pinyin": "Tā fēicháng xǐhuan dòufu.",
+            "pt": "Adora tofu."
+          },
+          {
+            "hanzi": "他非常喜欢咖啡。",
+            "pinyin": "Tā fēicháng xǐhuan kāfēi.",
+            "pt": "Adora café."
+          },
+          {
+            "hanzi": "他非常喜欢汉堡。",
+            "pinyin": "Tā fēicháng xǐhuan hànbǎo.",
+            "pt": "Adora hambúrguer."
+          }
+        ],
+        "certa": 0
+      }
+    ]
+  },
+  {
+    "id": "h-quem-e",
+    "titulo": "这是谁？",
+    "pinyin": "Zhè shì shéi?",
+    "pt": "Quem é este?",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3"
+    ],
+    "linhas": [
+      {
+        "quem": "陆雨平",
+        "hanzi": "林娜，这是谁？",
+        "pinyin": "Lín Nà, zhè shì shéi?",
+        "pt": "Lin Na, quem é esta?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "这是我妈妈。她是医生。",
+        "pinyin": "Zhè shì wǒ māma. Tā shì yīshēng.",
+        "pt": "É minha mãe. Ela é médica."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "那是你爸爸吗？",
+        "pinyin": "Nà shì nǐ bàba ma?",
+        "pt": "E aquele é seu pai?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "不是，那是我哥哥。他是律师。",
+        "pinyin": "Bú shì, nà shì wǒ gēge. Tā shì lǜshī.",
+        "pt": "Não, aquele é meu irmão mais velho. Ele é advogado."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "你哥哥很忙吗？",
+        "pinyin": "Nǐ gēge hěn máng ma?",
+        "pt": "Seu irmão é muito ocupado?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "他很忙。",
+        "pinyin": "Tā hěn máng.",
+        "pt": "Muito ocupado."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "这是你奶奶吗？",
+        "pinyin": "Zhè shì nǐ nǎinai ma?",
+        "pt": "Esta é sua avó paterna?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "不是，她是我外婆。",
+        "pinyin": "Bú shì, tā shì wǒ wàipó.",
+        "pt": "Não, é minha avó materna."
+      },
+      {
+        "quem": "陆雨平",
+        "hanzi": "你外婆是哪国人？",
+        "pinyin": "Nǐ wàipó shì nǎ guó rén?",
+        "pt": "De que país é a sua avó?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "她是法国人。她也喝咖啡。",
+        "pinyin": "Tā shì Fǎguó rén. Tā yě hē kāfēi.",
+        "pt": "Ela é francesa. Ela também bebe café."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "林娜妈妈是老师吗？",
+        "pinyin": "Lín Nà māma shì lǎoshī ma?",
+        "pt": "A mãe da Lin Na é professora?",
+        "opcoes": [
+          {
+            "hanzi": "是，她是老师。",
+            "pinyin": "Shì, tā shì lǎoshī.",
+            "pt": "Sim, é professora."
+          },
+          {
+            "hanzi": "不是，她是医生。",
+            "pinyin": "Bú shì, tā shì yīshēng.",
+            "pt": "Não, é médica."
+          },
+          {
+            "hanzi": "不是，她是律师。",
+            "pinyin": "Bú shì, tā shì lǜshī.",
+            "pt": "Não, é advogada."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "那是林娜爸爸吗？",
+        "pinyin": "Nà shì Lín Nà bàba ma?",
+        "pt": "Aquele é o pai da Lin Na?",
+        "opcoes": [
+          {
+            "hanzi": "是，那是她爸爸。",
+            "pinyin": "Shì, nà shì tā bàba.",
+            "pt": "Sim, é o pai dela."
+          },
+          {
+            "hanzi": "不是，那是她哥哥。",
+            "pinyin": "Bú shì, nà shì tā gēge.",
+            "pt": "Não, é o irmão mais velho dela."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "林娜外婆是哪国人？",
+        "pinyin": "Lín Nà wàipó shì nǎ guó rén?",
+        "pt": "De que país é a avó da Lin Na?",
+        "opcoes": [
+          {
+            "hanzi": "她是中国人。",
+            "pinyin": "Tā shì Zhōngguó rén.",
+            "pt": "Chinesa."
+          },
+          {
+            "hanzi": "她是德国人。",
+            "pinyin": "Tā shì Déguó rén.",
+            "pt": "Alemã."
+          },
+          {
+            "hanzi": "她是法国人。",
+            "pinyin": "Tā shì Fǎguó rén.",
+            "pt": "Francesa."
+          }
+        ],
+        "certa": 2
+      }
+    ]
+  },
+  {
+    "id": "h-professora-cansada",
+    "titulo": "老师很累",
+    "pinyin": "Lǎoshī hěn lèi",
+    "pt": "A professora está cansada",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "extra-aula"
+    ],
+    "linhas": [
+      {
+        "hanzi": "陈老师是中国人，她很忙。",
+        "pinyin": "Chén lǎoshī shì Zhōngguó rén, tā hěn máng.",
+        "pt": "A professora Chen é chinesa e é muito ocupada."
+      },
+      {
+        "hanzi": "今天陈老师非常累。",
+        "pinyin": "Jīntiān Chén lǎoshī fēicháng lèi.",
+        "pt": "Hoje a professora Chen está cansadíssima."
+      },
+      {
+        "quem": "陈老师",
+        "hanzi": "你们好！打开书，第二十页。",
+        "pinyin": "Nǐmen hǎo! Dǎkāi shū, dì èrshí yè.",
+        "pt": "Olá, turma! Abram o livro na página vinte."
+      },
+      {
+        "quem": "力波",
+        "hanzi": "老师，您累吗？",
+        "pinyin": "Lǎoshī, nín lèi ma?",
+        "pt": "Professora, a senhora está cansada?"
+      },
+      {
+        "quem": "陈老师",
+        "hanzi": "我很累，也很渴。",
+        "pinyin": "Wǒ hěn lèi, yě hěn kě.",
+        "pt": "Muito cansada, e com muita sede."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "老师，您要喝水吗？",
+        "pinyin": "Lǎoshī, nín yào hē shuǐ ma?",
+        "pt": "Professora, quer beber água?"
+      },
+      {
+        "quem": "陈老师",
+        "hanzi": "要，谢谢你！",
+        "pinyin": "Yào, xièxie nǐ!",
+        "pt": "Quero, obrigada!"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "老师，我也很困。",
+        "pinyin": "Lǎoshī, wǒ yě hěn kùn.",
+        "pt": "Professora, eu também estou com sono."
+      },
+      {
+        "quem": "陈老师",
+        "hanzi": "为什么？",
+        "pinyin": "Wèishénme?",
+        "pt": "Por quê?"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "我不喝咖啡！",
+        "pinyin": "Wǒ bù hē kāfēi!",
+        "pt": "Eu não bebo café!"
+      },
+      {
+        "quem": "陈老师",
+        "hanzi": "我们都要喝咖啡！",
+        "pinyin": "Wǒmen dōu yào hē kāfēi!",
+        "pt": "Todo mundo precisa de um café!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "陈老师是哪国人？",
+        "pinyin": "Chén lǎoshī shì nǎ guó rén?",
+        "pt": "De que país é a professora Chen?",
+        "opcoes": [
+          {
+            "hanzi": "她是日本人。",
+            "pinyin": "Tā shì Rìběn rén.",
+            "pt": "Japonesa."
+          },
+          {
+            "hanzi": "她是中国人。",
+            "pinyin": "Tā shì Zhōngguó rén.",
+            "pt": "Chinesa."
+          },
+          {
+            "hanzi": "她是韩国人。",
+            "pinyin": "Tā shì Hánguó rén.",
+            "pt": "Coreana."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "陈老师要喝什么？",
+        "pinyin": "Chén lǎoshī yào hē shénme?",
+        "pt": "O que a professora Chen quer beber?",
+        "opcoes": [
+          {
+            "hanzi": "她要喝水。",
+            "pinyin": "Tā yào hē shuǐ.",
+            "pt": "Água."
+          },
+          {
+            "hanzi": "她要喝啤酒。",
+            "pinyin": "Tā yào hē píjiǔ.",
+            "pt": "Cerveja."
+          },
+          {
+            "hanzi": "她要喝果汁。",
+            "pinyin": "Tā yào hē guǒzhī.",
+            "pt": "Suco."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "力波为什么很困？",
+        "pinyin": "Lìbō wèishénme hěn kùn?",
+        "pt": "Por que o Libo está com sono?",
+        "opcoes": [
+          {
+            "hanzi": "他不喝咖啡。",
+            "pinyin": "Tā bù hē kāfēi.",
+            "pt": "Ele não bebe café."
+          },
+          {
+            "hanzi": "他很饿。",
+            "pinyin": "Tā hěn è.",
+            "pt": "Está com fome."
+          },
+          {
+            "hanzi": "他很忙。",
+            "pinyin": "Tā hěn máng.",
+            "pt": "Está ocupado."
+          }
+        ],
+        "certa": 0
+      }
+    ]
+  },
+  {
+    "id": "h-sem-aula",
+    "titulo": "今天不上课",
+    "pinyin": "Jīntiān bú shàngkè",
+    "pt": "Hoje não tem aula",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "duolingo"
+    ],
+    "linhas": [
+      {
+        "hanzi": "力波是大学生，他学中文。",
+        "pinyin": "Lìbō shì dàxuéshēng, tā xué Zhōngwén.",
+        "pt": "O Libo é universitário e estuda chinês."
+      },
+      {
+        "hanzi": "他有哥哥，也有妹妹。",
+        "pinyin": "Tā yǒu gēge, yě yǒu mèimei.",
+        "pt": "Ele tem um irmão mais velho e uma irmã mais nova."
+      },
+      {
+        "hanzi": "他哥哥是医生，常常很忙。",
+        "pinyin": "Tā gēge shì yīshēng, chángcháng hěn máng.",
+        "pt": "O irmão é médico e vive ocupado."
+      },
+      {
+        "hanzi": "他妹妹也是大学生。她不喜欢数学，她喜欢音乐。",
+        "pinyin": "Tā mèimei yě shì dàxuéshēng. Tā bù xǐhuan shùxué, tā xǐhuan yīnyuè.",
+        "pt": "A irmã também é universitária. Não gosta de matemática, gosta de música."
+      },
+      {
+        "hanzi": "今天他们不上课。",
+        "pinyin": "Jīntiān tāmen bú shàngkè.",
+        "pt": "Hoje eles não têm aula."
+      },
+      {
+        "hanzi": "力波去书店，他妹妹也去。",
+        "pinyin": "Lìbō qù shūdiàn, tā mèimei yě qù.",
+        "pt": "O Libo vai à livraria, e a irmã vai junto."
+      },
+      {
+        "hanzi": "他们也去饭馆。",
+        "pinyin": "Tāmen yě qù fànguǎn.",
+        "pt": "Depois vão ao restaurante."
+      },
+      {
+        "quem": "妹妹",
+        "hanzi": "哥哥，你吃什么？",
+        "pinyin": "Gēge, nǐ chī shénme?",
+        "pt": "Irmão, o que você vai comer?"
+      },
+      {
+        "quem": "力波",
+        "hanzi": "我吃米饭，喝汤。你呢？",
+        "pinyin": "Wǒ chī mǐfàn, hē tāng. Nǐ ne?",
+        "pt": "Arroz e sopa. E você?"
+      },
+      {
+        "quem": "妹妹",
+        "hanzi": "我要豆腐，也要一杯茶。",
+        "pinyin": "Wǒ yào dòufu, yě yào yì bēi chá.",
+        "pt": "Quero tofu e uma xícara de chá."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "力波哥哥是老师吗？",
+        "pinyin": "Lìbō gēge shì lǎoshī ma?",
+        "pt": "O irmão mais velho do Libo é professor?",
+        "opcoes": [
+          {
+            "hanzi": "是，他是老师。",
+            "pinyin": "Shì, tā shì lǎoshī.",
+            "pt": "Sim, é professor."
+          },
+          {
+            "hanzi": "不是，他是医生。",
+            "pinyin": "Bú shì, tā shì yīshēng.",
+            "pt": "Não, é médico."
+          },
+          {
+            "hanzi": "不是，他是律师。",
+            "pinyin": "Bú shì, tā shì lǜshī.",
+            "pt": "Não, é advogado."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "力波妹妹喜欢什么？",
+        "pinyin": "Lìbō mèimei xǐhuan shénme?",
+        "pt": "Do que a irmã do Libo gosta?",
+        "opcoes": [
+          {
+            "hanzi": "她喜欢数学。",
+            "pinyin": "Tā xǐhuan shùxué.",
+            "pt": "De matemática."
+          },
+          {
+            "hanzi": "她喜欢音乐。",
+            "pinyin": "Tā xǐhuan yīnyuè.",
+            "pt": "De música."
+          },
+          {
+            "hanzi": "她喜欢中文。",
+            "pinyin": "Tā xǐhuan Zhōngwén.",
+            "pt": "De chinês."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "力波妹妹要喝什么？",
+        "pinyin": "Lìbō mèimei yào hē shénme?",
+        "pt": "O que a irmã do Libo quer beber?",
+        "opcoes": [
+          {
+            "hanzi": "她要喝汤。",
+            "pinyin": "Tā yào hē tāng.",
+            "pt": "Sopa."
+          },
+          {
+            "hanzi": "她要喝咖啡。",
+            "pinyin": "Tā yào hē kāfēi.",
+            "pt": "Café."
+          },
+          {
+            "hanzi": "她要喝茶。",
+            "pinyin": "Tā yào hē chá.",
+            "pt": "Chá."
+          }
+        ],
+        "certa": 2
+      }
+    ]
+  },
+  {
+    "id": "h-pode-entrar",
+    "titulo": "请进",
+    "pinyin": "Qǐng jìn",
+    "pt": "Pode entrar",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "extra-aula"
+    ],
+    "linhas": [
+      {
+        "quem": "马大为",
+        "hanzi": "请问，这是语言学院吗？",
+        "pinyin": "Qǐngwèn, zhè shì Yǔyán Xuéyuàn ma?",
+        "pt": "Com licença, aqui é o Instituto de Línguas?"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "是。请进！",
+        "pinyin": "Shì. Qǐng jìn!",
+        "pt": "É, sim. Pode entrar!"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "你叫什么名字？",
+        "pinyin": "Nǐ jiào shénme míngzi?",
+        "pt": "Como você se chama?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "我叫马大为。您贵姓？",
+        "pinyin": "Wǒ jiào Mǎ Dàwéi. Nín guìxìng?",
+        "pt": "Eu me chamo Ma Dawei. Qual é o seu sobrenome?"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "我姓杨，是汉语老师。",
+        "pinyin": "Wǒ xìng Yáng, shì Hànyǔ lǎoshī.",
+        "pt": "Meu sobrenome é Yang, sou professor de chinês."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "杨老师，认识您很高兴！",
+        "pinyin": "Yáng lǎoshī, rènshi nín hěn gāoxìng!",
+        "pt": "Professor Yang, muito prazer!"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "你是加拿大人吗？",
+        "pinyin": "Nǐ shì Jiānádà rén ma?",
+        "pt": "Você é canadense?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "不是，我是美国人。",
+        "pinyin": "Bú shì, wǒ shì Měiguó rén.",
+        "pt": "Não, sou americano."
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "你累吗？要喝水吗？",
+        "pinyin": "Nǐ lèi ma? Yào hē shuǐ ma?",
+        "pt": "Está cansado? Quer água?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "我不累，谢谢老师。",
+        "pinyin": "Wǒ bú lèi, xièxie lǎoshī.",
+        "pt": "Não estou cansado, obrigado, professor."
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "好。打开书，第一页。",
+        "pinyin": "Hǎo. Dǎkāi shū, dì yī yè.",
+        "pt": "Então vamos lá. Abra o livro na página um."
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "杨老师是什么老师？",
+        "pinyin": "Yáng lǎoshī shì shénme lǎoshī?",
+        "pt": "O professor Yang é professor de quê?",
+        "opcoes": [
+          {
+            "hanzi": "他是汉语老师。",
+            "pinyin": "Tā shì Hànyǔ lǎoshī.",
+            "pt": "De chinês."
+          },
+          {
+            "hanzi": "他是记者。",
+            "pinyin": "Tā shì jìzhě.",
+            "pt": "Ele é repórter."
+          },
+          {
+            "hanzi": "他是医生。",
+            "pinyin": "Tā shì yīshēng.",
+            "pt": "Ele é médico."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "马大为是哪国人？",
+        "pinyin": "Mǎ Dàwéi shì nǎ guó rén?",
+        "pt": "De que país é o Ma Dawei?",
+        "opcoes": [
+          {
+            "hanzi": "他是加拿大人。",
+            "pinyin": "Tā shì Jiānádà rén.",
+            "pt": "Canadense."
+          },
+          {
+            "hanzi": "他是美国人。",
+            "pinyin": "Tā shì Měiguó rén.",
+            "pt": "Americano."
+          },
+          {
+            "hanzi": "他是英国人。",
+            "pinyin": "Tā shì Yīngguó rén.",
+            "pt": "Inglês."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "马大为累吗？",
+        "pinyin": "Mǎ Dàwéi lèi ma?",
+        "pt": "O Ma Dawei está cansado?",
+        "opcoes": [
+          {
+            "hanzi": "他很累。",
+            "pinyin": "Tā hěn lèi.",
+            "pt": "Muito cansado."
+          },
+          {
+            "hanzi": "他不累。",
+            "pinyin": "Tā bú lèi.",
+            "pt": "Não está cansado."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  }
+]
