@@ -32,9 +32,10 @@ rodar essa linha uma vez** — sem ela a trava contra vazar chave não existe ne
 
 ### A chave do Supabase
 
-Dois scripts precisam dela — o `supabase/seed.py` e o passo final do
-`build_audio_nativo.py`. Ela chega pelo Leo, por canal privado, e **mora fora da pasta do
-projeto**, junto da `ELEVEN_API_KEY` que o áudio das frases usa:
+Os scripts que falam com o banco precisam dela — o `supabase/seed.py`, o passo final
+do `build_audio_nativo.py` e o `tools/push_historias.py`. Ela chega pelo Leo, por canal
+privado, e **mora fora da pasta do projeto**, junto da `ELEVEN_API_KEY` que o áudio das
+frases e das histórias usa:
 
 ```bash
 mkdir -p ~/.config
@@ -268,10 +269,72 @@ print('conferido')"
 Não precisa de banco, de áudio nem de fonte: as frases do roteiro já passaram por tudo
 isso quando entraram. Um diálogo novo é conteúdo — vai direto no `main`, com o JSON.
 
+### 5c. História nova? Texto, áudio e bucket
+
+O modo 📖 Histórias (app iOS) lê `seed/historias.json`: uma história curta, linha a
+linha, com perguntas de compreensão. **Ao contrário do diálogo, ela tem conteúdo
+próprio** — cada linha é texto corrido, com pinyin, português e uma faixa de áudio.
+
+As histórias formam uma **escada de nível**. Cada uma declara no `escopo` as origens
+(`fonte` das cartas) de onde tira o vocabulário, e o app só a mostra a quem escolheu
+TODAS essas origens. Os degraus são "até o cap. N", em três sabores:
+
+| escopo | quem vê |
+|---|---|
+| `["cap1","cap2","cap3"]` | quem está no cap. 3 ou além |
+| `["cap1","cap2","cap3","extra-aula"]` | isso + a chave "Extras da aula" |
+| `["cap1","cap2","cap3","duolingo"]` | isso + a chave "Duolingo" |
+
+**Entrou capítulo novo?** Escreva 2–3 histórias do degrau novo. As antigas não
+estragam — o escopo delas continua valendo.
+
+```json
+{ "id": "h-no-mercado", "titulo": "去超市", "pinyin": "Qù chāoshì", "pt": "Ao supermercado",
+  "escopo": ["cap1","cap2","cap3","cap4","duolingo"],
+  "linhas": [
+    { "hanzi": "今天很热。", "pinyin": "Jīntiān hěn rè.", "pt": "Hoje está calor." },
+    { "quem": "林娜", "hanzi": "我要冰奶茶。", "pinyin": "Wǒ yào bīng nǎichá.", "pt": "Quero chá gelado." } ],
+  "perguntas": [
+    { "hanzi": "林娜要什么？", "pinyin": "Lín Nà yào shénme?", "pt": "O que a Lin Na quer?",
+      "opcoes": [ { "hanzi": "她要咖啡。", "pinyin": "Tā yào kāfēi.", "pt": "Café." },
+                  { "hanzi": "她要冰奶茶。", "pinyin": "Tā yào bīng nǎichá.", "pt": "Chá gelado." } ],
+      "certa": 1 } ] }
+```
+
+Regras que importam:
+
+- **`id` começa com `h-`** e nunca muda depois de publicado — o áudio é `<id>-NN.mp3`.
+- **Só vocabulário do escopo, inclusive nas perguntas e nos nomes.** Olhe o deck por
+  origem antes de escrever. Pegadinha: até o cap. 2 não existe 是 nem 她 (são do cap. 3),
+  então esses degraus saem em diálogo ("他很忙", "我要咖啡").
+- **Linha com pontuação final** (。？！) — a voz usa ela pra entonação.
+- **Linha nova vai no FIM.** O áudio é numerado pela posição: inserir no meio
+  desalinha todas as de baixo (aí apague as faixas daquela história e gere de novo).
+- **3 perguntas**, uma resposta certa cada, sobre fatos do texto.
+
+O passo a passo, nesta ordem:
+
+```bash
+python3 tools/check_historias.py                                              # grátis: cada 汉字 contra o escopo
+source ~/.config/manman.env && python3 tools/build_audio_historias.py         # PAGO: só as linhas sem áudio
+source ~/.config/manman.env && python3 tools/push_historias.py --dry-run      # o que subiria
+source ~/.config/manman.env && python3 tools/push_historias.py                # publica
+```
+
+- O `check` barra caractere fora do escopo. Ele confere caractere, não palavra — dois
+  caracteres conhecidos podem formar uma palavra que o deck não tem, e isso é olho seu.
+- O áudio usa a mesma voz das frases (ElevenLabs), e ela já trocou 林娜 por "李诺" e
+  哪国人 por "哪个人". **Ouça as faixas novas antes de publicar.** Faixa errada: apague o
+  mp3 e rode o `build_audio_historias.py` de novo.
+- O `push` sobe pro bucket público `historias` do Supabase só as faixas que mudaram, e a
+  lista por último. **Quem abrir o app com internet já recebe** — sem release do app.
+- Depois do push, commite `seed/historias.json` e `audio/historias/` no `main` (passo 6):
+  o repo é a fonte, o bucket é a cópia publicada.
+
 ### 6. Commitar e publicar
 
 ```bash
-git add seed/seed_cards.json seed/dialogos.json audio/nativo/ audio/frases/ fonts/ strokes/
+git add seed/seed_cards.json seed/dialogos.json seed/historias.json audio/nativo/ audio/frases/ audio/historias/ fonts/ strokes/
 git commit -m "..."
 git push origin main
 ```
