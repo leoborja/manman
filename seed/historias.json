@@ -990,9 +990,9 @@
     ],
     "linhas": [
       {
-        "hanzi": "力波是大学生，他学中文。",
-        "pinyin": "Lìbō shì dàxuéshēng, tā xué Zhōngwén.",
-        "pt": "O Libo é universitário e estuda chinês."
+        "hanzi": "力波是大学生，他上中文课。",
+        "pinyin": "Lìbō shì dàxuéshēng, tā shàng Zhōngwén kè.",
+        "pt": "O Libo é universitário e faz aula de chinês."
       },
       {
         "hanzi": "他有哥哥，也有妹妹。",
