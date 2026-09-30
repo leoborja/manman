@@ -248,6 +248,9 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 贵 | guì | [Zh-guì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%AC.ogg) | 贵 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 女士 | nǚshì | [LL-Q9192 (cmn)-Jouketou-女士.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Jouketou-%E5%A5%B3%E5%A3%AB.wav) | 女士 | Speaker: Jouketou Recorder: Jouketou | CC BY-SA 4.0 |
 | 小姐 | xiǎojiě | [Zh-xiǎojiě.oga](https://commons.wikimedia.org/wiki/File%3AZh-xi%C7%8Eoji%C4%9B.oga) | 小姐 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 笔 | bǐ | [Zh-bǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C7%90.ogg) | 笔 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 橡皮 | xiàngpí | [Zh-xiàngpí.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C3%A0ngp%C3%AD.ogg) | 橡皮 | Yue Tan | CC BY-SA 3.0 us |
+| 本子 | běnzi | [Zh-běnzi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C4%9Bnzi.ogg) | 本子 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 常常 | chángcháng | [Zh-chángcháng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C3%A1ngch%C3%A1ng.ogg) | 常常 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 去 | qù | [Zh-qù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-q%C3%B9.ogg) | 去 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 书店 | shūdiàn | [LL-Q9192 (cmn)-Luilui6666-书店.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E4%B9%A6%E5%BA%97.wav) | 书店 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
