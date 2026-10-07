@@ -524,6 +524,7 @@ const RADICAIS = [
   ['父', 'pai'], ['马', 'cavalo'], ['扌', 'mão'], ['又', 'mão / de novo'], ['忄', 'coração'],
   ['心', 'coração'], ['讠', 'fala'], ['饣', 'comida'], ['彳', 'passo'], ['囗', 'cerca'],
   ['宀', 'teto'], ['疒', 'doença'], ['力', 'força'], ['阝', 'monte / cidade'],
+  ['食', 'comida'], ['尸', 'construção'], ['厂', 'construção'], ['辶', 'movimento'],
 ];
 const RADICAL_PT = Object.fromEntries(RADICAIS);
 function medianLen(m) {
