@@ -1261,5 +1261,291 @@
         "certa": 1
       }
     ]
+  },
+  {
+    "id": "h-xiaoyun-esta",
+    "titulo": "王小云在吗？",
+    "pinyin": "Wáng Xiǎoyún zài ma?",
+    "pt": "A Xiaoyun está?",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5"
+    ],
+    "linhas": [
+      {
+        "hanzi": "马大为在宿舍。",
+        "pinyin": "Mǎ Dàwéi zài sùshè.",
+        "pt": "Ma Dawei está no dormitório."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "请问，王小云在吗？",
+        "pinyin": "Qǐngwèn, Wáng Xiǎoyún zài ma?",
+        "pt": "Com licença, a Wang Xiaoyun está?"
+      },
+      {
+        "quem": "女学生",
+        "hanzi": "请进，请坐。",
+        "pinyin": "Qǐng jìn, qǐng zuò.",
+        "pt": "Entre e sente-se, por favor."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "谢谢！",
+        "pinyin": "Xièxie!",
+        "pt": "Obrigado!"
+      },
+      {
+        "quem": "女学生",
+        "hanzi": "对不起，她不在这儿。",
+        "pinyin": "Duìbuqǐ, tā bú zài zhèr.",
+        "pt": "Desculpe, ela não está aqui."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "她在哪儿？",
+        "pinyin": "Tā zài nǎr?",
+        "pt": "Onde ela está?"
+      },
+      {
+        "quem": "女学生",
+        "hanzi": "她在餐厅。",
+        "pinyin": "Tā zài cāntīng.",
+        "pt": "Ela está no refeitório."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "餐厅在哪儿？",
+        "pinyin": "Cāntīng zài nǎr?",
+        "pt": "Onde fica o refeitório?"
+      },
+      {
+        "quem": "女学生",
+        "hanzi": "在二层。",
+        "pinyin": "Zài èr céng.",
+        "pt": "No segundo andar."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "谢谢你！",
+        "pinyin": "Xièxie nǐ!",
+        "pt": "Obrigado!"
+      },
+      {
+        "quem": "女学生",
+        "hanzi": "不用谢。再见！",
+        "pinyin": "Búyòng xiè. Zàijiàn!",
+        "pt": "Não há de quê. Tchau!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "王小云在宿舍吗？",
+        "pinyin": "Wáng Xiǎoyún zài sùshè ma?",
+        "pt": "A Wang Xiaoyun está no dormitório?",
+        "opcoes": [
+          {
+            "hanzi": "她在宿舍。",
+            "pinyin": "Tā zài sùshè.",
+            "pt": "Está."
+          },
+          {
+            "hanzi": "她不在宿舍。",
+            "pinyin": "Tā bú zài sùshè.",
+            "pt": "Não está."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "王小云在哪儿？",
+        "pinyin": "Wáng Xiǎoyún zài nǎr?",
+        "pt": "Onde está a Wang Xiaoyun?",
+        "opcoes": [
+          {
+            "hanzi": "她在餐厅。",
+            "pinyin": "Tā zài cāntīng.",
+            "pt": "No refeitório."
+          },
+          {
+            "hanzi": "她在这儿。",
+            "pinyin": "Tā zài zhèr.",
+            "pt": "Aqui."
+          },
+          {
+            "hanzi": "她在学院。",
+            "pinyin": "Tā zài xuéyuàn.",
+            "pt": "No instituto."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "餐厅在哪儿？",
+        "pinyin": "Cāntīng zài nǎr?",
+        "pt": "Onde fica o refeitório?",
+        "opcoes": [
+          {
+            "hanzi": "在四层。",
+            "pinyin": "Zài sì céng.",
+            "pt": "No quarto andar."
+          },
+          {
+            "hanzi": "在二层。",
+            "pinyin": "Zài èr céng.",
+            "pt": "No segundo andar."
+          },
+          {
+            "hanzi": "在宿舍。",
+            "pinyin": "Zài sùshè.",
+            "pt": "No dormitório."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  },
+  {
+    "id": "h-cheguei-tarde",
+    "titulo": "我来晚了",
+    "pinyin": "Wǒ lái wǎn le",
+    "pt": "Cheguei atrasado",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5"
+    ],
+    "linhas": [
+      {
+        "hanzi": "宋华在餐厅，王小云也在。",
+        "pinyin": "Sòng Huá zài cāntīng, Wáng Xiǎoyún yě zài.",
+        "pt": "Song Hua está no refeitório, e a Wang Xiaoyun também."
+      },
+      {
+        "quem": "宋华",
+        "hanzi": "小云，马大为在哪儿？",
+        "pinyin": "Xiǎoyún, Mǎ Dàwéi zài nǎr?",
+        "pt": "Xiaoyun, onde está o Ma Dawei?"
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "我不知道。他不在宿舍。",
+        "pinyin": "Wǒ bù zhīdào. Tā bú zài sùshè.",
+        "pt": "Não sei. Ele não está no dormitório."
+      },
+      {
+        "quem": "宋华",
+        "hanzi": "大为！我们在这儿！",
+        "pinyin": "Dàwéi! Wǒmen zài zhèr!",
+        "pt": "Dawei! Estamos aqui!"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "对不起，我来晚了。",
+        "pinyin": "Duìbuqǐ, wǒ lái wǎn le.",
+        "pt": "Desculpem, cheguei atrasado."
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "没关系。请坐！",
+        "pinyin": "Méi guānxi. Qǐng zuò!",
+        "pt": "Tudo bem. Sente-se!"
+      },
+      {
+        "quem": "宋华",
+        "hanzi": "你要喝什么？",
+        "pinyin": "Nǐ yào hē shénme?",
+        "pt": "O que você quer beber?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "我要喝咖啡。",
+        "pinyin": "Wǒ yào hē kāfēi.",
+        "pt": "Quero café."
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "我也要咖啡。",
+        "pinyin": "Wǒ yě yào kāfēi.",
+        "pt": "Eu também quero café."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "谢谢你们！",
+        "pinyin": "Xièxie nǐmen!",
+        "pt": "Obrigado, gente!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "谁来晚了？",
+        "pinyin": "Shéi lái wǎn le?",
+        "pt": "Quem chegou atrasado?",
+        "opcoes": [
+          {
+            "hanzi": "宋华。",
+            "pinyin": "Sòng Huá.",
+            "pt": "Song Hua."
+          },
+          {
+            "hanzi": "王小云。",
+            "pinyin": "Wáng Xiǎoyún.",
+            "pt": "Wang Xiaoyun."
+          },
+          {
+            "hanzi": "马大为。",
+            "pinyin": "Mǎ Dàwéi.",
+            "pt": "Ma Dawei."
+          }
+        ],
+        "certa": 2
+      },
+      {
+        "hanzi": "王小云知道马大为在哪儿吗？",
+        "pinyin": "Wáng Xiǎoyún zhīdào Mǎ Dàwéi zài nǎr ma?",
+        "pt": "A Wang Xiaoyun sabe onde o Ma Dawei está?",
+        "opcoes": [
+          {
+            "hanzi": "她知道。",
+            "pinyin": "Tā zhīdào.",
+            "pt": "Sabe."
+          },
+          {
+            "hanzi": "她不知道。",
+            "pinyin": "Tā bù zhīdào.",
+            "pt": "Não sabe."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "马大为要喝什么？",
+        "pinyin": "Mǎ Dàwéi yào hē shénme?",
+        "pt": "O que o Ma Dawei quer beber?",
+        "opcoes": [
+          {
+            "hanzi": "他要喝水。",
+            "pinyin": "Tā yào hē shuǐ.",
+            "pt": "Água."
+          },
+          {
+            "hanzi": "他要喝咖啡。",
+            "pinyin": "Tā yào hē kāfēi.",
+            "pt": "Café."
+          },
+          {
+            "hanzi": "他要喝可乐。",
+            "pinyin": "Tā yào hē kělè.",
+            "pt": "Coca."
+          }
+        ],
+        "certa": 1
+      }
+    ]
   }
 ]
