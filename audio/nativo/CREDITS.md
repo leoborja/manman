@@ -281,3 +281,9 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 王 | wáng | [Zh-wáng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A1ng.ogg) | 亡 | Yue Tan | CC BY-SA 3.0 us |
 | 小 | xiǎo | [Zh-xiǎo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C7%8Eo.ogg) | 小 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 云 | yún | [Zh-yún.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%BAn.ogg) | 云 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 路 | lù | [Zh-lù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%B9.ogg) | 路 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 家 | jiā | [Zh-jiā.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C4%81.ogg) | 加 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 学校 | xuéxiào | [Zh-xuéxiào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xu%C3%A9xi%C3%A0o.ogg) | 学校 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 商店 | shāngdiàn | [Zh-shāngdiàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C4%81ngdi%C3%A0n.ogg) | 商店 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 医院 | yīyuàn | [Zh-yīyuàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%AByu%C3%A0n.ogg) | 医院 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 银行 | yínháng | [Zh-yínháng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%ADnh%C3%A1ng.ogg) | 银行 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
