@@ -193,19 +193,23 @@ function pinyinColored(py) { // cada sílaba pintada com a cor do seu tom, e o s
 // sílabas, todas montadas de inicial + final — então a aproximação se calcula da própria
 // sílaba e vale pra toda palavra nova sem ninguém preencher campo nenhum. Palavra que
 // saísse torta se conserta aqui, no PRON_EXCECAO, e não carta por carta.
-const PRON_INICIAL = { b:'b', p:'p', m:'m', f:'f', d:'d', t:'t', n:'n', l:'l', g:'g', k:'k',
+// b/d/g são p/t/k SECOS, e p/t/k os mesmos com sopro — o ʰ é a marca do sopro, a mesma
+// que o professor usa no quadro. Por isso 爸爸 sai "pa-pa" e 怕 sai "pʰa": a diferença
+// entre os dois é o ar, não a voz.
+const PRON_INICIAL = { b:'p', p:'pʰ', m:'m', f:'f', d:'t', t:'tʰ', n:'n', l:'l', g:'k', k:'kʰ',
   h:'r',                          // o h chinês raspa a garganta: é o r de "rato", não o h mudo de "hoje"
-  j:'dj', q:'tch', x:'x',         // j/q/x e zh/ch/sh caem no mesmo par pra ouvido brasileiro
-  zh:'dj', ch:'tch', sh:'ch',
+  j:'dj', q:'tchʰ', x:'x',        // j/q/x e zh/ch/sh caem no mesmo par pra ouvido brasileiro
+  zh:'dj', ch:'tchʰ', sh:'ch',
   r:'j',                          // 人 rén soa "jên", com o j de "já"
   z:'dz', c:'ts', s:'s' };
-const PRON_FINAL = { a:'a', o:'ô', e:'ê', ai:'ai', ei:'ei', ao:'au', ou:'ou',
-  an:'an', en:'ên', ang:'ang', eng:'eng', ong:'ong', er:'ar',
-  i:'i', ia:'iá', ie:'ié', iao:'iau', iu:'iou', ian:'ién', in:'in',
+// o e sozinho e antes de n/ng é o "ã" paulista; em ei, ie, üe é o nosso ê
+const PRON_FINAL = { a:'a', o:'ô', e:'ã', ai:'ai', ei:'ei', ao:'au', ou:'ou',
+  an:'an', en:'ãn', ang:'ang', eng:'ãng', ong:'ong', er:'ar',
+  i:'i', ia:'iá', ie:'iê', iao:'iau', iu:'iou', ian:'ién', in:'in',
   iang:'iang', ing:'ing', iong:'iong',
   u:'u', ua:'uá', uo:'uô', uai:'uai', ui:'uei', uan:'uan', un:'uên',
   uang:'uang', ueng:'ueng',
-  'ü':'iu', 'üe':'iué', 'üan':'iuan', 'ün':'iun' };
+  'ü':'ü', 'üe':'üê', 'üan':'üén', 'ün':'ün' };  // ü fica ü: "iu" se lia como dois sons
 // y e w não são consoante nenhuma: são a mesma vogal escrita de outro jeito quando abre a
 // sílaba (yī = i, wǒ = uo, yǔ = ü). Normalizados aqui, a tabela de finais resolve o resto.
 const PRON_YW = { yi:'i', ya:'ia', ye:'ie', yao:'iao', you:'iu', yan:'ian', yin:'in',
@@ -228,9 +232,7 @@ function pronSilaba(sil) {
   if ('jqx'.indexOf(ini) >= 0 && fin[0] === 'u') fin = 'ü' + fin.slice(1);
   // o i de shì, rì, zhī não é i nenhum: é a língua parada no lugar da consoante, zumbindo
   if (fin === 'i' && ['zh', 'ch', 'sh', 'r'].indexOf(ini) >= 0) return PRON_INICIAL[ini] + 'r';
-  let cabeca = PRON_INICIAL[ini] || '';
-  // "ge" em português é "je": o g duro antes de e/i pede o u mudo, como em "guerra"
-  if (cabeca === 'g' && 'eêi'.indexOf((PRON_FINAL[fin] || '')[0]) >= 0) cabeca = 'gu';
+  const cabeca = PRON_INICIAL[ini] || '';
   const cauda = PRON_FINAL[fin];
   if (cauda === undefined) return s; // sílaba que a tabela não conhece sai como veio
   return cabeca + cauda;
