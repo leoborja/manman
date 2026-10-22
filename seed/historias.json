@@ -1547,5 +1547,391 @@
         "certa": 1
       }
     ]
+  },
+  {
+    "id": "h-vamos-nadar",
+    "titulo": "我们去游泳",
+    "pinyin": "Wǒmen qù yóuyǒng",
+    "pt": "Vamos nadar",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5",
+      "cap6"
+    ],
+    "linhas": [
+      {
+        "hanzi": "今天天气很好。",
+        "pinyin": "Jīntiān tiānqì hěn hǎo.",
+        "pt": "Hoje o tempo está bom."
+      },
+      {
+        "hanzi": "林娜现在不忙。",
+        "pinyin": "Lín Nà xiànzài bù máng.",
+        "pt": "A Lin Na agora não está ocupada."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "力波，我们去游泳，好吗？",
+        "pinyin": "Lìbō, wǒmen qù yóuyǒng, hǎo ma?",
+        "pt": "Libo, vamos nadar?"
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "太好了！什么时候去？",
+        "pinyin": "Tài hǎo le! Shénme shíhou qù?",
+        "pt": "Que ótimo! Quando a gente vai?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "现在去，可以吗？",
+        "pinyin": "Xiànzài qù, kěyǐ ma?",
+        "pt": "Que tal agora?"
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "可以。宋华也去吗？",
+        "pinyin": "Kěyǐ. Sòng Huá yě qù ma?",
+        "pt": "Pode ser. O Song Hua vai também?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "宋华不去。他很忙。",
+        "pinyin": "Sòng Huá bú qù. Tā hěn máng.",
+        "pt": "O Song Hua não vai. Ele está muito ocupado."
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "明天他有时间吗？",
+        "pinyin": "Míngtiān tā yǒu shíjiān ma?",
+        "pt": "E amanhã, ele tem tempo?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我不知道。",
+        "pinyin": "Wǒ bù zhīdào.",
+        "pt": "Não sei."
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "好，我们现在去！",
+        "pinyin": "Hǎo, wǒmen xiànzài qù!",
+        "pt": "Tá bom, vamos agora!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "今天天气怎么样？",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+        "pt": "Como está o tempo hoje?",
+        "opcoes": [
+          {
+            "hanzi": "很好。",
+            "pinyin": "Hěn hǎo.",
+            "pt": "Bom."
+          },
+          {
+            "hanzi": "不好。",
+            "pinyin": "Bù hǎo.",
+            "pt": "Ruim."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "他们什么时候去游泳？",
+        "pinyin": "Tāmen shénme shíhou qù yóuyǒng?",
+        "pt": "Quando eles vão nadar?",
+        "opcoes": [
+          {
+            "hanzi": "明天去。",
+            "pinyin": "Míngtiān qù.",
+            "pt": "Amanhã."
+          },
+          {
+            "hanzi": "现在去。",
+            "pinyin": "Xiànzài qù.",
+            "pt": "Agora."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "宋华去游泳吗？",
+        "pinyin": "Sòng Huá qù yóuyǒng ma?",
+        "pt": "O Song Hua vai nadar?",
+        "opcoes": [
+          {
+            "hanzi": "他去。",
+            "pinyin": "Tā qù.",
+            "pt": "Vai."
+          },
+          {
+            "hanzi": "他不去。",
+            "pinyin": "Tā bú qù.",
+            "pt": "Não vai."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  },
+  {
+    "id": "h-opera",
+    "titulo": "京剧很有意思",
+    "pinyin": "Jīngjù hěn yǒu yìsi",
+    "pt": "A ópera é interessante",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5",
+      "cap6"
+    ],
+    "linhas": [
+      {
+        "hanzi": "昨天马大为去看京剧。",
+        "pinyin": "Zuótiān Mǎ Dàwéi qù kàn jīngjù.",
+        "pt": "Ontem o Ma Dawei foi ver ópera de Pequim."
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "大为，昨天的京剧怎么样？",
+        "pinyin": "Dàwéi, zuótiān de jīngjù zěnmeyàng?",
+        "pt": "Dawei, como foi a ópera ontem?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "很有意思！",
+        "pinyin": "Hěn yǒu yìsi!",
+        "pt": "Muito interessante!"
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "明天我们去看京剧，好吗？",
+        "pinyin": "Míngtiān wǒmen qù kàn jīngjù, hǎo ma?",
+        "pt": "Vamos ver ópera amanhã?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "好！杨老师也去，好吗？",
+        "pinyin": "Hǎo! Yáng lǎoshī yě qù, hǎo ma?",
+        "pt": "Vamos! E se o professor Yang for também?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "杨老师，明天您有时间吗？",
+        "pinyin": "Yáng lǎoshī, míngtiān nín yǒu shíjiān ma?",
+        "pt": "Professor Yang, o senhor tem tempo amanhã?"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "对不起，请再说一遍。",
+        "pinyin": "Duìbuqǐ, qǐng zài shuō yí biàn.",
+        "pt": "Desculpe, pode repetir?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "明天我们去看京剧，您去吗？",
+        "pinyin": "Míngtiān wǒmen qù kàn jīngjù, nín qù ma?",
+        "pt": "Amanhã vamos ver ópera. O senhor vai?"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "很抱歉，明天我很忙，恐怕不行。",
+        "pinyin": "Hěn bàoqiàn, míngtiān wǒ hěn máng, kǒngpà bù xíng.",
+        "pt": "Sinto muito, amanhã estou muito ocupado, acho que não vai dar."
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "谢谢你们！",
+        "pinyin": "Xièxie nǐmen!",
+        "pt": "Obrigado a vocês!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "马大为昨天去看什么？",
+        "pinyin": "Mǎ Dàwéi zuótiān qù kàn shénme?",
+        "pt": "O que o Ma Dawei foi ver ontem?",
+        "opcoes": [
+          {
+            "hanzi": "他去看京剧。",
+            "pinyin": "Tā qù kàn jīngjù.",
+            "pt": "Ópera de Pequim."
+          },
+          {
+            "hanzi": "他去打球。",
+            "pinyin": "Tā qù dǎ qiú.",
+            "pt": "Foi jogar bola."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "昨天的京剧怎么样？",
+        "pinyin": "Zuótiān de jīngjù zěnmeyàng?",
+        "pt": "Como foi a ópera ontem?",
+        "opcoes": [
+          {
+            "hanzi": "没有意思。",
+            "pinyin": "Méiyǒu yìsi.",
+            "pt": "Sem graça."
+          },
+          {
+            "hanzi": "很有意思。",
+            "pinyin": "Hěn yǒu yìsi.",
+            "pt": "Muito interessante."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "明天杨老师去看京剧吗？",
+        "pinyin": "Míngtiān Yáng lǎoshī qù kàn jīngjù ma?",
+        "pt": "O professor Yang vai ver a ópera amanhã?",
+        "opcoes": [
+          {
+            "hanzi": "去。",
+            "pinyin": "Qù.",
+            "pt": "Vai."
+          },
+          {
+            "hanzi": "不去。",
+            "pinyin": "Bú qù.",
+            "pt": "Não vai."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  },
+  {
+    "id": "h-ditado",
+    "titulo": "我们听写",
+    "pinyin": "Wǒmen tīngxiě",
+    "pt": "Ditado",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5",
+      "cap6"
+    ],
+    "linhas": [
+      {
+        "quem": "杨老师",
+        "hanzi": "请看书。",
+        "pinyin": "Qǐng kàn shū.",
+        "pt": "Leiam o livro, por favor."
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "现在我们听写。",
+        "pinyin": "Xiànzài wǒmen tīngxiě.",
+        "pt": "Agora vamos fazer ditado."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "对不起，老师，请再说一遍。",
+        "pinyin": "Duìbuqǐ, lǎoshī, qǐng zài shuō yí biàn.",
+        "pt": "Desculpe, professor, pode repetir?"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "我们听写。请写汉字。",
+        "pinyin": "Wǒmen tīngxiě. Qǐng xiě Hànzì.",
+        "pt": "Vamos fazer ditado. Escrevam os caracteres."
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "“今天”，“明天”，“昨天”。",
+        "pinyin": "“Jīntiān”, “míngtiān”, “zuótiān”.",
+        "pt": "“Hoje”, “amanhã”, “ontem”."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "老师，可以再念一遍吗？",
+        "pinyin": "Lǎoshī, kěyǐ zài niàn yí biàn ma?",
+        "pt": "Professor, pode ler de novo?"
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "可以。“今天”，“明天”，“昨天”。",
+        "pinyin": "Kěyǐ. “Jīntiān”, “míngtiān”, “zuótiān”.",
+        "pt": "Pode. “Hoje”, “amanhã”, “ontem”."
+      },
+      {
+        "hanzi": "马大为写汉字，林娜也写汉字。",
+        "pinyin": "Mǎ Dàwéi xiě Hànzì, Lín Nà yě xiě Hànzì.",
+        "pt": "O Ma Dawei escreve os caracteres, e a Lin Na também."
+      },
+      {
+        "quem": "杨老师",
+        "hanzi": "你们都很好！",
+        "pinyin": "Nǐmen dōu hěn hǎo!",
+        "pt": "Muito bem, vocês dois!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "谁请老师再说一遍？",
+        "pinyin": "Shéi qǐng lǎoshī zài shuō yí biàn?",
+        "pt": "Quem pede pro professor repetir?",
+        "opcoes": [
+          {
+            "hanzi": "马大为。",
+            "pinyin": "Mǎ Dàwéi.",
+            "pt": "O Ma Dawei."
+          },
+          {
+            "hanzi": "林娜。",
+            "pinyin": "Lín Nà.",
+            "pt": "A Lin Na."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "老师再念一遍吗？",
+        "pinyin": "Lǎoshī zài niàn yí biàn ma?",
+        "pt": "O professor lê de novo?",
+        "opcoes": [
+          {
+            "hanzi": "念。",
+            "pinyin": "Niàn.",
+            "pt": "Lê."
+          },
+          {
+            "hanzi": "不念。",
+            "pinyin": "Bú niàn.",
+            "pt": "Não lê."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "林娜写什么？",
+        "pinyin": "Lín Nà xiě shénme?",
+        "pt": "O que a Lin Na escreve?",
+        "opcoes": [
+          {
+            "hanzi": "她写汉字。",
+            "pinyin": "Tā xiě Hànzì.",
+            "pt": "Os caracteres."
+          },
+          {
+            "hanzi": "她看书。",
+            "pinyin": "Tā kàn shū.",
+            "pt": "Ela lê o livro."
+          }
+        ],
+        "certa": 0
+      }
+    ]
   }
 ]

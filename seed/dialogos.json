@@ -214,5 +214,107 @@
       { "quem": "outro", "card": "fr-pai-cerveja" },
       { "quem": "voce", "card": "fr-irmao-arroz", "dica": "conte do seu irmão mais novo: ele gosta de arroz" }
     ]
+  },
+  {
+    "id": "dl-opera",
+    "titulo": "Como foi a ópera?",
+    "deck": "gostos",
+    "cena": "Você é a Wang Xiaoyun e encontra a Lin Na no dia seguinte à ópera.",
+    "falas": [
+      { "quem": "voce", "card": "fr-opera-ontem", "dica": "pergunte o que ela achou da ópera de ontem" },
+      { "quem": "outro", "card": "fr-muito-interessante" },
+      { "quem": "outro", "card": "fr-vamos-nadar" },
+      { "quem": "voce", "card": "fr-otimo-quando", "dica": "aceite animada e pergunte quando" },
+      { "quem": "outro", "card": "fr-agora-pode" },
+      { "quem": "voce", "card": "fr-pode", "dica": "concorde" }
+    ]
+  },
+  {
+    "id": "dl-convite-recusado",
+    "titulo": "O convite recusado",
+    "deck": "gostos",
+    "cena": "Você é o professor Yang. Dois alunos te param no corredor.",
+    "falas": [
+      { "quem": "outro", "card": "fr-yang-tem-tempo" },
+      { "quem": "voce", "card": "fr-repita", "dica": "você não ouviu — peça pra repetir" },
+      { "quem": "outro", "card": "fr-tem-tempo-amanha" },
+      { "quem": "outro", "card": "fr-jogar-bola" },
+      { "quem": "voce", "card": "fr-recusa-ocupado", "dica": "recuse com educação: amanhã você está ocupado" }
+    ]
+  },
+  {
+    "id": "dl-revisao-apresentacao",
+    "titulo": "Na universidade",
+    "deck": "nomes",
+    "cena": "Revisão: você é a Li Mali e conhece alguém novo.",
+    "falas": [
+      { "quem": "outro", "card": "fr-qingwen-guixing" },
+      { "quem": "voce", "card": "fr-sou-li-mali", "dica": "diga seu nome e pergunte o sobrenome dele" },
+      { "quem": "outro", "card": "fr-sou-song-hua" },
+      { "quem": "voce", "card": "fr-americana-beida", "dica": "diga que é americana e estuda na 北大" },
+      { "quem": "outro", "card": "fr-prazer-conhecer-nin" },
+      { "quem": "voce", "card": "fr-prazer-tambem", "dica": "diga que o prazer é seu também" }
+    ]
+  },
+  {
+    "id": "dl-revisao-amigos",
+    "titulo": "Apresentando um amigo",
+    "deck": "familia",
+    "cena": "Revisão: você é o Libo e encontra o Song Hua com a Mary.",
+    "falas": [
+      { "quem": "outro", "card": "fr-libo-tudo-bem" },
+      { "quem": "voce", "card": "fr-bem-songhua-e-voce", "dica": "diga que está bem e devolva a pergunta" },
+      { "quem": "outro", "card": "fr-ocupado-avo" },
+      { "quem": "voce", "card": "fr-ela-bem-pais", "dica": "agradeça, diga que ela está bem e pergunte dos pais dele" },
+      { "quem": "outro", "card": "fr-mali-amigo-libo" },
+      { "quem": "outro", "card": "fr-mali-estudante" },
+      { "quem": "outro", "card": "fr-voce-americano" },
+      { "quem": "voce", "card": "fr-nao-sou-canadense", "dica": "diga que não — você é canadense" }
+    ]
+  },
+  {
+    "id": "dl-revisao-quem-e",
+    "titulo": "Quem é ela?",
+    "deck": "identidade",
+    "cena": "Revisão: um colega pergunta quem são as pessoas no corredor.",
+    "falas": [
+      { "quem": "outro", "card": "fr-ela-quem" },
+      { "quem": "voce", "card": "fr-nossa-professora", "dica": "diga que é a professora de vocês" },
+      { "quem": "outro", "card": "fr-ela-chinesa-pergunta" },
+      { "quem": "voce", "card": "fr-chinesa-chen", "dica": "diga que sim, e o sobrenome dela" },
+      { "quem": "outro", "card": "fr-quem-e" },
+      { "quem": "voce", "card": "fr-ele-lu-yuping", "dica": "diga o nome dele: Lu Yuping" },
+      { "quem": "outro", "card": "fr-tambem-professor" },
+      { "quem": "voce", "card": "fr-nao-professor-reporter", "dica": "diga que não, ele é jornalista" }
+    ]
+  },
+  {
+    "id": "dl-revisao-escritorio",
+    "titulo": "Procurando a professora",
+    "deck": "lugares",
+    "cena": "Revisão: você procura a professora Chen num prédio que não conhece.",
+    "falas": [
+      { "quem": "voce", "card": "fr-escritorio-onde", "dica": "pergunte ao senhor onde fica o escritório" },
+      { "quem": "outro", "card": "fr-quinto-andar" },
+      { "quem": "voce", "card": "fr-chen-esta", "dica": "pergunte se a professora Chen está" },
+      { "quem": "outro", "card": "fr-quem-repita" },
+      { "quem": "voce", "card": "fr-chen-fangfang-esta", "dica": "repita com o nome inteiro dela" },
+      { "quem": "outro", "card": "fr-ela-esta" }
+    ]
+  },
+  {
+    "id": "dl-revisao-atrasado",
+    "titulo": "Cheguei atrasado",
+    "deck": "comida",
+    "cena": "Revisão: você recebe o senhor Wang, que chega atrasado.",
+    "falas": [
+      { "quem": "outro", "card": "fr-posso-entrar" },
+      { "quem": "voce", "card": "fr-wang-boa-tarde", "dica": "cumprimente o senhor Wang" },
+      { "quem": "outro", "card": "fr-desculpa-atraso" },
+      { "quem": "voce", "card": "fr-tudo-bem-cafe", "dica": "diga que não tem problema e ofereça café" },
+      { "quem": "outro", "card": "fr-nao-quero-obrigado" },
+      { "quem": "outro", "card": "fr-ver-opera-amanha" },
+      { "quem": "voce", "card": "fr-desculpa-ocupado", "dica": "peça desculpa: amanhã você está ocupado" }
+    ]
   }
 ]

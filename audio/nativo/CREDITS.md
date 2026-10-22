@@ -287,3 +287,23 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 商店 | shāngdiàn | [Zh-shāngdiàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C4%81ngdi%C3%A0n.ogg) | 商店 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 医院 | yīyuàn | [Zh-yīyuàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%AByu%C3%A0n.ogg) | 医院 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 银行 | yínháng | [Zh-yínháng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%ADnh%C3%A1ng.ogg) | 银行 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 游泳 | yóuyǒng | [Zh-yóuyǒng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%B3uy%C7%92ng.ogg) | 游泳 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 昨天 | zuótiān | [Zh-zuótiān.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zu%C3%B3ti%C4%81n.ogg) | 昨天 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 怎么样 | zěnmeyàng | [Zh-zěnmeyàng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-z%C4%9Bnmey%C3%A0ng.ogg) | 怎么样 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 有意思 | yǒu yìsi | [Zh-yǒuyìsi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C7%92uy%C3%ACsi.ogg) | 有意思 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 天气 | tiānqì | [Zh-tiānqì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ti%C4%81nq%C3%AC.ogg) | 天气 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 太 | tài | [Zh-tài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A0i.ogg) | 太 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 时候 | shíhou | [Zh-shíhou.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%ADhou.ogg) | 时候 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 现在 | xiànzài | [Zh-xiànzài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C3%A0nz%C3%A0i.ogg) | 现在 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 明天 | míngtiān | [Zh-míngtiān.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%ADngti%C4%81n.ogg) | 明天 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 时间 | shíjiān | [Zh-shíjiān.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C3%ADji%C4%81n.ogg) | 时间 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 遍 | biàn | [Zh-biàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-bi%C3%A0n.ogg) | 遍 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 球 | qiú | [Zh-qiú.ogg](https://commons.wikimedia.org/wiki/File%3AZh-qi%C3%BA.ogg) | 球 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 抱歉 | bàoqiàn | [Zh-bàoqiàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C3%A0oqi%C3%A0n.ogg) | 抱歉 | Yue Tan | CC BY-SA 3.0 us |
+| 行 | xíng | [Zh-xíng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C3%ADng.ogg) | 行 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 看 | kàn | [Zh-kàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C3%A0n.ogg) | 看 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 写 | xiě | [Zh-xiě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C4%9B.ogg) | 写 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 念 | niàn | [Zh-niàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ni%C3%A0n.ogg) | 念 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 听写 | tīngxiě | [Zh-tīngxiě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%ABngxi%C4%9B.ogg) | 听写 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 汉字 | Hànzì | [Zh-hànzì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A0nz%C3%AC.ogg) | 汉字 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 李 | Lǐ | [Zh-lǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C7%90.ogg) | 里 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
