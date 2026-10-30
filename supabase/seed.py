@@ -24,7 +24,7 @@ with open(os.path.join(here, "..", "seed", "seed_cards.json")) as f:
 
 # PostgREST exige as MESMAS chaves em todos os objetos do lote (PGRST102)
 # fonte: a ORIGEM da carta, que é o eixo 📖 do app — 'cap1', 'cap2'… (capítulo do livro),
-# 'extra-aula' ou 'duolingo'. data_aula: 'YYYY-MM-DD' do dia da aula, guardada como registro.
+# 'duolingo' (extra de aula entra no capítulo do dia). data_aula: 'YYYY-MM-DD' do dia da aula, guardada como registro.
 # deleted: true tira a carta do app pra todo mundo sem apagá-la do JSON — o seed é upsert
 # e nunca remove, então apagar do JSON deixaria a carta viva no banco.
 # audio_url fica DE FORA de propósito: quem escreve nele é o build_audio_nativo.py, e

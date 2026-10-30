@@ -358,7 +358,7 @@ Três consequências:
 
 ### Adicionar palavras novas (fluxo do Leo)
 
-1. Editar `seed/seed_cards.json` — preencher `fonte` com a origem (`cap3`, `extra-aula`, `duolingo`) — é o eixo 📖 — e `data_aula` (`"2026-08-13"`) com o dia da aula, quando veio de uma. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
+1. Editar `seed/seed_cards.json` — preencher `fonte` com a origem (`cap3`, `duolingo`; o que o professor trouxe na aula vai pro capítulo daquele dia) — é o eixo 📖 — e `data_aula` (`"2026-08-13"`) com o dia da aula, quando veio de uma. **Frase** leva `"tipo":"frase"` e o pinyin **separado por palavra** (`"Wǒ shì Bāxī rén"`), que é de onde sai a segmentação do 🧩 ordenar — colar tudo junto tira a frase desse modo
 2. `source ~/Documents/codes/cloud_local/manman_supabase.env && python3 supabase/seed.py`
 3. Caractere novo? `python3 tools/build_font.py`, `python3 tools/build_strokes.py` e `python3 tools/build_radicals.py`
 4. `python3 tools/build_audio_nativo.py` — baixa a gravação nativa das cartas novas e liga o `audio_url` (precisa das mesmas variáveis do passo 2 e do `ffmpeg`). **Frases ele pula**: o Commons nomeia os arquivos por sílaba de palavra, então procurar a frase inteira é consulta garantidamente vazia — elas vão pro passo 5

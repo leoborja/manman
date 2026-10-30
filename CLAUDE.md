@@ -127,8 +127,11 @@ Regras que importam:
 - **`fonte`** é a origem da palavra, e vira o filtro 📖 do app. A turma estuda pelo
   *New Practical Chinese Reader 1* (o `book-1.pdf` da pasta), então é o capítulo:
   `"cap1"`, `"cap2"`, `"cap3"`… — vale o que está no 生词 da lição, na seção de 汉字 e
-  nas palavras dos exercícios dela. Fora do livro: `"extra-aula"` (o professor trouxe
-  na aula) ou `"duolingo"`. Capítulo novo não precisa de código, o chip "Cap. 3" aparece
+  nas palavras dos exercícios dela. O que o professor trouxe na aula, fora do livro,
+  vai pro capítulo que a turma estudava naquele dia (pela `data_aula`) — não existe
+  mais grupo de extras, a turma estuda as duas coisas juntas. Frase escrita pra
+  praticar vai pro capítulo do caractere mais avançado dela, pra fase do Curso nunca
+  perguntar o que ainda não veio. Fora da aula: `"duolingo"`. Capítulo novo não precisa de código, o chip "Cap. 3" aparece
   sozinho. `"caractere"` é a sala de espera: o ideograma que só entrou no deck por ter
   sido quebrado de uma palavra maior (啡 de 咖啡, 朋 e 友 de 朋友) e que a turma ainda
   não estudou. Quando o livro o ensinar, a carta SAI de `caractere` e vai pro capítulo —
@@ -277,12 +280,11 @@ próprio** — cada linha é texto corrido, com pinyin, português e uma faixa d
 
 As histórias formam uma **escada de nível**. Cada uma declara no `escopo` as origens
 (`fonte` das cartas) de onde tira o vocabulário, e o app só a mostra a quem escolheu
-TODAS essas origens. Os degraus são "até o cap. N", em três sabores:
+TODAS essas origens. Os degraus são "até o cap. N", em dois sabores:
 
 | escopo | quem vê |
 |---|---|
 | `["cap1","cap2","cap3"]` | quem está no cap. 3 ou além |
-| `["cap1","cap2","cap3","extra-aula"]` | isso + a chave "Extras da aula" |
 | `["cap1","cap2","cap3","duolingo"]` | isso + a chave "Duolingo" |
 
 **Entrou capítulo novo?** Escreva 2–3 histórias do degrau novo. As antigas não

@@ -166,7 +166,6 @@
       "cap2",
       "cap3",
       "cap4",
-      "extra-aula",
       "duolingo"
     ],
     "linhas": [
@@ -436,7 +435,7 @@
     "escopo": [
       "cap1",
       "cap2",
-      "extra-aula"
+      "cap3"
     ],
     "linhas": [
       {
@@ -836,8 +835,7 @@
     "escopo": [
       "cap1",
       "cap2",
-      "cap3",
-      "extra-aula"
+      "cap3"
     ],
     "linhas": [
       {
@@ -1124,8 +1122,7 @@
       "cap1",
       "cap2",
       "cap3",
-      "cap4",
-      "extra-aula"
+      "cap4"
     ],
     "linhas": [
       {
