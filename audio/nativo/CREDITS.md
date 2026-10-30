@@ -84,6 +84,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 豆腐 | dòufu | [Zh-dòufu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C3%B2ufu.ogg) | 豆腐 | Yue Tan | CC BY-SA 3.0 us |
 | 啤酒 | píjiǔ | [Zh-píjiǔ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-p%C3%ADji%C7%94.ogg) | 啤酒 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 热 | rè | [Zh-rè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-r%C3%A8.ogg) | 热 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 冷 | lěng | [Zh-lěng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C4%9Bng.ogg) | 冷 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 是 | shì | [LL-Q9192 (cmn)-Luilui6666-是.wav](https://commons.wikimedia.org/wiki/File%3ALL-Q9192_%28cmn%29-Luilui6666-%E6%98%AF.wav) | 是 | Speaker: Luilui6666 Recorder: Luilui6666 | CC BY-SA 4.0 |
 | 爱 | ài | [Zh-ài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-%C3%A0i.ogg) | 爱 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 喜欢 | xǐhuan | [Zh-xǐhuan.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C7%90huan.ogg) | 喜欢 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
@@ -171,6 +172,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 音 | yīn | [Zh-yīn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C4%ABn.ogg) | 阴 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 高 | gāo | [Zh-gāo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-g%C4%81o.ogg) | 高 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 快 | kuài | [Zh-kuài.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ku%C3%A0i.ogg) | 快 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 慢 | màn | [Zh-màn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A0n.ogg) | 慢 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 心 | xīn | [Zh-xīn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C4%ABn.ogg) | 新 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 兴 | xìng | [Zh-xìng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C3%ACng.ogg) | 姓 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 爸 | bà | [Zh-bà.ogg](https://commons.wikimedia.org/wiki/File%3AZh-b%C3%A0.ogg) | 罢 | Yue Tan | CC BY-SA 3.0 us |

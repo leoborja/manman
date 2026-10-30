@@ -96,7 +96,9 @@
   {"id":"doufu","hanzi":"豆腐","pinyin":"dòufu","pt":"tofu","deck":"comida","fonte":"duolingo","nota":"豆 é a soja e 腐 é COALHADO — 'coalhada de soja', ao pé da letra. Não fermenta nada. Segunda sílaba em tom neutro: dòufu"},
   {"id":"pijiu","hanzi":"啤酒","pinyin":"píjiǔ","pt":"cerveja","deck":"comida","fonte":"cap2","nota":"啤 vale só pelo som de \"beer\", com 口 (boca) à esquerda como em 咖啡. 酒 jiǔ é bebida alcoólica em geral"},
 
-  {"id":"re","hanzi":"热","pinyin":"rè","pt":"quente / com calor","deck":"estados","fonte":"duolingo","nota":"我很热 = estou com calor. As quatro gotinhas embaixo (灬) são o 火 (fogo) achatado. Serve pra coisa quente também: 热茶"},
+  {"id":"re","hanzi":"热","pinyin":"rè","pt":"quente / com calor","deck":"estados","fonte":"cap6","nota":"我很热 = estou com calor. As quatro gotinhas embaixo (灬) são o 火 (fogo) achatado. Serve pra coisa quente também: 热茶"},
+  {"id":"leng","hanzi":"冷","pinyin":"lěng","pt":"frio / com frio","deck":"estados","fonte":"cap6","nota":"我很冷 = estou com frio; 今天很冷 = hoje está frio. O par de 热 rè (quente). Os dois pinguinhos à esquerda são gelo: a água com uma gota a menos, congelada"},
+  {"id":"manman","hanzi":"慢慢","pinyin":"mànmàn","pt":"devagar","deck":"estados","fonte":"cap6","nota":"O nome do app! 慢慢说 = fale devagar; 慢慢来 = vai com calma, sem pressa. É o contrário de 快 kuài (rápido), e os dois levam o coração à esquerda"},
 
   {"id":"weihunqi","hanzi":"未婚妻","pinyin":"wèihūnqī","pt":"noiva (prometida)","deck":"familia","fonte":"cap2","nota":"未 (ainda não) + 婚 (casar) + 妻 (esposa) = esposa ainda não casada. O 未 é o mesmo do 妹妹, a irmã que ainda não cresceu"},
   {"id":"qizi","hanzi":"妻子","pinyin":"qīzi","pt":"esposa","deck":"familia","fonte":"cap2","nota":"O termo padrão e neutro, serve em qualquer contexto. O 子 aqui só fecha a palavra, sem o sentido de criança"},
@@ -370,6 +372,7 @@
   {"id":"ying","hanzi":"英","pinyin":"yīng","pt":"(som) Inglaterra / herói","deck":"escola","fonte":"caractere","nota":"Em 英国 e 英语 vale só pelo som, de 'Eng-'. O sentido 'herói' existe, mas vive em 英雄 yīngxióng"},
   {"id":"gao","hanzi":"高","pinyin":"gāo","pt":"alto","deck":"estados","fonte":"cap4","nota":"他很高 = ele é alto. Em 高兴 é o ânimo que está lá em cima"},
   {"id":"kuai","hanzi":"快","pinyin":"kuài","pt":"rápido","deck":"estados","fonte":"caractere","nota":"快到了 = está quase chegando — aqui 快 vira 'quase', não 'rápido'. Em 快乐 é a alegria que vem rápido"},
+  {"id":"man-lento","hanzi":"慢","pinyin":"màn","pt":"lento","deck":"estados","fonte":"caractere","nota":"Dobrado vira 慢慢 (devagar). O coração de pé à esquerda é o mesmo de 快 (rápido): os dois falam do ritmo de quem faz"},
   {"id":"xin","hanzi":"心","pinyin":"xīn","pt":"coração","deck":"estados","fonte":"cap4","nota":"开心 = coração aberto = feliz. O desenho é um coração com as aurículas."},
   {"id":"xing","hanzi":"兴","pinyin":"xìng","pt":"ânimo / disposição","deck":"estados","fonte":"caractere","nota":"高兴 = 'ânimo alto' = contente. Lido xīng quer dizer prosperar."},
   {"id":"ba-pai","hanzi":"爸","pinyin":"bà","pt":"pai","deck":"familia","fonte":"caractere","data_aula":"2026-08-19","nota":"我爸 é coloquial e comum; a forma padrão é dobrada, 爸爸. Mesmo padrão de 妈, 哥, 姐, 弟, 妹"},
