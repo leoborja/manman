@@ -202,6 +202,7 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 韩 | hán | [Zh-hán.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A1n.ogg) | 寒 | Yue Tan | CC BY-SA 3.0 us |
 | 加 | jiā | [Zh-jiā.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C4%81.ogg) | 加 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 拿 | ná | [Zh-ná.ogg](https://commons.wikimedia.org/wiki/File%3AZh-n%C3%A1.ogg) | 拿 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 墨 | mò | [Zh-mò.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%B2.ogg) | 末 or 墨 | Yue Tan | CC BY-SA 3.0 us |
 | 西 | xī | [Zh-xī.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C4%AB.ogg) | 西 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 们 | men | [Zh-men.ogg](https://commons.wikimedia.org/wiki/File%3AZh-men.ogg) | 们 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 谢 | xiè | [Zh-xiè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-xi%C3%A8.ogg) | 泻 | Yue Tan | CC BY-SA 3.0 us |

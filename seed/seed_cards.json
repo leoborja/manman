@@ -217,6 +217,7 @@
 
   {"id":"jianada","hanzi":"加拿大","pinyin":"Jiānádà","pt":"Canadá","deck":"paises","fonte":"cap4","nota":"Transcrição do som Ca-na-dá, sílaba por sílaba, e nenhum dos três caracteres vale pelo sentido — o 大 (grande) que você já tem está aqui só pelo som. Por isso não leva 国, como 日本 e 巴西 também não levam"},
   {"id":"jianadaren","hanzi":"加拿大人","pinyin":"Jiānádàrén","pt":"canadense","deck":"paises","fonte":"cap3","nota":"加拿大 + 人, a mesma receita de 中国人 e 巴西人 — vale mesmo num país que dispensa o 国. E não existe 加文: no Canadá se fala 英文 e francês"},
+  {"id":"moxige","hanzi":"墨西哥","pinyin":"Mòxīgē","pt":"México","deck":"paises","fonte":"cap5","nota":"Transcrição do som Mé-xi-co, como 巴西 e 加拿大 — por isso também não leva 国. O 西 é o mesmo de 巴西 e o 哥 é o de 哥哥, os dois só pelo som. Mexicano é 墨西哥人"},
 
   {"id":"guo","hanzi":"国","pinyin":"guó","pt":"país","deck":"paises","fonte":"cap3","nota":"Um 玉 (jade, o tesouro do rei) cercado pela muralha 囗. É o 国 de 中国, 美国 e 韩国 — e repare em quem NÃO leva: 日本, 巴西 e 加拿大 são transcrição de som e dispensam ele"},
   {"id":"yu-lingua","hanzi":"语","pinyin":"yǔ","pt":"língua falada","deck":"escola","fonte":"cap3","nota":"讠(fala) — o mesmo radical de 说, 谢谢 e 课 — mais 吾 pelo som. É a língua que sai da boca: 英语 é o inglês de conversa. O par escrito dele é 文"},
@@ -404,6 +405,7 @@
   {"id":"han-coreia","hanzi":"韩","pinyin":"hán","pt":"Coreia / sobrenome Han","deck":"paises","fonte":"caractere","nota":"Não é só som: era um estado da China antiga, virou sobrenome e é o nome da Coreia. 韩国 = Coreia do Sul, 韩文 = coreano"},
   {"id":"jia","hanzi":"加","pinyin":"jiā","pt":"somar / acrescentar","deck":"paises","fonte":"caractere","nota":"加糖 = pôr açúcar. Em 加拿大 é só som, junto com o 拿"},
   {"id":"na-pegar","hanzi":"拿","pinyin":"ná","pt":"pegar / segurar","deck":"paises","fonte":"caractere","nota":"拿书 = pegar o livro. Em 加拿大 vale só pelo som"},
+  {"id":"mo-tinta","hanzi":"墨","pinyin":"mò","pt":"tinta nanquim","deck":"paises","fonte":"caractere","nota":"Em cima, o preto da fuligem; embaixo, 土 (terra): a tinta preta de bastão que se esfrega na pedra pra caligrafia. Em 墨西哥 vale só pelo som"},
   {"id":"xi-oeste","hanzi":"西","pinyin":"xī","pt":"oeste","deck":"paises","fonte":"caractere","data_aula":"2026-08-06","nota":"往西走 = ir para o oeste. Em 巴西 é só som, junto com o 巴"},
   {"id":"men-plural","hanzi":"们","pinyin":"men","pt":"sufixo de plural (pessoas)","deck":"pronomes","fonte":"cap3","data_aula":"2026-08-19","nota":"Átono. 我→我们, 你→你们, 他→他们. Do lado esquerdo o 亻de pessoa."},
   {"id":"xie","hanzi":"谢","pinyin":"xiè","pt":"agradecer","deck":"saudacoes","fonte":"caractere","nota":"谢谢 = obrigado. O 讠do lado é 'fala'."},
