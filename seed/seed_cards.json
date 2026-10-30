@@ -220,6 +220,7 @@
   {"id":"jianada","hanzi":"加拿大","pinyin":"Jiānádà","pt":"Canadá","deck":"paises","fonte":"cap4","nota":"Transcrição do som Ca-na-dá, sílaba por sílaba, e nenhum dos três caracteres vale pelo sentido — o 大 (grande) que você já tem está aqui só pelo som. Por isso não leva 国, como 日本 e 巴西 também não levam"},
   {"id":"jianadaren","hanzi":"加拿大人","pinyin":"Jiānádàrén","pt":"canadense","deck":"paises","fonte":"cap3","nota":"加拿大 + 人, a mesma receita de 中国人 e 巴西人 — vale mesmo num país que dispensa o 国. E não existe 加文: no Canadá se fala 英文 e francês"},
   {"id":"moxige","hanzi":"墨西哥","pinyin":"Mòxīgē","pt":"México","deck":"paises","fonte":"cap5","nota":"Transcrição do som Mé-xi-co, como 巴西 e 加拿大 — por isso também não leva 国. O 西 é o mesmo de 巴西 e o 哥 é o de 哥哥, os dois só pelo som. Mexicano é 墨西哥人"},
+  {"id":"moxigeren","hanzi":"墨西哥人","pinyin":"Mòxīgērén","pt":"mexicano (pessoa)","deck":"paises","fonte":"cap5","nota":"墨西哥 + 人, a mesma receita de 巴西人 e 加拿大人 — o país sem 国 também aceita o 人. O idioma é o espanhol"},
 
   {"id":"guo","hanzi":"国","pinyin":"guó","pt":"país","deck":"paises","fonte":"cap3","nota":"Um 玉 (jade, o tesouro do rei) cercado pela muralha 囗. É o 国 de 中国, 美国 e 韩国 — e repare em quem NÃO leva: 日本, 巴西 e 加拿大 são transcrição de som e dispensam ele"},
   {"id":"yu-lingua","hanzi":"语","pinyin":"yǔ","pt":"língua falada","deck":"escola","fonte":"cap3","nota":"讠(fala) — o mesmo radical de 说, 谢谢 e 课 — mais 吾 pelo som. É a língua que sai da boca: 英语 é o inglês de conversa. O par escrito dele é 文"},
