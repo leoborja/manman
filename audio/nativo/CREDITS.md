@@ -310,3 +310,18 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 听写 | tīngxiě | [Zh-tīngxiě.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C4%ABngxi%C4%9B.ogg) | 听写 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 汉字 | Hànzì | [Zh-hànzì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A0nz%C3%AC.ogg) | 汉字 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 李 | Lǐ | [Zh-lǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C7%90.ogg) | 里 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 开学 | kāixué | [Zh-kāixué.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C4%81ixu%C3%A9.ogg) | 开学 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 教授 | jiàoshòu | [Zh-jiàoshòu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C3%A0osh%C3%B2u.ogg) | 教授 | Yue Tan | CC BY-SA 3.0 us |
+| 教 | jiào | [Zh-jiào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C3%A0o.ogg) | 叫 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 张 | Zhāng | [Zh-zhāng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C4%81ng.ogg) | 张 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 介绍 | jièshào | [Zh-jièshào.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C3%A8sh%C3%A0o.ogg) | 介绍 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 文学 | wénxué | [Zh-wénxué.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A9nxu%C3%A9.ogg) | 文学 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 系 | xì | [Zh-xì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-x%C3%AC.ogg) | 系 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 物理 | wùlǐ | [Zh-wùlǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%B9l%C7%90.ogg) | 物理 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 化学 | huàxué | [Zh-huàxué.ogg](https://commons.wikimedia.org/wiki/File%3AZh-hu%C3%A0xu%C3%A9.ogg) | 化学 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 历史 | lìshǐ | [Zh-lìshǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-l%C3%ACsh%C7%90.ogg) | 历史 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 哲学 | zhéxué | [Zh-zhéxué.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C3%A9xu%C3%A9.ogg) | 哲学 | Yue Tan | CC BY-SA 3.0 us |
+| 经济 | jīngjì | [Zh-jīngjì.ogg](https://commons.wikimedia.org/wiki/File%3AZh-j%C4%ABngj%C3%AC.ogg) | 经济 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 教育 | jiàoyù | [Zh-jiàoyù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C3%A0oy%C3%B9.ogg) | 教育 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 文化 | wénhuà | [Zh-wénhuà.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A9nhu%C3%A0.ogg) | 文化 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 国家 | guójiā | [Zh-guójiā.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%B3ji%C4%81.ogg) | 国家 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

@@ -316,5 +316,55 @@
       { "quem": "outro", "card": "fr-ver-opera-amanha" },
       { "quem": "voce", "card": "fr-desculpa-ocupado", "dica": "peça desculpa: amanhã você está ocupado" }
     ]
+  },
+  {
+    "id": "dl-cap7-professor-zhang",
+    "titulo": "O professor Zhang",
+    "deck": "escola",
+    "cena": "Véspera do começo das aulas. Você e a Lin Na veem um senhor no instituto.",
+    "falas": [
+      { "quem": "outro", "card": "fr-amanha-comecam-aulas" },
+      { "quem": "outro", "card": "fr-ele-professor-shibushi" },
+      { "quem": "voce", "card": "fr-vou-perguntar", "dica": "diga que vai lá perguntar rapidinho" },
+      { "quem": "voce", "card": "fr-professor-do-instituto", "dica": "pergunte, com licença, se ele é professor do instituto de vocês" },
+      { "quem": "outro", "card": "fr-sou-professor-yuyan" },
+      { "quem": "voce", "card": "fr-seu-sobrenome", "dica": "pergunte o sobrenome dele, do jeito educado" },
+      { "quem": "outro", "card": "fr-sobrenome-zhang" },
+      { "quem": "outro", "card": "fr-cartao-de-visita" },
+      { "quem": "voce", "card": "fr-ah-professor-zhang", "dica": "agradeça, leia o cartão e caia a ficha: é o professor Zhang" },
+      { "quem": "voce", "card": "fr-eu-libo-ela-linna", "dica": "diga que você é o Ding Libo e ela, a Lin Na" },
+      { "quem": "voce", "card": "fr-somos-alunos-yuyan", "dica": "diga que os dois são alunos do Instituto de Línguas" },
+      { "quem": "voce", "card": "fr-prazer-professor", "dica": "diga que é um prazer conhecê-lo" },
+      { "quem": "outro", "card": "fr-tambem-prazer-voces" },
+      { "quem": "outro", "card": "fr-voces-bem" },
+      { "quem": "voce", "card": "fr-todos-bem-obrigado", "dica": "agradeça e diga que estão todos bem" },
+      { "quem": "voce", "card": "fr-zhang-mangbumang", "dica": "pergunte se ele anda ocupado, sem usar 吗" },
+      { "quem": "outro", "card": "fr-sentem-tchau" }
+    ]
+  },
+  {
+    "id": "dl-cap7-quem-e-aquele",
+    "titulo": "Quem é aquele?",
+    "deck": "escola",
+    "cena": "Você vê um rapaz que não conhece, e a Lin Na conhece todo mundo.",
+    "falas": [
+      { "quem": "voce", "card": "fr-aquele-quem", "dica": "pergunte à Lin Na quem é aquele" },
+      { "quem": "outro", "card": "fr-conhece-ele" },
+      { "quem": "voce", "card": "fr-nao-conheco", "dica": "diga que não conhece" },
+      { "quem": "outro", "card": "fr-vou-apresentar" },
+      { "quem": "outro", "card": "fr-dawei-meu-amigo" },
+      { "quem": "voce", "card": "fr-sobrenome-ding", "dica": "cumprimente, diga o sobrenome e o nome inteiro" },
+      { "quem": "voce", "card": "fr-qual-seu-nome", "dica": "pergunte o nome dele, no jeito casual" },
+      { "quem": "outro", "card": "fr-nome-chines-dawei" },
+      { "quem": "outro", "card": "fr-voce-chines-shibushi" },
+      { "quem": "voce", "card": "fr-nao-sou-canadense", "dica": "diga que não: você é canadense" },
+      { "quem": "voce", "card": "fr-mae-chinesa-pai-canadense", "dica": "explique: a mãe é chinesa e o pai, canadense" },
+      { "quem": "voce", "card": "fr-voce-pais", "dica": "devolva: de que país ele é?" },
+      { "quem": "outro", "card": "fr-americano-que-curso" },
+      { "quem": "voce", "card": "fr-curso-artes", "dica": "diga que faz belas-artes e devolva a pergunta" },
+      { "quem": "outro", "card": "fr-curso-literatura" },
+      { "quem": "outro", "card": "fr-agora-estudo-chines" },
+      { "quem": "outro", "card": "fr-todos-departamento-chines" }
+    ]
   }
 ]
