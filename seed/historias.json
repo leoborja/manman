@@ -1930,5 +1930,369 @@
         "certa": 0
       }
     ]
+  },
+  {
+    "id": "h-professor-zhang",
+    "titulo": "张教授的名片",
+    "pinyin": "Zhāng jiàoshòu de míngpiàn",
+    "pt": "O cartão do professor Zhang",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5",
+      "cap6",
+      "cap7"
+    ],
+    "linhas": [
+      {
+        "hanzi": "明天开学，林娜很高兴。",
+        "pinyin": "Míngtiān kāixué, Lín Nà hěn gāoxìng.",
+        "pt": "Amanhã começam as aulas, e a Lin Na está contente."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "力波，你看，那是谁？",
+        "pinyin": "Lìbō, nǐ kàn, nà shì shéi?",
+        "pt": "Libo, olha, quem é aquele?"
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "我不认识他。我问一下。",
+        "pinyin": "Wǒ bú rènshi tā. Wǒ wèn yíxià.",
+        "pt": "Não conheço. Vou perguntar."
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "请问，您是我们学院的老师吗？",
+        "pinyin": "Qǐngwèn, nín shì wǒmen xuéyuàn de lǎoshī ma?",
+        "pt": "Com licença, o senhor é professor do nosso instituto?"
+      },
+      {
+        "quem": "张教授",
+        "hanzi": "是，我姓张。这是我的名片。",
+        "pinyin": "Shì, wǒ xìng Zhāng. Zhè shì wǒ de míngpiàn.",
+        "pt": "Sou, meu sobrenome é Zhang. Este é o meu cartão."
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "啊，您是张教授！",
+        "pinyin": "À, nín shì Zhāng jiàoshòu!",
+        "pt": "Ah, o senhor é o professor Zhang!"
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "我叫丁力波，是汉语系的学生。",
+        "pinyin": "Wǒ jiào Dīng Lìbō, shì Hànyǔ xì de xuésheng.",
+        "pt": "Me chamo Ding Libo, sou aluno do departamento de chinês."
+      },
+      {
+        "quem": "张教授",
+        "hanzi": "认识你们很高兴。你们忙不忙？",
+        "pinyin": "Rènshi nǐmen hěn gāoxìng. Nǐmen máng bu máng?",
+        "pt": "Prazer em conhecer vocês. Vocês andam ocupados?"
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "我们很忙，也很高兴！",
+        "pinyin": "Wǒmen hěn máng, yě hěn gāoxìng!",
+        "pt": "Muito ocupados, e muito contentes!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "林娜为什么很高兴？",
+        "pinyin": "Lín Nà wèishénme hěn gāoxìng?",
+        "pt": "Por que a Lin Na está contente?",
+        "opcoes": [
+          {
+            "hanzi": "明天开学。",
+            "pinyin": "Míngtiān kāixué.",
+            "pt": "Amanhã começam as aulas."
+          },
+          {
+            "hanzi": "明天去游泳。",
+            "pinyin": "Míngtiān qù yóuyǒng.",
+            "pt": "Amanhã vão nadar."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "力波认识不认识张教授？",
+        "pinyin": "Lìbō rènshi bu rènshi Zhāng jiàoshòu?",
+        "pt": "O Libo conhece o professor Zhang?",
+        "opcoes": [
+          {
+            "hanzi": "他认识张教授。",
+            "pinyin": "Tā rènshi Zhāng jiàoshòu.",
+            "pt": "Conhece."
+          },
+          {
+            "hanzi": "他不认识张教授。",
+            "pinyin": "Tā bú rènshi Zhāng jiàoshòu.",
+            "pt": "Não conhece."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "力波是什么系的学生？",
+        "pinyin": "Lìbō shì shénme xì de xuésheng?",
+        "pt": "O Libo é aluno de que departamento?",
+        "opcoes": [
+          {
+            "hanzi": "经济系。",
+            "pinyin": "Jīngjì xì.",
+            "pt": "Economia."
+          },
+          {
+            "hanzi": "汉语系。",
+            "pinyin": "Hànyǔ xì.",
+            "pt": "Chinês."
+          }
+        ],
+        "certa": 1
+      }
+    ]
+  },
+  {
+    "id": "h-que-curso",
+    "titulo": "你学习什么专业？",
+    "pinyin": "Nǐ xuéxí shénme zhuānyè?",
+    "pt": "Que curso você faz?",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5",
+      "cap6",
+      "cap7"
+    ],
+    "linhas": [
+      {
+        "hanzi": "宋华是北京大学的学生。",
+        "pinyin": "Sòng Huá shì Běijīng Dàxué de xuésheng.",
+        "pt": "O Song Hua é aluno da Universidade de Pequim."
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "宋华，我来介绍一下，这是我朋友马大为。",
+        "pinyin": "Sòng Huá, wǒ lái jièshào yíxià, zhè shì wǒ péngyou Mǎ Dàwéi.",
+        "pt": "Song Hua, deixa eu apresentar: este é meu amigo Ma Dawei."
+      },
+      {
+        "quem": "宋华",
+        "hanzi": "你好！你是不是加拿大人？",
+        "pinyin": "Nǐ hǎo! Nǐ shì bu shì Jiānádà rén?",
+        "pt": "Oi! Você é canadense?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "不是，我是美国人。你学习什么专业？",
+        "pinyin": "Bú shì, wǒ shì Měiguó rén. Nǐ xuéxí shénme zhuānyè?",
+        "pt": "Não, sou americano. Que curso você faz?"
+      },
+      {
+        "quem": "宋华",
+        "hanzi": "我学习经济专业。你呢？",
+        "pinyin": "Wǒ xuéxí jīngjì zhuānyè. Nǐ ne?",
+        "pt": "Faço economia. E você?"
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "我学习美术专业，现在也学习汉语。",
+        "pinyin": "Wǒ xuéxí měishù zhuānyè, xiànzài yě xuéxí Hànyǔ.",
+        "pt": "Faço belas-artes, e agora também estudo chinês."
+      },
+      {
+        "quem": "王小云",
+        "hanzi": "我学习文学，也选修中国文化。",
+        "pinyin": "Wǒ xuéxí wénxué, yě xuǎnxiū Zhōngguó wénhuà.",
+        "pt": "Eu faço literatura, e tenho optativa de cultura chinesa."
+      },
+      {
+        "quem": "马大为",
+        "hanzi": "中国文化很有意思！",
+        "pinyin": "Zhōngguó wénhuà hěn yǒu yìsi!",
+        "pt": "Cultura chinesa é muito interessante!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "宋华学习什么专业？",
+        "pinyin": "Sòng Huá xuéxí shénme zhuānyè?",
+        "pt": "Que curso o Song Hua faz?",
+        "opcoes": [
+          {
+            "hanzi": "他学习经济。",
+            "pinyin": "Tā xuéxí jīngjì.",
+            "pt": "Economia."
+          },
+          {
+            "hanzi": "他学习美术。",
+            "pinyin": "Tā xuéxí měishù.",
+            "pt": "Belas-artes."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "马大为是哪国人？",
+        "pinyin": "Mǎ Dàwéi shì nǎ guó rén?",
+        "pt": "De que país é o Ma Dawei?",
+        "opcoes": [
+          {
+            "hanzi": "他是加拿大人。",
+            "pinyin": "Tā shì Jiānádà rén.",
+            "pt": "Canadá."
+          },
+          {
+            "hanzi": "他是美国人。",
+            "pinyin": "Tā shì Měiguó rén.",
+            "pt": "Estados Unidos."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "王小云选修什么？",
+        "pinyin": "Wáng Xiǎoyún xuǎnxiū shénme?",
+        "pt": "Que optativa a Wang Xiaoyun faz?",
+        "opcoes": [
+          {
+            "hanzi": "中国文化。",
+            "pinyin": "Zhōngguó wénhuà.",
+            "pt": "Cultura chinesa."
+          },
+          {
+            "hanzi": "汉语。",
+            "pinyin": "Hànyǔ.",
+            "pt": "Chinês."
+          }
+        ],
+        "certa": 0
+      }
+    ]
+  },
+  {
+    "id": "h-sobrenome-da-mae",
+    "titulo": "丁是谁的姓？",
+    "pinyin": "Dīng shì shéi de xìng?",
+    "pt": "De quem é o sobrenome Ding?",
+    "escopo": [
+      "cap1",
+      "cap2",
+      "cap3",
+      "cap4",
+      "cap5",
+      "cap6",
+      "cap7"
+    ],
+    "linhas": [
+      {
+        "hanzi": "丁力波是加拿大人。",
+        "pinyin": "Dīng Lìbō shì Jiānádà rén.",
+        "pt": "O Ding Libo é canadense."
+      },
+      {
+        "hanzi": "他妈妈是中国人，是汉语老师。",
+        "pinyin": "Tā māma shì Zhōngguó rén, shì Hànyǔ lǎoshī.",
+        "pt": "A mãe dele é chinesa, professora de chinês."
+      },
+      {
+        "hanzi": "他爸爸是加拿大人，是大学教授。",
+        "pinyin": "Tā bàba shì Jiānádà rén, shì dàxué jiàoshòu.",
+        "pt": "O pai dele é canadense, professor universitário."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "力波，你的中文名字叫什么？",
+        "pinyin": "Lìbō, nǐ de Zhōngwén míngzi jiào shénme?",
+        "pt": "Libo, como é o seu nome em chinês?"
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "我的中文名字叫丁力波。我姓丁。",
+        "pinyin": "Wǒ de Zhōngwén míngzi jiào Dīng Lìbō. Wǒ xìng Dīng.",
+        "pt": "Meu nome em chinês é Ding Libo. Meu sobrenome é Ding."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "丁是不是你爸爸的姓？",
+        "pinyin": "Dīng shì bu shì nǐ bàba de xìng?",
+        "pt": "Ding é o sobrenome do seu pai?"
+      },
+      {
+        "quem": "丁力波",
+        "hanzi": "不是，是我妈妈的姓。",
+        "pinyin": "Bú shì, shì wǒ māma de xìng.",
+        "pt": "Não, é o sobrenome da minha mãe."
+      },
+      {
+        "quem": "林娜",
+        "hanzi": "啊，你妈妈姓丁！",
+        "pinyin": "À, nǐ māma xìng Dīng!",
+        "pt": "Ah, sua mãe se chama Ding!"
+      }
+    ],
+    "perguntas": [
+      {
+        "hanzi": "力波的妈妈是哪国人？",
+        "pinyin": "Lìbō de māma shì nǎ guó rén?",
+        "pt": "De que país é a mãe do Libo?",
+        "opcoes": [
+          {
+            "hanzi": "她是中国人。",
+            "pinyin": "Tā shì Zhōngguó rén.",
+            "pt": "China."
+          },
+          {
+            "hanzi": "她是加拿大人。",
+            "pinyin": "Tā shì Jiānádà rén.",
+            "pt": "Canadá."
+          }
+        ],
+        "certa": 0
+      },
+      {
+        "hanzi": "力波的爸爸是老师吗？",
+        "pinyin": "Lìbō de bàba shì lǎoshī ma?",
+        "pt": "O pai do Libo é professor?",
+        "opcoes": [
+          {
+            "hanzi": "不是，他是记者。",
+            "pinyin": "Bú shì, tā shì jìzhě.",
+            "pt": "Não, é jornalista."
+          },
+          {
+            "hanzi": "是，他是大学教授。",
+            "pinyin": "Shì, tā shì dàxué jiàoshòu.",
+            "pt": "Sim, é professor universitário."
+          }
+        ],
+        "certa": 1
+      },
+      {
+        "hanzi": "丁是谁的姓？",
+        "pinyin": "Dīng shì shéi de xìng?",
+        "pt": "De quem é o sobrenome Ding?",
+        "opcoes": [
+          {
+            "hanzi": "力波爸爸的姓。",
+            "pinyin": "Lìbō bàba de xìng.",
+            "pt": "Do pai do Libo."
+          },
+          {
+            "hanzi": "力波妈妈的姓。",
+            "pinyin": "Lìbō māma de xìng.",
+            "pt": "Da mãe do Libo."
+          }
+        ],
+        "certa": 1
+      }
+    ]
   }
 ]
