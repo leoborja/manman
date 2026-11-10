@@ -38,6 +38,8 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
   dirtyOff: 'manman.dirtyoff.v1',
   settings: 'manman.settings.v1',
   arranjo: 'manman.arranjo.v1',   // os montes que você arrastou na Grade — por usuário
+  fav: 'manman.fav.v1',           // ⭐ as favoritas — por usuário, sobe numa linha só
+  dirtyFav: 'manman.dirtyfav.v1',
   dayOffset: 'manman.dayoffset'
 };
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
@@ -326,6 +328,8 @@ if (settings.tag === undefined) settings.tag = true; // quem já usava o app nã
 if (settings.pron === undefined) settings.pron = true;   // idem
 if (settings.lento === undefined) settings.lento = false; // idem
 if (!FLASH_MS.includes(settings.flashMs)) settings.flashMs = FLASH_MS_PADRAO;
+// ⭐ uma favorita a cada quantas cartas — quem já usava não tem o campo
+if (![1, 2, 3, 5, 10].includes(settings.favACada)) settings.favACada = 3;
 settings.flash = !!settings.flash;
 // quem já usava o app não tem o campo, e quem não tem escreve de memória, como antes
 if (!ESCRITAS.includes(settings.escrita)) settings.escrita = 'memoria';
@@ -362,6 +366,9 @@ let dirty = [];                  // ids com sync pendente (SRS)
 let arranjo = { grupos: [] };
 let off = {};                    // id → {off: bool, u: ms} — cartas desligadas pelo usuário
 let dirtyOff = [];               // ids com sync de desligamento pendente
+let fav = {};                    // id → {fav: bool, u: ms} — ⭐ as favoritas
+let dirtyFav = false;            // o mapa das favoritas ainda não subiu
+let favAdiantadas = new Set();   // favoritas que a fila puxou antes do dia delas
 let queue = [];                  // fila da sessão (ids)
 let current = null;              // carta atual
 let phase = 'sched';             // 'sched' (revisões+novas) | 'practice' (infinita) | 'quiz' (tons) | 'flash' (relâmpago)
@@ -1533,6 +1540,66 @@ function setOff(id, val) {
   pushOff(id);
 }
 
+// ── ⭐ favoritas ────────────────────────────────────────────
+// A favorita entra em toda sessão do tipo dela, por cima dos filtros de tema, origem e
+// erro e do agendamento: é a palavra que você quer martelar sempre.
+//
+// Mora no `progress` numa linha que não é carta nenhuma — card_id 'favoritas' —, com o
+// mapa no `hab`: {"num-1": {n: <ms da última mudança>, e: 1 favorita | 0 tirada}}. Sem
+// coluna nova (ninguém tem DDL). Tirar não apaga a chave: o 0 mais novo é o que avisa o
+// outro aparelho que a estrela saiu. No merge ganha o `n` maior. O iOS faz igual.
+const FAV_ROW = 'favoritas';
+function linhaEspecial(id) { return id === FAV_ROW || /^prova:/.test(id); }
+function isFav(id) { return !!(fav[id] && fav[id].fav); }
+function favDoBanco(hab) {
+  const m = {};
+  for (const k of Object.keys(hab || {})) m[k] = { fav: (hab[k].e || 0) > 0, u: hab[k].n || 0 };
+  return m;
+}
+function mesclaFav(a, b) {
+  const r = Object.assign({}, a);
+  for (const k of Object.keys(b)) if (!r[k] || b[k].u > r[k].u) r[k] = b[k];
+  return r;
+}
+function setFav(id, val) {
+  fav[id] = { fav: val, u: Date.now() };
+  save(uk(K.fav), fav);
+  dirtyFav = true; save(uk(K.dirtyFav), true);
+  pushFav();
+}
+// Lê a linha antes de gravar e sobe a UNIÃO: o upsert troca o `hab` inteiro, e sem a
+// leitura a estrela que o iPhone pôs desde o último pull seria apagada por esta aba.
+async function pushFav() {
+  if (!syncEnabled()) return;
+  const base = HW_CONFIG.SUPABASE_URL + '/rest/v1/progress';
+  try {
+    const u = encodeURIComponent(settings.user);
+    const r0 = await fetch(base + '?user_name=eq.' + u + '&card_id=eq.' + FAV_ROW + '&select=hab', { headers: sbHeaders() });
+    if (!r0.ok) throw new Error('HTTP ' + r0.status);
+    const [row] = await r0.json();
+    if (row && row.hab) { fav = mesclaFav(fav, favDoBanco(row.hab)); save(uk(K.fav), fav); }
+    const hab = {};
+    for (const k of Object.keys(fav)) hab[k] = { n: fav[k].u, e: fav[k].fav ? 1 : 0 };
+    const r = await fetch(base + '?on_conflict=user_name,card_id', {
+      method: 'POST',
+      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
+      body: JSON.stringify({ user_name: settings.user, card_id: FAV_ROW, hab })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    dirtyFav = false;
+  } catch (e) { dirtyFav = true; }
+  save(uk(K.dirtyFav), dirtyFav);
+}
+// As favoritas que a sessão puxa: as do TIPO dela, em rotação, e do TEMA e da ORIGEM que
+// a sessão está estudando — estudar o Cap. 3 traz as favoritas do Cap. 3, não as do
+// Cap. 1. Sem tema nem origem marcados, todas. O que elas pulam é o filtro de erro (a
+// favorita que você já não erra continua sendo a que você quer martelar) e o agendamento.
+function favoritasDaSessao() {
+  return deckAtual().filter(c => isFav(c.id) && !foraDaRotacao(c) &&
+    (!settings.decks.length || settings.decks.includes(c.deck)) &&
+    (!settings.origens.length || settings.origens.includes(origemDe(c))));
+}
+
 // ── usuário / login ─────────────────────────────────────────
 function loadUserState() {
   srs = load(uk(K.srs), {});
@@ -1542,6 +1609,8 @@ function loadUserState() {
   off = load(uk(K.off), {});
   offVer++;
   dirtyOff = load(uk(K.dirtyOff), []);
+  fav = load(uk(K.fav), {});
+  dirtyFav = load(uk(K.dirtyFav), false);
   arranjo = load(uk(K.arranjo), { grupos: [] });
   if (!Array.isArray(arranjo.grupos)) arranjo = { grupos: [] };
   // migração: progresso antigo sem usuário vira do primeiro que logar
@@ -1649,6 +1718,14 @@ async function syncPull() {
     ]);
     if (pr.ok) {
       for (const row of await pr.json()) {
+        // a linha das ⭐ e as das provas do iOS não são carta
+        if (row.card_id === FAV_ROW) {
+          const antes = JSON.stringify(fav);
+          fav = mesclaFav(fav, favDoBanco(row.hab));
+          if (JSON.stringify(fav) !== antes) changed = true;
+          continue;
+        }
+        if (linhaEspecial(row.card_id)) continue;
         const local = srs[row.card_id];
         if (row.due !== null && (!local || (row.updated_ms || 0) > (local.u || 0))) {
           srs[row.card_id] = { reps: row.reps, ivl: row.ivl, ease: row.ease, due: row.due, u: row.updated_ms || 0 };
@@ -1689,6 +1766,7 @@ async function syncPull() {
       save(uk(K.srs), srs);
       save(uk(K.off), off);
       save(uk(K.stats), stats);
+      save(uk(K.fav), fav);
     }
     if (lr.ok) {
       for (const row of await lr.json()) {
@@ -1767,6 +1845,7 @@ function flushDirty() {
   if (!syncEnabled()) return;
   [...dirty].forEach(id => { if (srs[id] || stats[id]) syncPush(id); });
   [...dirtyOff].forEach(id => { if (off[id]) pushOff(id); });
+  if (dirtyFav) pushFav();
 }
 async function syncReset() { // apaga progresso remoto do usuário
   if (!syncEnabled()) return;
@@ -1933,7 +2012,12 @@ function origemLabel(o) {
   if (m) return 'Cap. ' + m[1];
   return ORIGEM_LABELS[o] || (o.charAt(0).toUpperCase() + o.slice(1));
 }
-function activePool() { return filteredCards().filter(c => !foraDaRotacao(c)); }
+// o filtro, mais as ⭐ favoritas que ele deixou de fora
+function activePool() {
+  const base = filteredCards().filter(c => !foraDaRotacao(c));
+  const ids = new Set(base.map(c => c.id));
+  return base.concat(favoritasDaSessao().filter(c => !ids.has(c.id)));
+}
 // Nem todo modo consegue perguntar de toda palavra:
 //   desenho — a grade é uma só, então 你好 e 谢谢 ficam de fora
 //   tom     — o tom é de uma sílaba, mesma restrição de um caractere
@@ -1990,12 +2074,23 @@ function buildQueue() {
   if (settings.erro) {
     const resto = shuffle(pool.filter(c => !due.includes(c)));
     queue = due.concat(resto).map(c => c.id);
-    phase = 'sched';
-    return;
+  } else {
+    const news = shuffle(pool.filter(c => !srs[c.id])); // sem limite diário: o deck só tem o que a turma já viu
+    queue = due.concat(news).map(c => c.id);
   }
-  const news = shuffle(pool.filter(c => !srs[c.id])); // sem limite diário: o deck só tem o que a turma já viu
-  queue = due.concat(news).map(c => c.id);
+  // ⭐ As favoritas que não vencem hoje entram assim mesmo, e na FRENTE: a fila emenda
+  // todas as novas do deck, e lá no fim elas nunca chegariam. Uma a cada `favACada` cartas,
+  // pra não virar uma rodada só delas. As já vistas vêm adiantadas — ver grade().
+  const extras = shuffle(pool.filter(c => isFav(c.id) && !due.includes(c)).map(c => c.id));
+  favAdiantadas = new Set(extras.filter(id => srs[id]));
+  if (extras.length) queue = espalha(extras, queue.filter(id => !extras.includes(id)), settings.favACada || 3);
   phase = 'sched';
+}
+// `extras` intercalados no começo de `base`, um a cada `passo` cartas
+function espalha(extras, base, passo) {
+  const r = []; let i = 0;
+  for (const e of extras) { r.push(e); r.push(...base.slice(i, i + passo - 1)); i += passo - 1; }
+  return r.concat(base.slice(i));
 }
 function enterPractice() { // prática livre: deck inteiro embaralhado, sem parar
   queue = shuffle(poolSessao().map(c => c.id));
@@ -2005,7 +2100,7 @@ function enterPractice() { // prática livre: deck inteiro embaralhado, sem para
 function dueCount(pool) {
   const t = todayStr();
   pool = pool || activePool();
-  const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t).length;
+  const due = pool.filter(c => srs[c.id] && (srs[c.id].due <= t || isFav(c.id))).length;
   const news = pool.filter(c => !srs[c.id]).length;
   return { due, news };
 }
@@ -2178,6 +2273,8 @@ function showCard(card) {
   if (m.front === 'audio' || desenho) speak(card, true);
   $('deckpill-f').textContent = deckLabel(card.deck);
   $('deckpill-b').textContent = deckLabel(card.deck);
+  // ⭐ só avisa que é uma das que você escolheu martelar; favoritar é na aba Cartas
+  $('fcard').classList.toggle('favcard', isFav(card.id));
   // "Números" na carta de 三 é meio caminho da resposta — dá pra desligar no MODO
   $('fcard').classList.toggle('semtag', !settings.tag);
   $('back-hanzi').textContent = card.hanzi;
@@ -2679,7 +2776,11 @@ function grade(g) {
   // botão É a medida, porque não existe resultado objetivo: "Difícil" é acerto, você
   // lembrou. Sem isso a taxa de "rec" não seria comparável com a dos outros cinco.
   if (modoKey() === 'zh_all' && !flashOn()) bumpHab(current.id, 'rec', g === 'again');
-  if (phase === 'sched') {
+  // A ⭐ favorita puxada antes do dia é prática, não revisão: acertá-la todo dia jogaria
+  // o intervalo pra meses e ela sumiria do agendado justo por ser a que você mais treina.
+  if (phase === 'sched' && favAdiantadas.has(current.id) && g !== 'again') {
+    syncPush(current.id);
+  } else if (phase === 'sched') {
     const isNew = !srs[current.id];
     srsApply(current.id, g);
     if (isNew) logToday('new');
@@ -2806,6 +2907,9 @@ function cartaLinha(c) {
     (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') +
     (bloq ? '<div class="n">🚫 fora da rotação: ' + esc(bloq) + ' está desligada</div>' : '') + '</div>' +
     '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
+    '<button class="fav-row' + (isFav(c.id) ? ' on' : '') + '" data-id="' + esc(c.id) + '" title="' +
+      (isFav(c.id) ? 'Tirar das favoritas' : 'Favoritar: aparece em toda sessão, mesmo fora do filtro') +
+      '" aria-pressed="' + isFav(c.id) + '">' + (isFav(c.id) ? '★' : '☆') + '</button>' +
     '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
     '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
     (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
@@ -2863,6 +2967,11 @@ function renderList() {
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
     if (c) speak(c);
+  });
+  $('cardlist').querySelectorAll('.fav-row').forEach(bt => bt.onclick = () => {
+    setFav(bt.dataset.id, !isFav(bt.dataset.id));
+    renderList();
+    if (phase === 'sched' || phase === 'practice') renderCounter();
   });
   $('cardlist').querySelectorAll('.offtgl').forEach(t => t.onchange = () => {
     setOff(t.dataset.id, !t.checked);
@@ -3681,7 +3790,7 @@ async function loadCompeticao() {
     const by = {};
     for (const row of await pr.json()) {
       const u = row.user_name;
-      if (!u || u === 'convidado') continue;
+      if (!u || u === 'convidado' || linhaEspecial(row.card_id)) continue;
       const d = by[u] || (by[u] = { seen: 0, learned: 0, susp: 0, g: 0, h: 0, a: 0,
         hab: {}, err: {}, tomx: {}, deck: {}, tipo: { palavra: { g: 0, h: 0, a: 0, learned: 0 }, frase: { g: 0, h: 0, a: 0, learned: 0 } } });
       if ((row.reps || 0) > 0) d.seen++;
@@ -4017,6 +4126,8 @@ function renderModeSheet() {
   $('flash-opt').classList.toggle('active', !!settings.flash);
   $('flashtime').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
+  $('favtime').querySelectorAll('button').forEach(b =>
+    b.classList.toggle('active', parseInt(b.dataset.n, 10) === settings.favACada));
   // só um modo vira a carta; nos outros responder já é outra coisa (digitar, desenhar,
   // marcar o tom) e a chave do relâmpago fica visivelmente sem efeito
   const semEfeito = mixOn() || quizOn() || drawOn() || typeOn() || ordenarOn() || dialogoOn();
@@ -4129,6 +4240,12 @@ function bindEvents() {
     renderModeSheet(); renderModeUI();
     startSession(); // tempo novo, rodada nova: o placar velho não vale mais
   });
+  $('favtime').querySelectorAll('button').forEach(b => b.onclick = () => {
+    settings.favACada = parseInt(b.dataset.n, 10);
+    save(K.settings, settings);
+    renderModeSheet();
+    startSession(); // o espaçamento novo só vale numa fila nova
+  });
   $('autospeak-opt').onclick = () => {
     settings.autoSpeak = !settings.autoSpeak; save(K.settings, settings);
     renderModeSheet();
@@ -4215,7 +4332,8 @@ function bindEvents() {
   // progresso
   $('resetbtn').onclick = () => {
     if (!confirm('Zerar TODO o seu progresso de estudo (' + (USERS[settings.user] || '') + ')? As cartas não são apagadas.')) return;
-    srs = {}; log = {}; dirty = []; stats = {};
+    srs = {}; log = {}; dirty = []; stats = {}; fav = {}; dirtyFav = false;
+    localStorage.removeItem(uk(K.fav)); localStorage.removeItem(uk(K.dirtyFav));
     localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log));
     localStorage.removeItem(uk(K.dirty)); localStorage.removeItem(uk(K.stats));
     syncReset();
