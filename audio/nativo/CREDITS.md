@@ -325,3 +325,33 @@ Os arquivos do Shtooka (Zh-…) são nomeados por pinyin, não por caractere —
 | 教育 | jiàoyù | [Zh-jiàoyù.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ji%C3%A0oy%C3%B9.ogg) | 教育 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 文化 | wénhuà | [Zh-wénhuà.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A9nhu%C3%A0.ogg) | 文化 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
 | 国家 | guójiā | [Zh-guójiā.ogg](https://commons.wikimedia.org/wiki/File%3AZh-gu%C3%B3ji%C4%81.ogg) | 国家 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 几 | jǐ | [Zh-jǐ.ogg](https://commons.wikimedia.org/wiki/File%3AZh-j%C7%90.ogg) | 几 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 口 | kǒu | [Zh-kǒu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-k%C7%92u.ogg) | 口 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 照片 | zhàopiàn | [Zh-zhàopiàn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C3%A0opi%C3%A0n.ogg) | 照片 | Yue Tan | CC BY-SA 3.0 us |
+| 个 | gè | [Zh-gè.ogg](https://commons.wikimedia.org/wiki/File%3AZh-g%C3%A8.ogg) | 各 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 两 | liǎng | [Zh-liǎng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-li%C7%8Eng.ogg) | 两 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 一共 | yígòng | [Zh-yígòng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%ADg%C3%B2ng.ogg) | 一共 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 还 | hái | [Zh-hái.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A1i.ogg) | 还 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 当然 | dāngrán | [Zh-dāngrán.ogg](https://commons.wikimedia.org/wiki/File%3AZh-d%C4%81ngr%C3%A1n.ogg) | 当然 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 张 | zhāng | [Zh-zhāng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C4%81ng.ogg) | 张 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 真 | zhēn | [Zh-zhēn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C4%93n.ogg) | 真 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 没 | méi | [Zh-méi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A9i.ogg) | 没 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 没有 | méiyǒu | [Zh-méiyǒu.ogg](https://commons.wikimedia.org/wiki/File%3AZh-m%C3%A9iy%C7%92u.ogg) | 没有 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 做 | zuò | [Zh-zuò.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zu%C3%B2.ogg) | 作 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 工作 | gōngzuò | [Zh-gōngzuò.ogg](https://commons.wikimedia.org/wiki/File%3AZh-g%C5%8Dngzu%C3%B2.ogg) | 工作 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 多少 | duōshao | [Zh-duōshao.ogg](https://commons.wikimedia.org/wiki/File%3AZh-du%C5%8Dshao.ogg) | 多少 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 多 | duō | [Zh-duō.ogg](https://commons.wikimedia.org/wiki/File%3AZh-du%C5%8D.ogg) | 多 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 少 | shǎo | [Zh-shǎo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-sh%C7%8Eo.ogg) | 少 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 外国 | wàiguó | [Zh-wàiguó.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A0igu%C3%B3.ogg) | 外国 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 位 | wèi | [Zh-wèi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-w%C3%A8i.ogg) | 为 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 车 | chē | [Zh-chē.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ch%C4%93.ogg) | 车 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 词典 | cídiǎn | [Zh-cídiǎn.ogg](https://commons.wikimedia.org/wiki/File%3AZh-c%C3%ADdi%C7%8En.ogg) | 词典 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 孩子 | háizi | [Zh-háizi.ogg](https://commons.wikimedia.org/wiki/File%3AZh-h%C3%A1izi.ogg) | 孩子 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 年 | nián | [Zh-nián.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ni%C3%A1n.ogg) | 年 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 前 | qián | [Zh-qián.ogg](https://commons.wikimedia.org/wiki/File%3AZh-qi%C3%A1n.ogg) | 前 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 只 | zhī | [Zh-zhī.ogg](https://commons.wikimedia.org/wiki/File%3AZh-zh%C4%AB.ogg) | 之 | Xudong Yang | CC BY 2.0 |
+| 条 | tiáo | [Zh-tiáo.ogg](https://commons.wikimedia.org/wiki/File%3AZh-ti%C3%A1o.ogg) | 条 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 辆 | liàng | [Zh-liàng.ogg](https://commons.wikimedia.org/wiki/File%3AZh-li%C3%A0ng.ogg) | 亮 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 台 | tái | [Zh-tái.ogg](https://commons.wikimedia.org/wiki/File%3AZh-t%C3%A1i.ogg) | 抬 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |
+| 猫 | māo | [Zh-māo.oga](https://commons.wikimedia.org/wiki/File%3AZh-m%C4%81o.oga) | 猫 | Yue Tan | CC BY-SA 3.0 us |
+| 鱼 | yú | [Zh-yú.ogg](https://commons.wikimedia.org/wiki/File%3AZh-y%C3%BA.ogg) | 鱼 | Wei Gao, Vion Nicolas | CC BY 2.0 fr |

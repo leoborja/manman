@@ -366,5 +366,57 @@
       { "quem": "outro", "card": "fr-agora-estudo-chines" },
       { "quem": "outro", "card": "fr-todos-departamento-chines" }
     ]
+  },
+  {
+    "id": "dl-cap8-quantas-pessoas",
+    "titulo": "Quantas pessoas tem na sua família?",
+    "deck": "familia",
+    "cena": "A Wang Xiaoyun mostra uma foto da família dela, e você é a Lin Na.",
+    "falas": [
+      { "quem": "voce", "card": "fr-foto-da-familia", "dica": "pergunte se é a foto da família dela" },
+      { "quem": "outro", "card": "fr-sim-a" },
+      { "quem": "voce", "card": "fr-deixa-eu-ver", "dica": "diga que vai dar uma olhada" },
+      { "quem": "voce", "card": "fr-quantas-pessoas", "dica": "pergunte quantas pessoas tem na família" },
+      { "quem": "outro", "card": "fr-quatro-pessoas" },
+      { "quem": "outro", "card": "fr-pai-mae-irmao-eu" },
+      { "quem": "outro", "card": "fr-e-a-sua-familia" },
+      { "quem": "voce", "card": "fr-irma-e-dois-irmaos", "dica": "diga que tem mãe, uma irmã mais velha e dois irmãos mais novos" },
+      { "quem": "voce", "card": "fr-seis-ao-todo", "dica": "diga que são seis ao todo" },
+      { "quem": "outro", "card": "fr-quem-mais" },
+      { "quem": "voce", "card": "fr-tem-a-beibei", "dica": "diga que tem também a Beibei" },
+      { "quem": "outro", "card": "fr-beibei-irma" },
+      { "quem": "voce", "card": "fr-minha-cachorrinha", "dica": "diga que não: a Beibei é a sua cachorrinha" },
+      { "quem": "outro", "card": "fr-cachorro-conta" },
+      { "quem": "voce", "card": "fr-claro-que-e-da-familia", "dica": "diga que ela é grande amiga, e claro que é da família" },
+      { "quem": "voce", "card": "fr-foto-da-beibei", "dica": "diga que tem uma foto da Beibei e mostre" },
+      { "quem": "outro", "card": "fr-que-fofa" },
+      { "quem": "voce", "card": "fr-voces-tem-cachorro", "dica": "pergunte se ela tem cachorro em casa" },
+      { "quem": "outro", "card": "fr-nao-temos-cachorro" },
+      { "quem": "outro", "card": "fr-tem-namorado" },
+      { "quem": "voce", "card": "fr-tenho-namorado", "dica": "diga que tem namorado" },
+      { "quem": "outro", "card": "fr-que-trabalho" },
+      { "quem": "voce", "card": "fr-ele-e-medico", "dica": "diga que ele é médico" }
+    ]
+  },
+  {
+    "id": "dl-cap8-departamento",
+    "titulo": "O departamento é grande?",
+    "deck": "escola",
+    "cena": "Você quer saber como é o Instituto de Línguas, e a Wang Xiaoyun estuda lá.",
+    "falas": [
+      { "quem": "voce", "card": "fr-instituto-grande", "dica": "pergunte se o Instituto de Línguas é grande" },
+      { "quem": "outro", "card": "fr-nao-muito-grande" },
+      { "quem": "voce", "card": "fr-quantos-departamentos", "dica": "pergunte quantos departamentos ele tem" },
+      { "quem": "outro", "card": "fr-doze-departamentos" },
+      { "quem": "voce", "card": "fr-gosta-do-departamento", "dica": "pergunte se ela gosta do departamento de línguas estrangeiras" },
+      { "quem": "outro", "card": "fr-gosto-muito" },
+      { "quem": "voce", "card": "fr-quantos-professores", "dica": "pergunte quantos professores tem lá" },
+      { "quem": "outro", "card": "fr-professores-chineses-estrangeiros" },
+      { "quem": "outro", "card": "fr-e-o-seu-departamento" },
+      { "quem": "voce", "card": "fr-departamento-grande", "dica": "diga que o seu departamento de chinês é muito grande" },
+      { "quem": "voce", "card": "fr-cem-professores", "dica": "diga que também tem muitos professores: cem" },
+      { "quem": "voce", "card": "fr-todos-chineses", "dica": "diga que todos são chineses" },
+      { "quem": "voce", "card": "fr-sem-estrangeiros", "dica": "diga que não tem professor estrangeiro" }
+    ]
   }
 ]
