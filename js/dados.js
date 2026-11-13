@@ -258,6 +258,24 @@ function sbHeaders(extra) {
     'Content-Type': 'application/json'
   }, extra || {});
 }
+// Uma leitura INTEIRA de uma tabela. O PostgREST do Supabase devolve no máximo 1.000
+// linhas por resposta e corta o resto calado — sem erro, sem aviso. O progress da turma
+// já passou disso (a Competição contava só parte dele), o deck está em 936 e o progress
+// de cada um cresce uma linha por carta. Então toda leitura que pode crescer pagina aqui.
+// A consulta precisa de `order` com desempate, senão a página seguinte pode repetir ou
+// pular linha. Falhou alguma página? Lança: dado pela metade é pior que dado nenhum.
+const SB_PAGINA = 1000;
+async function sbTodas(consulta, opcoes) {
+  const out = [];
+  for (let ini = 0; ; ini += SB_PAGINA) {
+    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/' + consulta + '&limit=' + SB_PAGINA + '&offset=' + ini,
+      Object.assign({ headers: sbHeaders() }, opcoes || {}));
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const pag = await r.json();
+    out.push(...pag);
+    if (pag.length < SB_PAGINA) return out;
+  }
+}
 async function loadCards() {
   const cached = load(K.cards, null);
   if (sbConfigured()) {
@@ -267,11 +285,9 @@ async function loadCards() {
       // cache. Sem cartas salvas não há plano B, então aí espera o quanto for.
       const ctrl = new AbortController();
       const prazo = cached && cached.length ? setTimeout(() => ctrl.abort(), 4000) : null;
-      const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/cards?select=*&deleted=eq.false&order=created_at.asc',
-        { headers: sbHeaders(), signal: ctrl.signal });
+      const todas = await sbTodas('cards?select=*&deleted=eq.false&order=created_at.asc,id.asc', { signal: ctrl.signal });
       clearTimeout(prazo);
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      cards = await r.json();
+      cards = todas;
       save(K.cards, cards);
       dataSource = 'supabase';
       cartasEm = Date.now();
@@ -304,10 +320,7 @@ async function loadLogTurma() {
   if (!sbConfigured()) return;
   try {
     const desde = todayStr(-13);
-    const r = await fetch(HW_CONFIG.SUPABASE_URL +
-      '/rest/v1/review_log?select=user_name,day,rev&day=gte.' + desde + '&order=day.asc',
-      { headers: sbHeaders() });
-    if (r.ok) logTurma = await r.json();
+    logTurma = await sbTodas('review_log?select=user_name,day,rev&day=gte.' + desde + '&order=day.asc,user_name.asc');
   } catch (e) { logTurma = null; }
 }
 async function syncPull() {
@@ -315,12 +328,13 @@ async function syncPull() {
   let changed = false;
   try {
     const u = encodeURIComponent(settings.user);
-    const [pr, lr] = await Promise.all([
-      fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?user_name=eq.' + u + '&select=*', { headers: sbHeaders() }),
-      fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/review_log?user_name=eq.' + u + '&select=*', { headers: sbHeaders() })
+    // cada uma pode falhar sozinha: sem o log, o progresso das cartas ainda entra
+    const [prows, lrows] = await Promise.all([
+      sbTodas('progress?user_name=eq.' + u + '&select=*&order=card_id.asc').catch(() => null),
+      sbTodas('review_log?user_name=eq.' + u + '&select=*&order=day.asc').catch(() => null)
     ]);
-    if (pr.ok) {
-      for (const row of await pr.json()) {
+    if (prows) {
+      for (const row of prows) {
         // a linha das ⭐ e as das provas do iOS não são carta
         if (row.card_id === FAV_ROW) {
           const antes = JSON.stringify(fav);
@@ -373,8 +387,8 @@ async function syncPull() {
       save(uk(K.stats), stats);
       save(uk(K.fav), fav);
     }
-    if (lr.ok) {
-      for (const row of await lr.json()) {
+    if (lrows) {
+      for (const row of lrows) {
         const local = log[row.day] || { rev: 0, new: 0 };
         log[row.day] = { rev: Math.max(local.rev, row.rev || 0), new: Math.max(local.new, row.new_cnt || 0) };
       }

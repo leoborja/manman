@@ -211,29 +211,21 @@ const COMP_CORES = ['#3b6fd4', '#2e9e5b', '#dd8500', '#8b5cf6', '#c8102e'];
 async function loadCompeticao() {
   if (!sbConfigured()) { compData = null; return; }
   try {
-    const [pr, lr] = await Promise.all([
-      fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress' +
-        '?select=user_name,card_id,ivl,reps,n_good,n_hard,n_again,hab,tom_x,suspended',
-        { headers: sbHeaders() }),
-      fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/review_log' +
-        '?select=user_name,day,rev,new_cnt&day=gte.' + META_DESDE + '&order=day.asc',
-        { headers: sbHeaders() })
+    // paginado (ver sbTodas): numa chamada só o PostgREST cortava em 1.000 linhas, e a
+    // turma já tem quase o dobro — quem caía depois do corte saía com menos do que tem
+    const [prows, lrows] = await Promise.all([
+      sbTodas('progress?select=user_name,card_id,ivl,reps,n_good,n_hard,n_again,hab,tom_x,suspended' +
+        '&order=user_name.asc,card_id.asc'),
+      sbTodas('review_log?select=user_name,day,rev,new_cnt&day=gte.' + META_DESDE + '&order=day.asc,user_name.asc')
+        .catch(() => [])
     ]);
-    if (!pr.ok) { compData = null; return; }
     const deckDe = {}; cards.forEach(c => { deckDe[c.id] = c.deck; });
     const ehFr = {}; cards.forEach(c => { ehFr[c.id] = ehFrase(c); });
     const by = {};
-    // As provas numa consulta só delas: o PostgREST corta a resposta em 1.000 linhas, e o
-    // progress da turma passa disso — as linhas prova:capN caíam fora do corte.
     provasTurma = {};
-    try {
-      const rp = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?select=user_name,card_id,hab&card_id=like.prova:*',
-        { headers: sbHeaders() });
-      if (rp.ok) (await rp.json()).forEach(guardaProvaDaTurma);
-    } catch (e) { /* sem provas, o resto da Competição segue */ }
-    for (const row of await pr.json()) {
+    for (const row of prows) {
       const u = row.user_name;
-      if (/^prova:/.test(row.card_id || '')) continue; // vêm na consulta própria, abaixo
+      if (/^prova:/.test(row.card_id || '')) { guardaProvaDaTurma(row); continue; }
       if (!u || u === 'convidado' || linhaEspecial(row.card_id)) continue;
       const d = by[u] || (by[u] = { seen: 0, learned: 0, susp: 0, g: 0, h: 0, a: 0,
         hab: {}, err: {}, tomx: {}, deck: {}, tipo: { palavra: { g: 0, h: 0, a: 0, learned: 0 }, frase: { g: 0, h: 0, a: 0, learned: 0 } } });
@@ -255,7 +247,7 @@ async function loadCompeticao() {
       if (row.card_id in ehFr) { const tp = d.tipo[ehFr[row.card_id] ? 'frase' : 'palavra']; tp.g += g; tp.h += h; tp.a += a; if (apr) tp.learned++; }
     }
     compData = by;
-    compLog = lr.ok ? await lr.json() : [];
+    compLog = lrows;
     logTurma = compLog; // a seção da turma agora vive aqui, e lê o mesmo review_log
   } catch (e) { compData = null; }
 }
