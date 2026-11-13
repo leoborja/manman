@@ -59,8 +59,10 @@ color:var(--txt);font-size:15px;font-weight:800;line-height:1;cursor:pointer;box
    e só um vale por vez. Sem ícone e sem duas linhas de texto, a barra caiu de 62 pra
    40px — a carta começa mais alto, que é o que se quer ver na tela do celular. */
 .tabs{display:flex;background:var(--surface2);border:1px solid var(--line);
-border-radius:999px;padding:3px;gap:2px;margin:0 0 12px;}
-.tab{flex:1 1 0;border:0;background:none;border-radius:999px;padding:8px 6px;
+border-radius:999px;padding:3px;gap:2px;margin:0 0 12px;
+overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1 0 auto;border:0;background:none;border-radius:999px;padding:8px 6px;
 font:inherit;font-size:13.5px;font-weight:700;line-height:1.2;color:var(--mut);
 cursor:pointer;transition:.15s;white-space:nowrap;}
 .tab.active{background:var(--red);color:#fff;box-shadow:var(--shadow);}
@@ -928,13 +930,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 .card .ideias{margin-top:8px;max-width:none;}
 .card .literal{justify-content:flex-start;gap:4px 14px;margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);}
 .card .mid{cursor:pointer;}
-.teoriabtn{display:block;margin:-4px auto 12px;border:0;background:none;color:var(--mut);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;padding:6px 10px;border-radius:999px;}
-.teoriabtn:hover{background:var(--pill);}
-.sheet.teoria{display:flex;flex-direction:column;height:86vh;max-height:86vh;padding-bottom:0;}
-.teoria-cab{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.teoria-cab h3{flex:1;margin:0;}
+.teoria-cab{display:flex;align-items:center;gap:10px;margin:0 0 12px;min-height:36px;}
+.teoria-cab h3{flex:1;margin:0;font-size:20px;}
 .tvolta{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--txt);font-size:18px;cursor:pointer;line-height:1;}
-.teoria-corpo{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px;}
+.teoria-corpo{padding-bottom:24px;}
 .teoria-corpo .vazio{color:var(--mut);text-align:center;}
 .tlinha{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:12px;margin-bottom:6px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--txt);font:inherit;cursor:pointer;}
 .tlinha:hover{background:var(--surface2);}
@@ -974,14 +973,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 .nota-nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px;}
 .nota-nav button:disabled{opacity:.35;cursor:default;}
 table.sons{border-collapse:collapse;width:100%;margin-top:4px;}
-table.sons th{font-size:13px;color:var(--mut);padding:6px 4px;text-align:center;position:sticky;top:0;background:var(--surface);}
+table.sons th{font-size:13px;color:var(--mut);padding:6px 4px;text-align:center;}
 table.sons tbody th{position:static;text-align:right;padding-right:10px;width:52px;}
 table.sons th.apagado{color:var(--soft);opacity:.55;}
 table.sons td{padding:3px;text-align:center;}
 .sil{width:100%;border:1px solid var(--line);background:var(--surface2);color:var(--txt);border-radius:10px;padding:8px 2px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;}
 .sil.apagado{color:var(--soft);font-weight:500;opacity:.6;}
 .sil.on{background:var(--txt);color:var(--surface);opacity:1;}
-.sons-folha{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);margin-top:10px;padding:12px 2px 4px;}
+.sons-folha{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);margin-top:10px;padding:12px 2px 4px;}
 .sons-folha p{margin:8px 0 0;font-size:14px;color:var(--mut);}
 .sons-folha p b{color:var(--txt);margin-right:4px;}
 .tons4{display:flex;gap:8px;flex-wrap:wrap;}
@@ -1008,6 +1007,7 @@ table.sons td{padding:3px;text-align:center;}
 <!-- as abas abrem o conteúdo: mandam na tela inteira, os chips só no que ela lista -->
 <div class="tabs">
   <button class="tab active" data-v="estudar">Estudar</button>
+  <button class="tab" data-v="teoria">Teoria</button>
   <button class="tab" data-v="cartas">Cartas</button>
   <button class="tab" data-v="grade">Grade</button>
   <button class="tab" data-v="competicao">Competição</button>
@@ -1024,7 +1024,6 @@ table.sons td{padding:3px;text-align:center;}
     <span class="marrow">▼</span>
   </button>
   <div class="counter" id="counter"></div>
-  <button class="teoriabtn" id="teoriabtn">📚 Teoria e sons do pinyin</button>
   <div class="flashrow" id="flashrow">
     <div class="flashbar" id="flashbar"><i id="flashfill"></i></div>
     <button class="flashpause" id="flashpause" title="Pausar">⏸</button>
@@ -1140,6 +1139,16 @@ table.sons td{padding:3px;text-align:center;}
 </section>
 
 <!-- ══════ CARTAS (consulta) ══════ -->
+<!-- ══════ TEORIA ══════ lista por capítulo → nota; e a tabela de sons. A mesma tela
+     troca de conteúdo, com o ‹ voltando pra lista. -->
+<section class="view" id="view-teoria">
+  <div class="teoria-cab">
+    <button class="tvolta" id="teoria-voltar" title="Voltar">‹</button>
+    <h3 id="teoria-titulo">Teoria</h3>
+  </div>
+  <div class="teoria-corpo" id="teoria-corpo"></div>
+</section>
+
 <section class="view" id="view-cartas">
   <!-- Palavra e frase moram na mesma tabela, mas esta aba é consulta: quem vem aqui
        procura o pictograma. Frase entra por escolha, nunca embolada com a palavra. -->
@@ -1507,21 +1516,6 @@ table.sons td{padding:3px;text-align:center;}
       <span class="info"><b>Falar devagar</b><small>0,75× do normal, na gravação e no TTS. O navegador estica o tempo sem mexer na altura da voz, então o tom continua o mesmo</small></span>
       <span class="check"></span>
     </button>
-  </div>
-</div>
-
-<!-- 📚 teoria: lista por capítulo → nota; e a tabela de sons. Uma folha só, que troca
-     de conteúdo: ler é um desvio de onde se está, e fecha tocando fora. -->
-<div class="sheetwrap" id="teoriasheet">
-  <div class="sheetbg" id="teoriasheet-bg"></div>
-  <div class="sheet teoria">
-    <div class="handle"></div>
-    <div class="teoria-cab">
-      <button class="tvolta" id="teoria-voltar" title="Voltar">‹</button>
-      <h3 id="teoria-titulo">Teoria</h3>
-      <button class="tvolta" id="teoria-fechar" title="Fechar">✕</button>
-    </div>
-    <div class="teoria-corpo" id="teoria-corpo"></div>
   </div>
 </div>
 

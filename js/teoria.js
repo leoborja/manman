@@ -132,22 +132,21 @@ function marcaLida(t) {
   teoriaLida[t.id] = Date.now();
   save(uk(K_TEORIA_LIDA), teoriaLida);
 }
+// A aba Teoria do menu. Entrar nela volta sempre pra lista: quem saiu no meio de uma
+// nota e voltou dias depois quer ver o que está esquecido, não a página onde parou.
 function abreTeoria() {
   teoriaLida = load(uk(K_TEORIA_LIDA), {});
   teoriaTela = 'lista';
+  sonsSilaba = null;
   renderTeoria();
-  $('teoriasheet').classList.add('show');
 }
-function fechaTeoria() {
-  $('teoriasheet').classList.remove('show');
-  if (somTocando) somTocando.pause();
-}
+function saiTeoria() { if (somTocando) somTocando.pause(); }
 function renderTeoria() {
   const box = $('teoria-corpo');
   if (teoriaTela === 'nota') return renderNota(box);
   if (teoriaTela === 'sons') return renderSons(box);
   $('teoria-titulo').textContent = 'Teoria';
-  $('teoria-voltar').style.visibility = 'hidden';
+  $('teoria-voltar').style.display = 'none';
   if (!teoriaDB.length) {
     box.innerHTML = '<p class="vazio">Nenhuma nota de teoria carregada — abra com internet uma vez.</p>';
     return;
@@ -167,7 +166,7 @@ function renderTeoria() {
     });
   }
   box.innerHTML = h;
-  box.scrollTop = 0;
+  window.scrollTo(0, 0);
   box.querySelectorAll('.tlinha').forEach(b => b.onclick = () => {
     if (b.dataset.acao === 'sons') { teoriaTela = 'sons'; renderTeoria(); return; }
     leitura = b.dataset.acao === 'relembrar'
@@ -181,14 +180,14 @@ function renderNota(box) {
   const t = leitura.notas[leitura.i];
   marcaLida(t); // a nota que fica na tela conta como lida
   $('teoria-titulo').textContent = leitura.titulo + (leitura.notas.length > 1 ? ' · ' + (leitura.i + 1) + ' de ' + leitura.notas.length : '');
-  $('teoria-voltar').style.visibility = '';
+  $('teoria-voltar').style.display = '';
   let h = '<div class="nota-t"><h4>' + esc(t.titulo) + '</h4><p class="res">' + esc(t.resumo || '') + '</p>';
   t.blocos.forEach((b, i) => { h += blocoHtml(b, i); });
   h += '</div><div class="nota-nav">' +
     '<button class="typeskip" id="nota-ant"' + (leitura.i ? '' : ' disabled') + '>‹ anterior</button>' +
     '<button class="typeskip" id="nota-prox"' + (leitura.i < leitura.notas.length - 1 ? '' : ' disabled') + '>próxima ›</button></div>';
   box.innerHTML = h;
-  box.scrollTop = 0;
+  window.scrollTo(0, 0);
   t.blocos.forEach((b, i) => { if (b.tipo === 'tracos') montaTracos(box.querySelector('[data-tr="' + i + '"]'), b); });
   box.querySelectorAll('[data-som]').forEach(el => el.onclick = () => tocaSilaba(el.dataset.som));
   box.querySelectorAll('[data-fala]').forEach(el => el.onclick = () => falaTexto(el.dataset.fala));
@@ -274,7 +273,7 @@ function sonsAteCap() {
 function silabaDe(ini, fin) { return sonsDB.silabas.find(s => s.inicial === ini && s.final === fin); }
 function renderSons(box) {
   $('teoria-titulo').textContent = 'Sons do pinyin';
-  $('teoria-voltar').style.visibility = '';
+  $('teoria-voltar').style.display = '';
   const ate = sonsAteCap();
   const vista = cap => ate === 0 || cap <= ate;
   if (!sonsGrupo) sonsGrupo = sonsDB.grupos[0].id;
@@ -310,9 +309,7 @@ function renderSons(box) {
       (s.inicial && di ? '<p><b>' + esc(s.inicial) + '</b> ' + esc(di) + '</p>' : '') +
       (df ? '<p><b>' + esc(s.final) + '</b> ' + esc(df) + '</p>' : '') + '</div>';
   }
-  const rolagem = box.scrollTop;
-  box.innerHTML = h;
-  box.scrollTop = rolagem;
+  box.innerHTML = h; // a página não rola sozinha: tocar numa sílaba deixa a tabela onde estava
   box.querySelectorAll('.sons-grupos .chip').forEach(b => b.onclick = () => { sonsGrupo = b.dataset.g; sonsSilaba = null; renderSons(box); });
   box.querySelectorAll('.sons-cap .chip').forEach(b => b.onclick = () => {
     localStorage.setItem('manman.sons.ateCap', b.dataset.cap); renderSons(box);

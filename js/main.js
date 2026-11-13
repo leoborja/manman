@@ -6,6 +6,7 @@ function switchView(v) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.v === v));
   document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v));
   if (v === 'progresso') renderProgress();
+  if (v === 'teoria') abreTeoria(); else saiTeoria();
   if (v === 'cartas') renderList();
   if (v === 'grade') renderGrade();
   if (v === 'competicao') {
@@ -234,9 +235,6 @@ function bindEvents() {
     ajustaAltura();
   };
   $('back-ideias').onclick = (e) => e.stopPropagation(); // ler a explicação não vira a carta
-  $('teoriabtn').onclick = abreTeoria;
-  $('teoriasheet-bg').onclick = fechaTeoria;
-  $('teoria-fechar').onclick = fechaTeoria;
   $('teoria-voltar').onclick = voltaTeoria;
   $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   bindPad();
