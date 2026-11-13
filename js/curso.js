@@ -123,6 +123,7 @@ function linhaCurso(attrs, icone, titulo, sub, fracao) {
 function renderCurso() {
   const box = $('curso-corpo');
   if (cursoFolha) return renderFolha();
+  if (cursoProva) return renderProva();
   const caps = capitulosDoCurso();
   const cap = capituloAtual();
   if (!cap) { box.innerHTML = '<p class="vazio">Nenhum capítulo no deck ainda.</p>'; $('curso-faixa').innerHTML = ''; return; }
@@ -165,7 +166,9 @@ function renderCurso() {
       ? 'As palavras e as frases enchem o círculo conforme se firmam na revisão. Os exercícios do professor fecham quando são feitos até o fim — e não mexem na revisão.'
       : 'As palavras e as frases enchem o círculo conforme se firmam na revisão; ele fecha quando todas estão aprendidas.') + '</p>';
   }
+  h += linhaDaProva(cap);
   box.innerHTML = h;
+  box.querySelectorAll('[data-prova]').forEach(b => b.onclick = () => abreProva(b.dataset.prova));
   box.querySelectorAll('[data-nota]').forEach(b => b.onclick = () => abreNotaDoCurso(cap, +b.dataset.nota));
   box.querySelectorAll('[data-cartas]').forEach(b => b.onclick = () => estudarCapitulo(cap, b.dataset.cartas));
   box.querySelectorAll('[data-folha]').forEach(b => b.onclick = () => abreFolha(exerciciosDB.find(e => e.id === b.dataset.folha)));

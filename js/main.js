@@ -306,6 +306,8 @@ function bindEvents() {
     localStorage.removeItem(uk(K.fav)); localStorage.removeItem(uk(K.dirtyFav));
     localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log));
     localStorage.removeItem(uk(K.dirty)); localStorage.removeItem(uk(K.stats));
+    // as provas também: o syncReset leva as linhas prova:capN do banco junto com as outras
+    localStorage.removeItem(uk(K_PROVAS)); localStorage.removeItem(uk(K_PROVAS_DIRTY));
     syncReset();
     renderProgress(); startSession();
   };
