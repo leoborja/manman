@@ -13,11 +13,11 @@ const fs = require('fs');
 const path = require('path');
 
 const raiz = path.join(__dirname, '..');
-const src = fs.readFileSync(path.join(raiz, 'app.js'), 'utf8');
+const src = fs.readFileSync(path.join(raiz, 'js', 'desenho.js'), 'utf8');
 const ini = src.indexOf('// ── desenho: a nota do traço');
 const fim = src.indexOf('// ── desenho: a grade e a tinta');
 if (ini < 0 || fim < 0) {
-  console.error('não achei o bloco da nota no app.js — os comentários de seção mudaram?');
+  console.error('não achei o bloco da nota no js/desenho.js — os comentários de seção mudaram?');
   process.exit(1);
 }
 const strokesDB = JSON.parse(fs.readFileSync(path.join(raiz, 'strokes', 'strokes.json'), 'utf8'));
