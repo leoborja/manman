@@ -1,0 +1,5055 @@
+[
+  {
+    "id": "c01-ordenar",
+    "capitulo": "cap1",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Oito frases com as peças embaralhadas",
+    "origem": "Huawen · B1 Organizing Sentences",
+    "itens": [
+      {
+        "pecas": [
+          "好",
+          "你",
+          "林娜"
+        ],
+        "respostas": [
+          "林娜，你好。",
+          "你好，林娜。"
+        ],
+        "pinyin": "Lín Nà, nǐ hǎo.",
+        "pt": "Oi, Lin Na."
+      },
+      {
+        "pecas": [
+          "我",
+          "好",
+          "很",
+          "也"
+        ],
+        "respostas": [
+          "我也很好。"
+        ],
+        "pinyin": "Wǒ yě hěn hǎo.",
+        "pt": "Eu também estou bem."
+      },
+      {
+        "pecas": [
+          "吗",
+          "力波",
+          "好",
+          "你"
+        ],
+        "respostas": [
+          "力波，你好吗？"
+        ],
+        "pinyin": "Lìbō, nǐ hǎo ma?",
+        "pt": "Libo, você está bem?"
+      },
+      {
+        "pecas": [
+          "好",
+          "我",
+          "很",
+          "呢",
+          "你"
+        ],
+        "respostas": [
+          "我很好，你呢？"
+        ],
+        "pinyin": "Wǒ hěn hǎo, nǐ ne?",
+        "pt": "Eu estou bem, e você?"
+      },
+      {
+        "pecas": [
+          "吗",
+          "好",
+          "你"
+        ],
+        "respostas": [
+          "你好吗？"
+        ],
+        "pinyin": "Nǐ hǎo ma?",
+        "pt": "Você está bem?"
+      },
+      {
+        "pecas": [
+          "力波",
+          "好",
+          "也",
+          "陆雨平",
+          "很",
+          "很",
+          "好"
+        ],
+        "respostas": [
+          "力波很好，陆雨平也很好。"
+        ],
+        "pinyin": "Lìbō hěn hǎo, Lù Yǔpíng yě hěn hǎo.",
+        "pt": "O Libo está bem, e o Lu Yuping também."
+      },
+      {
+        "pecas": [
+          "林娜",
+          "力波",
+          "很",
+          "呢",
+          "好"
+        ],
+        "respostas": [
+          "林娜很好，力波呢？"
+        ],
+        "pinyin": "Lín Nà hěn hǎo, Lìbō ne?",
+        "pt": "A Lin Na está bem. E o Libo?"
+      },
+      {
+        "pecas": [
+          "好",
+          "陆雨平",
+          "吗"
+        ],
+        "respostas": [
+          "陆雨平好吗？"
+        ],
+        "pinyin": "Lù Yǔpíng hǎo ma?",
+        "pt": "O Lu Yuping está bem?"
+      }
+    ]
+  },
+  {
+    "id": "c01-tracos",
+    "capitulo": "cap1",
+    "ordem": 2,
+    "tipo": "tracos",
+    "titulo": "Ordem dos traços",
+    "resumo": "Nove peças que formam os ideogramas da lição",
+    "origem": "Huawen · Lição 1 Exercício Ordem de Traços",
+    "itens": [
+      {
+        "hanzi": "马",
+        "pinyin": "mǎ",
+        "pt": "cavalo",
+        "em": "吗 妈"
+      },
+      {
+        "hanzi": "女",
+        "pinyin": "nǚ",
+        "pt": "mulher",
+        "em": "好 妈 娜"
+      },
+      {
+        "hanzi": "击",
+        "pinyin": "jī",
+        "pt": "golpear",
+        "em": "陆"
+      },
+      {
+        "hanzi": "木",
+        "pinyin": "mù",
+        "pt": "árvore",
+        "em": "林"
+      },
+      {
+        "hanzi": "子",
+        "pinyin": "zǐ",
+        "pt": "filho",
+        "em": "好"
+      },
+      {
+        "hanzi": "艮",
+        "pinyin": "gèn",
+        "pt": "componente, sem uso sozinho",
+        "em": "很"
+      },
+      {
+        "hanzi": "皮",
+        "pinyin": "pí",
+        "pt": "pele",
+        "em": "波"
+      },
+      {
+        "hanzi": "小",
+        "pinyin": "xiǎo",
+        "pt": "pequeno",
+        "em": "你"
+      },
+      {
+        "hanzi": "尸",
+        "pinyin": "shī",
+        "pt": "cadáver",
+        "em": "呢"
+      }
+    ]
+  },
+  {
+    "id": "c01-ma-ne",
+    "capitulo": "cap1",
+    "ordem": 3,
+    "tipo": "lacuna",
+    "titulo": "吗 ou 呢?",
+    "resumo": "Dez lacunas: pergunta de sim ou não, ou “e você?”",
+    "origem": "Huawen · B1 Exercise Ma X Ne",
+    "opcoes": [
+      "吗",
+      "呢"
+    ],
+    "regras": {
+      "吗": "吗 no fim faz da frase uma pergunta de sim ou não: 你好 → 你好吗？",
+      "呢": "呢 devolve a pergunta sem repetir o resto: 我很好，你呢？ = “e você?”"
+    },
+    "glossario": [
+      {
+        "hanzi": "妈妈",
+        "pinyin": "māma",
+        "pt": "mãe"
+      },
+      {
+        "hanzi": "他",
+        "pinyin": "tā",
+        "pt": "ele"
+      },
+      {
+        "hanzi": "她",
+        "pinyin": "tā",
+        "pt": "ela"
+      },
+      {
+        "hanzi": "忙",
+        "pinyin": "máng",
+        "pt": "ocupado"
+      },
+      {
+        "hanzi": "累",
+        "pinyin": "lèi",
+        "pt": "cansado"
+      },
+      {
+        "hanzi": "饿",
+        "pinyin": "è",
+        "pt": "com fome"
+      },
+      {
+        "hanzi": "爸爸",
+        "pinyin": "bàba",
+        "pt": "pai"
+      },
+      {
+        "hanzi": "困",
+        "pinyin": "kùn",
+        "pt": "com sono"
+      },
+      {
+        "hanzi": "渴",
+        "pinyin": "kě",
+        "pt": "com sede"
+      }
+    ],
+    "itens": [
+      {
+        "linhas": [
+          {
+            "texto": "我很好！你___？",
+            "pinyin": "Wǒ hěn hǎo! Nǐ ne?"
+          }
+        ],
+        "resposta": "呢",
+        "pt": "Eu estou bem! E você?"
+      },
+      {
+        "linhas": [
+          {
+            "quem": "A",
+            "texto": "妈妈好___？",
+            "pinyin": "Māma hǎo ma?"
+          },
+          {
+            "quem": "B",
+            "texto": "她很好。",
+            "pinyin": "Tā hěn hǎo."
+          }
+        ],
+        "resposta": "吗",
+        "pt": "— A mamãe está bem? — Ela está bem."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "我不忙。你___？",
+            "pinyin": "Wǒ bù máng. Nǐ ne?"
+          }
+        ],
+        "resposta": "呢",
+        "pt": "Não estou ocupado. E você?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他不累。你累___？",
+            "pinyin": "Tā bú lèi. Nǐ lèi ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Ele não está cansado. Você está cansado?"
+      },
+      {
+        "linhas": [
+          {
+            "quem": "A",
+            "texto": "你饿___？",
+            "pinyin": "Nǐ è ma?"
+          },
+          {
+            "quem": "B",
+            "texto": "我很饿。",
+            "pinyin": "Wǒ hěn è."
+          }
+        ],
+        "resposta": "吗",
+        "pt": "— Você está com fome? — Estou com muita fome."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他不好___？",
+            "pinyin": "Tā bù hǎo ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Ele não está bem?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "爸爸很好。妈妈___？",
+            "pinyin": "Bàba hěn hǎo. Māma ne?"
+          }
+        ],
+        "resposta": "呢",
+        "pt": "O papai está bem. E a mamãe?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "我很困。你___？",
+            "pinyin": "Wǒ hěn kùn. Nǐ ne?"
+          }
+        ],
+        "resposta": "呢",
+        "pt": "Estou com muito sono. E você?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你渴___？",
+            "pinyin": "Nǐ kě ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Você está com sede?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她很累。你___？",
+            "pinyin": "Tā hěn lèi. Nǐ ne?"
+          }
+        ],
+        "resposta": "呢",
+        "pt": "Ela está muito cansada. E você?"
+      }
+    ]
+  },
+  {
+    "id": "c01-caca",
+    "capitulo": "cap1",
+    "ordem": 4,
+    "tipo": "caca",
+    "titulo": "Ache o ideograma",
+    "resumo": "Três quadros cheios de parecidos: 吗, 很 e 好",
+    "origem": "Huawen · B1 Ideogram Recognition Exercise",
+    "itens": [
+      {
+        "hanzi": "吗",
+        "pinyin": "ma",
+        "pt": "partícula de pergunta",
+        "quadro": [
+          "吗骂妈吗马码玛犸妈吗",
+          "杩码马祃吗蚂骂妈吗杩",
+          "妈马吗杩妈马骂码蚂祃",
+          "犸祃码蚂吗马妈妈蚂骂",
+          "骂吗蚂妈码祃犸吗码蚂"
+        ]
+      },
+      {
+        "hanzi": "很",
+        "pinyin": "hěn",
+        "pt": "muito",
+        "quadro": [
+          "佷拫鞎恨良很茛哏跟根",
+          "很恨痕俍很鞎佷狠跟哏",
+          "哏茛艮根艮很娘恨很鞎",
+          "艮根鞎跟很茛哏狠恨狠",
+          "狠恨鞎跟艮良佷狠鞎跟"
+        ]
+      },
+      {
+        "hanzi": "好",
+        "pinyin": "hǎo",
+        "pt": "bom, bem",
+        "quadro": [
+          "妈好始奶奴如姓妮姑妹",
+          "姐妤仔好籽姨好她妆妤",
+          "妳妈仔妤奶妹姐如姑籽",
+          "奴奶姐如姓她好妆妮始",
+          "好妈孖奶妤仔奶好妤奴"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c02-ordenar",
+    "capitulo": "cap2",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Oito frases com 都, 也 e 不 fora do lugar",
+    "origem": "Huawen · B1 Organizing Sentences Exercise 1",
+    "itens": [
+      {
+        "pecas": [
+          "她",
+          "忙",
+          "不",
+          "也"
+        ],
+        "respostas": [
+          "她也不忙。"
+        ],
+        "pinyin": "Tā yě bù máng.",
+        "pt": "Ela também não está ocupada."
+      },
+      {
+        "pecas": [
+          "爸爸",
+          "好",
+          "你",
+          "吗"
+        ],
+        "respostas": [
+          "爸爸，你好吗？"
+        ],
+        "pinyin": "Bàba, nǐ hǎo ma?",
+        "pt": "Pai, você está bem?"
+      },
+      {
+        "pecas": [
+          "也",
+          "妈妈",
+          "很",
+          "我",
+          "好"
+        ],
+        "respostas": [
+          "我妈妈也很好。",
+          "妈妈，我也很好。"
+        ],
+        "pinyin": "Wǒ māma yě hěn hǎo.",
+        "pt": "Minha mãe também está bem."
+      },
+      {
+        "pecas": [
+          "哥哥",
+          "喝",
+          "弟弟",
+          "咖啡",
+          "都"
+        ],
+        "respostas": [
+          "哥哥、弟弟都喝咖啡。"
+        ],
+        "pinyin": "Gēge、dìdi dōu hē kāfēi.",
+        "pt": "O irmão mais velho e o mais novo tomam café."
+      },
+      {
+        "pecas": [
+          "都",
+          "喝",
+          "他们",
+          "吗",
+          "要",
+          "咖啡"
+        ],
+        "respostas": [
+          "他们都要喝咖啡吗？"
+        ],
+        "pinyin": "Tāmen dōu yào hē kāfēi ma?",
+        "pt": "Todos eles querem tomar café?"
+      },
+      {
+        "pecas": [
+          "朋友",
+          "很",
+          "男",
+          "不",
+          "好"
+        ],
+        "respostas": [
+          "男朋友不很好。"
+        ],
+        "pinyin": "Nán péngyou bù hěn hǎo.",
+        "pt": "O namorado não está muito bem."
+      },
+      {
+        "pecas": [
+          "都",
+          "妈妈",
+          "爸爸",
+          "咖啡",
+          "不",
+          "喝"
+        ],
+        "respostas": [
+          "爸爸、妈妈都不喝咖啡。",
+          "爸爸、妈妈不都喝咖啡。"
+        ],
+        "pinyin": "Bàba、māma dōu bù hē kāfēi.",
+        "pt": "Nem o pai nem a mãe tomam café."
+      },
+      {
+        "pecas": [
+          "忙",
+          "咖啡",
+          "很",
+          "我",
+          "不",
+          "要"
+        ],
+        "respostas": [
+          "我很忙，不要咖啡。"
+        ],
+        "pinyin": "Wǒ hěn máng, bú yào kāfēi.",
+        "pt": "Estou muito ocupado, não quero café."
+      }
+    ]
+  },
+  {
+    "id": "c02-leitura",
+    "capitulo": "cap2",
+    "ordem": 2,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Um diálogo, um texto e seis afirmações",
+    "origem": "Huawen · B1 Reading Comprehension Exercise",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "dialogo": [
+        {
+          "quem": "A",
+          "texto": "安娜，你好！"
+        },
+        {
+          "quem": "B",
+          "texto": "你好，林娜。"
+        },
+        {
+          "quem": "A",
+          "texto": "你忙吗？"
+        },
+        {
+          "quem": "B",
+          "texto": "我不忙。"
+        },
+        {
+          "quem": "A",
+          "texto": "安娜，你爸爸、妈妈好吗？"
+        },
+        {
+          "quem": "B",
+          "texto": "他们都很好。你呢？"
+        },
+        {
+          "quem": "A",
+          "texto": "我也很好。"
+        },
+        {
+          "quem": "B",
+          "texto": "你要咖啡吗？"
+        },
+        {
+          "quem": "A",
+          "texto": "不要。谢谢。"
+        },
+        {
+          "quem": "B",
+          "texto": "茶呢？"
+        },
+        {
+          "quem": "A",
+          "texto": "我不要咖啡，也不要茶。我要水。"
+        },
+        {
+          "quem": "B",
+          "texto": "好。你喝水，我喝茶。"
+        }
+      ],
+      "texto": "安娜不忙。她爸爸、妈妈都很好。林娜呢？林娜也很好。林娜不要咖啡，也不要茶。她要喝水。安娜不要水，她要茶。林娜喝水，安娜喝茶。"
+    },
+    "glossario": [
+      {
+        "hanzi": "安娜",
+        "pinyin": "Ānnà",
+        "pt": "Ana"
+      },
+      {
+        "hanzi": "谢谢",
+        "pinyin": "xièxie",
+        "pt": "obrigado"
+      },
+      {
+        "hanzi": "茶",
+        "pinyin": "chá",
+        "pt": "chá"
+      },
+      {
+        "hanzi": "水",
+        "pinyin": "shuǐ",
+        "pt": "água"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "安娜很忙。",
+        "resposta": "F",
+        "pinyin": "Ānnà hěn máng.",
+        "pt": "A Ana está muito ocupada.",
+        "por": "安娜不忙。"
+      },
+      {
+        "afirmacao": "林娜很好。",
+        "resposta": "V",
+        "pinyin": "Lín Nà hěn hǎo.",
+        "pt": "A Lin Na está bem.",
+        "por": "林娜也很好。"
+      },
+      {
+        "afirmacao": "林娜不要咖啡。",
+        "resposta": "V",
+        "pinyin": "Lín Nà bú yào kāfēi.",
+        "pt": "A Lin Na não quer café.",
+        "por": "林娜不要咖啡，也不要茶。"
+      },
+      {
+        "afirmacao": "林娜要茶。",
+        "resposta": "F",
+        "pinyin": "Lín Nà yào chá.",
+        "pt": "A Lin Na quer chá.",
+        "por": "林娜不要咖啡，也不要茶。她要喝水。"
+      },
+      {
+        "afirmacao": "安娜不喝茶。",
+        "resposta": "F",
+        "pinyin": "Ānnà bù hē chá.",
+        "pt": "A Ana não toma chá.",
+        "por": "林娜喝水，安娜喝茶。"
+      },
+      {
+        "afirmacao": "林娜喝水。",
+        "resposta": "V",
+        "pinyin": "Lín Nà hē shuǐ.",
+        "pt": "A Lin Na toma água.",
+        "por": "林娜喝水，安娜喝茶。"
+      }
+    ]
+  },
+  {
+    "id": "c01-traducao",
+    "capitulo": "cap1",
+    "ordem": 5,
+    "tipo": "traducao",
+    "titulo": "Traduza o diálogo",
+    "resumo": "Cinco falas do português para o chinês",
+    "origem": "Huawen · B1 Translation Exercise",
+    "itens": [
+      {
+        "quem": "A",
+        "pt": "Oi, Lin Na!",
+        "respostas": [
+          "你好，林娜！",
+          "林娜，你好！"
+        ],
+        "pinyin": "Nǐ hǎo, Lín Nà!"
+      },
+      {
+        "quem": "B",
+        "pt": "Oi, Libo! Você está bem?",
+        "respostas": [
+          "你好，力波！你好吗？",
+          "力波，你好！你好吗？"
+        ],
+        "pinyin": "Nǐ hǎo, Lìbō! Nǐ hǎo ma?"
+      },
+      {
+        "quem": "A",
+        "pt": "Eu estou bem, e você?",
+        "respostas": [
+          "我很好，你呢？"
+        ],
+        "pinyin": "Wǒ hěn hǎo, nǐ ne?"
+      },
+      {
+        "quem": "B",
+        "pt": "Eu também estou bem. E o Lu Yuping?",
+        "respostas": [
+          "我也很好。陆雨平呢？"
+        ],
+        "pinyin": "Wǒ yě hěn hǎo. Lù Yǔpíng ne?"
+      },
+      {
+        "quem": "A",
+        "pt": "O Lu Yuping também está bem.",
+        "respostas": [
+          "陆雨平也很好。"
+        ],
+        "pinyin": "Lù Yǔpíng yě hěn hǎo."
+      }
+    ]
+  },
+  {
+    "id": "c01-corrigir",
+    "capitulo": "cap1",
+    "ordem": 6,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Oito frases com um erro cada",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "你好？",
+        "respostas": [
+          "你好吗？",
+          "你好。"
+        ],
+        "pinyin": "Nǐ hǎo ma?",
+        "nota": "Sem 吗, 你好 é cumprimento, não pergunta."
+      },
+      {
+        "errada": "我好。",
+        "respostas": [
+          "我很好。",
+          "我不好。"
+        ],
+        "pinyin": "Wǒ hěn hǎo.",
+        "nota": "Adjetivo sozinho soa como comparação; na afirmação simples entra 很."
+      },
+      {
+        "errada": "呢你？",
+        "respostas": [
+          "你呢？"
+        ],
+        "pinyin": "Nǐ ne?",
+        "nota": "呢 vai no fim: 你呢？"
+      },
+      {
+        "errada": "我很好也。",
+        "respostas": [
+          "我也很好。"
+        ],
+        "pinyin": "Wǒ yě hěn hǎo.",
+        "nota": "也 vem antes do 很 e do adjetivo, nunca no fim."
+      },
+      {
+        "errada": "你好马？",
+        "respostas": [
+          "你好吗？"
+        ],
+        "pinyin": "Nǐ hǎo ma?",
+        "nota": "马 faltou a boca: a partícula é 吗, com 口."
+      },
+      {
+        "errada": "你很好？",
+        "respostas": [
+          "你很好吗？"
+        ],
+        "pinyin": "Nǐ hěn hǎo ma?",
+        "nota": "Pergunta de sim ou não pede 吗 no fim."
+      },
+      {
+        "errada": "我恨好。",
+        "respostas": [
+          "我很好。"
+        ],
+        "pinyin": "Wǒ hěn hǎo.",
+        "nota": "Apesar de parecido, 恨 é diferente de 很."
+      },
+      {
+        "errada": "你很也好。",
+        "respostas": [
+          "你也很好。"
+        ],
+        "pinyin": "Nǐ yě hěn hǎo.",
+        "nota": "也 vem antes do 很: 也很好."
+      }
+    ]
+  },
+  {
+    "id": "c02-traducao",
+    "capitulo": "cap2",
+    "ordem": 3,
+    "tipo": "traducao",
+    "titulo": "Traduza o diálogo",
+    "resumo": "Nove falas do português para o chinês",
+    "origem": "Huawen · B1 Exercise Translation",
+    "glossario": [
+      {
+        "hanzi": "茶",
+        "pinyin": "chá",
+        "pt": "chá"
+      },
+      {
+        "hanzi": "谢谢",
+        "pinyin": "xièxie",
+        "pt": "obrigado"
+      }
+    ],
+    "itens": [
+      {
+        "quem": "A",
+        "pt": "Oi, Lin Na!",
+        "respostas": [
+          "你好，林娜！",
+          "林娜，你好！"
+        ],
+        "pinyin": "Nǐ hǎo, Lín Nà!"
+      },
+      {
+        "quem": "B",
+        "pt": "Oi, Libo! Você está ocupado?",
+        "respostas": [
+          "你好，力波！你忙吗？",
+          "力波，你好！你忙吗？"
+        ],
+        "pinyin": "Nǐ hǎo, Lìbō! Nǐ máng ma?"
+      },
+      {
+        "quem": "A",
+        "pt": "Eu não estou ocupado. Você está bem?",
+        "respostas": [
+          "我不忙。你好吗？"
+        ],
+        "pinyin": "Wǒ bù máng. Nǐ hǎo ma?"
+      },
+      {
+        "quem": "B",
+        "pt": "Eu estou bem. E você?",
+        "respostas": [
+          "我很好，你呢？",
+          "我很好。你呢？"
+        ],
+        "pinyin": "Wǒ hěn hǎo, nǐ ne?"
+      },
+      {
+        "quem": "A",
+        "pt": "Eu também estou bem. E o seu pai e sua mãe?",
+        "respostas": [
+          "我也很好。你爸爸、妈妈呢？"
+        ],
+        "pinyin": "Wǒ yě hěn hǎo. Nǐ bàba、māma ne?"
+      },
+      {
+        "quem": "B",
+        "pt": "Todos eles estão bem também.",
+        "respostas": [
+          "他们也都很好。"
+        ],
+        "pinyin": "Tāmen yě dōu hěn hǎo."
+      },
+      {
+        "quem": "A",
+        "pt": "Você quer beber café?",
+        "respostas": [
+          "你要喝咖啡吗？"
+        ],
+        "pinyin": "Nǐ yào hē kāfēi ma?"
+      },
+      {
+        "quem": "B",
+        "pt": "Eu quero chá, obrigado.",
+        "respostas": [
+          "我要茶，谢谢。",
+          "我要喝茶，谢谢。"
+        ],
+        "pinyin": "Wǒ yào chá, xièxie."
+      },
+      {
+        "quem": "A",
+        "pt": "Eu também quero chá. Todos nós queremos beber chá.",
+        "respostas": [
+          "我也要茶。我们都要喝茶。"
+        ],
+        "pinyin": "Wǒ yě yào chá. Wǒmen dōu yào hē chá."
+      }
+    ]
+  },
+  {
+    "id": "c02-corrigir",
+    "capitulo": "cap2",
+    "ordem": 4,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Oito frases: 都, 也, 不 e 很 fora do lugar",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "glossario": [
+      {
+        "hanzi": "水",
+        "pinyin": "shuǐ",
+        "pt": "água"
+      },
+      {
+        "hanzi": "茶",
+        "pinyin": "chá",
+        "pt": "chá"
+      }
+    ],
+    "itens": [
+      {
+        "errada": "都他们很好。",
+        "respostas": [
+          "他们都很好。"
+        ],
+        "pinyin": "Tāmen dōu hěn hǎo.",
+        "nota": "都 vem depois do sujeito, antes do verbo ou adjetivo."
+      },
+      {
+        "errada": "我不要咖啡不。",
+        "respostas": [
+          "我不要咖啡。"
+        ],
+        "pinyin": "Wǒ bú yào kāfēi.",
+        "nota": "Um 不 só, antes do verbo: o do fim sobra."
+      },
+      {
+        "errada": "都她们不喝水。",
+        "respostas": [
+          "她们都不喝水。",
+          "她们不都喝水。"
+        ],
+        "pinyin": "Tāmen dōu bù hē shuǐ.",
+        "nota": "都 depois do sujeito. 都不 = nenhuma bebe; 不都 = nem todas bebem."
+      },
+      {
+        "errada": "我们都也要茶。",
+        "respostas": [
+          "我们也都要茶。"
+        ],
+        "pinyin": "Wǒmen yě dōu yào chá.",
+        "nota": "Os dois juntos, a ordem é 也都."
+      },
+      {
+        "errada": "她男朋友很喝咖啡。",
+        "respostas": [
+          "她男朋友喝咖啡。"
+        ],
+        "pinyin": "Tā nán péngyou hē kāfēi.",
+        "nota": "很 vai com adjetivo, não com verbo como 喝."
+      },
+      {
+        "errada": "我巴巴、马马很好。",
+        "respostas": [
+          "我爸爸、妈妈很好。"
+        ],
+        "pinyin": "Wǒ bàba、māma hěn hǎo.",
+        "nota": "O som é o mesmo, a escrita não: 爸 tem 父 em cima, 妈 tem 女 do lado."
+      },
+      {
+        "errada": "我不喝很茶。",
+        "respostas": [
+          "我不喝茶。"
+        ],
+        "pinyin": "Wǒ bù hē chá.",
+        "nota": "很 não entra antes de substantivo: o 很 sobra."
+      },
+      {
+        "errada": "我哥哥他喝水。",
+        "respostas": [
+          "我哥哥喝水。",
+          "他喝水。"
+        ],
+        "pinyin": "Wǒ gēge hē shuǐ.",
+        "nota": "O sujeito é um só: ou 我哥哥, ou 他."
+      }
+    ]
+  },
+  {
+    "id": "c03-ordenar",
+    "capitulo": "cap3",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Dez frases com 是, 不 e 哪国人",
+    "origem": "Huawen · B1 Organizing Sentences Exercise",
+    "itens": [
+      {
+        "pecas": [
+          "巴西",
+          "是",
+          "不",
+          "都",
+          "人",
+          "他们"
+        ],
+        "respostas": [
+          "他们都不是巴西人。"
+        ],
+        "pinyin": "Tāmen dōu bú shì Bāxī rén.",
+        "pt": "Nenhum deles é brasileiro."
+      },
+      {
+        "pecas": [
+          "是",
+          "您",
+          "哪国人"
+        ],
+        "respostas": [
+          "您是哪国人？"
+        ],
+        "pinyin": "Nín shì nǎ guó rén?",
+        "pt": "De que país o senhor é?"
+      },
+      {
+        "pecas": [
+          "朋友",
+          "老师",
+          "是",
+          "我",
+          "外语"
+        ],
+        "respostas": [
+          "我朋友是外语老师。"
+        ],
+        "pinyin": "Wǒ péngyou shì wàiyǔ lǎoshī.",
+        "pt": "Meu amigo é professor de língua estrangeira."
+      },
+      {
+        "pecas": [
+          "医生",
+          "她",
+          "老师",
+          "是",
+          "不",
+          "是"
+        ],
+        "respostas": [
+          "她不是医生，是老师。"
+        ],
+        "pinyin": "Tā bú shì yīshēng, shì lǎoshī.",
+        "pt": "Ela não é médica, é professora."
+      },
+      {
+        "pecas": [
+          "外婆",
+          "老师",
+          "他",
+          "不",
+          "陈",
+          "是"
+        ],
+        "respostas": [
+          "陈老师不是他外婆。"
+        ],
+        "pinyin": "Chén lǎoshī bú shì tā wàipó.",
+        "pt": "A professora Chen não é a avó materna dele."
+      },
+      {
+        "pecas": [
+          "中国",
+          "我",
+          "是",
+          "奶奶",
+          "人"
+        ],
+        "respostas": [
+          "我奶奶是中国人。"
+        ],
+        "pinyin": "Wǒ nǎinai shì Zhōngguó rén.",
+        "pt": "Minha avó paterna é chinesa."
+      },
+      {
+        "pecas": [
+          "我",
+          "老师",
+          "不",
+          "丁",
+          "是",
+          "朋友"
+        ],
+        "respostas": [
+          "丁老师不是我朋友。"
+        ],
+        "pinyin": "Dīng lǎoshī bú shì wǒ péngyou.",
+        "pt": "O professor Ding não é meu amigo."
+      },
+      {
+        "pecas": [
+          "中国",
+          "医生",
+          "我",
+          "朋友",
+          "是"
+        ],
+        "respostas": [
+          "我中国朋友是医生。"
+        ],
+        "pinyin": "Wǒ Zhōngguó péngyou shì yīshēng.",
+        "pt": "Meu amigo chinês é médico."
+      },
+      {
+        "pecas": [
+          "他",
+          "哪",
+          "人",
+          "爸爸",
+          "是",
+          "国"
+        ],
+        "respostas": [
+          "他爸爸是哪国人？"
+        ],
+        "pinyin": "Tā bàba shì nǎ guó rén?",
+        "pt": "De que país é o pai dele?"
+      },
+      {
+        "pecas": [
+          "是",
+          "老师",
+          "谁",
+          "巴西"
+        ],
+        "respostas": [
+          "巴西老师是谁？"
+        ],
+        "pinyin": "Bāxī lǎoshī shì shéi?",
+        "pt": "Quem é o professor brasileiro?"
+      }
+    ]
+  },
+  {
+    "id": "c03-hen-shi",
+    "capitulo": "cap3",
+    "ordem": 2,
+    "tipo": "lacuna",
+    "titulo": "很 ou 是?",
+    "resumo": "Dez lacunas: adjetivo ou substantivo",
+    "origem": "Huawen · B1 Exercise",
+    "opcoes": [
+      "很",
+      "是"
+    ],
+    "regras": {
+      "很": "Antes de adjetivo (累, 饿, 好…) entra 很, não 是: 他很累。",
+      "是": "Para ligar a um substantivo (医生, 中国人…) entra 是: 妈妈是医生。"
+    },
+    "glossario": [
+      {
+        "hanzi": "累",
+        "pinyin": "lèi",
+        "pt": "cansado"
+      },
+      {
+        "hanzi": "饿",
+        "pinyin": "è",
+        "pt": "com fome"
+      },
+      {
+        "hanzi": "困",
+        "pinyin": "kùn",
+        "pt": "com sono"
+      },
+      {
+        "hanzi": "渴",
+        "pinyin": "kě",
+        "pt": "com sede"
+      }
+    ],
+    "itens": [
+      {
+        "linhas": [
+          {
+            "texto": "我___巴西人。",
+            "pinyin": "Wǒ shì Bāxī rén."
+          }
+        ],
+        "resposta": "是",
+        "pt": "Eu sou brasileiro."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他___累。",
+            "pinyin": "Tā hěn lèi."
+          }
+        ],
+        "resposta": "很",
+        "pt": "Ele está muito cansado."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "力波不___好。",
+            "pinyin": "Lìbō bù hěn hǎo."
+          }
+        ],
+        "resposta": "很",
+        "pt": "O Libo não está muito bem."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "妈妈___医生。",
+            "pinyin": "Māma shì yīshēng."
+          }
+        ],
+        "resposta": "是",
+        "pt": "A mãe é médica."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "爸爸___饿。",
+            "pinyin": "Bàba hěn è."
+          }
+        ],
+        "resposta": "很",
+        "pt": "O pai está com muita fome."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你不___中国人。",
+            "pinyin": "Nǐ bú shì Zhōngguó rén."
+          }
+        ],
+        "resposta": "是",
+        "pt": "Você não é chinês."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "我女朋友___困。",
+            "pinyin": "Wǒ nǚ péngyou hěn kùn."
+          }
+        ],
+        "resposta": "很",
+        "pt": "Minha namorada está com muito sono."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "哥哥不___老师。",
+            "pinyin": "Gēge bú shì lǎoshī."
+          }
+        ],
+        "resposta": "是",
+        "pt": "O irmão mais velho não é professor."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "弟弟___学生。",
+            "pinyin": "Dìdi shì xuésheng."
+          }
+        ],
+        "resposta": "是",
+        "pt": "O irmão mais novo é estudante."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她男朋友___渴。",
+            "pinyin": "Tā nán péngyou hěn kě."
+          }
+        ],
+        "resposta": "很",
+        "pt": "O namorado dela está com muita sede."
+      }
+    ]
+  },
+  {
+    "id": "c03-caca",
+    "capitulo": "cap3",
+    "ordem": 3,
+    "tipo": "caca",
+    "titulo": "Ache os ideogramas",
+    "resumo": "Três quadros, dois alvos em cada",
+    "origem": "Huawen · B1 Ideogram Recognition Exercise",
+    "itens": [
+      {
+        "alvos": [
+          "那",
+          "哪"
+        ],
+        "pinyin": "nà · nǎ",
+        "pt": "aquele · qual",
+        "quadro": [
+          "哪哪那娜那娜娜那那哪娜哪",
+          "那哪那娜哪那娜哪哪哪那那",
+          "娜那那哪那那娜哪那娜那哪"
+        ]
+      },
+      {
+        "alvos": [
+          "四",
+          "西"
+        ],
+        "pinyin": "sì · xī",
+        "pt": "quatro · oeste",
+        "quadro": [
+          "四四西四西西西西四四四西",
+          "西四四西西西四西四西四西",
+          "四四西西四西四西西西四西"
+        ]
+      },
+      {
+        "alvos": [
+          "八",
+          "人"
+        ],
+        "pinyin": "bā · rén",
+        "pt": "oito · pessoa",
+        "componentes": true,
+        "quadro": [
+          "人趴扒认八队从公众叭囚分",
+          "八闪队众叭人分认扒朳从趴",
+          "囚朲玐八人众仈公队汃扒从"
+        ],
+        "marcas": [
+          "baababbababa",
+          "abbbababaaba",
+          "bbaabbaabaab"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c03-leitura",
+    "capitulo": "cap3",
+    "ordem": 4,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Dois diálogos, um texto e dez afirmações",
+    "origem": "Huawen · B1 Leitura e Compreensão",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "dialogo": [
+        {
+          "quem": "A",
+          "texto": "陈老师，您好吗？"
+        },
+        {
+          "quem": "B",
+          "texto": "我很好。林娜，你呢？"
+        },
+        {
+          "quem": "A",
+          "texto": "也很好。老师，这是我朋友：雨平。他是外语老师。"
+        },
+        {
+          "quem": "B",
+          "texto": "雨平，你好吗？"
+        },
+        {
+          "quem": "C",
+          "texto": "我很好。您是中国人吗？"
+        },
+        {
+          "quem": "B",
+          "texto": "是。"
+        },
+        {
+          "quem": "C",
+          "texto": "我爷爷、外公也都是中国人。"
+        },
+        {
+          "quem": "B",
+          "texto": "你呢？你是哪国人？"
+        },
+        {
+          "quem": "C",
+          "texto": "我是巴西人。"
+        },
+        {
+          "texto": "—"
+        },
+        {
+          "quem": "A",
+          "texto": "你们好！你们是哪国人？"
+        },
+        {
+          "quem": "B",
+          "texto": "老师，我是日本人。"
+        },
+        {
+          "quem": "A",
+          "texto": "你呢？"
+        },
+        {
+          "quem": "C",
+          "texto": "我是法国人。"
+        },
+        {
+          "quem": "A",
+          "texto": "林娜，你也是法国人吗？"
+        },
+        {
+          "quem": "D",
+          "texto": "不是。我是美国人。"
+        },
+        {
+          "quem": "A",
+          "texto": "好。你们都是外国人。我是中国人。"
+        }
+      ],
+      "texto": "雨平不是中国人，他是巴西人。他外公、爷爷都是中国人。林娜是他朋友。她是美国人。他们班有日本人、法国人、美国人、巴西人、德国人、英国人。陈老师是他们老师。他是中国人。"
+    },
+    "glossario": [
+      {
+        "hanzi": "日本",
+        "pinyin": "Rìběn",
+        "pt": "Japão"
+      },
+      {
+        "hanzi": "法国",
+        "pinyin": "Fǎguó",
+        "pt": "França"
+      },
+      {
+        "hanzi": "美国",
+        "pinyin": "Měiguó",
+        "pt": "EUA"
+      },
+      {
+        "hanzi": "外国",
+        "pinyin": "wàiguó",
+        "pt": "estrangeiro"
+      },
+      {
+        "hanzi": "班",
+        "pinyin": "bān",
+        "pt": "turma"
+      },
+      {
+        "hanzi": "有",
+        "pinyin": "yǒu",
+        "pt": "ter"
+      },
+      {
+        "hanzi": "德国",
+        "pinyin": "Déguó",
+        "pt": "Alemanha"
+      },
+      {
+        "hanzi": "英国",
+        "pinyin": "Yīngguó",
+        "pt": "Inglaterra"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "雨平不是老师。",
+        "resposta": "F",
+        "pinyin": "Yǔpíng bú shì lǎoshī.",
+        "pt": "O Yuping não é professor.",
+        "por": "他是外语老师。"
+      },
+      {
+        "afirmacao": "陈老师是中国人。",
+        "resposta": "V",
+        "pinyin": "Chén lǎoshī shì Zhōngguó rén.",
+        "pt": "O professor Chen é chinês.",
+        "por": "陈老师是他们老师。他是中国人。"
+      },
+      {
+        "afirmacao": "雨平是美国人。",
+        "resposta": "F",
+        "pinyin": "Yǔpíng shì Měiguó rén.",
+        "pt": "O Yuping é americano.",
+        "por": "雨平不是中国人，他是巴西人。"
+      },
+      {
+        "afirmacao": "他爷爷是中国人，他外公不是。",
+        "resposta": "F",
+        "pinyin": "Tā yéye shì Zhōngguó rén, tā wàigōng bú shì.",
+        "pt": "O avô paterno dele é chinês, o materno não.",
+        "por": "他外公、爷爷都是中国人。"
+      },
+      {
+        "afirmacao": "林娜是他朋友。",
+        "resposta": "V",
+        "pinyin": "Lín Nà shì tā péngyou.",
+        "pt": "A Lin Na é amiga dele.",
+        "por": "林娜是他朋友。"
+      },
+      {
+        "afirmacao": "雨平、林娜都不是老师。",
+        "resposta": "F",
+        "pinyin": "Yǔpíng、Lín Nà dōu bú shì lǎoshī.",
+        "pt": "Nem o Yuping nem a Lin Na são professores.",
+        "por": "这是我朋友：雨平。他是外语老师。"
+      },
+      {
+        "afirmacao": "他们班有中国人。",
+        "resposta": "F",
+        "pinyin": "Tāmen bān yǒu Zhōngguó rén.",
+        "pt": "A turma deles tem chineses.",
+        "por": "他们班有日本人、法国人、美国人、巴西人、德国人、英国人。"
+      },
+      {
+        "afirmacao": "他们班有日本人。",
+        "resposta": "V",
+        "pinyin": "Tāmen bān yǒu Rìběn rén.",
+        "pt": "A turma deles tem japoneses.",
+        "por": "他们班有日本人……"
+      },
+      {
+        "afirmacao": "林娜是美国人。",
+        "resposta": "V",
+        "pinyin": "Lín Nà shì Měiguó rén.",
+        "pt": "A Lin Na é americana.",
+        "por": "她是美国人。"
+      },
+      {
+        "afirmacao": "雨平很好。",
+        "resposta": "V",
+        "pinyin": "Yǔpíng hěn hǎo.",
+        "pt": "O Yuping está bem.",
+        "por": "雨平，你好吗？——我很好。"
+      }
+    ]
+  },
+  {
+    "id": "c03-traducao",
+    "capitulo": "cap3",
+    "ordem": 5,
+    "tipo": "traducao",
+    "titulo": "Traduza o diálogo",
+    "resumo": "Dez falas, com três pessoas",
+    "origem": "Huawen · B1 Exercise Translation",
+    "glossario": [
+      {
+        "hanzi": "谢谢",
+        "pinyin": "xièxie",
+        "pt": "obrigado"
+      },
+      {
+        "hanzi": "和",
+        "pinyin": "hé",
+        "pt": "e"
+      }
+    ],
+    "itens": [
+      {
+        "quem": "A",
+        "pt": "Oi, Lin Na! Tudo bem?",
+        "respostas": [
+          "你好，林娜！你好吗？",
+          "林娜，你好！你好吗？"
+        ],
+        "pinyin": "Nǐ hǎo, Lín Nà! Nǐ hǎo ma?"
+      },
+      {
+        "quem": "B",
+        "pt": "Eu estou bem, e você?",
+        "respostas": [
+          "我很好，你呢？"
+        ],
+        "pinyin": "Wǒ hěn hǎo, nǐ ne?"
+      },
+      {
+        "quem": "A",
+        "pt": "Eu também estou bem. Lin Na, esta é a minha mãe.",
+        "respostas": [
+          "我也很好。林娜，这是我妈妈。"
+        ],
+        "pinyin": "Wǒ yě hěn hǎo. Lín Nà, zhè shì wǒ māma."
+      },
+      {
+        "quem": "B",
+        "pt": "Olá! A senhora está bem?",
+        "respostas": [
+          "您好！您好吗？"
+        ],
+        "pinyin": "Nín hǎo! Nín hǎo ma?"
+      },
+      {
+        "quem": "C",
+        "pt": "Estou, obrigada.",
+        "respostas": [
+          "很好，谢谢。",
+          "我很好，谢谢。"
+        ],
+        "pinyin": "Hěn hǎo, xièxie."
+      },
+      {
+        "quem": "B",
+        "pt": "A senhora é de qual país?",
+        "respostas": [
+          "您是哪国人？"
+        ],
+        "pinyin": "Nín shì nǎ guó rén?"
+      },
+      {
+        "quem": "C",
+        "pt": "Eu sou chinesa. E você?",
+        "respostas": [
+          "我是中国人，你呢？",
+          "我是中国人。你呢？"
+        ],
+        "pinyin": "Wǒ shì Zhōngguó rén, nǐ ne?"
+      },
+      {
+        "quem": "B",
+        "pt": "Eu sou brasileira.",
+        "respostas": [
+          "我是巴西人。"
+        ],
+        "pinyin": "Wǒ shì Bāxī rén."
+      },
+      {
+        "quem": "A",
+        "pt": "Lin Na, seu pai também é chinês?",
+        "respostas": [
+          "林娜，你爸爸也是中国人吗？"
+        ],
+        "pinyin": "Lín Nà, nǐ bàba yě shì Zhōngguó rén ma?"
+      },
+      {
+        "quem": "B",
+        "pt": "É, sua mãe e meu pai são chineses, eu e você somos brasileiras.",
+        "respostas": [
+          "是。你妈妈和我爸爸都是中国人，我和你是巴西人。",
+          "是。你妈妈和我爸爸都是中国人，我和你都是巴西人。"
+        ],
+        "pinyin": "Shì. Nǐ māma hé wǒ bàba dōu shì Zhōngguó rén, wǒ hé nǐ shì Bāxī rén."
+      }
+    ]
+  },
+  {
+    "id": "c03-corrigir",
+    "capitulo": "cap3",
+    "ordem": 6,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Dez frases: 是 sobrando ou faltando, 吗 junto de 哪 e 谁",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "哪国他是？",
+        "respostas": [
+          "他是哪国人？"
+        ],
+        "pinyin": "Tā shì nǎ guó rén?",
+        "nota": "A pergunta fica no lugar da resposta: 他是哪国人？ como 他是巴西人。"
+      },
+      {
+        "errada": "你是哪国人吗？",
+        "respostas": [
+          "你是哪国人？"
+        ],
+        "pinyin": "Nǐ shì nǎ guó rén?",
+        "nota": "哪 já faz a pergunta: o 吗 sobra."
+      },
+      {
+        "errada": "我是要咖啡。",
+        "respostas": [
+          "我要咖啡。"
+        ],
+        "pinyin": "Wǒ yào kāfēi.",
+        "nota": "要 já é o verbo: o 是 sobra."
+      },
+      {
+        "errada": "那是谁吗？",
+        "respostas": [
+          "那是谁？"
+        ],
+        "pinyin": "Nà shì shéi?",
+        "nota": "谁 já faz a pergunta: o 吗 sobra."
+      },
+      {
+        "errada": "他是老师外语。",
+        "respostas": [
+          "他是外语老师。"
+        ],
+        "pinyin": "Tā shì wàiyǔ lǎoshī.",
+        "nota": "O que qualifica vem antes: 外语老师."
+      },
+      {
+        "errada": "这是我奶奶。他是中国人。",
+        "respostas": [
+          "这是我奶奶。她是中国人。"
+        ],
+        "pinyin": "Zhè shì wǒ nǎinai. Tā shì Zhōngguó rén.",
+        "nota": "A avó é ela: 她, com 女."
+      },
+      {
+        "errada": "她是医生不。",
+        "respostas": [
+          "她不是医生。"
+        ],
+        "pinyin": "Tā bú shì yīshēng.",
+        "nota": "不 vem antes do 是: 不是."
+      },
+      {
+        "errada": "你是忙吗？",
+        "respostas": [
+          "你忙吗？"
+        ],
+        "pinyin": "Nǐ máng ma?",
+        "nota": "Adjetivo não leva 是: 你忙吗？"
+      },
+      {
+        "errada": "我巴西人。",
+        "respostas": [
+          "我是巴西人。"
+        ],
+        "pinyin": "Wǒ shì Bāxī rén.",
+        "nota": "Para ligar a um substantivo falta o 是."
+      },
+      {
+        "errada": "都老师是中国人。",
+        "respostas": [
+          "老师都是中国人。"
+        ],
+        "pinyin": "Lǎoshī dōu shì Zhōngguó rén.",
+        "nota": "都 vem depois do sujeito: 老师都是."
+      }
+    ]
+  },
+  {
+    "id": "c04-ordenar",
+    "capitulo": "cap4",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Dez frases com 的, 请问 e 认识",
+    "origem": "Huawen · B1 Organizing Sentences Exercise",
+    "itens": [
+      {
+        "pecas": [
+          "问",
+          "贵",
+          "请",
+          "姓",
+          "您"
+        ],
+        "respostas": [
+          "请问，您贵姓？"
+        ],
+        "pinyin": "Qǐngwèn, nín guì xìng?",
+        "pt": "Por favor, qual o seu sobrenome?"
+      },
+      {
+        "pecas": [
+          "高兴",
+          "陈",
+          "认识",
+          "老师",
+          "很",
+          "您"
+        ],
+        "respostas": [
+          "陈老师，认识您很高兴。",
+          "很高兴认识您，陈老师。"
+        ],
+        "pinyin": "Chén lǎoshī, rènshi nín hěn gāoxìng.",
+        "pt": "Professor Chen, é um prazer conhecê-lo."
+      },
+      {
+        "pecas": [
+          "不",
+          "老师",
+          "学院",
+          "他",
+          "葡萄牙语",
+          "是",
+          "的"
+        ],
+        "respostas": [
+          "他不是学院的葡萄牙语老师。"
+        ],
+        "pinyin": "Tā bú shì xuéyuàn de Pútáoyáyǔ lǎoshī.",
+        "pt": "Ele não é o professor de português da faculdade."
+      },
+      {
+        "pecas": [
+          "学习",
+          "我们",
+          "也",
+          "汉语",
+          "都"
+        ],
+        "respostas": [
+          "我们也都学习汉语。"
+        ],
+        "pinyin": "Wǒmen yě dōu xuéxí Hànyǔ.",
+        "pt": "Nós também estudamos mandarim, todos nós."
+      },
+      {
+        "pecas": [
+          "茶",
+          "喝",
+          "我",
+          "中国"
+        ],
+        "respostas": [
+          "我喝中国茶。"
+        ],
+        "pinyin": "Wǒ hē Zhōngguó chá.",
+        "pt": "Eu tomo chá chinês."
+      },
+      {
+        "pecas": [
+          "美国",
+          "叫",
+          "他",
+          "朋友",
+          "的",
+          "小林"
+        ],
+        "respostas": [
+          "他的美国朋友叫小林。"
+        ],
+        "pinyin": "Tā de Měiguó péngyou jiào Xiǎo Lín.",
+        "pt": "O amigo americano dele se chama Xiao Lin."
+      },
+      {
+        "pecas": [
+          "的",
+          "学院",
+          "先生",
+          "是",
+          "老师",
+          "丁"
+        ],
+        "respostas": [
+          "丁先生是学院的老师。"
+        ],
+        "pinyin": "Dīng xiānsheng shì xuéyuàn de lǎoshī.",
+        "pt": "O senhor Ding é professor da faculdade."
+      },
+      {
+        "pecas": [
+          "我",
+          "吗",
+          "进",
+          "可以",
+          "来"
+        ],
+        "respostas": [
+          "我可以进来吗？"
+        ],
+        "pinyin": "Wǒ kěyǐ jìnlai ma?",
+        "pt": "Posso entrar?"
+      },
+      {
+        "pecas": [
+          "高兴",
+          "的",
+          "很",
+          "都",
+          "他",
+          "学生"
+        ],
+        "respostas": [
+          "他的学生都很高兴。"
+        ],
+        "pinyin": "Tā de xuésheng dōu hěn gāoxìng.",
+        "pt": "Os alunos dele estão todos muito contentes."
+      },
+      {
+        "pecas": [
+          "学生",
+          "语言",
+          "的",
+          "学习",
+          "老师"
+        ],
+        "respostas": [
+          "老师的学生学习语言。"
+        ],
+        "pinyin": "Lǎoshī de xuésheng xuéxí yǔyán.",
+        "pt": "Os alunos do professor estudam línguas."
+      }
+    ]
+  },
+  {
+    "id": "c04-caca",
+    "capitulo": "cap4",
+    "ordem": 2,
+    "tipo": "caca",
+    "titulo": "Ache os radicais",
+    "resumo": "Um quadro: 讠 da fala ou 辶 do andar",
+    "origem": "Huawen · B1 Ideogram Recognition Exercise",
+    "itens": [
+      {
+        "alvos": [
+          "讠",
+          "辶"
+        ],
+        "pinyin": "yán · chuò",
+        "pt": "falar · andar",
+        "componentes": true,
+        "quadro": [
+          "进读记边达认说讨运近远让",
+          "还议返迷讲论过证速识译述",
+          "选造诉词试话遍该语谁迎请"
+        ],
+        "marcas": [
+          "baabbaaabbba",
+          "babbaababaab",
+          "bbaaaabaaaba"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c04-leitura",
+    "capitulo": "cap4",
+    "ordem": 3,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Um texto e cinco afirmações",
+    "origem": "Huawen · B1 Reading Comprehension Exercise",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "texto": "马大为不认识林娜。力波介绍他们。林娜是英国人，她学习汉语。大为也学习汉语，他是美国人，是汉语学校的学生。他是丁力波的同学，林娜是丁力波的朋友。马大为现在也是林娜的朋友。他们都很高兴！"
+    },
+    "glossario": [
+      {
+        "hanzi": "介绍",
+        "pinyin": "jièshào",
+        "pt": "apresentar"
+      },
+      {
+        "hanzi": "学校",
+        "pinyin": "xuéxiào",
+        "pt": "escola"
+      },
+      {
+        "hanzi": "同学",
+        "pinyin": "tóngxué",
+        "pt": "colega"
+      },
+      {
+        "hanzi": "现在",
+        "pinyin": "xiànzài",
+        "pt": "agora"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "大为、林娜不都是英国人。",
+        "resposta": "V",
+        "pinyin": "Dàwéi、Lín Nà bù dōu shì Yīngguó rén.",
+        "pt": "Nem todos (Dawei e Lin Na) são ingleses.",
+        "por": "林娜是英国人……他是美国人。"
+      },
+      {
+        "afirmacao": "马大为学习汉语。",
+        "resposta": "V",
+        "pinyin": "Mǎ Dàwéi xuéxí Hànyǔ.",
+        "pt": "Ma Dawei estuda mandarim.",
+        "por": "大为也学习汉语。"
+      },
+      {
+        "afirmacao": "林娜是力波的同学。",
+        "resposta": "F",
+        "pinyin": "Lín Nà shì Lìbō de tóngxué.",
+        "pt": "Lin Na é colega de turma do Libo.",
+        "por": "林娜是丁力波的朋友。"
+      },
+      {
+        "afirmacao": "马大为、林娜都是汉语学校的学生。",
+        "resposta": "F",
+        "pinyin": "Mǎ Dàwéi、Lín Nà dōu shì Hànyǔ xuéxiào de xuésheng.",
+        "pt": "Ma Dawei e Lin Na são alunos da escola de mandarim.",
+        "por": "他是……汉语学校的学生。O texto só diz isso do Dawei."
+      },
+      {
+        "afirmacao": "力波不认识林娜。",
+        "resposta": "F",
+        "pinyin": "Lìbō bú rènshi Lín Nà.",
+        "pt": "Libo não conhece Lin Na.",
+        "por": "林娜是丁力波的朋友。"
+      }
+    ]
+  },
+  {
+    "id": "c04-traducao-frases",
+    "capitulo": "cap4",
+    "ordem": 4,
+    "tipo": "traducao",
+    "titulo": "Traduza as frases",
+    "resumo": "Dez frases com 的, do português para o chinês",
+    "origem": "Huawen · B1 Exercise Translation",
+    "itens": [
+      {
+        "pt": "O médico do Libo não é médico da Lin Na.",
+        "respostas": [
+          "力波的医生不是林娜的医生。"
+        ],
+        "pinyin": "Lìbō de yīshēng bú shì Lín Nà de yīshēng."
+      },
+      {
+        "pt": "O repórter da China vem para o Brasil.",
+        "respostas": [
+          "中国的记者来巴西。",
+          "中国记者来巴西。"
+        ],
+        "pinyin": "Zhōngguó de jìzhě lái Bāxī."
+      },
+      {
+        "pt": "Meu amigo chinês tem sobrenome Lu.",
+        "respostas": [
+          "我的中国朋友姓陆。",
+          "我中国朋友姓陆。"
+        ],
+        "pinyin": "Wǒ de Zhōngguó péngyou xìng Lù."
+      },
+      {
+        "pt": "O professor da minha mãe é professor da faculdade.",
+        "respostas": [
+          "我妈妈的老师是学院的老师。"
+        ],
+        "pinyin": "Wǒ māma de lǎoshī shì xuéyuàn de lǎoshī."
+      },
+      {
+        "pt": "O estudante do professor estuda mandarim.",
+        "respostas": [
+          "老师的学生学习汉语。"
+        ],
+        "pinyin": "Lǎoshī de xuésheng xuéxí Hànyǔ."
+      },
+      {
+        "pt": "O café da minha avó é bom.",
+        "respostas": [
+          "我奶奶的咖啡很好。",
+          "我外婆的咖啡很好。"
+        ],
+        "pinyin": "Wǒ nǎinai de kāfēi hěn hǎo."
+      },
+      {
+        "pt": "O namorado da Lin Na é inglês.",
+        "respostas": [
+          "林娜的男朋友是英国人。"
+        ],
+        "pinyin": "Lín Nà de nán péngyou shì Yīngguó rén."
+      },
+      {
+        "pt": "A faculdade do Libo é grande.",
+        "respostas": [
+          "力波的学院很大。"
+        ],
+        "pinyin": "Lìbō de xuéyuàn hěn dà."
+      },
+      {
+        "pt": "Meu irmão não é amigo da Lin Na.",
+        "respostas": [
+          "我哥哥不是林娜的朋友。",
+          "我弟弟不是林娜的朋友。"
+        ],
+        "pinyin": "Wǒ gēge bú shì Lín Nà de péngyou."
+      },
+      {
+        "pt": "O médico da minha irmã é professor do meu irmão.",
+        "respostas": [
+          "我姐姐的医生是我哥哥的老师。",
+          "我妹妹的医生是我哥哥的老师。",
+          "我姐姐的医生是我弟弟的老师。",
+          "我妹妹的医生是我弟弟的老师。"
+        ],
+        "pinyin": "Wǒ jiějie de yīshēng shì wǒ gēge de lǎoshī."
+      }
+    ]
+  },
+  {
+    "id": "c04-traducao",
+    "capitulo": "cap4",
+    "ordem": 5,
+    "tipo": "traducao",
+    "titulo": "Traduza o diálogo",
+    "resumo": "Dez falas: 欢迎, 请问 e 贵姓",
+    "origem": "Huawen · B1 Translation Exercise",
+    "glossario": [
+      {
+        "hanzi": "欢迎",
+        "pinyin": "huānyíng",
+        "pt": "bem-vindo"
+      }
+    ],
+    "itens": [
+      {
+        "quem": "A",
+        "pt": "Bem-vindos!",
+        "respostas": [
+          "欢迎！",
+          "欢迎你们！"
+        ],
+        "pinyin": "Huānyíng!"
+      },
+      {
+        "quem": "B",
+        "pt": "Por favor, qual o sobrenome do senhor?",
+        "respostas": [
+          "请问，您贵姓？"
+        ],
+        "pinyin": "Qǐngwèn, nín guì xìng?"
+      },
+      {
+        "quem": "A",
+        "pt": "Eu sou o professor Ma. Por favor, entrem. Qual é o seu sobrenome?",
+        "respostas": [
+          "我是马老师。请进。你姓什么？"
+        ],
+        "pinyin": "Wǒ shì Mǎ lǎoshī. Qǐng jìn. Nǐ xìng shénme?"
+      },
+      {
+        "quem": "B",
+        "pt": "Professor, meu sobrenome é Wang.",
+        "respostas": [
+          "老师，我姓王。"
+        ],
+        "pinyin": "Lǎoshī, wǒ xìng Wáng."
+      },
+      {
+        "quem": "A",
+        "pt": "E o seu?",
+        "respostas": [
+          "你呢？"
+        ],
+        "pinyin": "Nǐ ne?"
+      },
+      {
+        "quem": "C",
+        "pt": "Meu sobrenome é Ding. O senhor é professor de mandarim?",
+        "respostas": [
+          "我姓丁。您是汉语老师吗？"
+        ],
+        "pinyin": "Wǒ xìng Dīng. Nín shì Hànyǔ lǎoshī ma?"
+      },
+      {
+        "quem": "A",
+        "pt": "Sou.",
+        "respostas": [
+          "是。",
+          "是的。"
+        ],
+        "pinyin": "Shì."
+      },
+      {
+        "quem": "C",
+        "pt": "Todos nós somos estudantes da faculdade de línguas estrangeiras.",
+        "respostas": [
+          "我们都是外语学院的学生。"
+        ],
+        "pinyin": "Wǒmen dōu shì wàiyǔ xuéyuàn de xuésheng."
+      },
+      {
+        "quem": "A",
+        "pt": "É um prazer conhecê-los!",
+        "respostas": [
+          "认识你们很高兴！",
+          "很高兴认识你们！"
+        ],
+        "pinyin": "Rènshi nǐmen hěn gāoxìng!"
+      },
+      {
+        "quem": "C",
+        "pt": "Professor Ma, também estamos felizes em conhecê-lo!",
+        "respostas": [
+          "马老师，认识您我们也都很高兴。",
+          "马老师，认识您我们也很高兴。",
+          "马老师，我们也很高兴认识您。"
+        ],
+        "pinyin": "Mǎ lǎoshī, rènshi nín wǒmen yě dōu hěn gāoxìng."
+      }
+    ]
+  },
+  {
+    "id": "c04-verter",
+    "capitulo": "cap4",
+    "ordem": 6,
+    "tipo": "verter",
+    "titulo": "Traduza para o português",
+    "resumo": "Dez frases do chinês; você mesmo confere",
+    "origem": "Huawen · B1 Translation Exercise (1)",
+    "itens": [
+      {
+        "texto": "那是你的医生吗？",
+        "pinyin": "Nà shì nǐ de yīshēng ma?",
+        "pt": "Aquele(a) é seu(sua) médico(a)?"
+      },
+      {
+        "texto": "她的名字叫林娜。",
+        "pinyin": "Tā de míngzi jiào Lín Nà.",
+        "pt": "O nome dela é Lin Na."
+      },
+      {
+        "texto": "我的中国朋友学习英语。",
+        "pinyin": "Wǒ de Zhōngguó péngyou xuéxí Yīngyǔ.",
+        "pt": "Meu(minha) amigo(a) chinês(a) estuda inglês."
+      },
+      {
+        "texto": "你的老师叫什么名字？",
+        "pinyin": "Nǐ de lǎoshī jiào shénme míngzi?",
+        "pt": "Como se chama seu(sua) professor(a)?"
+      },
+      {
+        "texto": "这是我妹妹的老师。",
+        "pinyin": "Zhè shì wǒ mèimei de lǎoshī.",
+        "pt": "Este(a) é o(a) professor(a) da minha irmã (mais nova)."
+      },
+      {
+        "texto": "我哥哥的茶是中国茶。",
+        "pinyin": "Wǒ gēge de chá shì Zhōngguó chá.",
+        "pt": "O chá do meu irmão (mais velho) é chá chinês."
+      },
+      {
+        "texto": "他是我们的老师。",
+        "pinyin": "Tā shì wǒmen de lǎoshī.",
+        "pt": "Ele é nosso professor."
+      },
+      {
+        "texto": "学生的学院很大。",
+        "pinyin": "Xuésheng de xuéyuàn hěn dà.",
+        "pt": "A faculdade do estudante é grande."
+      },
+      {
+        "texto": "记者的妈妈是巴西人。",
+        "pinyin": "Jìzhě de māma shì Bāxī rén.",
+        "pt": "A mãe do repórter é brasileira."
+      },
+      {
+        "texto": "这是我奶奶的咖啡。",
+        "pinyin": "Zhè shì wǒ nǎinai de kāfēi.",
+        "pt": "Esse é o café da minha avó (paterna)."
+      }
+    ]
+  },
+  {
+    "id": "c04-corrigir",
+    "capitulo": "cap4",
+    "ordem": 7,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Dez frases: 的 sobrando ou fora do lugar, 贵 e 姓",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "什么你学习？",
+        "respostas": [
+          "你学习什么？"
+        ],
+        "pinyin": "Nǐ xuéxí shénme?",
+        "nota": "A pergunta fica no lugar da resposta: 你学习什么？ como 我学习汉语。"
+      },
+      {
+        "errada": "我贵姓陆。",
+        "respostas": [
+          "我姓陆。"
+        ],
+        "pinyin": "Wǒ xìng Lù.",
+        "nota": "贵 é cortesia para o sobrenome DOS OUTROS: de si mesmo, só 姓."
+      },
+      {
+        "errada": "老师杨，您好。",
+        "respostas": [
+          "杨老师，您好。"
+        ],
+        "pinyin": "Yáng lǎoshī, nín hǎo.",
+        "nota": "O sobrenome vem antes do título: 杨老师."
+      },
+      {
+        "errada": "我学习的汉语。",
+        "respostas": [
+          "我学习汉语。"
+        ],
+        "pinyin": "Wǒ xuéxí Hànyǔ.",
+        "nota": "Entre o verbo e o objeto não entra 的."
+      },
+      {
+        "errada": "她是学生的汉语。",
+        "respostas": [
+          "她是汉语学生。"
+        ],
+        "pinyin": "Tā shì Hànyǔ xuésheng.",
+        "nota": "O que qualifica vem antes, e 汉语学生 dispensa o 的."
+      },
+      {
+        "errada": "我请问您贵姓？",
+        "respostas": [
+          "请问您贵姓？",
+          "请问，您贵姓？"
+        ],
+        "pinyin": "Qǐngwèn nín guì xìng?",
+        "nota": "请问 já é o pedido: o 我 sobra."
+      },
+      {
+        "errada": "我姓雨平。",
+        "respostas": [
+          "我叫雨平。"
+        ],
+        "pinyin": "Wǒ jiào Yǔpíng.",
+        "nota": "雨平 é nome, não sobrenome: para o nome é 叫."
+      },
+      {
+        "errada": "请间，您贵姓？",
+        "respostas": [
+          "请问，您贵姓？"
+        ],
+        "pinyin": "Qǐngwèn, nín guì xìng?",
+        "nota": "问 (perguntar) tem 口 dentro; 间 tem 日."
+      },
+      {
+        "errada": "咖啡的妈妈很好。",
+        "respostas": [
+          "妈妈的咖啡很好。"
+        ],
+        "pinyin": "Māma de kāfēi hěn hǎo.",
+        "nota": "O dono vem antes do 的: 妈妈的咖啡 = o café da mamãe."
+      },
+      {
+        "errada": "他是汉语的学院的老师。",
+        "respostas": [
+          "他是汉语学院的老师。"
+        ],
+        "pinyin": "Tā shì Hànyǔ xuéyuàn de lǎoshī.",
+        "nota": "汉语学院 é um nome só, sem 的 no meio."
+      }
+    ]
+  },
+  {
+    "id": "c05-ordenar",
+    "capitulo": "cap5",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Dez frases com 在, 哪儿 e 对不起",
+    "origem": "Huawen · B1 Organizing Sentences Exercise",
+    "itens": [
+      {
+        "pecas": [
+          "在",
+          "王小云",
+          "宿舍",
+          "也"
+        ],
+        "respostas": [
+          "王小云也在宿舍。"
+        ],
+        "pinyin": "Wáng Xiǎoyún yě zài sùshè.",
+        "pt": "Wang Xiaoyun também está no dormitório."
+      },
+      {
+        "pecas": [
+          "知道",
+          "我",
+          "在",
+          "不",
+          "他",
+          "哪儿"
+        ],
+        "respostas": [
+          "我不知道他在哪儿。"
+        ],
+        "pinyin": "Wǒ bù zhīdào tā zài nǎr.",
+        "pt": "Não sei onde ele está."
+      },
+      {
+        "pecas": [
+          "一〇八",
+          "层",
+          "的",
+          "他",
+          "宿舍",
+          "九",
+          "号",
+          "在"
+        ],
+        "respostas": [
+          "他的宿舍在九层一〇八号。"
+        ],
+        "pinyin": "Tā de sùshè zài jiǔ céng yāo líng bā hào.",
+        "pt": "O quarto dele fica no 9º andar, número 108."
+      },
+      {
+        "pecas": [
+          "也",
+          "在",
+          "都",
+          "学院",
+          "他们",
+          "不"
+        ],
+        "respostas": [
+          "他们也都不在学院。"
+        ],
+        "pinyin": "Tāmen yě dōu bú zài xuéyuàn.",
+        "pt": "Eles também não estão na faculdade, nenhum deles."
+      },
+      {
+        "pecas": [
+          "宿舍",
+          "的",
+          "这儿",
+          "在",
+          "我",
+          "不"
+        ],
+        "respostas": [
+          "我的宿舍不在这儿。"
+        ],
+        "pinyin": "Wǒ de sùshè bú zài zhèr.",
+        "pt": "Meu dormitório não fica aqui."
+      },
+      {
+        "pecas": [
+          "学院",
+          "中国",
+          "在",
+          "汉语",
+          "吗"
+        ],
+        "respostas": [
+          "汉语学院在中国吗？"
+        ],
+        "pinyin": "Hànyǔ xuéyuàn zài Zhōngguó ma?",
+        "pt": "A faculdade de mandarim fica na China?"
+      },
+      {
+        "pecas": [
+          "我",
+          "对不起",
+          "知道",
+          "不"
+        ],
+        "respostas": [
+          "对不起，我不知道。"
+        ],
+        "pinyin": "Duìbuqǐ, wǒ bù zhīdào.",
+        "pt": "Desculpe, eu não sei."
+      },
+      {
+        "pecas": [
+          "那儿",
+          "餐厅",
+          "学生",
+          "在"
+        ],
+        "respostas": [
+          "学生餐厅在那儿。"
+        ],
+        "pinyin": "Xuésheng cāntīng zài nàr.",
+        "pt": "O refeitório dos alunos fica ali."
+      },
+      {
+        "pecas": [
+          "老师",
+          "在",
+          "宿舍",
+          "哪儿"
+        ],
+        "respostas": [
+          "老师宿舍在哪儿？"
+        ],
+        "pinyin": "Lǎoshī sùshè zài nǎr?",
+        "pt": "Onde fica o dormitório dos professores?"
+      },
+      {
+        "pecas": [
+          "了",
+          "来",
+          "对不起",
+          "我",
+          "晚"
+        ],
+        "respostas": [
+          "对不起，我来晚了。"
+        ],
+        "pinyin": "Duìbuqǐ, wǒ lái wǎn le.",
+        "pt": "Desculpe, cheguei atrasado."
+      }
+    ]
+  },
+  {
+    "id": "c05-caca",
+    "capitulo": "cap5",
+    "ordem": 3,
+    "tipo": "caca",
+    "titulo": "Ache os componentes",
+    "resumo": "Um quadro: 贝 da concha ou 见 do ver",
+    "origem": "Huawen · B1 Ideogram Recognition Exercise",
+    "itens": [
+      {
+        "alvos": [
+          "贝",
+          "见"
+        ],
+        "pinyin": "bèi · jiàn",
+        "pt": "concha · ver",
+        "componentes": true,
+        "quadro": [
+          "贵现财观觉视账舰呗狈",
+          "钡贤蚬苋则员负规砚坝",
+          "枧败贩购笕宽览贴觌货"
+        ],
+        "marcas": [
+          "ababbbabaa",
+          "aabbaaabba",
+          "baaabbbaba"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c05-leitura",
+    "capitulo": "cap5",
+    "ordem": 4,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Um diálogo, um texto e seis afirmações",
+    "origem": "Huawen · B1 Reading Comprehension Exercise",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "dialogo": [
+        {
+          "quem": "A",
+          "texto": "小明！欢迎，欢迎！请进。你好吗？"
+        },
+        {
+          "quem": "B",
+          "texto": "我很好！老马，这是我的老师。"
+        },
+        {
+          "quem": "A",
+          "texto": "您好！请问，您贵姓？"
+        },
+        {
+          "quem": "C",
+          "texto": "我姓李。很高兴认识您。"
+        },
+        {
+          "quem": "A",
+          "texto": "李老师，认识您我也很高兴！"
+        },
+        {
+          "quem": "C",
+          "texto": "您是哪国人？"
+        },
+        {
+          "quem": "A",
+          "texto": "我是巴西人。"
+        },
+        {
+          "quem": "C",
+          "texto": "是吗？我学习葡萄牙语！"
+        },
+        {
+          "quem": "A",
+          "texto": "哈哈，您学习葡萄牙语，我学习汉语。"
+        },
+        {
+          "quem": "B",
+          "texto": "老马，你也是老师吗？"
+        },
+        {
+          "quem": "A",
+          "texto": "对。我是葡萄牙语老师。我的学生都是巴西人。"
+        },
+        {
+          "quem": "C",
+          "texto": "马老师，我是汉语老师。"
+        },
+        {
+          "quem": "A",
+          "texto": "是吗？我们可以学习汉语吗？"
+        },
+        {
+          "quem": "C",
+          "texto": "可以。也可以学习葡萄牙语啊！"
+        },
+        {
+          "quem": "A",
+          "texto": "好！谢谢您！"
+        },
+        {
+          "quem": "C",
+          "texto": "不谢。"
+        }
+      ],
+      "texto": "小明、老马是好朋友。小明和他的老师来老马的宿舍。小明的老师姓李。她学习葡萄牙语，是中国人。她是汉语老师。老马也是老师。他是葡萄牙语老师，是巴西人。他的学生也都是巴西人。他学习汉语。李老师问老马他们可以不可以学习葡萄牙语。老马说可以。他们很高兴。"
+    },
+    "glossario": [
+      {
+        "hanzi": "欢迎",
+        "pinyin": "huānyíng",
+        "pt": "bem-vindo"
+      },
+      {
+        "hanzi": "李",
+        "pinyin": "Lǐ",
+        "pt": "sobrenome"
+      },
+      {
+        "hanzi": "葡萄牙语",
+        "pinyin": "Pútáoyáyǔ",
+        "pt": "português"
+      },
+      {
+        "hanzi": "哈哈",
+        "pinyin": "hāha",
+        "pt": "haha"
+      },
+      {
+        "hanzi": "对",
+        "pinyin": "duì",
+        "pt": "certo"
+      },
+      {
+        "hanzi": "啊",
+        "pinyin": "a",
+        "pt": "exclamação"
+      },
+      {
+        "hanzi": "不谢",
+        "pinyin": "bú xiè",
+        "pt": "de nada"
+      },
+      {
+        "hanzi": "说",
+        "pinyin": "shuō",
+        "pt": "falar"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "A的老师姓马。",
+        "resposta": "F",
+        "pinyin": "A de lǎoshī xìng Mǎ.",
+        "pt": "O professor de A se chama Ma.",
+        "por": "A 是老马。小明的老师姓李。"
+      },
+      {
+        "afirmacao": "A姓马。",
+        "resposta": "V",
+        "pinyin": "A xìng Mǎ.",
+        "pt": "O sobrenome de A é Ma.",
+        "por": "B：老马，这是我的老师。"
+      },
+      {
+        "afirmacao": "小明认识李老师。",
+        "resposta": "V",
+        "pinyin": "Xiǎomíng rènshi Lǐ lǎoshī.",
+        "pt": "Xiaoming conhece a professora Li.",
+        "por": "老马，这是我的老师。"
+      },
+      {
+        "afirmacao": "老马是巴西人。",
+        "resposta": "V",
+        "pinyin": "Lǎo Mǎ shì Bāxī rén.",
+        "pt": "Lao Ma é brasileiro.",
+        "por": "我是巴西人。"
+      },
+      {
+        "afirmacao": "老马学习葡萄牙语。",
+        "resposta": "F",
+        "pinyin": "Lǎo Mǎ xuéxí Pútáoyáyǔ.",
+        "pt": "Lao Ma estuda português.",
+        "por": "他学习汉语。"
+      },
+      {
+        "afirmacao": "老马也是老师。",
+        "resposta": "V",
+        "pinyin": "Lǎo Mǎ yě shì lǎoshī.",
+        "pt": "Lao Ma também é professor.",
+        "por": "老马也是老师。"
+      }
+    ]
+  },
+  {
+    "id": "c05-traducao",
+    "capitulo": "cap5",
+    "ordem": 5,
+    "tipo": "traducao",
+    "titulo": "Traduza o diálogo",
+    "resumo": "Sete falas: 欢迎, 学校 e 在",
+    "origem": "Huawen · B1 Exercise Translation",
+    "itens": [
+      {
+        "quem": "A",
+        "pt": "Bem-vindo, Ma Dawei! Por favor, entre.",
+        "respostas": [
+          "欢迎，马大为！请进。",
+          "马大为，欢迎！请进。"
+        ],
+        "pinyin": "Huānyíng, Mǎ Dàwéi! Qǐng jìn."
+      },
+      {
+        "quem": "B",
+        "pt": "Obrigado! Este é meu professor.",
+        "respostas": [
+          "谢谢！这是我的老师。",
+          "谢谢！这是我老师。"
+        ],
+        "pinyin": "Xièxie! Zhè shì wǒ de lǎoshī."
+      },
+      {
+        "quem": "A",
+        "pt": "Muito prazer! Onde fica sua escola?",
+        "respostas": [
+          "认识您很高兴！您的学校在哪儿？",
+          "很高兴认识您！您的学校在哪儿？"
+        ],
+        "pinyin": "Rènshi nín hěn gāoxìng! Nín de xuéxiào zài nǎr?"
+      },
+      {
+        "quem": "C",
+        "pt": "Minha escola fica no Brasil.",
+        "respostas": [
+          "我的学校在巴西。"
+        ],
+        "pinyin": "Wǒ de xuéxiào zài Bāxī."
+      },
+      {
+        "quem": "A",
+        "pt": "A casa da minha mãe também é no Brasil.",
+        "respostas": [
+          "我妈妈的家也在巴西。"
+        ],
+        "pinyin": "Wǒ māma de jiā yě zài Bāxī."
+      },
+      {
+        "quem": "C",
+        "pt": "Ela está lá?",
+        "respostas": [
+          "她在那儿吗？"
+        ],
+        "pinyin": "Tā zài nàr ma?"
+      },
+      {
+        "quem": "A",
+        "pt": "Está, e meu pai também.",
+        "respostas": [
+          "在，我爸爸也在。"
+        ],
+        "pinyin": "Zài, wǒ bàba yě zài."
+      }
+    ]
+  },
+  {
+    "id": "c05-corrigir",
+    "capitulo": "cap5",
+    "ordem": 6,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Oito frases: 哪儿, 那儿 e o 的",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "哪儿他在？",
+        "respostas": [
+          "他在哪儿？"
+        ],
+        "pinyin": "Tā zài nǎr?",
+        "nota": "A pergunta fica no lugar da resposta: 他在哪儿？ como 他在宿舍。"
+      },
+      {
+        "errada": "王小云在那学院。",
+        "respostas": [
+          "王小云在学院。"
+        ],
+        "pinyin": "Wáng Xiǎoyún zài xuéyuàn.",
+        "nota": "那 sobra: 在 já leva direto ao lugar."
+      },
+      {
+        "errada": "他宿舍不在三层。",
+        "respostas": [
+          "他的宿舍不在三层。"
+        ],
+        "pinyin": "Tā de sùshè bú zài sān céng.",
+        "nota": "Coisa que é dele pede 的: 他的宿舍."
+      },
+      {
+        "errada": "请问，你妈妈在哪？",
+        "respostas": [
+          "请问，你妈妈在哪儿？"
+        ],
+        "pinyin": "Qǐngwèn, nǐ māma zài nǎr?",
+        "nota": "Para lugar é 哪儿, com 儿."
+      },
+      {
+        "errada": "男学生不在哪儿。",
+        "respostas": [
+          "男学生不在那儿。"
+        ],
+        "pinyin": "Nán xuésheng bú zài nàr.",
+        "nota": "哪儿 pergunta onde; 那儿 é ali. A frase afirma: 那儿."
+      },
+      {
+        "errada": "餐厅学生很大。",
+        "respostas": [
+          "学生餐厅很大。"
+        ],
+        "pinyin": "Xuésheng cāntīng hěn dà.",
+        "nota": "O que qualifica vem antes: 学生餐厅."
+      },
+      {
+        "errada": "我妈妈老师不是巴西人。",
+        "respostas": [
+          "我妈妈的老师不是巴西人。"
+        ],
+        "pinyin": "Wǒ māma de lǎoshī bú shì Bāxī rén.",
+        "nota": "O professor da mãe: falta o 的 entre os dois."
+      },
+      {
+        "errada": "宿舍老师在那儿。",
+        "respostas": [
+          "老师宿舍在那儿。"
+        ],
+        "pinyin": "Lǎoshī sùshè zài nàr.",
+        "nota": "O que qualifica vem antes: 老师宿舍 = dormitório dos professores."
+      }
+    ]
+  },
+  {
+    "id": "c05-silabas-1",
+    "capitulo": "cap5",
+    "ordem": 7,
+    "tipo": "silabas",
+    "titulo": "Separe as sílabas 1",
+    "resumo": "Palavras 1 a 15: corte sílaba, inicial e final",
+    "origem": "Huawen · B1 Exercise Syllable Separation",
+    "itens": [
+      {
+        "texto": "jīnglǐ",
+        "corte": "j|īng/l|ǐ"
+      },
+      {
+        "texto": "duōme",
+        "corte": "d|uō/m|e"
+      },
+      {
+        "texto": "dāngrán",
+        "corte": "d|āng/r|án"
+      },
+      {
+        "texto": "guǒzhī",
+        "corte": "g|uǒ/zh|ī"
+      },
+      {
+        "texto": "péngyou",
+        "corte": "p|éng/y|ou"
+      },
+      {
+        "texto": "yuányīn",
+        "corte": "y|uán/y|īn"
+      },
+      {
+        "texto": "rénwù",
+        "corte": "r|én/w|ù"
+      },
+      {
+        "texto": "jiārén",
+        "corte": "j|iā/r|én"
+      },
+      {
+        "texto": "fāzhǎn",
+        "corte": "f|ā/zh|ǎn"
+      },
+      {
+        "texto": "kāishǐ",
+        "corte": "k|āi/sh|ǐ"
+      },
+      {
+        "texto": "déjiǎng",
+        "corte": "d|é/j|iǎng"
+      },
+      {
+        "texto": "lùshang",
+        "corte": "l|ù/sh|ang"
+      },
+      {
+        "texto": "shēnghuó",
+        "corte": "sh|ēng/h|uó"
+      },
+      {
+        "texto": "huǒyàn",
+        "corte": "h|uǒ/y|àn"
+      },
+      {
+        "texto": "gǔzhēng",
+        "corte": "g|ǔ/zh|ēng"
+      }
+    ]
+  },
+  {
+    "id": "c05-silabas-2",
+    "capitulo": "cap5",
+    "ordem": 8,
+    "tipo": "silabas",
+    "titulo": "Separe as sílabas 2",
+    "resumo": "Palavras 16 a 30: corte sílaba, inicial e final",
+    "origem": "Huawen · B1 Exercise Syllable Separation",
+    "itens": [
+      {
+        "texto": "rìjì",
+        "corte": "r|ì/j|ì"
+      },
+      {
+        "texto": "mǎshàng",
+        "corte": "m|ǎ/sh|àng"
+      },
+      {
+        "texto": "chēwèi",
+        "corte": "ch|ē/w|èi"
+      },
+      {
+        "texto": "guǒshí",
+        "corte": "g|uǒ/sh|í"
+      },
+      {
+        "texto": "sīniàn",
+        "corte": "s|ī/n|iàn"
+      },
+      {
+        "texto": "míngnián",
+        "corte": "m|íng/n|ián"
+      },
+      {
+        "texto": "jiérì",
+        "corte": "j|ié/r|ì"
+      },
+      {
+        "texto": "chūyǎn",
+        "corte": "ch|ū/y|ǎn"
+      },
+      {
+        "texto": "lìzhī",
+        "corte": "l|ì/zh|ī"
+      },
+      {
+        "texto": "lājī",
+        "corte": "l|ā/j|ī"
+      },
+      {
+        "texto": "lèyì",
+        "corte": "l|è/y|ì"
+      },
+      {
+        "texto": "huǒjī",
+        "corte": "h|uǒ/j|ī"
+      },
+      {
+        "texto": "kěnéng",
+        "corte": "k|ě/n|éng"
+      },
+      {
+        "texto": "lǐmào",
+        "corte": "l|ǐ/m|ào"
+      },
+      {
+        "texto": "huàxué",
+        "corte": "h|uà/x|ué"
+      }
+    ]
+  },
+  {
+    "id": "c05-silabas-3",
+    "capitulo": "cap5",
+    "ordem": 9,
+    "tipo": "silabas",
+    "titulo": "Separe as sílabas 3",
+    "resumo": "Palavras 31 a 44: corte sílaba, inicial e final",
+    "origem": "Huawen · B1 Exercise Syllable Separation",
+    "itens": [
+      {
+        "texto": "défēn",
+        "corte": "d|é/f|ēn"
+      },
+      {
+        "texto": "yěxǔ",
+        "corte": "y|ě/x|ǔ"
+      },
+      {
+        "texto": "dòngwù",
+        "corte": "d|òng/w|ù"
+      },
+      {
+        "texto": "rùxué",
+        "corte": "r|ù/x|ué"
+      },
+      {
+        "texto": "guāfēng",
+        "corte": "g|uā/f|ēng"
+      },
+      {
+        "texto": "dòujiāng",
+        "corte": "d|òu/j|iāng"
+      },
+      {
+        "texto": "hūrán",
+        "corte": "h|ū/r|án"
+      },
+      {
+        "texto": "bāngmáng",
+        "corte": "b|āng/m|áng"
+      },
+      {
+        "texto": "wǒfāng",
+        "corte": "w|ǒ/f|āng"
+      },
+      {
+        "texto": "jièshào",
+        "corte": "j|iè/sh|ào"
+      },
+      {
+        "texto": "huǒrè",
+        "corte": "h|uǒ/r|è"
+      },
+      {
+        "texto": "dàngāo",
+        "corte": "d|àn/g|āo"
+      },
+      {
+        "texto": "máyào",
+        "corte": "m|á/y|ào"
+      },
+      {
+        "texto": "cāmǒ",
+        "corte": "c|ā/m|ǒ"
+      }
+    ]
+  },
+  {
+    "id": "c05-silabas-4",
+    "capitulo": "cap5",
+    "ordem": 10,
+    "tipo": "silabas",
+    "titulo": "Separe as sílabas 4",
+    "resumo": "Palavras 45 a 58: corte sílaba, inicial e final",
+    "origem": "Huawen · B1 Exercise Syllable Separation",
+    "itens": [
+      {
+        "texto": "cháwǎn",
+        "corte": "ch|á/w|ǎn"
+      },
+      {
+        "texto": "suīrán",
+        "corte": "s|uī/r|án"
+      },
+      {
+        "texto": "shuōxiào",
+        "corte": "sh|uō/x|iào"
+      },
+      {
+        "texto": "xǐwǎn",
+        "corte": "x|ǐ/w|ǎn"
+      },
+      {
+        "texto": "qūfēn",
+        "corte": "q|ū/f|ēn"
+      },
+      {
+        "texto": "láixìn",
+        "corte": "l|ái/x|ìn"
+      },
+      {
+        "texto": "mòwěi",
+        "corte": "m|ò/w|ěi"
+      },
+      {
+        "texto": "mǎnǎo",
+        "corte": "m|ǎ/n|ǎo"
+      },
+      {
+        "texto": "hēifà",
+        "corte": "h|ēi/f|à"
+      },
+      {
+        "texto": "gūniang",
+        "corte": "g|ū/n|iang"
+      },
+      {
+        "texto": "yínháng",
+        "corte": "y|ín/h|áng"
+      },
+      {
+        "texto": "rèmén",
+        "corte": "r|è/m|én"
+      },
+      {
+        "texto": "chēzhàn",
+        "corte": "ch|ē/zh|àn"
+      },
+      {
+        "texto": "bùmén",
+        "corte": "b|ù/m|én"
+      }
+    ]
+  },
+  {
+    "id": "c06-ordenar",
+    "capitulo": "cap6",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Dez frases com 去, 怎么样 e 恐怕不行",
+    "origem": "Huawen · B1 Organizing Sentences Exercise",
+    "itens": [
+      {
+        "pecas": [
+          "妈妈",
+          "游泳",
+          "今天",
+          "爸爸",
+          "去",
+          "我",
+          "都"
+        ],
+        "respostas": [
+          "我爸爸、妈妈都今天去游泳。",
+          "我爸爸、妈妈今天都去游泳。"
+        ],
+        "pinyin": "Wǒ bàba、māma jīntiān dōu qù yóuyǒng.",
+        "pt": "Meu pai e minha mãe vão nadar hoje."
+      },
+      {
+        "pecas": [
+          "很",
+          "昨天",
+          "有",
+          "京剧",
+          "意思",
+          "的"
+        ],
+        "respostas": [
+          "昨天的京剧很有意思。"
+        ],
+        "pinyin": "Zuótiān de jīngjù hěn yǒu yìsi.",
+        "pt": "A ópera de ontem foi muito interessante."
+      },
+      {
+        "pecas": [
+          "说",
+          "对不起",
+          "一遍",
+          "再",
+          "请"
+        ],
+        "respostas": [
+          "对不起，请再说一遍。"
+        ],
+        "pinyin": "Duìbuqǐ, qǐng zài shuō yí biàn.",
+        "pt": "Desculpe, pode repetir, por favor?"
+      },
+      {
+        "pecas": [
+          "吗",
+          "去",
+          "我们",
+          "好",
+          "打球"
+        ],
+        "respostas": [
+          "我们去打球，好吗？"
+        ],
+        "pinyin": "Wǒmen qù dǎ qiú, hǎo ma?",
+        "pt": "Vamos jogar bola?"
+      },
+      {
+        "pecas": [
+          "不",
+          "很",
+          "行",
+          "恐怕",
+          "抱歉"
+        ],
+        "respostas": [
+          "很抱歉，恐怕不行。"
+        ],
+        "pinyin": "Hěn bàoqiàn, kǒngpà bù xíng.",
+        "pt": "Sinto muito, acho que não vai dar."
+      },
+      {
+        "pecas": [
+          "时间",
+          "今天",
+          "有",
+          "你",
+          "吗"
+        ],
+        "respostas": [
+          "你今天有时间吗？"
+        ],
+        "pinyin": "Nǐ jīntiān yǒu shíjiān ma?",
+        "pt": "Você tem tempo hoje?"
+      },
+      {
+        "pecas": [
+          "没",
+          "他",
+          "去",
+          "有",
+          "时间",
+          "打球"
+        ],
+        "respostas": [
+          "他没有时间去打球。"
+        ],
+        "pinyin": "Tā méiyǒu shíjiān qù dǎ qiú.",
+        "pt": "Ele não tem tempo de ir jogar bola."
+      },
+      {
+        "pecas": [
+          "昨天",
+          "宿舍",
+          "我",
+          "在"
+        ],
+        "respostas": [
+          "我昨天在宿舍。",
+          "昨天我在宿舍。"
+        ],
+        "pinyin": "Wǒ zuótiān zài sùshè.",
+        "pt": "Ontem eu estava no dormitório."
+      },
+      {
+        "pecas": [
+          "哪儿",
+          "去",
+          "明天",
+          "你",
+          "要"
+        ],
+        "respostas": [
+          "你明天要去哪儿？",
+          "明天你要去哪儿？"
+        ],
+        "pinyin": "Nǐ míngtiān yào qù nǎr?",
+        "pt": "Aonde você vai amanhã?"
+      },
+      {
+        "pecas": [
+          "天气",
+          "怎么",
+          "今天",
+          "样"
+        ],
+        "respostas": [
+          "今天天气怎么样？"
+        ],
+        "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+        "pt": "Como está o tempo hoje?"
+      }
+    ]
+  },
+  {
+    "id": "c06-conte",
+    "capitulo": "cap6",
+    "ordem": 2,
+    "tipo": "contar",
+    "titulo": "Quantos são diferentes?",
+    "resumo": "Um quadro de parecidos: 禾 天 大 夫 犬 太…",
+    "origem": "Huawen · B1 Ideogram Recognition Exercise",
+    "glossario": [
+      {
+        "hanzi": "禾",
+        "pinyin": "hé",
+        "pt": "pé de arroz"
+      },
+      {
+        "hanzi": "天",
+        "pinyin": "tiān",
+        "pt": "dia, céu"
+      },
+      {
+        "hanzi": "大",
+        "pinyin": "dà",
+        "pt": "grande"
+      },
+      {
+        "hanzi": "夫",
+        "pinyin": "fū",
+        "pt": "marido, homem adulto"
+      },
+      {
+        "hanzi": "犬",
+        "pinyin": "quǎn",
+        "pt": "cachorro"
+      },
+      {
+        "hanzi": "太",
+        "pinyin": "tài",
+        "pt": "demais, extremamente"
+      },
+      {
+        "hanzi": "夭",
+        "pinyin": "yāo",
+        "pt": "morrer jovem"
+      },
+      {
+        "hanzi": "未",
+        "pinyin": "wèi",
+        "pt": "não"
+      },
+      {
+        "hanzi": "末",
+        "pinyin": "mò",
+        "pt": "ponta, fim"
+      },
+      {
+        "hanzi": "木",
+        "pinyin": "mù",
+        "pt": "madeira"
+      },
+      {
+        "hanzi": "丈",
+        "pinyin": "zhàng",
+        "pt": "marido"
+      }
+    ],
+    "itens": [
+      {
+        "quadro": [
+          "禾天大夫犬太夭未大夫",
+          "末太犬木夫丈天大夫末",
+          "大犬禾末大犬天太丈木",
+          "未木太丈夫犬大大丈天",
+          "天夫丈大太木未禾太丈"
+        ],
+        "resposta": "11"
+      }
+    ]
+  },
+  {
+    "id": "c06-leitura",
+    "capitulo": "cap6",
+    "ordem": 3,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Dois diálogos, um texto e cinco afirmações",
+    "origem": "Huawen · B1 Reading Comprehension Exercise",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "dialogo": [
+        {
+          "quem": "A",
+          "texto": "小云，这是安娜。她是我的好朋友。"
+        },
+        {
+          "quem": "B",
+          "texto": "安娜，你怎么样？"
+        },
+        {
+          "quem": "C",
+          "texto": "我很好。你呢？"
+        },
+        {
+          "quem": "B",
+          "texto": "也很好。安娜，今天林娜和我去游泳。你也要去吗？"
+        },
+        {
+          "quem": "C",
+          "texto": "今天天气不太好。我们今天去看京剧，明天去游泳，怎么样？"
+        },
+        {
+          "quem": "B",
+          "texto": "京剧有意思吗？"
+        },
+        {
+          "quem": "C",
+          "texto": "很有意思！"
+        },
+        {
+          "quem": "B",
+          "texto": "太好了！我们也可以请力波、陆雨平去吗？"
+        },
+        {
+          "quem": "C",
+          "texto": "可以。"
+        },
+        {
+          "texto": "—"
+        },
+        {
+          "quem": "B",
+          "texto": "雨平，我们要请你和力波去看京剧。你说怎么样？"
+        },
+        {
+          "quem": "A",
+          "texto": "你们什么时候去看京剧？"
+        },
+        {
+          "quem": "B",
+          "texto": "现在去。"
+        },
+        {
+          "quem": "A",
+          "texto": "对不起，请再说一遍。"
+        },
+        {
+          "quem": "B",
+          "texto": "我们现在去看京剧，好吗？"
+        },
+        {
+          "quem": "A",
+          "texto": "啊，很抱歉，恐怕不行。现在我和力波去打球。谢谢你。"
+        },
+        {
+          "quem": "B",
+          "texto": "没关系。再见！"
+        }
+      ],
+      "texto": "王小云和林娜今天要去游泳，可是天气不太好。安娜今天要看京剧。今天她们都去看京剧，明天去游泳。王小云请陆雨平和力波也去，可是今天不行，他们去打球。"
+    },
+    "glossario": [
+      {
+        "hanzi": "安娜",
+        "pinyin": "Ānnà",
+        "pt": "Ana"
+      },
+      {
+        "hanzi": "看",
+        "pinyin": "kàn",
+        "pt": "ver"
+      },
+      {
+        "hanzi": "可是",
+        "pinyin": "kěshì",
+        "pt": "mas"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "看京剧没有意思。",
+        "resposta": "F",
+        "pinyin": "Kàn jīngjù méiyǒu yìsi.",
+        "pt": "Ver ópera de Pequim não tem graça.",
+        "por": "京剧有意思吗？——很有意思！"
+      },
+      {
+        "afirmacao": "今天林娜、王小云、安娜都去游泳。",
+        "resposta": "F",
+        "pinyin": "Jīntiān Lín Nà、Wáng Xiǎoyún、Ānnà dōu qù yóuyǒng.",
+        "pt": "Hoje Lin Na, Wang Xiaoyun e Ana vão nadar.",
+        "por": "今天她们都去看京剧，明天去游泳。(O gabarito do professor marca V.)"
+      },
+      {
+        "afirmacao": "力波明天去打球。",
+        "resposta": "F",
+        "pinyin": "Lìbō míngtiān qù dǎ qiú.",
+        "pt": "Libo vai jogar bola amanhã.",
+        "por": "现在我和力波去打球。É hoje, agora."
+      },
+      {
+        "afirmacao": "陆雨平也去看京剧。",
+        "resposta": "F",
+        "pinyin": "Lù Yǔpíng yě qù kàn jīngjù.",
+        "pt": "Lu Yuping também vai ver a ópera.",
+        "por": "可是今天不行，他们去打球。"
+      },
+      {
+        "afirmacao": "今天天气很好。",
+        "resposta": "F",
+        "pinyin": "Jīntiān tiānqì hěn hǎo.",
+        "pt": "Hoje o tempo está ótimo.",
+        "por": "今天天气不太好。"
+      }
+    ]
+  },
+  {
+    "id": "c06-traducao",
+    "capitulo": "cap6",
+    "ordem": 4,
+    "tipo": "traducao",
+    "titulo": "Traduza o diálogo",
+    "resumo": "Dez falas: 怎么样, 再说一遍, 恐怕不行",
+    "origem": "Huawen · B1 Translation Exercise",
+    "itens": [
+      {
+        "quem": "A",
+        "pt": "Libo, que tal irmos para a faculdade estudar chinês?",
+        "respostas": [
+          "力波，我们去学院学习汉语，怎么样？"
+        ],
+        "pinyin": "Lìbō, wǒmen qù xuéyuàn xuéxí Hànyǔ, zěnmeyàng?"
+      },
+      {
+        "quem": "B",
+        "pt": "Desculpa, você pode repetir, por favor?",
+        "respostas": [
+          "对不起，请再说一遍。"
+        ],
+        "pinyin": "Duìbuqǐ, qǐng zài shuō yí biàn."
+      },
+      {
+        "quem": "A",
+        "pt": "Vamos para a faculdade estudar chinês?",
+        "respostas": [
+          "我们去学院学习汉语，好吗？"
+        ],
+        "pinyin": "Wǒmen qù xuéyuàn xuéxí Hànyǔ, hǎo ma?"
+      },
+      {
+        "quem": "B",
+        "pt": "Tudo bem. Quando você quer ir?",
+        "respostas": [
+          "好。你什么时候要去？",
+          "好。你什么时候去？",
+          "好。你要什么时候去？"
+        ],
+        "pinyin": "Hǎo. Nǐ shénme shíhou yào qù?"
+      },
+      {
+        "quem": "A",
+        "pt": "Podemos ir agora?",
+        "respostas": [
+          "我们现在去，可以吗？",
+          "我们可以现在去吗？"
+        ],
+        "pinyin": "Wǒmen xiànzài qù, kěyǐ ma?"
+      },
+      {
+        "quem": "B",
+        "pt": "Sinto muito, agora eu estou ocupado. Acho que não vai dar...",
+        "respostas": [
+          "很抱歉，我现在很忙，恐怕不行。"
+        ],
+        "pinyin": "Hěn bàoqiàn, wǒ xiànzài hěn máng, kǒngpà bù xíng."
+      },
+      {
+        "quem": "A",
+        "pt": "Que tal amanhã?",
+        "respostas": [
+          "明天怎么样？"
+        ],
+        "pinyin": "Míngtiān zěnmeyàng?"
+      },
+      {
+        "quem": "B",
+        "pt": "Amanhã dá.",
+        "respostas": [
+          "明天行。",
+          "明天可以。"
+        ],
+        "pinyin": "Míngtiān xíng."
+      },
+      {
+        "quem": "A",
+        "pt": "OK, até amanhã!",
+        "respostas": [
+          "好，明天见！"
+        ],
+        "pinyin": "Hǎo, míngtiān jiàn!"
+      },
+      {
+        "quem": "B",
+        "pt": "Até amanhã!",
+        "respostas": [
+          "明天见！"
+        ],
+        "pinyin": "Míngtiān jiàn!"
+      }
+    ]
+  },
+  {
+    "id": "c06-corrigir",
+    "capitulo": "cap6",
+    "ordem": 5,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Dez frases: o tempo vem antes do verbo",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "我们去游泳今天。",
+        "respostas": [
+          "我们今天去游泳。",
+          "今天我们去游泳。"
+        ],
+        "pinyin": "Wǒmen jīntiān qù yóuyǒng.",
+        "nota": "O quando vem antes do verbo: 今天去."
+      },
+      {
+        "errada": "请说一遍再。",
+        "respostas": [
+          "请再说一遍。"
+        ],
+        "pinyin": "Qǐng zài shuō yí biàn.",
+        "nota": "再 vem antes do verbo: 再说."
+      },
+      {
+        "errada": "怎么样我们现在去京剧？",
+        "respostas": [
+          "我们现在去京剧，怎么样？"
+        ],
+        "pinyin": "Wǒmen xiànzài qù jīngjù, zěnmeyàng?",
+        "nota": "怎么样 fecha a proposta, no fim."
+      },
+      {
+        "errada": "你们去什么时候打球？",
+        "respostas": [
+          "你们什么时候去打球？"
+        ],
+        "pinyin": "Nǐmen shénme shíhou qù dǎ qiú?",
+        "nota": "什么时候 vem antes do verbo, no lugar do 今天."
+      },
+      {
+        "errada": "明天的京剧很意思。",
+        "respostas": [
+          "明天的京剧很有意思。"
+        ],
+        "pinyin": "Míngtiān de jīngjù hěn yǒu yìsi.",
+        "nota": "Interessante é 有意思: falta o 有."
+      },
+      {
+        "errada": "我不有时间。",
+        "respostas": [
+          "我没有时间。"
+        ],
+        "pinyin": "Wǒ méiyǒu shíjiān.",
+        "nota": "有 se nega com 没, nunca com 不."
+      },
+      {
+        "errada": "他们去中国明天。",
+        "respostas": [
+          "他们明天去中国。",
+          "明天他们去中国。"
+        ],
+        "pinyin": "Tāmen míngtiān qù Zhōngguó.",
+        "nota": "O quando vem antes do verbo: 明天去."
+      },
+      {
+        "errada": "我们在现在学校。",
+        "respostas": [
+          "我们现在在学校。",
+          "现在我们在学校。"
+        ],
+        "pinyin": "Wǒmen xiànzài zài xuéxiào.",
+        "nota": "现在 vem antes do 在."
+      },
+      {
+        "errada": "你们去游泳什么时候？",
+        "respostas": [
+          "你们什么时候去游泳？"
+        ],
+        "pinyin": "Nǐmen shénme shíhou qù yóuyǒng?",
+        "nota": "什么时候 vem antes do verbo."
+      },
+      {
+        "errada": "我们去游泳现在，怎么样？",
+        "respostas": [
+          "我们现在去游泳，怎么样？"
+        ],
+        "pinyin": "Wǒmen xiànzài qù yóuyǒng, zěnmeyàng?",
+        "nota": "现在 vem antes do verbo."
+      }
+    ]
+  },
+  {
+    "id": "c07-ordenar",
+    "capitulo": "cap7",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Dez frases: 一下, 的 e a pergunta 学不学",
+    "origem": "Huawen · B1 Organizing Sentences Exercise",
+    "itens": [
+      {
+        "pecas": [
+          "学习",
+          "你",
+          "专业",
+          "学习",
+          "不",
+          "美术"
+        ],
+        "respostas": [
+          "你学习不学习美术专业？"
+        ],
+        "pinyin": "Nǐ xuéxí bu xuéxí měishù zhuānyè?",
+        "pt": "Você estuda ou não estuda artes plásticas?"
+      },
+      {
+        "pecas": [
+          "说",
+          "我们",
+          "好",
+          "中文",
+          "吗",
+          "一下"
+        ],
+        "respostas": [
+          "我们说一下中文，好吗？"
+        ],
+        "pinyin": "Wǒmen shuō yíxià Zhōngwén, hǎo ma?",
+        "pt": "Vamos falar um pouco de chinês?"
+      },
+      {
+        "pecas": [
+          "看",
+          "名片",
+          "这",
+          "你",
+          "是",
+          "的",
+          "我"
+        ],
+        "respostas": [
+          "你看，这是我的名片。"
+        ],
+        "pinyin": "Nǐ kàn, zhè shì wǒ de míngpiàn.",
+        "pt": "Olha, este é o meu cartão de visita."
+      },
+      {
+        "pecas": [
+          "语言",
+          "他",
+          "教授",
+          "学院",
+          "是",
+          "的"
+        ],
+        "respostas": [
+          "他是语言学院的教授。"
+        ],
+        "pinyin": "Tā shì yǔyán xuéyuàn de jiàoshòu.",
+        "pt": "Ele é professor da faculdade de línguas."
+      },
+      {
+        "pecas": [
+          "不",
+          "爸爸",
+          "我",
+          "妈妈",
+          "都",
+          "中国人",
+          "是"
+        ],
+        "respostas": [
+          "我爸爸、妈妈都不是中国人。",
+          "我爸爸、妈妈不都是中国人。"
+        ],
+        "pinyin": "Wǒ bàba、māma dōu bú shì Zhōngguó rén.",
+        "pt": "Nem meu pai nem minha mãe são chineses."
+      },
+      {
+        "pecas": [
+          "的",
+          "都",
+          "我们",
+          "系",
+          "是",
+          "汉语",
+          "也",
+          "学生"
+        ],
+        "respostas": [
+          "我们也都是汉语系的学生。"
+        ],
+        "pinyin": "Wǒmen yě dōu shì Hànyǔ xì de xuésheng.",
+        "pt": "Nós também somos todos alunos do departamento de chinês."
+      },
+      {
+        "pecas": [
+          "没",
+          "他",
+          "去",
+          "中文",
+          "有",
+          "时间",
+          "学"
+        ],
+        "respostas": [
+          "他没有时间去学中文。"
+        ],
+        "pinyin": "Tā méiyǒu shíjiān qù xué Zhōngwén.",
+        "pt": "Ele não tem tempo de ir estudar chinês."
+      },
+      {
+        "pecas": [
+          "认识",
+          "认识",
+          "我",
+          "中国",
+          "不",
+          "的",
+          "朋友",
+          "你"
+        ],
+        "respostas": [
+          "你认识不认识我的中国朋友？"
+        ],
+        "pinyin": "Nǐ rènshi bu rènshi wǒ de Zhōngguó péngyou?",
+        "pt": "Você conhece ou não conhece meu amigo chinês?"
+      },
+      {
+        "pecas": [
+          "他",
+          "教授",
+          "汉语",
+          "的",
+          "系",
+          "是",
+          "不"
+        ],
+        "respostas": [
+          "他不是汉语系的教授。"
+        ],
+        "pinyin": "Tā bú shì Hànyǔ xì de jiàoshòu.",
+        "pt": "Ele não é professor do departamento de chinês."
+      },
+      {
+        "pecas": [
+          "我们",
+          "一下",
+          "怎么样",
+          "今天",
+          "游",
+          "泳"
+        ],
+        "respostas": [
+          "我们今天游一下泳怎么样？",
+          "我们今天游一下泳，怎么样？"
+        ],
+        "pinyin": "Wǒmen jīntiān yóu yíxià yǒng zěnmeyàng?",
+        "pt": "Que tal nadarmos um pouco hoje?"
+      }
+    ]
+  },
+  {
+    "id": "c07-leitura",
+    "capitulo": "cap7",
+    "ordem": 2,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Um texto e cinco afirmações",
+    "origem": "Huawen · B1 Reading Comprehension Exercise",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "texto": "林娜昨天、今天都很好。今天天气也很好，丁力波请她去游泳。他们什么时候去游泳？不学习中文吗？他们现在去游泳，明天学一下中文。马大为不认识张老师。丁力波明天要介绍他们。张老师是中文老师。他也说葡萄牙语，很有意思。丁力波请张老师明天去打球，可是他明天太忙了，没有时间。"
+    },
+    "glossario": [
+      {
+        "hanzi": "葡萄牙语",
+        "pinyin": "Pútáoyáyǔ",
+        "pt": "português"
+      },
+      {
+        "hanzi": "可是",
+        "pinyin": "kěshì",
+        "pt": "mas"
+      },
+      {
+        "hanzi": "和",
+        "pinyin": "hé",
+        "pt": "e"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "林娜昨天不好。",
+        "resposta": "F",
+        "pinyin": "Lín Nà zuótiān bù hǎo.",
+        "pt": "Ontem a Lin Na não estava bem.",
+        "por": "林娜昨天、今天都很好。"
+      },
+      {
+        "afirmacao": "力波明天介绍大为和张老师。",
+        "resposta": "V",
+        "pinyin": "Lìbō míngtiān jièshào Dàwéi hé Zhāng lǎoshī.",
+        "pt": "Amanhã o Libo apresenta o Dawei e o professor Zhang.",
+        "por": "丁力波明天要介绍他们。"
+      },
+      {
+        "afirmacao": "张老师不说葡萄牙语。",
+        "resposta": "F",
+        "pinyin": "Zhāng lǎoshī bù shuō Pútáoyáyǔ.",
+        "pt": "O professor Zhang não fala português.",
+        "por": "他也说葡萄牙语。"
+      },
+      {
+        "afirmacao": "张老师明天没有时间。",
+        "resposta": "V",
+        "pinyin": "Zhāng lǎoshī míngtiān méiyǒu shíjiān.",
+        "pt": "O professor Zhang não tem tempo amanhã.",
+        "por": "他明天太忙了，没有时间。"
+      },
+      {
+        "afirmacao": "丁力波请张老师游泳。",
+        "resposta": "F",
+        "pinyin": "Dīng Lìbō qǐng Zhāng lǎoshī yóuyǒng.",
+        "pt": "Ding Libo convida o professor Zhang para nadar.",
+        "por": "丁力波请张老师明天去打球。"
+      }
+    ]
+  },
+  {
+    "id": "c07-traducao",
+    "capitulo": "cap7",
+    "ordem": 3,
+    "tipo": "traducao",
+    "titulo": "Traduza as frases",
+    "resumo": "Dez frases: 是不是, 不都, 一下",
+    "origem": "Huawen · B1 Translation Exercise",
+    "itens": [
+      {
+        "pt": "Ontem o clima não estava bom.",
+        "respostas": [
+          "昨天天气不好。",
+          "昨天天气不太好。"
+        ],
+        "pinyin": "Zuótiān tiānqì bù hǎo."
+      },
+      {
+        "pt": "Me desculpe! Eu não tenho tempo agora.",
+        "respostas": [
+          "对不起，我现在没有时间。",
+          "对不起！我现在没有时间。"
+        ],
+        "pinyin": "Duìbuqǐ, wǒ xiànzài méiyǒu shíjiān."
+      },
+      {
+        "pt": "Que tal tomarmos café?",
+        "respostas": [
+          "我们喝咖啡，怎么样？",
+          "我们喝咖啡怎么样？"
+        ],
+        "pinyin": "Wǒmen hē kāfēi, zěnmeyàng?"
+      },
+      {
+        "pt": "Meu mandarim não é bom. Repita, por favor.",
+        "respostas": [
+          "我的汉语不好，请再说一遍。",
+          "我的中文不好，请再说一遍。"
+        ],
+        "pinyin": "Wǒ de Hànyǔ bù hǎo, qǐng zài shuō yí biàn."
+      },
+      {
+        "pt": "Quando você vem para o Brasil?",
+        "respostas": [
+          "你什么时候来巴西？"
+        ],
+        "pinyin": "Nǐ shénme shíhou lái Bāxī?"
+      },
+      {
+        "pt": "Estudar chinês é muito interessante!",
+        "respostas": [
+          "学习中文很有意思！",
+          "学习汉语很有意思！",
+          "学中文很有意思！"
+        ],
+        "pinyin": "Xuéxí Zhōngwén hěn yǒu yìsi!"
+      },
+      {
+        "pt": "Você é ou não é estudante de mandarim?",
+        "respostas": [
+          "你是不是汉语学生？",
+          "你是不是中文学生？"
+        ],
+        "pinyin": "Nǐ shì bu shì Hànyǔ xuésheng?"
+      },
+      {
+        "pt": "Nem todos eles bebem café brasileiro.",
+        "respostas": [
+          "他们不都喝巴西咖啡。"
+        ],
+        "pinyin": "Tāmen bù dōu hē Bāxī kāfēi."
+      },
+      {
+        "pt": "Este é seu cartão de visitas? Deixe-me dar uma olhada.",
+        "respostas": [
+          "这是你的名片吗？我看一下。"
+        ],
+        "pinyin": "Zhè shì nǐ de míngpiàn ma? Wǒ kàn yíxià."
+      },
+      {
+        "pt": "Todos nós também somos brasileiros.",
+        "respostas": [
+          "我们也都是巴西人。"
+        ],
+        "pinyin": "Wǒmen yě dōu shì Bāxī rén."
+      }
+    ]
+  },
+  {
+    "id": "c07-corrigir",
+    "capitulo": "cap7",
+    "ordem": 4,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Dez frases: 一下, 是不是 sem 吗, 没有",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "林娜、力波都也高兴。",
+        "respostas": [
+          "林娜、力波也都很高兴。",
+          "林娜、力波也都高兴。"
+        ],
+        "pinyin": "Lín Nà、Lìbō yě dōu hěn gāoxìng.",
+        "nota": "Os dois juntos, a ordem é 也都."
+      },
+      {
+        "errada": "老师张有名片。",
+        "respostas": [
+          "张老师有名片。"
+        ],
+        "pinyin": "Zhāng lǎoshī yǒu míngpiàn.",
+        "nota": "O sobrenome vem antes do título: 张老师."
+      },
+      {
+        "errada": "我可以看名片一下吗？",
+        "respostas": [
+          "我可以看一下名片吗？"
+        ],
+        "pinyin": "Wǒ kěyǐ kàn yíxià míngpiàn ma?",
+        "nota": "一下 fica colado no verbo, antes do objeto: 看一下名片."
+      },
+      {
+        "errada": "他的明字叫大为。",
+        "respostas": [
+          "他的名字叫大为。"
+        ],
+        "pinyin": "Tā de míngzi jiào Dàwéi.",
+        "nota": "Nome é 名字; 明 (claro) é outro caractere."
+      },
+      {
+        "errada": "他学习不学习美术专业吗？",
+        "respostas": [
+          "他学习不学习美术专业？"
+        ],
+        "pinyin": "Tā xuéxí bu xuéxí měishù zhuānyè?",
+        "nota": "学习不学习 já é a pergunta: o 吗 sobra."
+      },
+      {
+        "errada": "语言学院是小。",
+        "respostas": [
+          "语言学院很小。"
+        ],
+        "pinyin": "Yǔyán xuéyuàn hěn xiǎo.",
+        "nota": "Adjetivo não leva 是: 很小."
+      },
+      {
+        "errada": "他的名字中文叫大为。",
+        "respostas": [
+          "他的中文名字叫大为。"
+        ],
+        "pinyin": "Tā de Zhōngwén míngzi jiào Dàwéi.",
+        "nota": "O que qualifica vem antes: 中文名字."
+      },
+      {
+        "errada": "我哥哥老师姓陈。",
+        "respostas": [
+          "我哥哥的老师姓陈。"
+        ],
+        "pinyin": "Wǒ gēge de lǎoshī xìng Chén.",
+        "nota": "O professor do irmão: falta o 的."
+      },
+      {
+        "errada": "你们什么时候开学吗？",
+        "respostas": [
+          "你们什么时候开学？"
+        ],
+        "pinyin": "Nǐmen shénme shíhou kāixué?",
+        "nota": "什么时候 já faz a pergunta: o 吗 sobra."
+      },
+      {
+        "errada": "他们不有中文名片。",
+        "respostas": [
+          "他们没有中文名片。"
+        ],
+        "pinyin": "Tāmen méiyǒu Zhōngwén míngpiàn.",
+        "nota": "有 se nega com 没."
+      }
+    ]
+  },
+  {
+    "id": "c08-ordenar",
+    "capitulo": "cap8",
+    "ordem": 1,
+    "tipo": "ordenar",
+    "titulo": "Organize as frases",
+    "resumo": "Dez frases com 口, 个, 只, 条 e 本",
+    "origem": "Huawen · B1 Organizing Sentences Exercise",
+    "itens": [
+      {
+        "pecas": [
+          "家",
+          "口",
+          "的",
+          "有",
+          "四",
+          "人",
+          "马大为"
+        ],
+        "respostas": [
+          "马大为的家有四口人。",
+          "马大为家有四口人。"
+        ],
+        "pinyin": "Mǎ Dàwéi de jiā yǒu sì kǒu rén.",
+        "pt": "A família do Ma Dawei tem quatro pessoas."
+      },
+      {
+        "pecas": [
+          "我",
+          "个",
+          "两",
+          "哥哥",
+          "有"
+        ],
+        "respostas": [
+          "我有两个哥哥。"
+        ],
+        "pinyin": "Wǒ yǒu liǎng ge gēge.",
+        "pt": "Tenho dois irmãos mais velhos."
+      },
+      {
+        "pecas": [
+          "有",
+          "你",
+          "朋友",
+          "中国",
+          "很",
+          "啊",
+          "多"
+        ],
+        "respostas": [
+          "你有很多中国朋友啊！"
+        ],
+        "pinyin": "Nǐ yǒu hěn duō Zhōngguó péngyou a!",
+        "pt": "Você tem muitos amigos chineses!"
+      },
+      {
+        "pecas": [
+          "有",
+          "中国",
+          "学校",
+          "个",
+          "我们",
+          "八十",
+          "学生"
+        ],
+        "respostas": [
+          "我们学校有八十个中国学生。"
+        ],
+        "pinyin": "Wǒmen xuéxiào yǒu bāshí ge Zhōngguó xuésheng.",
+        "pt": "Nossa escola tem 80 alunos chineses."
+      },
+      {
+        "pecas": [
+          "两",
+          "条",
+          "狗",
+          "一",
+          "我",
+          "和",
+          "有",
+          "只",
+          "鱼"
+        ],
+        "respostas": [
+          "我有一只狗和两条鱼。"
+        ],
+        "pinyin": "Wǒ yǒu yì zhī gǒu hé liǎng tiáo yú.",
+        "pt": "Tenho um cachorro e dois peixes."
+      },
+      {
+        "pecas": [
+          "他们",
+          "人",
+          "二十五",
+          "有",
+          "学院",
+          "一共",
+          "个"
+        ],
+        "respostas": [
+          "他们学院一共有二十五个人。"
+        ],
+        "pinyin": "Tāmen xuéyuàn yígòng yǒu èrshíwǔ ge rén.",
+        "pt": "A faculdade deles tem 25 pessoas no total."
+      },
+      {
+        "pecas": [
+          "还",
+          "男",
+          "没",
+          "她",
+          "朋友",
+          "有"
+        ],
+        "respostas": [
+          "她还没有男朋友。"
+        ],
+        "pinyin": "Tā hái méiyǒu nán péngyou.",
+        "pt": "Ela ainda não tem namorado."
+      },
+      {
+        "pecas": [
+          "有",
+          "书",
+          "学院",
+          "本",
+          "多少",
+          "汉语",
+          "语言"
+        ],
+        "respostas": [
+          "语言学院有多少本汉语书？"
+        ],
+        "pinyin": "Yǔyán xuéyuàn yǒu duōshao běn Hànyǔ shū?",
+        "pt": "Quantos livros de chinês a faculdade de línguas tem?"
+      },
+      {
+        "pecas": [
+          "几",
+          "有",
+          "你",
+          "猫",
+          "只"
+        ],
+        "respostas": [
+          "你有几只猫？"
+        ],
+        "pinyin": "Nǐ yǒu jǐ zhī māo?",
+        "pt": "Quantos gatos você tem?"
+      },
+      {
+        "pecas": [
+          "要",
+          "中国",
+          "我",
+          "去",
+          "当然"
+        ],
+        "respostas": [
+          "当然我要去中国。",
+          "我当然要去中国。"
+        ],
+        "pinyin": "Dāngrán wǒ yào qù Zhōngguó.",
+        "pt": "Claro que vou para a China."
+      }
+    ]
+  },
+  {
+    "id": "c08-ma-1",
+    "capitulo": "cap8",
+    "ordem": 3,
+    "tipo": "lacuna",
+    "titulo": "吗 ou não? 1",
+    "resumo": "Perguntas 1 a 14",
+    "origem": "Huawen · B1 Exercise Questions",
+    "opcoes": [
+      "吗",
+      "sem 吗"
+    ],
+    "regras": {
+      "吗": "Pergunta de sim ou não, sem outra marca de pergunta, termina com 吗.",
+      "sem 吗": "A frase já pergunta sozinha: com 什么/哪儿/谁/几/多少/怎么样, ou com 不 no meio (好不好, 有没有). 吗 sobra."
+    },
+    "itens": [
+      {
+        "linhas": [
+          {
+            "texto": "您是陈老师___？",
+            "pinyin": "Nín shì Chén lǎoshī ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "O senhor é o professor Chen?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她喜欢不喜欢她的工作___？",
+            "pinyin": "Tā xǐhuan bu xǐhuan tā de gōngzuò?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Ela gosta ou não gosta do trabalho dela?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你的家有几口人___？",
+            "pinyin": "Nǐ de jiā yǒu jǐ kǒu rén?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Quantas pessoas tem na sua família?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "宋华是不是医生___？",
+            "pinyin": "Sòng Huá shì bu shì yīshēng?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Song Hua é ou não é médico?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她叫什么名字___？",
+            "pinyin": "Tā jiào shénme míngzi?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Como ela se chama?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你要喝咖啡___？",
+            "pinyin": "Nǐ yào hē kāfēi ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Você quer tomar café?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "马大为是谁___？",
+            "pinyin": "Mǎ Dàwéi shì shéi?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Quem é Ma Dawei?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你爸爸妈妈好不好___？",
+            "pinyin": "Nǐ bàba māma hǎo bu hǎo?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Seus pais estão bem?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "明天天气怎么样___？",
+            "pinyin": "Míngtiān tiānqì zěnmeyàng?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Como vai estar o tempo amanhã?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你要不要去游泳___？",
+            "pinyin": "Nǐ yào bu yào qù yóuyǒng?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Você quer ou não ir nadar?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "力波学习什么专业___？",
+            "pinyin": "Lìbō xuéxí shénme zhuānyè?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Que curso o Libo faz?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "您是哪国人___？",
+            "pinyin": "Nín shì nǎ guó rén?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "De que país o senhor é?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你们喜欢狗___？",
+            "pinyin": "Nǐmen xǐhuan gǒu ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Vocês gostam de cachorro?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你有没有你爸爸的名片___？",
+            "pinyin": "Nǐ yǒu méiyǒu nǐ bàba de míngpiàn?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Você tem ou não o cartão do seu pai?"
+      }
+    ]
+  },
+  {
+    "id": "c08-ma-2",
+    "capitulo": "cap8",
+    "ordem": 4,
+    "tipo": "lacuna",
+    "titulo": "吗 ou não? 2",
+    "resumo": "Perguntas 15 a 28",
+    "origem": "Huawen · B1 Exercise Questions",
+    "opcoes": [
+      "吗",
+      "sem 吗"
+    ],
+    "regras": {
+      "吗": "Pergunta de sim ou não, sem outra marca de pergunta, termina com 吗.",
+      "sem 吗": "A frase já pergunta sozinha: com 什么/哪儿/谁/几/多少/怎么样, ou com 不 no meio (好不好, 有没有). 吗 sobra."
+    },
+    "itens": [
+      {
+        "linhas": [
+          {
+            "texto": "他们今天去哪儿___？",
+            "pinyin": "Tāmen jīntiān qù nǎr?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Aonde eles vão hoje?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你认识我们的老师___？",
+            "pinyin": "Nǐ rènshi wǒmen de lǎoshī ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Você conhece o nosso professor?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "您现在有时间___？",
+            "pinyin": "Nín xiànzài yǒu shíjiān ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "O senhor tem tempo agora?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "林娜有多少张照片___？",
+            "pinyin": "Lín Nà yǒu duōshao zhāng zhàopiàn?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Quantas fotos a Lin Na tem?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "我们可以进来___？",
+            "pinyin": "Wǒmen kěyǐ jìnlai ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Podemos entrar?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你要两杯咖啡___？",
+            "pinyin": "Nǐ yào liǎng bēi kāfēi ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Você quer dois cafés?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你们也喜欢看京剧___？",
+            "pinyin": "Nǐmen yě xǐhuan kàn jīngjù ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Vocês também gostam de ver ópera de Pequim?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你的工作忙不忙___？",
+            "pinyin": "Nǐ de gōngzuò máng bu máng?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Seu trabalho é corrido ou não?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "小云去不去宋华的宿舍___？",
+            "pinyin": "Xiǎoyún qù bu qù Sòng Huá de sùshè?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "A Xiaoyun vai ou não ao dormitório do Song Hua?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你知道王小云的宿舍在哪儿___？",
+            "pinyin": "Nǐ zhīdào Wáng Xiǎoyún de sùshè zài nǎr ma?"
+          }
+        ],
+        "resposta": "吗",
+        "pt": "Você sabe onde fica o dormitório da Wang Xiaoyun?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她有没有男朋友___？",
+            "pinyin": "Tā yǒu méiyǒu nán péngyou?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Ela tem ou não namorado?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你今天高兴不高兴___？",
+            "pinyin": "Nǐ jīntiān gāoxìng bu gāoxìng?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Você está contente hoje ou não?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她们要不要学习汉语___？",
+            "pinyin": "Tāmen yào bu yào xuéxí Hànyǔ?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Elas querem ou não estudar chinês?"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "你什么时候学习中文___？",
+            "pinyin": "Nǐ shénme shíhou xuéxí Zhōngwén?"
+          }
+        ],
+        "resposta": "sem 吗",
+        "pt": "Quando você estuda chinês?"
+      }
+    ]
+  },
+  {
+    "id": "c08-er-liang",
+    "capitulo": "cap8",
+    "ordem": 5,
+    "tipo": "lacuna",
+    "titulo": "二 ou 两?",
+    "resumo": "Dez lacunas: contar ou quantos",
+    "origem": "Huawen · B1 Exercise 二 x 两",
+    "opcoes": [
+      "二",
+      "两"
+    ],
+    "regras": {
+      "二": "二 é o número: para contar, em endereço, andar, número de quarto e dentro de outro número (十二, 二十二).",
+      "两": "两 é \"dois de alguma coisa\": vem antes do classificador (两个, 两只, 两杯)."
+    },
+    "glossario": [
+      {
+        "hanzi": "只",
+        "pinyin": "zhī",
+        "pt": "classif. de animais"
+      },
+      {
+        "hanzi": "条",
+        "pinyin": "tiáo",
+        "pt": "classif. de peixe"
+      },
+      {
+        "hanzi": "杯",
+        "pinyin": "bēi",
+        "pt": "copo, xícara"
+      },
+      {
+        "hanzi": "层",
+        "pinyin": "céng",
+        "pt": "andar"
+      },
+      {
+        "hanzi": "号",
+        "pinyin": "hào",
+        "pt": "número"
+      }
+    ],
+    "itens": [
+      {
+        "linhas": [
+          {
+            "texto": "一、___、三、四、五、六、七、八、九、十。",
+            "pinyin": "yī, èr, sān…"
+          }
+        ],
+        "resposta": "二",
+        "pt": "Contar: 1, 2, 3…"
+      },
+      {
+        "linhas": [
+          {
+            "texto": "我的宿舍在___〇五号。",
+            "pinyin": "Wǒ de sùshè zài èr líng wǔ hào."
+          }
+        ],
+        "resposta": "二",
+        "pt": "Meu quarto é o 205."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "她有___只猫。",
+            "pinyin": "Tā yǒu liǎng zhī māo."
+          }
+        ],
+        "resposta": "两",
+        "pt": "Ela tem 2 gatos."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他有___个中国朋友。",
+            "pinyin": "Tā yǒu liǎng ge Zhōngguó péngyou."
+          }
+        ],
+        "resposta": "两",
+        "pt": "Ele tem 2 amigos chineses."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他要喝___杯咖啡。",
+            "pinyin": "Tā yào hē liǎng bēi kāfēi."
+          }
+        ],
+        "resposta": "两",
+        "pt": "Ele quer tomar 2 xícaras de café."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "华文在 Antero da Silveira 二十___号。",
+            "pinyin": "… èrshí'èr hào."
+          }
+        ],
+        "resposta": "二",
+        "pt": "A Huawen fica na Antero da Silveira, 22."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他有___个美国老师。",
+            "pinyin": "Tā yǒu liǎng ge Měiguó lǎoshī."
+          }
+        ],
+        "resposta": "两",
+        "pt": "Ele tem 2 professores americanos."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "我们学院在___层。",
+            "pinyin": "Wǒmen xuéyuàn zài èr céng."
+          }
+        ],
+        "resposta": "二",
+        "pt": "Nossa faculdade fica no 2º andar."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他们学___个专业。",
+            "pinyin": "Tāmen xué liǎng ge zhuānyè."
+          }
+        ],
+        "resposta": "两",
+        "pt": "Eles fazem 2 cursos."
+      },
+      {
+        "linhas": [
+          {
+            "texto": "他有十___条鱼。",
+            "pinyin": "Tā yǒu shí'èr tiáo yú."
+          }
+        ],
+        "resposta": "二",
+        "pt": "Ele tem 12 peixes."
+      }
+    ]
+  },
+  {
+    "id": "c08-caca",
+    "capitulo": "cap8",
+    "ordem": 6,
+    "tipo": "caca",
+    "titulo": "Ache os ideogramas",
+    "resumo": "Três quadros: 几 儿 九, 木 ou 禾, 犭 ou 扌",
+    "origem": "Huawen · B1 Ideogram Recognition Exercise",
+    "itens": [
+      {
+        "alvos": [
+          "几",
+          "儿",
+          "九"
+        ],
+        "pinyin": "jǐ · ér · jiǔ",
+        "pt": "quantos · filho · nove",
+        "quadro": [
+          "几儿九几九儿儿九几几九儿",
+          "儿儿九几九几九儿九几儿九",
+          "几几儿几儿九几儿儿九九几"
+        ]
+      },
+      {
+        "alvos": [
+          "木",
+          "禾"
+        ],
+        "pinyin": "mù · hé",
+        "pt": "árvore · cereal",
+        "componentes": true,
+        "quadro": [
+          "杯种样机相利根科和极积体",
+          "树程泍委森休移某秘村李标",
+          "枧秀枪笨季私校秋楼香钵床"
+        ],
+        "marcas": [
+          "abaaababbab-",
+          "ab-baababaaa",
+          "aba-bbabab-a"
+        ]
+      },
+      {
+        "alvos": [
+          "犭",
+          "扌"
+        ],
+        "pinyin": "quǎn · shǒu",
+        "pt": "animal · mão",
+        "componentes": true,
+        "quadro": [
+          "打狗扫技狼猩抓猜择抄狸括",
+          "拆猫扩狐抢找狮把狡拔批折",
+          "抬猾抱报独挂担猪拐狠犯护"
+        ],
+        "marcas": [
+          "babbaababbab",
+          "bababbababbb",
+          "babbabbabaab"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c08-leitura",
+    "capitulo": "cap8",
+    "ordem": 7,
+    "tipo": "leitura",
+    "titulo": "Leitura: V ou F",
+    "resumo": "Um texto sobre a família e quatro afirmações",
+    "origem": "Huawen · B1 Reading Comprehension Exercise",
+    "opcoes": [
+      "V",
+      "F"
+    ],
+    "leitura": {
+      "texto": "这是我家的照片。我家有六口人：爸爸、妈妈、哥哥、姐姐、弟弟和我。我们还有很多宠物：三只狗、两只猫、一只鸟和一条鱼。我爸爸是企业家，我妈妈不工作，她是家庭主妇。我姐姐是医生，我哥哥是律师。我和弟弟都是学生。我学习汉语，我很喜欢学习汉语。"
+    },
+    "glossario": [
+      {
+        "hanzi": "宠物",
+        "pinyin": "chǒngwù",
+        "pt": "bicho de estimação"
+      },
+      {
+        "hanzi": "猫",
+        "pinyin": "māo",
+        "pt": "gato"
+      },
+      {
+        "hanzi": "鸟",
+        "pinyin": "niǎo",
+        "pt": "passarinho"
+      },
+      {
+        "hanzi": "鱼",
+        "pinyin": "yú",
+        "pt": "peixe"
+      },
+      {
+        "hanzi": "企业家",
+        "pinyin": "qǐyèjiā",
+        "pt": "empresário"
+      },
+      {
+        "hanzi": "家庭主妇",
+        "pinyin": "jiātíng zhǔfù",
+        "pt": "dona de casa"
+      }
+    ],
+    "itens": [
+      {
+        "afirmacao": "我没有兄弟姐妹。",
+        "resposta": "F",
+        "pinyin": "Wǒ méiyǒu xiōngdì jiěmèi.",
+        "pt": "Eu não tenho irmãos.",
+        "por": "哥哥、姐姐、弟弟和我。"
+      },
+      {
+        "afirmacao": "我们一共有七只宠物。",
+        "resposta": "V",
+        "pinyin": "Wǒmen yígòng yǒu qī zhī chǒngwù.",
+        "pt": "Temos sete bichos no total.",
+        "por": "三只狗、两只猫、一只鸟和一条鱼。3 + 2 + 1 + 1 = 7."
+      },
+      {
+        "afirmacao": "我弟弟学习汉语。",
+        "resposta": "F",
+        "pinyin": "Wǒ dìdi xuéxí Hànyǔ.",
+        "pt": "Meu irmão mais novo estuda chinês.",
+        "por": "我学习汉语。Quem estuda chinês sou eu."
+      },
+      {
+        "afirmacao": "我爸爸、妈妈不都工作。",
+        "resposta": "V",
+        "pinyin": "Wǒ bàba、māma bù dōu gōngzuò.",
+        "pt": "Nem todos (pai e mãe) trabalham.",
+        "por": "我妈妈不工作，她是家庭主妇。"
+      }
+    ]
+  },
+  {
+    "id": "c08-traducao",
+    "capitulo": "cap8",
+    "ordem": 8,
+    "tipo": "traducao",
+    "titulo": "Traduza as frases",
+    "resumo": "Dez frases: 几, 多少, 一共 e os classificadores",
+    "origem": "Huawen · B1 Translation Exercise",
+    "itens": [
+      {
+        "pt": "Eu tenho muitos amigos estrangeiros.",
+        "respostas": [
+          "我有很多外国朋友。"
+        ],
+        "pinyin": "Wǒ yǒu hěn duō wàiguó péngyou."
+      },
+      {
+        "pt": "Por favor, você tem quantos dicionários de mandarim?",
+        "respostas": [
+          "请问，你有几本汉语词典？",
+          "请问，你有多少本汉语词典？",
+          "请问，你有几本中文词典？"
+        ],
+        "pinyin": "Qǐngwèn, nǐ yǒu jǐ běn Hànyǔ cídiǎn?"
+      },
+      {
+        "pt": "Ele ainda não está aqui?",
+        "respostas": [
+          "他还不在这儿吗？",
+          "他还没在这儿吗？"
+        ],
+        "pinyin": "Tā hái bú zài zhèr ma?"
+      },
+      {
+        "pt": "Eu gosto do meu cachorro e dos meus dois gatos.",
+        "respostas": [
+          "我喜欢我的狗和我的两只猫。",
+          "我喜欢我的狗和两只猫。"
+        ],
+        "pinyin": "Wǒ xǐhuan wǒ de gǒu hé wǒ de liǎng zhī māo."
+      },
+      {
+        "pt": "Qual é a profissão das suas irmãs?",
+        "respostas": [
+          "你姐妹都做什么工作？",
+          "你的姐妹都做什么工作？",
+          "你姐妹做什么工作？"
+        ],
+        "pinyin": "Nǐ jiěmèi dōu zuò shénme gōngzuò?"
+      },
+      {
+        "pt": "Você tem quantas fotos da sua família?",
+        "respostas": [
+          "你有多少张家的照片？",
+          "你有几张家的照片？",
+          "你有多少张你家的照片？"
+        ],
+        "pinyin": "Nǐ yǒu duōshao zhāng jiā de zhàopiàn?"
+      },
+      {
+        "pt": "No total você tem quantos peixes?",
+        "respostas": [
+          "你一共有多少条鱼？",
+          "你一共有几条鱼？"
+        ],
+        "pinyin": "Nǐ yígòng yǒu duōshao tiáo yú?"
+      },
+      {
+        "pt": "Meus irmãos estão realmente felizes!",
+        "respostas": [
+          "我兄弟姐妹真高兴啊！",
+          "我的兄弟姐妹真高兴啊！",
+          "我兄弟姐妹真高兴！"
+        ],
+        "pinyin": "Wǒ xiōngdì jiěmèi zhēn gāoxìng a!"
+      },
+      {
+        "pt": "Eu sou chinês. É claro que falo mandarim.",
+        "respostas": [
+          "我是中国人，当然说汉语。",
+          "我是中国人，我当然说汉语。",
+          "我是中国人，当然说中文。"
+        ],
+        "pinyin": "Wǒ shì Zhōngguó rén, dāngrán shuō Hànyǔ."
+      },
+      {
+        "pt": "Sua faculdade tem quantos alunos no total?",
+        "respostas": [
+          "你们学院一共有多少个学生？",
+          "你们学院一共有多少学生？",
+          "你的学院一共有多少个学生？"
+        ],
+        "pinyin": "Nǐmen xuéyuàn yígòng yǒu duōshao ge xuésheng?"
+      }
+    ]
+  },
+  {
+    "id": "c08-corrigir",
+    "capitulo": "cap8",
+    "ordem": 9,
+    "tipo": "corrigir",
+    "titulo": "Corrija as frases",
+    "resumo": "Dez frases: classificador, 一共, 两, 有没有, 还有",
+    "origem": "Huawen · B1 Exercise Correct Sentences",
+    "itens": [
+      {
+        "errada": "我们家有一口爸爸、一口妈妈和我。",
+        "respostas": [
+          "我们家有一个爸爸、一个妈妈和我。"
+        ],
+        "pinyin": "Wǒmen jiā yǒu yí ge bàba、yí ge māma hé wǒ.",
+        "nota": "口 só conta a família inteira (几口人); para cada pessoa é 个."
+      },
+      {
+        "errada": "他们学院有一百个老师一共。",
+        "respostas": [
+          "他们学院一共有一百个老师。"
+        ],
+        "pinyin": "Tāmen xuéyuàn yígòng yǒu yìbǎi ge lǎoshī.",
+        "nota": "一共 vem antes do verbo: 一共有."
+      },
+      {
+        "errada": "林娜有二张照片。",
+        "respostas": [
+          "林娜有两张照片。"
+        ],
+        "pinyin": "Lín Nà yǒu liǎng zhāng zhàopiàn.",
+        "nota": "Antes de classificador é 两, não 二."
+      },
+      {
+        "errada": "你工作什么？",
+        "respostas": [
+          "你做什么工作？"
+        ],
+        "pinyin": "Nǐ zuò shénme gōngzuò?",
+        "nota": "A pergunta é 做什么工作: fazer qual trabalho."
+      },
+      {
+        "errada": "你们家有几人？",
+        "respostas": [
+          "你们家有几口人？"
+        ],
+        "pinyin": "Nǐmen jiā yǒu jǐ kǒu rén?",
+        "nota": "几 pede classificador: 几口人."
+      },
+      {
+        "errada": "林娜有不有小狗？",
+        "respostas": [
+          "林娜有没有小狗？"
+        ],
+        "pinyin": "Lín Nà yǒu méiyǒu xiǎo gǒu?",
+        "nota": "有 se nega com 没: 有没有."
+      },
+      {
+        "errada": "我们学校有多学生。",
+        "respostas": [
+          "我们学校有很多学生。"
+        ],
+        "pinyin": "Wǒmen xuéxiào yǒu hěn duō xuésheng.",
+        "nota": "多 sozinho não vai antes do substantivo: 很多."
+      },
+      {
+        "errada": "我喝很咖啡。",
+        "respostas": [
+          "我喝很多咖啡。"
+        ],
+        "pinyin": "Wǒ hē hěn duō kāfēi.",
+        "nota": "很 não vai com substantivo; muito café é 很多咖啡."
+      },
+      {
+        "errada": "你有多少个本书？",
+        "respostas": [
+          "你有多少本书？"
+        ],
+        "pinyin": "Nǐ yǒu duōshao běn shū?",
+        "nota": "Um classificador só: livro é 本, o 个 sobra."
+      },
+      {
+        "errada": "我有哥哥、弟弟、姐姐还妹妹。",
+        "respostas": [
+          "我有哥哥、弟弟、姐姐还有妹妹。",
+          "我有哥哥、弟弟、姐姐和妹妹。"
+        ],
+        "pinyin": "Wǒ yǒu gēge、dìdi、jiějie hái yǒu mèimei.",
+        "nota": "还 sozinho não liga substantivos: 还有, ou 和."
+      }
+    ]
+  }
+]

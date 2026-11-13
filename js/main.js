@@ -7,6 +7,7 @@ function switchView(v) {
   document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v));
   if (v === 'progresso') renderProgress();
   if (v === 'teoria') abreTeoria(); else saiTeoria();
+  if (v === 'curso') renderCurso();
   if (v === 'cartas') renderList();
   if (v === 'grade') renderGrade();
   if (v === 'competicao') {
@@ -325,7 +326,7 @@ async function init() {
   bindEvents();
   bindTips();
   renderModeUI();
-  await Promise.all([loadCards(), loadStrokes(), loadDialogos(), loadConteudoIOS()]);
+  await Promise.all([loadCards(), loadStrokes(), loadDialogos(), loadConteudoIOS(), loadExercicios()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
   else if (dataSource === 'vazio') showBanner('error', 'Não consegui carregar nenhuma carta. Verifique a conexão e recarregue.');

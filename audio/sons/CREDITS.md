@@ -1,6 +1,6 @@
 # Créditos — sons da tabela de pinyin
 
-As gravações da tabela de sons (Estudar → 📚 Teoria → Sons do pinyin), em `audio/sons/som-<pinyin><tom>.mp3`, vêm do projeto [audio-cmn](https://github.com/hugolpz/audio-cmn), pasta `24k-abr/syllabs/`.
+As gravações da tabela de sons (aba Teoria → Sons do pinyin), em `audio/sons/som-<pinyin><tom>.mp3`, vêm do projeto [audio-cmn](https://github.com/hugolpz/audio-cmn), pasta `24k-abr/syllabs/`.
 
 - **Voz:** Chen Wang
 - **Licença:** [CC BY-SA](https://creativecommons.org/licenses/by-sa/3.0/)
