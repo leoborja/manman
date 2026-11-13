@@ -328,6 +328,8 @@ async function syncPull() {
           if (JSON.stringify(fav) !== antes) changed = true;
           continue;
         }
+        // as provas (do iOS ou deste app) somam por tentativa — ver js/prova.js
+        if (/^prova:/.test(row.card_id)) { mesclaProvas(row.card_id.slice(6), row.hab); continue; }
         if (linhaEspecial(row.card_id)) continue;
         const local = srs[row.card_id];
         if (row.due !== null && (!local || (row.updated_ms || 0) > (local.u || 0))) {
@@ -449,6 +451,7 @@ function flushDirty() {
   [...dirty].forEach(id => { if (srs[id] || stats[id]) syncPush(id); });
   [...dirtyOff].forEach(id => { if (off[id]) pushOff(id); });
   if (dirtyFav) pushFav();
+  flushProvas();
 }
 async function syncReset() { // apaga progresso remoto do usuário
   if (!syncEnabled()) return;

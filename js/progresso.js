@@ -223,8 +223,17 @@ async function loadCompeticao() {
     const deckDe = {}; cards.forEach(c => { deckDe[c.id] = c.deck; });
     const ehFr = {}; cards.forEach(c => { ehFr[c.id] = ehFrase(c); });
     const by = {};
+    // As provas numa consulta só delas: o PostgREST corta a resposta em 1.000 linhas, e o
+    // progress da turma passa disso — as linhas prova:capN caíam fora do corte.
+    provasTurma = {};
+    try {
+      const rp = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?select=user_name,card_id,hab&card_id=like.prova:*',
+        { headers: sbHeaders() });
+      if (rp.ok) (await rp.json()).forEach(guardaProvaDaTurma);
+    } catch (e) { /* sem provas, o resto da Competição segue */ }
     for (const row of await pr.json()) {
       const u = row.user_name;
+      if (/^prova:/.test(row.card_id || '')) continue; // vêm na consulta própria, abaixo
       if (!u || u === 'convidado' || linhaEspecial(row.card_id)) continue;
       const d = by[u] || (by[u] = { seen: 0, learned: 0, susp: 0, g: 0, h: 0, a: 0,
         hab: {}, err: {}, tomx: {}, deck: {}, tipo: { palavra: { g: 0, h: 0, a: 0, learned: 0 }, frase: { g: 0, h: 0, a: 0, learned: 0 } } });
@@ -313,6 +322,7 @@ function compGrafico(us) {
     guias + linhas + xlabs + '</svg><div class="cgleg">' + leg + '</div></div>';
 }
 function renderCompeticao() {
+  renderProvasTurma();
   if (!sbConfigured()) {
     $('comp-placar').innerHTML = '<p class="wempty">Sem conexão com o banco.</p>';
     ['comp-graf', 'comp-hab', 'comp-tema', 'comp-tipo', 'comp-tom', 'comp-erram'].forEach(id => $(id).innerHTML = '');
