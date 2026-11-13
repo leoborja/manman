@@ -1,0 +1,2632 @@
+{
+ "grupos": [
+  {
+   "id": "labiais",
+   "nome": "Lábios",
+   "iniciais": [
+    "b",
+    "p",
+    "m",
+    "f"
+   ]
+  },
+  {
+   "id": "alveolares",
+   "nome": "Ponta da língua",
+   "iniciais": [
+    "d",
+    "t",
+    "n",
+    "l"
+   ]
+  },
+  {
+   "id": "velares",
+   "nome": "Fundo da boca",
+   "iniciais": [
+    "g",
+    "k",
+    "h"
+   ]
+  },
+  {
+   "id": "palatais",
+   "nome": "Grupo das crianças",
+   "iniciais": [
+    "j",
+    "q",
+    "x"
+   ]
+  },
+  {
+   "id": "retroflexas",
+   "nome": "Língua no céu da boca",
+   "iniciais": [
+    "zh",
+    "ch",
+    "sh",
+    "r"
+   ]
+  },
+  {
+   "id": "dentais",
+   "nome": "Língua nos dentes",
+   "iniciais": [
+    "z",
+    "c",
+    "s"
+   ]
+  },
+  {
+   "id": "sem-inicial",
+   "nome": "Sem inicial",
+   "iniciais": [
+    ""
+   ]
+  }
+ ],
+ "finais": [
+  "a",
+  "o",
+  "e",
+  "-i",
+  "er",
+  "ai",
+  "ei",
+  "ao",
+  "ou",
+  "an",
+  "en",
+  "ang",
+  "eng",
+  "ong",
+  "i",
+  "ia",
+  "ie",
+  "iao",
+  "iou",
+  "ian",
+  "in",
+  "iang",
+  "ing",
+  "iong",
+  "u",
+  "ua",
+  "uo",
+  "uai",
+  "uei",
+  "uan",
+  "uen",
+  "uang",
+  "ueng",
+  "ü",
+  "üe",
+  "üan",
+  "ün"
+ ],
+ "iniciais": {
+  "b": 1,
+  "p": 1,
+  "m": 1,
+  "n": 1,
+  "l": 1,
+  "h": 1,
+  "d": 2,
+  "t": 2,
+  "g": 2,
+  "k": 2,
+  "f": 2,
+  "zh": 3,
+  "ch": 3,
+  "sh": 3,
+  "r": 3,
+  "j": 4,
+  "q": 4,
+  "x": 4,
+  "z": 5,
+  "c": 5,
+  "s": 5,
+  "∅": 1
+ },
+ "dicaInicial": {
+  "b": "p seco — sem soltar ar",
+  "p": "p soprado — sai um sopro junto",
+  "m": "m",
+  "f": "f",
+  "n": "n",
+  "l": "l",
+  "d": "t seco — sem soltar ar",
+  "t": "t soprado — sai um sopro junto",
+  "g": "k seco — sem soltar ar",
+  "k": "k soprado — sai um sopro junto",
+  "h": "r de \"rato\", raspando a garganta",
+  "j": "dj, com o i fino de criança",
+  "q": "tch soprado, com o i fino de criança",
+  "x": "entre ch e s — meio s",
+  "zh": "dj, com a língua no céu da boca",
+  "ch": "tch soprado, com a língua no céu da boca",
+  "sh": "ch, com a língua no céu da boca",
+  "r": "j, com a língua no céu da boca",
+  "z": "dz seco",
+  "c": "ts soprado",
+  "s": "s",
+  "": "sem consoante: y soa i, w soa u"
+ },
+ "dicaFinal": {
+  "a": "a aberto",
+  "o": "o",
+  "e": "\"ã\" fechado, do jeito paulista",
+  "-i": "não é i: a língua fica parada onde a consoante nasceu, zumbindo",
+  "er": "\"ar\" com a ponta da língua enrolada",
+  "ai": "ai",
+  "ei": "ei, igual ao nosso",
+  "ao": "au",
+  "ou": "ou, igual ao nosso",
+  "an": "a aberto + n pronunciado no fim",
+  "en": "\"ãn\" paulista, com o n pronunciado",
+  "ang": "a aberto + ng fanho",
+  "eng": "\"ãng\" paulista + ng fanho",
+  "ong": "ung + ng fanho",
+  "i": "i",
+  "ia": "iá",
+  "ie": "iê",
+  "iao": "iau",
+  "iou": "iou, com um o leve no meio",
+  "ian": "ién",
+  "in": "in, com o n pronunciado",
+  "iang": "iang + ng fanho",
+  "ing": "ing — o ng fecha a garganta e o som sai pelo nariz",
+  "iong": "iung + ng fanho",
+  "u": "u",
+  "ua": "uá",
+  "uo": "uô",
+  "uai": "uai",
+  "uei": "uei — tem um e no meio",
+  "uan": "uan",
+  "uen": "uên — tem um e no meio",
+  "uang": "uang + ng fanho",
+  "ueng": "uêng",
+  "ü": "bico de u e fala i",
+  "üe": "ü + ê",
+  "üan": "ü + én",
+  "ün": "ü + n"
+ },
+ "silabas": [
+  {
+   "pinyin": "a",
+   "inicial": "",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "o",
+   "inicial": "",
+   "final": "o",
+   "cap": 1
+  },
+  {
+   "pinyin": "e",
+   "inicial": "",
+   "final": "e",
+   "cap": 1
+  },
+  {
+   "pinyin": "ai",
+   "inicial": "",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "ei",
+   "inicial": "",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "ao",
+   "inicial": "",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "ou",
+   "inicial": "",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "an",
+   "inicial": "",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "en",
+   "inicial": "",
+   "final": "en",
+   "cap": 1
+  },
+  {
+   "pinyin": "ang",
+   "inicial": "",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "eng",
+   "inicial": "",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "er",
+   "inicial": "",
+   "final": "er",
+   "cap": 5
+  },
+  {
+   "pinyin": "yi",
+   "inicial": "",
+   "final": "i",
+   "cap": 1
+  },
+  {
+   "pinyin": "ya",
+   "inicial": "",
+   "final": "ia",
+   "cap": 4
+  },
+  {
+   "pinyin": "ye",
+   "inicial": "",
+   "final": "ie",
+   "cap": 1
+  },
+  {
+   "pinyin": "yao",
+   "inicial": "",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "you",
+   "inicial": "",
+   "final": "iou",
+   "cap": 2
+  },
+  {
+   "pinyin": "yan",
+   "inicial": "",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "yin",
+   "inicial": "",
+   "final": "in",
+   "cap": 1
+  },
+  {
+   "pinyin": "yang",
+   "inicial": "",
+   "final": "iang",
+   "cap": 4
+  },
+  {
+   "pinyin": "ying",
+   "inicial": "",
+   "final": "ing",
+   "cap": 1
+  },
+  {
+   "pinyin": "yong",
+   "inicial": "",
+   "final": "iong",
+   "cap": 5
+  },
+  {
+   "pinyin": "wu",
+   "inicial": "",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "wa",
+   "inicial": "",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "wo",
+   "inicial": "",
+   "final": "uo",
+   "cap": 1
+  },
+  {
+   "pinyin": "wai",
+   "inicial": "",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "wei",
+   "inicial": "",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "wan",
+   "inicial": "",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "wen",
+   "inicial": "",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "wang",
+   "inicial": "",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "weng",
+   "inicial": "",
+   "final": "ueng",
+   "cap": 5
+  },
+  {
+   "pinyin": "yu",
+   "inicial": "",
+   "final": "ü",
+   "cap": 1
+  },
+  {
+   "pinyin": "yue",
+   "inicial": "",
+   "final": "üe",
+   "cap": 4
+  },
+  {
+   "pinyin": "yuan",
+   "inicial": "",
+   "final": "üan",
+   "cap": 4
+  },
+  {
+   "pinyin": "yun",
+   "inicial": "",
+   "final": "ün",
+   "cap": 5
+  },
+  {
+   "pinyin": "ba",
+   "inicial": "b",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "bo",
+   "inicial": "b",
+   "final": "o",
+   "cap": 1
+  },
+  {
+   "pinyin": "bai",
+   "inicial": "b",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "bei",
+   "inicial": "b",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "bao",
+   "inicial": "b",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "ban",
+   "inicial": "b",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "ben",
+   "inicial": "b",
+   "final": "en",
+   "cap": 1
+  },
+  {
+   "pinyin": "bang",
+   "inicial": "b",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "beng",
+   "inicial": "b",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "bi",
+   "inicial": "b",
+   "final": "i",
+   "cap": 1
+  },
+  {
+   "pinyin": "bie",
+   "inicial": "b",
+   "final": "ie",
+   "cap": 1
+  },
+  {
+   "pinyin": "biao",
+   "inicial": "b",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "bian",
+   "inicial": "b",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "bin",
+   "inicial": "b",
+   "final": "in",
+   "cap": 1
+  },
+  {
+   "pinyin": "bing",
+   "inicial": "b",
+   "final": "ing",
+   "cap": 1
+  },
+  {
+   "pinyin": "bu",
+   "inicial": "b",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "pa",
+   "inicial": "p",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "po",
+   "inicial": "p",
+   "final": "o",
+   "cap": 1
+  },
+  {
+   "pinyin": "pai",
+   "inicial": "p",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "pei",
+   "inicial": "p",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "pao",
+   "inicial": "p",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "pou",
+   "inicial": "p",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "pan",
+   "inicial": "p",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "pen",
+   "inicial": "p",
+   "final": "en",
+   "cap": 1
+  },
+  {
+   "pinyin": "pang",
+   "inicial": "p",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "peng",
+   "inicial": "p",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "pi",
+   "inicial": "p",
+   "final": "i",
+   "cap": 1
+  },
+  {
+   "pinyin": "pie",
+   "inicial": "p",
+   "final": "ie",
+   "cap": 1
+  },
+  {
+   "pinyin": "piao",
+   "inicial": "p",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "pian",
+   "inicial": "p",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "pin",
+   "inicial": "p",
+   "final": "in",
+   "cap": 1
+  },
+  {
+   "pinyin": "ping",
+   "inicial": "p",
+   "final": "ing",
+   "cap": 1
+  },
+  {
+   "pinyin": "pu",
+   "inicial": "p",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "ma",
+   "inicial": "m",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "mo",
+   "inicial": "m",
+   "final": "o",
+   "cap": 1
+  },
+  {
+   "pinyin": "me",
+   "inicial": "m",
+   "final": "e",
+   "cap": 1
+  },
+  {
+   "pinyin": "mai",
+   "inicial": "m",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "mei",
+   "inicial": "m",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "mao",
+   "inicial": "m",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "mou",
+   "inicial": "m",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "man",
+   "inicial": "m",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "men",
+   "inicial": "m",
+   "final": "en",
+   "cap": 1
+  },
+  {
+   "pinyin": "mang",
+   "inicial": "m",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "meng",
+   "inicial": "m",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "mi",
+   "inicial": "m",
+   "final": "i",
+   "cap": 1
+  },
+  {
+   "pinyin": "mie",
+   "inicial": "m",
+   "final": "ie",
+   "cap": 1
+  },
+  {
+   "pinyin": "miao",
+   "inicial": "m",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "miu",
+   "inicial": "m",
+   "final": "iou",
+   "cap": 2
+  },
+  {
+   "pinyin": "mian",
+   "inicial": "m",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "min",
+   "inicial": "m",
+   "final": "in",
+   "cap": 1
+  },
+  {
+   "pinyin": "ming",
+   "inicial": "m",
+   "final": "ing",
+   "cap": 1
+  },
+  {
+   "pinyin": "mu",
+   "inicial": "m",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "fa",
+   "inicial": "f",
+   "final": "a",
+   "cap": 2
+  },
+  {
+   "pinyin": "fo",
+   "inicial": "f",
+   "final": "o",
+   "cap": 2
+  },
+  {
+   "pinyin": "fei",
+   "inicial": "f",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "fou",
+   "inicial": "f",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "fan",
+   "inicial": "f",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "fen",
+   "inicial": "f",
+   "final": "en",
+   "cap": 2
+  },
+  {
+   "pinyin": "fang",
+   "inicial": "f",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "feng",
+   "inicial": "f",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "fu",
+   "inicial": "f",
+   "final": "u",
+   "cap": 2
+  },
+  {
+   "pinyin": "da",
+   "inicial": "d",
+   "final": "a",
+   "cap": 2
+  },
+  {
+   "pinyin": "de",
+   "inicial": "d",
+   "final": "e",
+   "cap": 2
+  },
+  {
+   "pinyin": "dai",
+   "inicial": "d",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "dei",
+   "inicial": "d",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "dao",
+   "inicial": "d",
+   "final": "ao",
+   "cap": 2
+  },
+  {
+   "pinyin": "dou",
+   "inicial": "d",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "dan",
+   "inicial": "d",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "dang",
+   "inicial": "d",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "deng",
+   "inicial": "d",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "dong",
+   "inicial": "d",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "di",
+   "inicial": "d",
+   "final": "i",
+   "cap": 2
+  },
+  {
+   "pinyin": "die",
+   "inicial": "d",
+   "final": "ie",
+   "cap": 2
+  },
+  {
+   "pinyin": "diao",
+   "inicial": "d",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "diu",
+   "inicial": "d",
+   "final": "iou",
+   "cap": 2
+  },
+  {
+   "pinyin": "dian",
+   "inicial": "d",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "ding",
+   "inicial": "d",
+   "final": "ing",
+   "cap": 2
+  },
+  {
+   "pinyin": "du",
+   "inicial": "d",
+   "final": "u",
+   "cap": 2
+  },
+  {
+   "pinyin": "duo",
+   "inicial": "d",
+   "final": "uo",
+   "cap": 2
+  },
+  {
+   "pinyin": "dui",
+   "inicial": "d",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "duan",
+   "inicial": "d",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "dun",
+   "inicial": "d",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "ta",
+   "inicial": "t",
+   "final": "a",
+   "cap": 2
+  },
+  {
+   "pinyin": "te",
+   "inicial": "t",
+   "final": "e",
+   "cap": 2
+  },
+  {
+   "pinyin": "tai",
+   "inicial": "t",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "tao",
+   "inicial": "t",
+   "final": "ao",
+   "cap": 2
+  },
+  {
+   "pinyin": "tou",
+   "inicial": "t",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "tan",
+   "inicial": "t",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "tang",
+   "inicial": "t",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "teng",
+   "inicial": "t",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "tong",
+   "inicial": "t",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "ti",
+   "inicial": "t",
+   "final": "i",
+   "cap": 2
+  },
+  {
+   "pinyin": "tie",
+   "inicial": "t",
+   "final": "ie",
+   "cap": 2
+  },
+  {
+   "pinyin": "tiao",
+   "inicial": "t",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "tian",
+   "inicial": "t",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "ting",
+   "inicial": "t",
+   "final": "ing",
+   "cap": 2
+  },
+  {
+   "pinyin": "tu",
+   "inicial": "t",
+   "final": "u",
+   "cap": 2
+  },
+  {
+   "pinyin": "tuo",
+   "inicial": "t",
+   "final": "uo",
+   "cap": 2
+  },
+  {
+   "pinyin": "tui",
+   "inicial": "t",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "tuan",
+   "inicial": "t",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "tun",
+   "inicial": "t",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "na",
+   "inicial": "n",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "ne",
+   "inicial": "n",
+   "final": "e",
+   "cap": 1
+  },
+  {
+   "pinyin": "nai",
+   "inicial": "n",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "nei",
+   "inicial": "n",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "nao",
+   "inicial": "n",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "nou",
+   "inicial": "n",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "nan",
+   "inicial": "n",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "nen",
+   "inicial": "n",
+   "final": "en",
+   "cap": 1
+  },
+  {
+   "pinyin": "nang",
+   "inicial": "n",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "neng",
+   "inicial": "n",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "nong",
+   "inicial": "n",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "ni",
+   "inicial": "n",
+   "final": "i",
+   "cap": 1
+  },
+  {
+   "pinyin": "nie",
+   "inicial": "n",
+   "final": "ie",
+   "cap": 1
+  },
+  {
+   "pinyin": "niao",
+   "inicial": "n",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "niu",
+   "inicial": "n",
+   "final": "iou",
+   "cap": 2
+  },
+  {
+   "pinyin": "nian",
+   "inicial": "n",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "nin",
+   "inicial": "n",
+   "final": "in",
+   "cap": 1
+  },
+  {
+   "pinyin": "niang",
+   "inicial": "n",
+   "final": "iang",
+   "cap": 4
+  },
+  {
+   "pinyin": "ning",
+   "inicial": "n",
+   "final": "ing",
+   "cap": 1
+  },
+  {
+   "pinyin": "nu",
+   "inicial": "n",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "nuo",
+   "inicial": "n",
+   "final": "uo",
+   "cap": 1
+  },
+  {
+   "pinyin": "nuan",
+   "inicial": "n",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "nü",
+   "inicial": "n",
+   "final": "ü",
+   "cap": 1
+  },
+  {
+   "pinyin": "nüe",
+   "inicial": "n",
+   "final": "üe",
+   "cap": 4
+  },
+  {
+   "pinyin": "la",
+   "inicial": "l",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "le",
+   "inicial": "l",
+   "final": "e",
+   "cap": 1
+  },
+  {
+   "pinyin": "lai",
+   "inicial": "l",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "lei",
+   "inicial": "l",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "lao",
+   "inicial": "l",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "lou",
+   "inicial": "l",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "lan",
+   "inicial": "l",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "lang",
+   "inicial": "l",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "leng",
+   "inicial": "l",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "long",
+   "inicial": "l",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "li",
+   "inicial": "l",
+   "final": "i",
+   "cap": 1
+  },
+  {
+   "pinyin": "lia",
+   "inicial": "l",
+   "final": "ia",
+   "cap": 4
+  },
+  {
+   "pinyin": "lie",
+   "inicial": "l",
+   "final": "ie",
+   "cap": 1
+  },
+  {
+   "pinyin": "liao",
+   "inicial": "l",
+   "final": "iao",
+   "cap": 2
+  },
+  {
+   "pinyin": "liu",
+   "inicial": "l",
+   "final": "iou",
+   "cap": 2
+  },
+  {
+   "pinyin": "lian",
+   "inicial": "l",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "lin",
+   "inicial": "l",
+   "final": "in",
+   "cap": 1
+  },
+  {
+   "pinyin": "liang",
+   "inicial": "l",
+   "final": "iang",
+   "cap": 4
+  },
+  {
+   "pinyin": "ling",
+   "inicial": "l",
+   "final": "ing",
+   "cap": 1
+  },
+  {
+   "pinyin": "lu",
+   "inicial": "l",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "luo",
+   "inicial": "l",
+   "final": "uo",
+   "cap": 1
+  },
+  {
+   "pinyin": "luan",
+   "inicial": "l",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "lun",
+   "inicial": "l",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "lü",
+   "inicial": "l",
+   "final": "ü",
+   "cap": 1
+  },
+  {
+   "pinyin": "lüe",
+   "inicial": "l",
+   "final": "üe",
+   "cap": 4
+  },
+  {
+   "pinyin": "ga",
+   "inicial": "g",
+   "final": "a",
+   "cap": 2
+  },
+  {
+   "pinyin": "ge",
+   "inicial": "g",
+   "final": "e",
+   "cap": 2
+  },
+  {
+   "pinyin": "gai",
+   "inicial": "g",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "gei",
+   "inicial": "g",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "gao",
+   "inicial": "g",
+   "final": "ao",
+   "cap": 2
+  },
+  {
+   "pinyin": "gou",
+   "inicial": "g",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "gan",
+   "inicial": "g",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "gen",
+   "inicial": "g",
+   "final": "en",
+   "cap": 2
+  },
+  {
+   "pinyin": "gang",
+   "inicial": "g",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "geng",
+   "inicial": "g",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "gong",
+   "inicial": "g",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "gu",
+   "inicial": "g",
+   "final": "u",
+   "cap": 2
+  },
+  {
+   "pinyin": "gua",
+   "inicial": "g",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "guo",
+   "inicial": "g",
+   "final": "uo",
+   "cap": 2
+  },
+  {
+   "pinyin": "guai",
+   "inicial": "g",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "gui",
+   "inicial": "g",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "guan",
+   "inicial": "g",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "gun",
+   "inicial": "g",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "guang",
+   "inicial": "g",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "ka",
+   "inicial": "k",
+   "final": "a",
+   "cap": 2
+  },
+  {
+   "pinyin": "ke",
+   "inicial": "k",
+   "final": "e",
+   "cap": 2
+  },
+  {
+   "pinyin": "kai",
+   "inicial": "k",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "kei",
+   "inicial": "k",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "kao",
+   "inicial": "k",
+   "final": "ao",
+   "cap": 2
+  },
+  {
+   "pinyin": "kou",
+   "inicial": "k",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "kan",
+   "inicial": "k",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "ken",
+   "inicial": "k",
+   "final": "en",
+   "cap": 2
+  },
+  {
+   "pinyin": "kang",
+   "inicial": "k",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "keng",
+   "inicial": "k",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "kong",
+   "inicial": "k",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "ku",
+   "inicial": "k",
+   "final": "u",
+   "cap": 2
+  },
+  {
+   "pinyin": "kua",
+   "inicial": "k",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "kuo",
+   "inicial": "k",
+   "final": "uo",
+   "cap": 2
+  },
+  {
+   "pinyin": "kuai",
+   "inicial": "k",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "kui",
+   "inicial": "k",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "kuan",
+   "inicial": "k",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "kun",
+   "inicial": "k",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "kuang",
+   "inicial": "k",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "ha",
+   "inicial": "h",
+   "final": "a",
+   "cap": 1
+  },
+  {
+   "pinyin": "he",
+   "inicial": "h",
+   "final": "e",
+   "cap": 1
+  },
+  {
+   "pinyin": "hai",
+   "inicial": "h",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "hei",
+   "inicial": "h",
+   "final": "ei",
+   "cap": 2
+  },
+  {
+   "pinyin": "hao",
+   "inicial": "h",
+   "final": "ao",
+   "cap": 1
+  },
+  {
+   "pinyin": "hou",
+   "inicial": "h",
+   "final": "ou",
+   "cap": 2
+  },
+  {
+   "pinyin": "han",
+   "inicial": "h",
+   "final": "an",
+   "cap": 2
+  },
+  {
+   "pinyin": "hen",
+   "inicial": "h",
+   "final": "en",
+   "cap": 1
+  },
+  {
+   "pinyin": "hang",
+   "inicial": "h",
+   "final": "ang",
+   "cap": 2
+  },
+  {
+   "pinyin": "heng",
+   "inicial": "h",
+   "final": "eng",
+   "cap": 2
+  },
+  {
+   "pinyin": "hong",
+   "inicial": "h",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "hu",
+   "inicial": "h",
+   "final": "u",
+   "cap": 1
+  },
+  {
+   "pinyin": "hua",
+   "inicial": "h",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "huo",
+   "inicial": "h",
+   "final": "uo",
+   "cap": 1
+  },
+  {
+   "pinyin": "huai",
+   "inicial": "h",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "hui",
+   "inicial": "h",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "huan",
+   "inicial": "h",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "hun",
+   "inicial": "h",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "huang",
+   "inicial": "h",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "ji",
+   "inicial": "j",
+   "final": "i",
+   "cap": 4
+  },
+  {
+   "pinyin": "jia",
+   "inicial": "j",
+   "final": "ia",
+   "cap": 4
+  },
+  {
+   "pinyin": "jie",
+   "inicial": "j",
+   "final": "ie",
+   "cap": 4
+  },
+  {
+   "pinyin": "jiao",
+   "inicial": "j",
+   "final": "iao",
+   "cap": 4
+  },
+  {
+   "pinyin": "jiu",
+   "inicial": "j",
+   "final": "iou",
+   "cap": 4
+  },
+  {
+   "pinyin": "jian",
+   "inicial": "j",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "jin",
+   "inicial": "j",
+   "final": "in",
+   "cap": 4
+  },
+  {
+   "pinyin": "jiang",
+   "inicial": "j",
+   "final": "iang",
+   "cap": 4
+  },
+  {
+   "pinyin": "jing",
+   "inicial": "j",
+   "final": "ing",
+   "cap": 4
+  },
+  {
+   "pinyin": "jiong",
+   "inicial": "j",
+   "final": "iong",
+   "cap": 5
+  },
+  {
+   "pinyin": "ju",
+   "inicial": "j",
+   "final": "ü",
+   "cap": 4
+  },
+  {
+   "pinyin": "jue",
+   "inicial": "j",
+   "final": "üe",
+   "cap": 4
+  },
+  {
+   "pinyin": "juan",
+   "inicial": "j",
+   "final": "üan",
+   "cap": 4
+  },
+  {
+   "pinyin": "jun",
+   "inicial": "j",
+   "final": "ün",
+   "cap": 5
+  },
+  {
+   "pinyin": "qi",
+   "inicial": "q",
+   "final": "i",
+   "cap": 4
+  },
+  {
+   "pinyin": "qia",
+   "inicial": "q",
+   "final": "ia",
+   "cap": 4
+  },
+  {
+   "pinyin": "qie",
+   "inicial": "q",
+   "final": "ie",
+   "cap": 4
+  },
+  {
+   "pinyin": "qiao",
+   "inicial": "q",
+   "final": "iao",
+   "cap": 4
+  },
+  {
+   "pinyin": "qiu",
+   "inicial": "q",
+   "final": "iou",
+   "cap": 4
+  },
+  {
+   "pinyin": "qian",
+   "inicial": "q",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "qin",
+   "inicial": "q",
+   "final": "in",
+   "cap": 4
+  },
+  {
+   "pinyin": "qiang",
+   "inicial": "q",
+   "final": "iang",
+   "cap": 4
+  },
+  {
+   "pinyin": "qing",
+   "inicial": "q",
+   "final": "ing",
+   "cap": 4
+  },
+  {
+   "pinyin": "qiong",
+   "inicial": "q",
+   "final": "iong",
+   "cap": 5
+  },
+  {
+   "pinyin": "qu",
+   "inicial": "q",
+   "final": "ü",
+   "cap": 4
+  },
+  {
+   "pinyin": "que",
+   "inicial": "q",
+   "final": "üe",
+   "cap": 4
+  },
+  {
+   "pinyin": "quan",
+   "inicial": "q",
+   "final": "üan",
+   "cap": 4
+  },
+  {
+   "pinyin": "qun",
+   "inicial": "q",
+   "final": "ün",
+   "cap": 5
+  },
+  {
+   "pinyin": "xi",
+   "inicial": "x",
+   "final": "i",
+   "cap": 4
+  },
+  {
+   "pinyin": "xia",
+   "inicial": "x",
+   "final": "ia",
+   "cap": 4
+  },
+  {
+   "pinyin": "xie",
+   "inicial": "x",
+   "final": "ie",
+   "cap": 4
+  },
+  {
+   "pinyin": "xiao",
+   "inicial": "x",
+   "final": "iao",
+   "cap": 4
+  },
+  {
+   "pinyin": "xiu",
+   "inicial": "x",
+   "final": "iou",
+   "cap": 4
+  },
+  {
+   "pinyin": "xian",
+   "inicial": "x",
+   "final": "ian",
+   "cap": 4
+  },
+  {
+   "pinyin": "xin",
+   "inicial": "x",
+   "final": "in",
+   "cap": 4
+  },
+  {
+   "pinyin": "xiang",
+   "inicial": "x",
+   "final": "iang",
+   "cap": 4
+  },
+  {
+   "pinyin": "xing",
+   "inicial": "x",
+   "final": "ing",
+   "cap": 4
+  },
+  {
+   "pinyin": "xiong",
+   "inicial": "x",
+   "final": "iong",
+   "cap": 5
+  },
+  {
+   "pinyin": "xu",
+   "inicial": "x",
+   "final": "ü",
+   "cap": 4
+  },
+  {
+   "pinyin": "xue",
+   "inicial": "x",
+   "final": "üe",
+   "cap": 4
+  },
+  {
+   "pinyin": "xuan",
+   "inicial": "x",
+   "final": "üan",
+   "cap": 4
+  },
+  {
+   "pinyin": "xun",
+   "inicial": "x",
+   "final": "ün",
+   "cap": 5
+  },
+  {
+   "pinyin": "zha",
+   "inicial": "zh",
+   "final": "a",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhe",
+   "inicial": "zh",
+   "final": "e",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhi",
+   "inicial": "zh",
+   "final": "-i",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhai",
+   "inicial": "zh",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhei",
+   "inicial": "zh",
+   "final": "ei",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhao",
+   "inicial": "zh",
+   "final": "ao",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhou",
+   "inicial": "zh",
+   "final": "ou",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhan",
+   "inicial": "zh",
+   "final": "an",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhen",
+   "inicial": "zh",
+   "final": "en",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhang",
+   "inicial": "zh",
+   "final": "ang",
+   "cap": 3
+  },
+  {
+   "pinyin": "zheng",
+   "inicial": "zh",
+   "final": "eng",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhong",
+   "inicial": "zh",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhu",
+   "inicial": "zh",
+   "final": "u",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhua",
+   "inicial": "zh",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "zhuo",
+   "inicial": "zh",
+   "final": "uo",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhuai",
+   "inicial": "zh",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "zhui",
+   "inicial": "zh",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "zhuan",
+   "inicial": "zh",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "zhun",
+   "inicial": "zh",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "zhuang",
+   "inicial": "zh",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "cha",
+   "inicial": "ch",
+   "final": "a",
+   "cap": 3
+  },
+  {
+   "pinyin": "che",
+   "inicial": "ch",
+   "final": "e",
+   "cap": 3
+  },
+  {
+   "pinyin": "chi",
+   "inicial": "ch",
+   "final": "-i",
+   "cap": 3
+  },
+  {
+   "pinyin": "chai",
+   "inicial": "ch",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "chao",
+   "inicial": "ch",
+   "final": "ao",
+   "cap": 3
+  },
+  {
+   "pinyin": "chou",
+   "inicial": "ch",
+   "final": "ou",
+   "cap": 3
+  },
+  {
+   "pinyin": "chan",
+   "inicial": "ch",
+   "final": "an",
+   "cap": 3
+  },
+  {
+   "pinyin": "chen",
+   "inicial": "ch",
+   "final": "en",
+   "cap": 3
+  },
+  {
+   "pinyin": "chang",
+   "inicial": "ch",
+   "final": "ang",
+   "cap": 3
+  },
+  {
+   "pinyin": "cheng",
+   "inicial": "ch",
+   "final": "eng",
+   "cap": 3
+  },
+  {
+   "pinyin": "chong",
+   "inicial": "ch",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "chu",
+   "inicial": "ch",
+   "final": "u",
+   "cap": 3
+  },
+  {
+   "pinyin": "chua",
+   "inicial": "ch",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "chuo",
+   "inicial": "ch",
+   "final": "uo",
+   "cap": 3
+  },
+  {
+   "pinyin": "chuai",
+   "inicial": "ch",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "chui",
+   "inicial": "ch",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "chuan",
+   "inicial": "ch",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "chun",
+   "inicial": "ch",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "chuang",
+   "inicial": "ch",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "sha",
+   "inicial": "sh",
+   "final": "a",
+   "cap": 3
+  },
+  {
+   "pinyin": "she",
+   "inicial": "sh",
+   "final": "e",
+   "cap": 3
+  },
+  {
+   "pinyin": "shi",
+   "inicial": "sh",
+   "final": "-i",
+   "cap": 3
+  },
+  {
+   "pinyin": "shai",
+   "inicial": "sh",
+   "final": "ai",
+   "cap": 3
+  },
+  {
+   "pinyin": "shei",
+   "inicial": "sh",
+   "final": "ei",
+   "cap": 3
+  },
+  {
+   "pinyin": "shao",
+   "inicial": "sh",
+   "final": "ao",
+   "cap": 3
+  },
+  {
+   "pinyin": "shou",
+   "inicial": "sh",
+   "final": "ou",
+   "cap": 3
+  },
+  {
+   "pinyin": "shan",
+   "inicial": "sh",
+   "final": "an",
+   "cap": 3
+  },
+  {
+   "pinyin": "shen",
+   "inicial": "sh",
+   "final": "en",
+   "cap": 3
+  },
+  {
+   "pinyin": "shang",
+   "inicial": "sh",
+   "final": "ang",
+   "cap": 3
+  },
+  {
+   "pinyin": "sheng",
+   "inicial": "sh",
+   "final": "eng",
+   "cap": 3
+  },
+  {
+   "pinyin": "shu",
+   "inicial": "sh",
+   "final": "u",
+   "cap": 3
+  },
+  {
+   "pinyin": "shua",
+   "inicial": "sh",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "shuo",
+   "inicial": "sh",
+   "final": "uo",
+   "cap": 3
+  },
+  {
+   "pinyin": "shuai",
+   "inicial": "sh",
+   "final": "uai",
+   "cap": 3
+  },
+  {
+   "pinyin": "shui",
+   "inicial": "sh",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "shuan",
+   "inicial": "sh",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "shun",
+   "inicial": "sh",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "shuang",
+   "inicial": "sh",
+   "final": "uang",
+   "cap": 5
+  },
+  {
+   "pinyin": "re",
+   "inicial": "r",
+   "final": "e",
+   "cap": 3
+  },
+  {
+   "pinyin": "ri",
+   "inicial": "r",
+   "final": "-i",
+   "cap": 3
+  },
+  {
+   "pinyin": "rao",
+   "inicial": "r",
+   "final": "ao",
+   "cap": 3
+  },
+  {
+   "pinyin": "rou",
+   "inicial": "r",
+   "final": "ou",
+   "cap": 3
+  },
+  {
+   "pinyin": "ran",
+   "inicial": "r",
+   "final": "an",
+   "cap": 3
+  },
+  {
+   "pinyin": "ren",
+   "inicial": "r",
+   "final": "en",
+   "cap": 3
+  },
+  {
+   "pinyin": "rang",
+   "inicial": "r",
+   "final": "ang",
+   "cap": 3
+  },
+  {
+   "pinyin": "reng",
+   "inicial": "r",
+   "final": "eng",
+   "cap": 3
+  },
+  {
+   "pinyin": "rong",
+   "inicial": "r",
+   "final": "ong",
+   "cap": 3
+  },
+  {
+   "pinyin": "ru",
+   "inicial": "r",
+   "final": "u",
+   "cap": 3
+  },
+  {
+   "pinyin": "rua",
+   "inicial": "r",
+   "final": "ua",
+   "cap": 5
+  },
+  {
+   "pinyin": "ruo",
+   "inicial": "r",
+   "final": "uo",
+   "cap": 3
+  },
+  {
+   "pinyin": "rui",
+   "inicial": "r",
+   "final": "uei",
+   "cap": 4
+  },
+  {
+   "pinyin": "ruan",
+   "inicial": "r",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "run",
+   "inicial": "r",
+   "final": "uen",
+   "cap": 4
+  },
+  {
+   "pinyin": "za",
+   "inicial": "z",
+   "final": "a",
+   "cap": 5
+  },
+  {
+   "pinyin": "ze",
+   "inicial": "z",
+   "final": "e",
+   "cap": 5
+  },
+  {
+   "pinyin": "zi",
+   "inicial": "z",
+   "final": "-i",
+   "cap": 5
+  },
+  {
+   "pinyin": "zai",
+   "inicial": "z",
+   "final": "ai",
+   "cap": 5
+  },
+  {
+   "pinyin": "zei",
+   "inicial": "z",
+   "final": "ei",
+   "cap": 5
+  },
+  {
+   "pinyin": "zao",
+   "inicial": "z",
+   "final": "ao",
+   "cap": 5
+  },
+  {
+   "pinyin": "zou",
+   "inicial": "z",
+   "final": "ou",
+   "cap": 5
+  },
+  {
+   "pinyin": "zan",
+   "inicial": "z",
+   "final": "an",
+   "cap": 5
+  },
+  {
+   "pinyin": "zen",
+   "inicial": "z",
+   "final": "en",
+   "cap": 5
+  },
+  {
+   "pinyin": "zang",
+   "inicial": "z",
+   "final": "ang",
+   "cap": 5
+  },
+  {
+   "pinyin": "zeng",
+   "inicial": "z",
+   "final": "eng",
+   "cap": 5
+  },
+  {
+   "pinyin": "zong",
+   "inicial": "z",
+   "final": "ong",
+   "cap": 5
+  },
+  {
+   "pinyin": "zu",
+   "inicial": "z",
+   "final": "u",
+   "cap": 5
+  },
+  {
+   "pinyin": "zuo",
+   "inicial": "z",
+   "final": "uo",
+   "cap": 5
+  },
+  {
+   "pinyin": "zui",
+   "inicial": "z",
+   "final": "uei",
+   "cap": 5
+  },
+  {
+   "pinyin": "zuan",
+   "inicial": "z",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "zun",
+   "inicial": "z",
+   "final": "uen",
+   "cap": 5
+  },
+  {
+   "pinyin": "ca",
+   "inicial": "c",
+   "final": "a",
+   "cap": 5
+  },
+  {
+   "pinyin": "ce",
+   "inicial": "c",
+   "final": "e",
+   "cap": 5
+  },
+  {
+   "pinyin": "ci",
+   "inicial": "c",
+   "final": "-i",
+   "cap": 5
+  },
+  {
+   "pinyin": "cai",
+   "inicial": "c",
+   "final": "ai",
+   "cap": 5
+  },
+  {
+   "pinyin": "cao",
+   "inicial": "c",
+   "final": "ao",
+   "cap": 5
+  },
+  {
+   "pinyin": "cou",
+   "inicial": "c",
+   "final": "ou",
+   "cap": 5
+  },
+  {
+   "pinyin": "can",
+   "inicial": "c",
+   "final": "an",
+   "cap": 5
+  },
+  {
+   "pinyin": "cen",
+   "inicial": "c",
+   "final": "en",
+   "cap": 5
+  },
+  {
+   "pinyin": "cang",
+   "inicial": "c",
+   "final": "ang",
+   "cap": 5
+  },
+  {
+   "pinyin": "ceng",
+   "inicial": "c",
+   "final": "eng",
+   "cap": 5
+  },
+  {
+   "pinyin": "cong",
+   "inicial": "c",
+   "final": "ong",
+   "cap": 5
+  },
+  {
+   "pinyin": "cu",
+   "inicial": "c",
+   "final": "u",
+   "cap": 5
+  },
+  {
+   "pinyin": "cuo",
+   "inicial": "c",
+   "final": "uo",
+   "cap": 5
+  },
+  {
+   "pinyin": "cui",
+   "inicial": "c",
+   "final": "uei",
+   "cap": 5
+  },
+  {
+   "pinyin": "cuan",
+   "inicial": "c",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "cun",
+   "inicial": "c",
+   "final": "uen",
+   "cap": 5
+  },
+  {
+   "pinyin": "sa",
+   "inicial": "s",
+   "final": "a",
+   "cap": 5
+  },
+  {
+   "pinyin": "se",
+   "inicial": "s",
+   "final": "e",
+   "cap": 5
+  },
+  {
+   "pinyin": "si",
+   "inicial": "s",
+   "final": "-i",
+   "cap": 5
+  },
+  {
+   "pinyin": "sai",
+   "inicial": "s",
+   "final": "ai",
+   "cap": 5
+  },
+  {
+   "pinyin": "sao",
+   "inicial": "s",
+   "final": "ao",
+   "cap": 5
+  },
+  {
+   "pinyin": "sou",
+   "inicial": "s",
+   "final": "ou",
+   "cap": 5
+  },
+  {
+   "pinyin": "san",
+   "inicial": "s",
+   "final": "an",
+   "cap": 5
+  },
+  {
+   "pinyin": "sen",
+   "inicial": "s",
+   "final": "en",
+   "cap": 5
+  },
+  {
+   "pinyin": "sang",
+   "inicial": "s",
+   "final": "ang",
+   "cap": 5
+  },
+  {
+   "pinyin": "seng",
+   "inicial": "s",
+   "final": "eng",
+   "cap": 5
+  },
+  {
+   "pinyin": "song",
+   "inicial": "s",
+   "final": "ong",
+   "cap": 5
+  },
+  {
+   "pinyin": "su",
+   "inicial": "s",
+   "final": "u",
+   "cap": 5
+  },
+  {
+   "pinyin": "suo",
+   "inicial": "s",
+   "final": "uo",
+   "cap": 5
+  },
+  {
+   "pinyin": "sui",
+   "inicial": "s",
+   "final": "uei",
+   "cap": 5
+  },
+  {
+   "pinyin": "suan",
+   "inicial": "s",
+   "final": "uan",
+   "cap": 5
+  },
+  {
+   "pinyin": "sun",
+   "inicial": "s",
+   "final": "uen",
+   "cap": 5
+  }
+ ]
+}

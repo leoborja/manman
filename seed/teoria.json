@@ -1,0 +1,2629 @@
+[
+  {
+    "id": "c01-tons",
+    "capitulo": "cap1",
+    "ordem": 1,
+    "titulo": "Os 4 tons e o neutro",
+    "resumo": "Cada sílaba tem um tom, e o tom muda o sentido.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "mā, má, mǎ e mà são quatro palavras diferentes. Toque em cada uma e compare."
+      },
+      {
+        "tipo": "som",
+        "hanzi": "1º",
+        "pt": "alto e reto, como o tom de linha do telefone",
+        "pinyin": "mā"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "2º",
+        "pt": "sobe, como quem pergunta “hein?”",
+        "pinyin": "má"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "3º",
+        "pt": "desce e sobe, como “aha!”",
+        "pinyin": "mǎ"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "4º",
+        "pt": "cai seco, como num susto",
+        "pinyin": "mà"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Sem marca é o tom neutro: curto e leve, sem força. É ele que fecha a pergunta com 吗."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你好吗？",
+        "pinyin": "Nǐ hǎo ma?",
+        "pt": "Tudo bem?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Nenhuma palavra começa com o tom neutro: ele só vem depois de outra sílaba."
+      }
+    ]
+  },
+  {
+    "id": "c01-silaba",
+    "capitulo": "cap1",
+    "ordem": 2,
+    "titulo": "Sílaba = inicial + final + tom",
+    "resumo": "Cada ideograma é uma sílaba, e cada sílaba tem três partes.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "A inicial é a consoante do começo; a final é o resto; e por cima vai o tom."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "hǎo = h + ao + ˇ",
+        "pt": "inicial + final + tom"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Algumas sílabas não têm inicial. Aí o pinyin escreve y ou w na frente — mas eles não são consoante: y soa i, w soa u."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我",
+        "pinyin": "wǒ",
+        "pt": "eu — soa “uô”"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "也",
+        "pinyin": "yě",
+        "pt": "também — soa “iê”"
+      },
+      {
+        "tipo": "texto",
+        "pt": "E todo ideograma cabe no mesmo quadrado, seja simples ou cheio de traços."
+      }
+    ]
+  },
+  {
+    "id": "c01-sons",
+    "capitulo": "cap1",
+    "ordem": 3,
+    "titulo": "Os sons do cap. 1",
+    "resumo": "b não é b, h é r, e o ü tem bico de u.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "m, n, l, a, o, i, u, ao e uo soam como em português. Os que enganam:"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "b",
+        "pt": "p seco — sem soltar ar",
+        "pinyin": "bā bǐ"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "p",
+        "pt": "p soprado — sai um sopro junto",
+        "pinyin": "pā pí"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "h",
+        "pt": "r de “rato”, raspando a garganta",
+        "pinyin": "hǎo hē"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "e",
+        "pt": "“ã” fechado, do jeito paulista",
+        "pinyin": "è hē"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ü",
+        "pt": "bico de u e fala i",
+        "pinyin": "nǚ lǜ"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "en",
+        "pt": "“ãn” paulista, com o n pronunciado",
+        "pinyin": "hěn mén"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ie",
+        "pt": "iê",
+        "pinyin": "bié liè"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "in",
+        "pt": "in, com o n pronunciado",
+        "pinyin": "nín lín"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ing",
+        "pt": "o ng fecha a garganta e o som sai pelo nariz",
+        "pinyin": "míng bīng"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "O que separa b de p é o sopro, não a voz: ponha a mão na frente da boca e sinta o ar só no p."
+      }
+    ]
+  },
+  {
+    "id": "c01-som-do-e",
+    "capitulo": "cap1",
+    "ordem": 4,
+    "titulo": "Os dois sons do e",
+    "resumo": "Sozinho ou antes de n/ng, é “ã”; em ei, ie, üe, é o nosso ê.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "O e do pinyin tem dois sons, e quem decide é o que vem junto."
+      },
+      {
+        "tipo": "som",
+        "hanzi": "e  en  eng",
+        "pt": "“ã” fechado, do jeito paulista",
+        "pinyin": "è hěn mèng"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ei  ie  üe",
+        "pt": "o nosso ê",
+        "pinyin": "lèi bié yuè"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "饿",
+        "pinyin": "è",
+        "pt": "com fome"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "累",
+        "pinyin": "lèi",
+        "pt": "cansado"
+      }
+    ]
+  },
+  {
+    "id": "c01-marca-do-tom",
+    "capitulo": "cap1",
+    "ordem": 5,
+    "titulo": "Onde vai a marca do tom",
+    "resumo": "No a; sem a, no o ou no e; com i e u juntos, no último.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "A marca vai sempre numa vogal, e a regra de qual é fixa:"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "1 · tem a → no a",
+        "pt": "hǎo, bái, liǎng"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "2 · sem a → no o ou no e",
+        "pt": "duō, xiè, gěi — o e o e nunca aparecem juntos"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "3 · só i e u → no último",
+        "pt": "liù, guǐ, duì"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Por isso é liù e guǐ: com i e u juntos, a marca vai sempre na segunda letra."
+      }
+    ]
+  },
+  {
+    "id": "c01-3-3",
+    "capitulo": "cap1",
+    "ordem": 6,
+    "titulo": "3º + 3º: o primeiro vira 2º",
+    "resumo": "Dois 3º tons seguidos: o primeiro sobe. A escrita não muda.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Quando dois 3º tons ficam seguidos, o primeiro é falado como 2º. O pinyin continua escrito com os dois 3º."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "ˇ + ˇ → ˊ + ˇ",
+        "pt": "3º + 3º soa 2º + 3º"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你好",
+        "pinyin": "nǐ hǎo",
+        "pt": "fala-se “ní hǎo”"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Numa fila de 3º tons, todos sobem menos o último."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我很好。",
+        "pinyin": "Wǒ hěn hǎo.",
+        "pt": "fala-se “wó hén hǎo”"
+      }
+    ]
+  },
+  {
+    "id": "c01-hen-adjetivo",
+    "capitulo": "cap1",
+    "ordem": 7,
+    "titulo": "我很好 — o adjetivo sem “ser”",
+    "resumo": "O adjetivo já é o verbo; na afirmação, vai 很 antes dele.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Em chinês o adjetivo funciona como verbo: “estou bem” é só “eu bem”. Na afirmação simples, põe-se 很 antes dele — e aí o 很 quase não quer dizer “muito”."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Sujeito + 很 + adjetivo",
+        "pt": "Sujeito está / é + adjetivo"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我很好。",
+        "pinyin": "Wǒ hěn hǎo.",
+        "pt": "Estou bem."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "今天很热。",
+        "pinyin": "Jīntiān hěn rè.",
+        "pt": "Hoje está quente."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Sem o 很, 我好 soa incompleto, como começo de um contraste: “eu estou bem, (mas…)”."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "很 só aparece antes de adjetivo — nunca antes de um verbo."
+      }
+    ],
+    "palavras": [
+      "hen"
+    ]
+  },
+  {
+    "id": "c01-ma-ne",
+    "capitulo": "cap1",
+    "ordem": 8,
+    "titulo": "吗 pergunta, 呢 devolve",
+    "resumo": "吗 no fim vira pergunta de sim/não; 呢 depois de um nome é “e…?”.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Para perguntar sim ou não, basta pôr 吗 no fim da afirmação. A ordem das palavras não muda."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Afirmação + 吗？",
+        "pt": "…?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你好吗？",
+        "pinyin": "Nǐ hǎo ma?",
+        "pt": "Tudo bem?"
+      },
+      {
+        "tipo": "texto",
+        "pt": "呢 depois de um nome devolve a pergunta que acabou de ser respondida."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Nome + 呢？",
+        "pt": "E o / a …?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我很好，你呢？",
+        "pinyin": "Wǒ hěn hǎo, nǐ ne?",
+        "pt": "Estou bem, e você?"
+      }
+    ],
+    "palavras": [
+      "ma-pergunta"
+    ]
+  },
+  {
+    "id": "c01-ideograma",
+    "capitulo": "cap1",
+    "ordem": 9,
+    "titulo": "Como o ideograma se monta",
+    "resumo": "Desenho, desenho + desenho, ou desenho + som.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "O radical é o pedaço do ideograma que dá uma pista do sentido — e é por ele que se procura o ideograma no dicionário."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "木  人",
+        "pt": "Pictograma: o ideograma é um desenho — árvore, pessoa."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "林 = 木 + 木",
+        "pt": "Associativo: dois desenhos juntos formam uma ideia — duas árvores, um bosque."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "妈 = 女 + 马",
+        "pt": "Pictofonético: um pedaço dá o sentido (女, mulher) e o outro dá o som (马, mǎ)."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Como saber de que tipo é? Só depois de conhecer tudo do ideograma: sentido, som e as partes."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Com uns 1.000 ideogramas já se reconhece cerca de 90% de um texto."
+      }
+    ]
+  },
+  {
+    "id": "c01-numeros",
+    "capitulo": "cap1",
+    "ordem": 10,
+    "titulo": "Números depois do 10",
+    "resumo": "O número se lê como uma conta: 二十一 é 2 × 10 + 1.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "十一 = 10 + 1",
+        "pt": "11"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "二十 = 2 × 10",
+        "pt": "20"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "二十一 = 2 × 10 + 1",
+        "pt": "21"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "十二",
+        "pinyin": "shí'èr",
+        "pt": "12"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "九十九",
+        "pinyin": "jiǔshíjiǔ",
+        "pt": "99"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "一百",
+        "pinyin": "yìbǎi",
+        "pt": "100"
+      }
+    ]
+  },
+  {
+    "id": "c01-escrita-tracos",
+    "capitulo": "cap1",
+    "ordem": 11,
+    "titulo": "Os 8 traços básicos",
+    "resumo": "Todo ideograma se escreve com o mesmo punhado de traços.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Cada traço tem nome. Em azul, ele dentro de um ideograma que você já conhece:"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "一",
+        "destaque": [
+          0
+        ],
+        "nome": "横",
+        "pinyin": "héng",
+        "pt": "horizontal"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "十",
+        "destaque": [
+          1
+        ],
+        "nome": "竖",
+        "pinyin": "shù",
+        "pt": "vertical"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "人",
+        "destaque": [
+          0
+        ],
+        "nome": "撇",
+        "pinyin": "piě",
+        "pt": "diagonal para a esquerda"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "人",
+        "destaque": [
+          1
+        ],
+        "nome": "捺",
+        "pinyin": "nà",
+        "pt": "diagonal para a direita"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "打",
+        "destaque": [
+          2
+        ],
+        "nome": "提",
+        "pinyin": "tí",
+        "pt": "diagonal que SOBE, de baixo à esquerda para cima à direita"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "六",
+        "destaque": [
+          0
+        ],
+        "nome": "点",
+        "pinyin": "diǎn",
+        "pt": "o “ponto” — na verdade um traço curto, de comprimento variável"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "口",
+        "destaque": [
+          1
+        ],
+        "nome": "折",
+        "pinyin": "zhé",
+        "pt": "quebra: o traço muda de direção sem levantar a caneta — e continua sendo um traço só"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "小",
+        "destaque": [
+          0
+        ],
+        "nome": "钩",
+        "pinyin": "gōu",
+        "pt": "gancho: o bico no fim do traço (aqui, embaixo do 竖 de 小), que pode sair para vários lados"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Por tradição, os oito cabem num ideograma só: 永 yǒng, “eterno”. Toque nele para ver de novo."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "永"
+      }
+    ]
+  },
+  {
+    "id": "c01-escrita-direcao",
+    "capitulo": "cap1",
+    "ordem": 12,
+    "titulo": "Para que lado vai o traço",
+    "resumo": "Da esquerda para a direita, de cima para baixo — e o 提 é a exceção.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "横 → ",
+        "pt": "Horizontal: sempre da esquerda para a direita."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "竖 撇 捺 ↓",
+        "pt": "Vertical e diagonal: sempre de cima para baixo."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "三人"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "打",
+        "destaque": [
+          2
+        ],
+        "nome": "提",
+        "pinyin": "tí",
+        "pt": "o único que vai de baixo para cima — e só aparece no canto inferior esquerdo do quadrado"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Quando o traço muda de direção (o 折), ele continua sendo UM traço só, desde que siga as duas regras acima:"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "口马九",
+        "pt": "o canto de 口, o zigue-zague de 马 e a volta de 九: cada um sai sem levantar a caneta"
+      }
+    ]
+  },
+  {
+    "id": "c01-escrita-ordem",
+    "capitulo": "cap1",
+    "ordem": 13,
+    "titulo": "A ordem: esquerda→direita, cima→baixo",
+    "resumo": "As duas regras principais. Quando brigam, a da esquerda ganha.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "A ordem existe para escrever rápido, lembrar do ideograma e para que a letra cursiva de um seja lida por todos."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "左 → 右",
+        "pt": "Da esquerda para a direita"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "川州心"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "上 ↓ 下",
+        "pt": "De cima para baixo"
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "三彐之"
+      },
+      {
+        "tipo": "texto",
+        "pt": "A regra vale componente a componente: termina-se uma parte do ideograma antes de passar para a próxima."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "São uma noção, não uma lei: há exceções, e muitas destas regras nem aparecem nos livros tradicionais de caligrafia."
+      }
+    ]
+  },
+  {
+    "id": "c01-escrita-cruzando",
+    "capitulo": "cap1",
+    "ordem": 14,
+    "titulo": "Meio, cruz e X",
+    "resumo": "Três casos que parecem quebrar as regras principais.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "中 → 左 → 右",
+        "pt": "O meio divide dois lados parecidos: ele vem primeiro, depois a esquerda, depois a direita."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "小水山"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "横 → 竖",
+        "pt": "Horizontal que cruza vertical vem antes dela."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "十丰半王"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "撇 → 捺",
+        "pt": "Duas diagonais em X: primeiro a que desce para a esquerda, depois a que desce para a direita."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "乂文父义"
+      }
+    ]
+  },
+  {
+    "id": "c01-escrita-caixas",
+    "capitulo": "cap1",
+    "ordem": 15,
+    "titulo": "Caixas e cantos",
+    "resumo": "O fundo da caixa fecha por último; o canto superior direito vem antes.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "左 → 上右 → 下",
+        "pt": "Caixa fechada (ou aberta embaixo): o lado esquerdo, depois o de cima-direita, e o fundo por último — o que está dentro entra antes do fundo."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "口中巾囚"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "右上 → 左",
+        "pt": "Traços embolados no canto superior direito, com um traço saindo à esquerda: primeiro o canto, depois o traço da esquerda."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "艮巴尸"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "右上 → 左下",
+        "pt": "Componente em cima de um traço que desce e vira para a direita (辶, 凵, 匚): primeiro o componente, depois esse traço."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "这凶医"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "No 医 o 匚 se divide: o 一 de cima vai primeiro, o canto de baixo (竖折) por último."
+      }
+    ]
+  },
+  {
+    "id": "c01-escrita-detalhes",
+    "capitulo": "cap1",
+    "ordem": 16,
+    "titulo": "Os detalhes do fim",
+    "resumo": "O vertical longo antes do horizontal curto, o ponto do canto por último, e o gancho que aponta o próximo.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "丨 → 一",
+        "pt": "Horizontal pequeno pendurado num vertical comprido: o vertical primeiro."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "正点非"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "右上 丶 → 最后",
+        "pt": "O 点 no canto superior direito é sempre o último traço."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "我甫代"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "钩 →",
+        "pt": "O gancho costuma apontar para onde começa o próximo traço."
+      },
+      {
+        "tipo": "tracos",
+        "hanzi": "永子我"
+      }
+    ]
+  },
+  {
+    "id": "c02-seco-soprado",
+    "capitulo": "cap2",
+    "ordem": 1,
+    "titulo": "Seco ou soprado: b/p, d/t, g/k",
+    "resumo": "b, d, g são p, t, k sem ar; p, t, k são com sopro.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "b, d e g não são os nossos b, d, g: são p, t e k secos, sem soltar ar. Já p, t e k são os mesmos sons com um sopro forte junto."
+      },
+      {
+        "tipo": "som",
+        "hanzi": "b · p",
+        "pt": "p seco × p soprado",
+        "pinyin": "bā pā"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "d · t",
+        "pt": "t seco × t soprado",
+        "pinyin": "dā tā"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "g · k",
+        "pt": "k seco × k soprado",
+        "pinyin": "gē kē"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Ponha a mão na frente da boca: no p, t e k sente-se o ar; no b, d e g, não."
+      }
+    ]
+  },
+  {
+    "id": "c02-sons",
+    "capitulo": "cap2",
+    "ordem": 2,
+    "titulo": "Os sons do cap. 2",
+    "resumo": "an × ang, e o o escondido do iu.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "f soa como em português; d, t, g e k estão na nota anterior. As finais:"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ei",
+        "pt": "ei, igual ao nosso",
+        "pinyin": "gěi lèi"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ou",
+        "pt": "ou, igual ao nosso",
+        "pinyin": "dōu tóu"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "an",
+        "pt": "a aberto + n pronunciado no fim",
+        "pinyin": "fàn kàn"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ang",
+        "pt": "a aberto + ng fanho",
+        "pinyin": "máng táng"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "eng",
+        "pt": "“ãng” paulista + ng fanho",
+        "pinyin": "děng péng"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "iao",
+        "pt": "iau",
+        "pinyin": "tiào niǎo"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "iou",
+        "pt": "escreve-se iu, mas tem um o leve no meio",
+        "pinyin": "liù niú"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "an e ang não são o mesmo som: no an a língua fecha na ponta; no ang o som vai para o nariz."
+      }
+    ]
+  },
+  {
+    "id": "c02-meio-terceiro",
+    "capitulo": "cap2",
+    "ordem": 3,
+    "titulo": "O 3º tom quase nunca é inteiro",
+    "resumo": "Antes de outro tom, o 3º só desce.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "O 3º tom desce e sobe inteiro só quando está sozinho ou no fim. Antes de outro tom, ele sempre muda:"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "ˇ + ˉ   ˇ + ˊ   ˇ + ˋ",
+        "pt": "vira meio 3º: só desce, quase sem subir"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "ˇ + ˇ",
+        "pt": "vira 2º + 3º (ver o cap. 1)"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "ˇ + neutro",
+        "pt": "meio 3º, e o neutro fica mais alto"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "很忙",
+        "pinyin": "hěn máng",
+        "pt": "muito ocupado — o hěn só desce"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们",
+        "pinyin": "wǒmen",
+        "pt": "nós — o men sai mais alto"
+      }
+    ]
+  },
+  {
+    "id": "c02-pronomes",
+    "capitulo": "cap2",
+    "ordem": 4,
+    "titulo": "Pronomes: o verbo não conjuga",
+    "resumo": "O verbo é o mesmo para todos; o plural é + 们.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "O verbo não muda com a pessoa. Para o plural, junta-se 们 (men) ao pronome."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "我 · 我们",
+        "pt": "wǒ · wǒmen — eu · nós"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "你 · 你们",
+        "pt": "nǐ · nǐmen — você · vocês"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "他 / 她 · 他们",
+        "pt": "tā · tāmen — ele / ela · eles"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "他 e 她 soam igual (tā): a diferença só aparece na escrita."
+      }
+    ]
+  },
+  {
+    "id": "c02-sem-possessivo",
+    "capitulo": "cap2",
+    "ordem": 5,
+    "titulo": "Minha mãe = 我妈妈",
+    "resumo": "Não há possessivo: pronome + família, e pronto.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Não existe pronome possessivo. Para dizer “minha mãe” ou “a mãe dele”, põe-se o pronome direto antes do nome."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Pronome + nome",
+        "pt": "eu + mãe = minha mãe"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我妈妈",
+        "pinyin": "wǒ māma",
+        "pt": "minha mãe"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "他妈妈",
+        "pinyin": "tā māma",
+        "pt": "a mãe dele"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Isso vale para família e gente próxima. No resto entra o 的 (cap. 3)."
+      }
+    ]
+  },
+  {
+    "id": "c02-ye-dou",
+    "capitulo": "cap2",
+    "ordem": 6,
+    "titulo": "Advérbio vem antes do verbo",
+    "resumo": "也, 都, 不, 很 ficam entre o sujeito e o verbo — nunca no fim.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "A ordem é sujeito + advérbio + verbo + objeto, e o advérbio vem sempre antes do verbo: 也 (também), 都 (todos), 不 (não), 很 (muito)."
+      },
+      {
+        "tipo": "texto",
+        "pt": "也 (também) e 都 (todos) são advérbios: ficam depois do sujeito e antes do verbo ou do adjetivo."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Sujeito + 也 / 都 + verbo",
+        "pt": "Sujeito também / todos + verbo"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "他也很忙。",
+        "pinyin": "Tā yě hěn máng.",
+        "pt": "Ele também está ocupado."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们都很忙。",
+        "pinyin": "Wǒmen dōu hěn máng.",
+        "pt": "Nós todos estamos ocupados."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "也 + 都",
+        "pt": "Juntos, o 也 vem primeiro."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们也都很好。",
+        "pinyin": "Wǒmen yě dōu hěn hǎo.",
+        "pt": "Nós também estamos todos bem."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Não se diz 我很忙也: o “também” do fim da frase em português vai para antes do verbo."
+      },
+      {
+        "tipo": "texto",
+        "pt": "E o 也 só entra se a frase de antes também foi positiva."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我妈妈很好，你妈妈呢？",
+        "pinyin": "Wǒ māma hěn hǎo, nǐ māma ne?",
+        "pt": "Minha mãe está bem, e a sua?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "她也很好。",
+        "pinyin": "Tā yě hěn hǎo.",
+        "pt": "Ela também está bem."
+      }
+    ]
+  },
+  {
+    "id": "c02-sem-sim",
+    "capitulo": "cap2",
+    "ordem": 7,
+    "titulo": "Não existe “sim”",
+    "resumo": "Responde-se repetindo o verbo — ou o adjetivo.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Para responder que sim, repete-se o verbo da pergunta; se ela não tem verbo, repete-se o adjetivo. Para o não, 不 antes dele."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你忙吗？",
+        "pinyin": "Nǐ máng ma?",
+        "pt": "Você está ocupado?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "忙。",
+        "pinyin": "Máng.",
+        "pt": "Estou."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "不忙。",
+        "pinyin": "Bù máng.",
+        "pt": "Não estou."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Existe um “sim” meio falso, mas o natural é repetir o verbo."
+      }
+    ]
+  },
+  {
+    "id": "c03-sons",
+    "capitulo": "cap3",
+    "ordem": 1,
+    "titulo": "Língua no céu da boca: zh, ch, sh, r",
+    "resumo": "A ponta da língua sobe — e o i depois deles não é i.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Em zh, ch, sh e r, a ponta da língua sobe para o céu da boca."
+      },
+      {
+        "tipo": "som",
+        "hanzi": "zh",
+        "pt": "dj",
+        "pinyin": "zhōng zhè"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ch",
+        "pt": "tch soprado",
+        "pinyin": "chī chá"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "sh",
+        "pt": "ch",
+        "pinyin": "shì shuō"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "r",
+        "pt": "j",
+        "pinyin": "rén rè"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "-i",
+        "pt": "depois deles o i não é i: a língua fica parada, zumbindo",
+        "pinyin": "zhī chī shì rì"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "uai",
+        "pt": "uai",
+        "pinyin": "kuài shuài"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ong",
+        "pt": "ung + ng fanho",
+        "pinyin": "zhōng hóng"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Este grupo nunca se junta com i nem com ü: shang existe, xang não."
+      }
+    ]
+  },
+  {
+    "id": "c03-shi",
+    "capitulo": "cap3",
+    "ordem": 2,
+    "titulo": "是 liga nome a nome",
+    "resumo": "A 是 B é “A é B” — só entre substantivos, nunca com adjetivo.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "是 liga dois nomes: quem ou o que alguém é. Com adjetivo quem entra é o 很 (ver o cap. 1)."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "A 是 B",
+        "pt": "A é B"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "A 不是 B",
+        "pt": "A não é B"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我是医生。",
+        "pinyin": "Wǒ shì yīshēng.",
+        "pt": "Sou médico."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "他不是日本人。",
+        "pinyin": "Tā bú shì Rìběn rén.",
+        "pt": "Ele não é japonês."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你是老师吗？",
+        "pinyin": "Nǐ shì lǎoshī ma?",
+        "pt": "Você é professor?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "我是很好 está errado: 好 é adjetivo, então é 我很好."
+      }
+    ],
+    "palavras": [
+      "shi"
+    ]
+  },
+  {
+    "id": "c03-interrogativos",
+    "capitulo": "cap3",
+    "ordem": 3,
+    "titulo": "什么 e 哪 já perguntam",
+    "resumo": "Com palavra de pergunta, não se põe 吗.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Palavras de pergunta — 什么 (o quê), 哪 (qual) — já fazem a frase virar pergunta. Com elas, não entra 吗."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你叫什么名字？",
+        "pinyin": "Nǐ jiào shénme míngzi?",
+        "pt": "Como você se chama?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你是哪国人？",
+        "pinyin": "Nǐ shì nǎ guó rén?",
+        "pt": "De que país você é?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "你叫什么名字吗？ está errado: seriam duas perguntas na mesma frase."
+      }
+    ]
+  },
+  {
+    "id": "c03-dou-plural",
+    "capitulo": "cap3",
+    "ordem": 4,
+    "titulo": "都 mostra o plural",
+    "resumo": "O nome não tem plural; o 都 é que diz que são vários.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Como o nome não muda no plural, é o 都 (todos) que mostra que é mais de um. Ele é tão comum que entra em quase toda frase com sujeito no plural — mesmo quando já está claro."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们都是老师。",
+        "pinyin": "Wǒmen dōu shì lǎoshī.",
+        "pt": "Nós somos professores."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "他们都很忙。",
+        "pinyin": "Tāmen dōu hěn máng.",
+        "pt": "Eles estão ocupados."
+      }
+    ]
+  },
+  {
+    "id": "c03-zi-ci",
+    "capitulo": "cap3",
+    "ordem": 5,
+    "titulo": "字 é ideograma, 词 é palavra",
+    "resumo": "Um ideograma traz uma ideia; a palavra quase sempre junta dois.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "字 zì · 词 cí",
+        "pt": "ideograma · palavra"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Quase todo ideograma traz a ideia de algo, e a palavra se forma juntando um ideograma a outro."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Como muitos ideogramas têm o mesmo som, o segundo deixa claro de qual se está falando."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "老师",
+        "pinyin": "lǎoshī",
+        "pt": "professor"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "名字",
+        "pinyin": "míngzi",
+        "pt": "nome — com o próprio 字 dentro"
+      }
+    ]
+  },
+  {
+    "id": "c03-guo",
+    "capitulo": "cap3",
+    "ordem": 6,
+    "titulo": "国: a jade dentro da fronteira",
+    "resumo": "O país é a riqueza protegida pelo limite.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "国 = 囗 + 玉",
+        "pt": "fronteira + jade"
+      },
+      {
+        "tipo": "texto",
+        "pt": "囗 é o radical de cercado, limite; dentro dele vai 玉, a jade. O país é a preciosidade protegida pela fronteira."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "中国",
+        "pinyin": "Zhōngguó",
+        "pt": "China"
+      }
+    ]
+  },
+  {
+    "id": "c03-de",
+    "capitulo": "cap3",
+    "ordem": 7,
+    "titulo": "的: de quem é",
+    "resumo": "Dono primeiro, 的, depois a coisa.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "的 liga o dono ao que é dele. O dono vem sempre primeiro."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "A 的 B",
+        "pt": "o B de A — A é o dono"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我的咖啡",
+        "pinyin": "wǒ de kāfēi",
+        "pt": "o meu café"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Com pronome + família ou gente próxima, o 的 pode sair: 我妈妈 (ver o cap. 2)."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Com nome próprio, ou quando a coisa não é próxima (café, chá), o 的 tem que entrar."
+      }
+    ]
+  },
+  {
+    "id": "c04-sons",
+    "capitulo": "cap4",
+    "ordem": 1,
+    "titulo": "Grupo das crianças: j, q, x",
+    "resumo": "O i fino de criança, e só com i e ü.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "j, q e x soam como uma criança falando: o i deles é bem fino."
+      },
+      {
+        "tipo": "som",
+        "hanzi": "j",
+        "pt": "dj",
+        "pinyin": "jiā jiào"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "q",
+        "pt": "tch soprado",
+        "pinyin": "qī qù"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "x",
+        "pt": "entre ch e s — meio s",
+        "pinyin": "xiè xué"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "u",
+        "pt": "depois de j, q, x, o u é sempre ü — só perde os pontinhos",
+        "pinyin": "jù qù xǔ"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Eles só se juntam com i e com ü — e depois pode vir mais coisa: xing, xiang, xuan."
+      },
+      {
+        "tipo": "som",
+        "hanzi": "ian",
+        "pt": "ién",
+        "pinyin": "jiān tiān"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "uei",
+        "pt": "escreve-se ui, tem um e no meio",
+        "pinyin": "duì guì"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "uen",
+        "pt": "escreve-se un, tem um e no meio",
+        "pinyin": "lùn chūn"
+      },
+      {
+        "tipo": "som",
+        "hanzi": "üe",
+        "pt": "ü + ê",
+        "pinyin": "xué yuè"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "É o contrário do grupo do cap. 3: shang existe e xang não; xing existe e shing não."
+      }
+    ]
+  },
+  {
+    "id": "c06-zenmeyang",
+    "capitulo": "cap6",
+    "ordem": 1,
+    "titulo": "…怎么样？ pede a opinião",
+    "resumo": "No fim da frase, pergunta o que o outro achou.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Pra saber o que alguém achou de alguma coisa, diga a coisa e ponha 怎么样 no fim."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Assunto + 怎么样？",
+        "pt": "Como é / como foi / que tal …?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "昨天的京剧怎么样？",
+        "pinyin": "Zuótiān de jīngjù zěnmeyàng?",
+        "pt": "Como foi a ópera ontem?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "今天天气怎么样？",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+        "pt": "Como está o tempo hoje?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "怎么样 já é palavra de pergunta, como 什么 e 哪: não leva 吗."
+      }
+    ],
+    "palavras": [
+      "zenmeyang"
+    ]
+  },
+  {
+    "id": "c06-sugerir",
+    "capitulo": "cap6",
+    "ordem": 2,
+    "titulo": "Sugerir: …，好吗？ e …，可以吗？",
+    "resumo": "A proposta vem primeiro; a pergunta curta, no fim.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Pra propor alguma coisa, diga a proposta inteira e pergunte no fim se está bom."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Proposta，好吗？",
+        "pt": "…, que tal?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们去游泳，好吗？",
+        "pinyin": "Wǒmen qù yóuyǒng, hǎo ma?",
+        "pt": "Vamos nadar?"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Proposta，可以吗？",
+        "pt": "…, pode ser?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "现在去，可以吗？",
+        "pinyin": "Xiànzài qù, kěyǐ ma?",
+        "pt": "Que tal ir agora?"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Pra aceitar: 好, 行 ou 可以. Animado: 太好了！"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "太好了！什么时候去？",
+        "pinyin": "Tài hǎo le! Shénme shíhou qù?",
+        "pt": "Que ótimo! Quando a gente vai?"
+      }
+    ],
+    "palavras": [
+      "xing-ok",
+      "keyi"
+    ]
+  },
+  {
+    "id": "c06-recusar",
+    "capitulo": "cap6",
+    "ordem": 3,
+    "titulo": "Recusar com educação: 恐怕不行",
+    "resumo": "Lamente, dê o motivo, e só então o não.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Um convite não se recusa com um 不 seco. A recusa educada tem três partes: lamentar, dar o motivo e amaciar o não com 恐怕 (receio que…)."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "很抱歉，motivo，恐怕不行。",
+        "pt": "Sinto muito, …, acho que não vai dar."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "很抱歉，明天我很忙，恐怕不行。",
+        "pinyin": "Hěn bàoqiàn, míngtiān wǒ hěn máng, kǒngpà bù xíng.",
+        "pt": "Sinto muito, amanhã estou ocupado, acho que não vai dar."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "抱歉 é mais forte que 对不起: é sentir muito, não só pedir licença."
+      }
+    ],
+    "palavras": [
+      "baoqian",
+      "kongpa",
+      "xing-ok"
+    ]
+  },
+  {
+    "id": "c06-tai-hen",
+    "capitulo": "cap6",
+    "ordem": 4,
+    "titulo": "太 × 很",
+    "resumo": "O 很 é gramática; o 太 é “muito” de verdade.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Na afirmação, o adjetivo pede um 很 antes dele (ver o cap. 1). Ali o 很 é obrigação gramatical: não quer dizer “muito”."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "今天天气很好。",
+        "pinyin": "Jīntiān tiānqì hěn hǎo.",
+        "pt": "Hoje o tempo está bom."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Já o 太, quando aparece, É “muito” — às vezes “demais”. Na exclamação, vem com 了 no fim."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "太好了！",
+        "pinyin": "Tài hǎo le!",
+        "pt": "Que ótimo!"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Na negação, os dois cabem, sempre depois do 不: 不很, 不太 — “não muito”."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我不太忙。",
+        "pinyin": "Wǒ bú tài máng.",
+        "pt": "Não estou muito ocupado."
+      }
+    ],
+    "palavras": [
+      "tai-muito"
+    ]
+  },
+  {
+    "id": "c06-you-mei",
+    "capitulo": "cap6",
+    "ordem": 5,
+    "titulo": "有 se nega com 没",
+    "resumo": "É o único verbo que o 不 não nega.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Todo verbo se nega com 不 — menos o 有 (ter). O dele é 没: 没有."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "没有 + coisa",
+        "pt": "não ter …"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "明天你有时间吗？",
+        "pinyin": "Míngtiān nǐ yǒu shíjiān ma?",
+        "pt": "Você tem tempo amanhã?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "没有。",
+        "pinyin": "Méiyǒu.",
+        "pt": "Não."
+      },
+      {
+        "tipo": "texto",
+        "pt": "A resposta repete o verbo, como no cap. 2: 有 pra sim, 没有 pra não. Na aula, o mesmo com 有问题吗？ (tem dúvida?)."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "没有意思。",
+        "pinyin": "Méiyǒu yìsi.",
+        "pt": "Não tem graça."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "不有 não existe."
+      }
+    ],
+    "palavras": [
+      "you-ter",
+      "youyisi"
+    ]
+  },
+  {
+    "id": "c06-yisi",
+    "capitulo": "cap6",
+    "ordem": 6,
+    "titulo": "O que quer dizer…?",
+    "resumo": "“X”是什么意思？ pergunta; “X”的意思是… responde.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "意思 é “significado” — o mesmo do 有意思, “ter significado”, interessante. Com ele se pergunta o que uma palavra quer dizer."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "“X”是什么意思？",
+        "pt": "O que quer dizer X?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "“京剧”是什么意思？",
+        "pinyin": "“Jīngjù” shì shénme yìsi?",
+        "pt": "O que quer dizer 京剧?"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "“X”的意思是“Y”。",
+        "pt": "X quer dizer Y — “o significado de X é Y”"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Na resposta, o 的 liga a palavra ao significado dela, como no cap. 3: o dono primeiro."
+      }
+    ],
+    "palavras": [
+      "youyisi"
+    ]
+  },
+  {
+    "id": "c06-shihou",
+    "capitulo": "cap6",
+    "ordem": 7,
+    "titulo": "什么时候 = quando",
+    "resumo": "时候 é o momento; 时间, o tempo que se tem.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Não existe uma palavra só pra “quando”: pergunta-se “qual momento”, 什么时候."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "什么时候去？",
+        "pinyin": "Shénme shíhou qù?",
+        "pt": "Quando a gente vai?"
+      },
+      {
+        "tipo": "texto",
+        "pt": "时间 é outra coisa: o tempo livre, o que se tem ou não tem."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "明天您有时间吗？",
+        "pinyin": "Míngtiān nín yǒu shíjiān ma?",
+        "pt": "O senhor tem tempo amanhã?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Palavra de tempo — 昨天, 今天, 明天, 现在, 什么时候 — vem antes do verbo, nunca no fim: 现在去, e não 去现在."
+      }
+    ],
+    "palavras": [
+      "shihou",
+      "shijian",
+      "xianzai",
+      "mingtian",
+      "zuotian"
+    ]
+  },
+  {
+    "id": "c06-verbo-objeto",
+    "capitulo": "cap6",
+    "ordem": 8,
+    "titulo": "O verbo que já traz o objeto",
+    "resumo": "游泳, 打球, 说话: o substantivo vem colado no verbo.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Muito verbo chinês é um verbo + um substantivo grudados: “nadar natação”, “bater bola”, “falar fala”. Juntos, valem um verbo nosso."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "打 + 球",
+        "pt": "bater + bola = jogar bola"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "说 + 话",
+        "pt": "falar + fala = falar"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们去打球，好吗？",
+        "pinyin": "Wǒmen qù dǎ qiú, hǎo ma?",
+        "pt": "Vamos jogar bola?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "O objeto embutido ocupa o lugar. Com outro objeto, ele sai: 我说汉语, nunca 我说话汉语."
+      }
+    ],
+    "palavras": [
+      "youyong",
+      "daqiu",
+      "shuohua"
+    ]
+  },
+  {
+    "id": "c06-bian",
+    "capitulo": "cap6",
+    "ordem": 9,
+    "titulo": "遍: quantas vezes",
+    "resumo": "一遍 = uma vez, do começo ao fim.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "遍 conta as vezes de uma ação inteira — dizer, ler, ouvir algo do começo ao fim. Vem depois do verbo, com o número."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Verbo + 一遍",
+        "pt": "fazer uma vez"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "请再说一遍。",
+        "pinyin": "Qǐng zài shuō yí biàn.",
+        "pt": "Repita, por favor."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "请再念一遍。",
+        "pinyin": "Qǐng zài niàn yí biàn.",
+        "pt": "Leia de novo, por favor."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "O 一 muda de tom: antes do 4º tom (biàn), vira 2º — yí biàn."
+      }
+    ],
+    "palavras": [
+      "bian"
+    ]
+  },
+  {
+    "id": "c06-radicais",
+    "capitulo": "cap6",
+    "ordem": 10,
+    "titulo": "Os radicais da lição",
+    "resumo": "氵 água, 日 sol, 扌 mão, 王 jade, 心 coração.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "氵 → 游泳",
+        "pt": "água: nadar"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "日 → 昨, 明, 时, 间",
+        "pt": "sol: as palavras de tempo"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "扌 → 打, 抱",
+        "pt": "mão: bater, abraçar"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "王 → 球, 现, 玛",
+        "pt": "jade: o que é precioso — e redondo"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "心 / 忄 → 恐, 怕, 念, 思, 怎",
+        "pt": "coração"
+      },
+      {
+        "tipo": "texto",
+        "pt": "明 (claro, o 明 de 明天) junta o 日 (sol) e o 月 (lua): a claridade que vem depois da noite."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "天 traz a ideia de céu, mas sozinho, hoje, ele é “dia”: 今天, 明天, 天气."
+      }
+    ],
+    "palavras": [
+      "qiu",
+      "tian"
+    ]
+  },
+  {
+    "id": "c07-yixia",
+    "capitulo": "cap7",
+    "ordem": 1,
+    "titulo": "Verbo + 一下: só rapidinho",
+    "resumo": "Deixa a ação curta e o pedido mais leve.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Depois do verbo, o 一下 diz que a ação é rápida, uma tentativa — como o nosso “dar uma olhadinha”. E deixa a frase menos formal."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Verbo + 一下",
+        "pt": "fazer rapidinho"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我问一下。",
+        "pinyin": "Wǒ wèn yíxià.",
+        "pt": "Vou só perguntar."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我来介绍一下。",
+        "pinyin": "Wǒ lái jièshào yíxià.",
+        "pt": "Deixa eu apresentar vocês."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们认识一下。",
+        "pinyin": "Wǒmen rènshi yíxià.",
+        "pt": "Vamos nos conhecer."
+      },
+      {
+        "tipo": "texto",
+        "pt": "我来介绍一下 e 我们认识一下 são as duas fórmulas de quem se apresenta pela primeira vez. Outras do mesmo molde: 看一下, 说一下, 坐一下."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "O 一 muda de tom: vira yí, porque o 下 é do 4º tom."
+      }
+    ],
+    "palavras": [
+      "yixia",
+      "jieshao"
+    ]
+  },
+  {
+    "id": "c07-v-bu-v",
+    "capitulo": "cap7",
+    "ordem": 2,
+    "titulo": "忙不忙？ — o sim e o não juntos",
+    "resumo": "Outro jeito de perguntar: verbo + 不 + verbo.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Em vez de pôr 吗 no fim, diga o verbo (ou o adjetivo) duas vezes, com 不 no meio. Quem responde escolhe um dos dois."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Verbo + 不 + Verbo？",
+        "pt": "… ou não …?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "您忙不忙？",
+        "pinyin": "Nín máng bu máng?",
+        "pt": "O senhor anda ocupado?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "他是不是我们学院的老师？",
+        "pinyin": "Tā shì bu shì wǒmen xuéyuàn de lǎoshī?",
+        "pt": "Ele é professor do nosso instituto?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你认识不认识他？",
+        "pinyin": "Nǐ rènshi bu rènshi tā?",
+        "pt": "Você conhece ele?"
+      },
+      {
+        "tipo": "texto",
+        "pt": "Responde-se repetindo o verbo: 我很忙 / 我不认识他."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Já é pergunta: não leva 吗. E o 不 do meio sai leve, sem tom."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Com 很, não: 你很忙不忙 está errado. O 很 só volta na resposta."
+      }
+    ]
+  },
+  {
+    "id": "c07-nos-instituicao",
+    "capitulo": "cap7",
+    "ordem": 3,
+    "titulo": "我们学院: o plural no lugar do “meu”",
+    "resumo": "O lugar onde se estuda ou trabalha leva o pronome no plural.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Pra falar da escola, do departamento ou do país de alguém, o chinês usa o pronome no plural, e sem 的."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "我们 / 你们 / 他们 + lugar",
+        "pt": "o nosso / o de vocês / o deles"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "您是我们学院的老师吗？",
+        "pinyin": "Nín shì wǒmen xuéyuàn de lǎoshī ma?",
+        "pt": "O senhor é professor do nosso instituto?"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "他们学院 · 你们系 · 我们国家",
+        "pt": "o instituto deles · o seu departamento · o nosso país"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Soa estranho dizer 他学院, 你系, 我国家: o lugar é de todo mundo que faz parte dele."
+      }
+    ],
+    "palavras": [
+      "guojia",
+      "xi-departamento"
+    ]
+  },
+  {
+    "id": "c07-nome",
+    "capitulo": "cap7",
+    "ordem": 4,
+    "titulo": "Perguntar o nome: casual ou educado",
+    "resumo": "你叫什么名字 entre jovens; 您贵姓 com mais velhos.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "你叫什么名字？ é o jeito casual: entre jovens, ou de adulto pra criança. A resposta costuma ser o nome inteiro."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你叫什么名字？",
+        "pinyin": "Nǐ jiào shénme míngzi?",
+        "pt": "Como você se chama?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我叫丁力波。",
+        "pinyin": "Wǒ jiào Dīng Lìbō.",
+        "pt": "Me chamo Ding Libo."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Também dá pra dizer o sobrenome primeiro e depois o nome inteiro:"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我姓丁，叫丁力波。",
+        "pinyin": "Wǒ xìng Dīng, jiào Dīng Lìbō.",
+        "pt": "Meu sobrenome é Ding, me chamo Ding Libo."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Com professor ou gente mais velha, pergunte o sobrenome: 您贵姓？ — e responda só com 我姓张, nunca com 贵."
+      }
+    ],
+    "palavras": [
+      "mingzi",
+      "dinglibo",
+      "zhang-sobrenome"
+    ]
+  },
+  {
+    "id": "c07-substantivo",
+    "capitulo": "cap7",
+    "ordem": 5,
+    "titulo": "Substantivo na frente de substantivo",
+    "resumo": "中文名字, 汉语老师, 中国人: sem 的 no meio.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Um substantivo pode ir direto na frente do outro e dizer de que tipo ele é. É o contrário do português: o tipo vem antes."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "中文 + 名字",
+        "pt": "nome + chinês = nome em chinês"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我的中文名字叫马大为。",
+        "pinyin": "Wǒ de Zhōngwén míngzi jiào Mǎ Dàwéi.",
+        "pt": "Meu nome em chinês é Ma Dawei."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "汉语老师 · 美术专业 · 汉语系",
+        "pt": "professor de chinês · curso de belas-artes · departamento de chinês"
+      },
+      {
+        "tipo": "texto",
+        "pt": "O nome estrangeiro em chinês sai do som ou do sentido do original: David March virou 马大为, Natalie Lynn virou 林娜. Um White pode virar 白 (branco), e uma Amy, 爱美."
+      }
+    ],
+    "palavras": [
+      "zhongwen",
+      "zhuanye",
+      "meishu"
+    ]
+  },
+  {
+    "id": "c07-zhongwen-hanyu",
+    "capitulo": "cap7",
+    "ordem": 6,
+    "titulo": "中文 ou 汉语?",
+    "resumo": "Os dois são “chinês”, e hoje se trocam.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "中文",
+        "pt": "a língua chinesa no geral — e puxa pro escrito"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "汉语",
+        "pt": "a língua do povo han — nasceu falada"
+      },
+      {
+        "tipo": "texto",
+        "pt": "No começo, 汉语 era só a língua falada. Hoje a maioria das pessoas usa os dois pra fala e pra escrita, e ninguém corrige quem trocar."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "现在我们都学习汉语。",
+        "pinyin": "Xiànzài wǒmen dōu xuéxí Hànyǔ.",
+        "pt": "Agora todos nós estudamos chinês."
+      }
+    ],
+    "palavras": [
+      "zhongwen",
+      "hanyu"
+    ]
+  },
+  {
+    "id": "c07-xue-xuexi",
+    "capitulo": "cap7",
+    "ordem": 7,
+    "titulo": "学 e 学习: os dois servem",
+    "resumo": "Estudar uma matéria: 学习汉语 ou 学汉语.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "学 e 学习 querem dizer a mesma coisa: aprender, estudar. Pode usar os dois."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你学习什么专业？",
+        "pinyin": "Nǐ xuéxí shénme zhuānyè?",
+        "pt": "Que curso você faz?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我学中文。",
+        "pinyin": "Wǒ xué Zhōngwén.",
+        "pt": "Eu estudo chinês."
+      },
+      {
+        "tipo": "texto",
+        "pt": "E 专业 é o curso, a graduação ou a especialidade: 美术专业, 文学专业, 汉语专业."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "也 e 都 juntos têm ordem: 也都是, nunca 都也是. 我们也都是汉语系的学生."
+      }
+    ],
+    "palavras": [
+      "xuexi",
+      "xue",
+      "zhuanye"
+    ]
+  },
+  {
+    "id": "c07-a",
+    "capitulo": "cap7",
+    "ordem": 8,
+    "titulo": "啊 no 4º tom: a ficha que cai",
+    "resumo": "Ah! — quando a gente entende de repente.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Lido no 4º tom, descendo, o 啊 marca que você acabou de entender alguma coisa, ou que ficou admirado."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "啊，您是张教授。",
+        "pinyin": "À, nín shì Zhāng jiàoshòu.",
+        "pt": "Ah, o senhor é o professor Zhang!"
+      },
+      {
+        "tipo": "texto",
+        "pt": "教授 é o professor titular, o cargo mais alto da universidade. 老师 serve pra qualquer professor."
+      }
+    ],
+    "palavras": [
+      "a-interjeicao",
+      "jiaoshou"
+    ]
+  },
+  {
+    "id": "c07-materias",
+    "capitulo": "cap7",
+    "ordem": 9,
+    "titulo": "As matérias: … + 学",
+    "resumo": "O 学 no fim quer dizer “o estudo de”.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "Muita matéria termina em 学 (estudo). Sabendo o primeiro caractere, dá pra adivinhar a palavra."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "化 + 学",
+        "pt": "mudança + estudo = química"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "哲 + 学",
+        "pt": "sábio + estudo = filosofia"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "数学 · 文学",
+        "pt": "números → matemática · escrita → literatura"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "物理 · 历史 · 经济 · 教育 · 音乐 · 文化",
+        "pt": "física · história · economia · educação · música · cultura"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我选修中国文化。",
+        "pinyin": "Wǒ xuǎnxiū Zhōngguó wénhuà.",
+        "pt": "Faço a optativa de cultura chinesa."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "选修 é verbo: escolher a matéria optativa. A matéria vem logo depois."
+      }
+    ],
+    "palavras": [
+      "huaxue",
+      "zhexue",
+      "shuxue",
+      "wenxue",
+      "xuanxiu"
+    ]
+  },
+  {
+    "id": "c07-radicais",
+    "capitulo": "cap7",
+    "ordem": 10,
+    "titulo": "Os radicais da lição",
+    "resumo": "廾 duas mãos, 手 mão, 目 olho, 夕 noite, 弓 arco.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "廾 → 开",
+        "pt": "duas mãos levantando a tranca (一) da porta: abrir"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "手 + 目 → 看",
+        "pt": "a mão na testa sobre o olho: olhar"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "夕 + 口 → 名",
+        "pt": "noite + boca: no escuro, a gente fala o nome pra se identificar"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "片",
+        "pt": "a lâmina, a ideia de cartão: 名片"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "弓 → 张",
+        "pt": "o arco"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "教 jiào (ensinar) e 叫 jiào (chamar-se) têm o mesmo som. O 叫 leva a boca 口; o 教, o 攵 da mão que ensina."
+      }
+    ],
+    "palavras": [
+      "kai",
+      "kan",
+      "mingpian",
+      "zhang-sobrenome",
+      "jiao-ensinar"
+    ]
+  },
+  {
+    "id": "c08-classificadores",
+    "capitulo": "cap8",
+    "ordem": 1,
+    "titulo": "Classificadores: número + medida + coisa",
+    "resumo": "Em chinês não se conta a coisa direto: entre o número e ela vai um classificador.",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "pt": "O classificador indica a medida, o tipo de coisa que se conta. Do caderno: TEM que ter classificador, existem muitos, e trocar ou tirar o classificador pode mudar o sentido."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "Número + Classificador + Substantivo",
+        "pt": "um + (medida) + coisa"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我有一个姐姐。",
+        "pinyin": "Wǒ yǒu yí ge jiějie.",
+        "pt": "Tenho uma irmã mais velha."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我有一张贝贝的照片。",
+        "pinyin": "Wǒ yǒu yì zhāng Bèibei de zhàopiàn.",
+        "pt": "Tenho uma foto da Beibei."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Com 这 e 那 também: 这个人, 那张照片. E o 几 pergunta já com o classificador: 几个？ 几口人？"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "一个人, nunca 一人. Sem o classificador a frase fica errada, mesmo que se entenda."
+      }
+    ],
+    "palavras": [
+      "ge-classificador",
+      "zhang-classificador"
+    ]
+  },
+  {
+    "id": "c08-lista-classificadores",
+    "capitulo": "cap8",
+    "ordem": 2,
+    "titulo": "A lista do caderno",
+    "resumo": "Cada tipo de coisa tem o seu.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "个 gè",
+        "pt": "o geral, pra quem não tem classificador próprio"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "口 kǒu",
+        "pt": "só pra pessoa da família"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "位 wèi",
+        "pt": "pessoa, de forma educada"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "只 zhī",
+        "pt": "animais: gato, cachorro, passarinho"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "条 tiáo",
+        "pt": "peixe (e coisa comprida: rio, estrada)"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "张 zhāng",
+        "pt": "coisas planas e finas: foto, cartão, folha"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "辆 liàng",
+        "pt": "veículos"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "台 tái",
+        "pt": "aparelhos grandes: computador, eletrodoméstico"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "本 běn",
+        "pt": "coisas encadernadas: livro, dicionário"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "杯 bēi",
+        "pt": "copo, xícara"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我有一只猫。",
+        "pinyin": "Wǒ yǒu yì zhī māo.",
+        "pt": "Tenho um gato."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "一条鱼 · 一辆车 · 一台电脑 · 一本词典",
+        "pt": "um peixe · um carro · um computador · um dicionário"
+      }
+    ],
+    "palavras": [
+      "wei-classificador",
+      "zhi-classificador",
+      "tiao",
+      "liang-veiculo",
+      "tai-classificador",
+      "ben",
+      "bei"
+    ]
+  },
+  {
+    "id": "c08-ge-kou",
+    "capitulo": "cap8",
+    "ordem": 3,
+    "titulo": "一个人 ou 一口人?",
+    "resumo": "Os dois são “uma pessoa” — o 口 é só pra família.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "一个人",
+        "pt": "uma pessoa (qualquer uma)"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "一口人",
+        "pt": "uma pessoa da família"
+      },
+      {
+        "tipo": "texto",
+        "pt": "口 é a boca: as bocas da casa pra alimentar. Por isso se pergunta da família com 几口人."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你们家有几口人？",
+        "pinyin": "Nǐmen jiā yǒu jǐ kǒu rén?",
+        "pt": "Quantas pessoas tem na sua família?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们家有四口人。",
+        "pinyin": "Wǒmen jiā yǒu sì kǒu rén.",
+        "pt": "Somos quatro em casa."
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "A graça do texto: 小狗也是一口人吗？ — cachorro também conta como gente da família?"
+      }
+    ],
+    "palavras": [
+      "kou-classificador",
+      "ji-quantos"
+    ]
+  },
+  {
+    "id": "c08-liang-er",
+    "capitulo": "cap8",
+    "ordem": 4,
+    "titulo": "两 ou 二?",
+    "resumo": "Os dois são 2: depende do que vem depois.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "两 + classificador",
+        "pt": "两个人, 两张照片, 两口人"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我有一个姐姐和两个弟弟。",
+        "pinyin": "Wǒ yǒu yí ge jiějie hé liǎng ge dìdi.",
+        "pt": "Tenho uma irmã mais velha e dois irmãos mais novos."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Contando sozinho (一、二、三) ou dentro de número de mais de um algarismo, continua 二 — mesmo com classificador depois."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "十二 · 二十二 · 九十二个人 · 二百",
+        "pt": "12 · 22 · 92 pessoas · 200"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "二个人 e 二张照片 não existem: é 两个人, 两张照片."
+      }
+    ],
+    "palavras": [
+      "liang-dois",
+      "num-2"
+    ]
+  },
+  {
+    "id": "c08-ji-duoshao",
+    "capitulo": "cap8",
+    "ordem": 5,
+    "titulo": "几 ou 多少?",
+    "resumo": "Os dois perguntam “quantos”.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "几 + classificador",
+        "pt": "quando se espera número pequeno, abaixo de 10"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你们家有几口人？",
+        "pinyin": "Nǐmen jiā yǒu jǐ kǒu rén?",
+        "pt": "Quantas pessoas tem na sua família?"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "多少 (+ classificador)",
+        "pt": "qualquer número, grande também"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "语言学院有多少个系？",
+        "pinyin": "Yǔyán Xuéyuàn yǒu duōshao ge xì?",
+        "pt": "Quantos departamentos tem o Instituto?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你们外语系有多少老师？",
+        "pinyin": "Nǐmen wàiyǔ xì yǒu duōshao lǎoshī?",
+        "pt": "Quantos professores tem o seu departamento?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "O 几 sempre pede classificador; o 多少 pode dispensar: 多少老师, mas nunca 几老师."
+      }
+    ],
+    "palavras": [
+      "ji-quantos",
+      "duoshao"
+    ]
+  },
+  {
+    "id": "c08-meiyou",
+    "capitulo": "cap8",
+    "ordem": 6,
+    "titulo": "没有: a negativa do 有",
+    "resumo": "O 有 é o único verbo que não se nega com 不.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "没有 + coisa",
+        "pt": "não ter"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们家没有小狗。",
+        "pinyin": "Wǒmen jiā méiyǒu xiǎo gǒu.",
+        "pt": "Não temos cachorro."
+      },
+      {
+        "tipo": "texto",
+        "pt": "E a pergunta de sim e não, do cap. 7, troca o 不 pelo 没:"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "有没有？",
+        "pt": "tem ou não tem?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "你有没有男朋友？",
+        "pinyin": "Nǐ yǒu méiyǒu nán péngyou?",
+        "pt": "Você tem namorado?"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "不有 não existe. E 有没有 já é pergunta: sem 吗."
+      }
+    ],
+    "palavras": [
+      "mei-nao",
+      "meiyou",
+      "you-ter"
+    ]
+  },
+  {
+    "id": "c08-he",
+    "capitulo": "cap8",
+    "ordem": 7,
+    "titulo": "和: só entre substantivos",
+    "resumo": "O “e” do chinês liga nomes e pronomes, não frases.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "Substantivo + 和 + Substantivo",
+        "pt": "isto e aquilo"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "这是我哥哥和我。",
+        "pinyin": "Zhè shì wǒ gēge hé wǒ.",
+        "pt": "Este é meu irmão e eu."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "他和她 · 哥哥和弟弟 · 我们老师和你们老师",
+        "pt": "ele e ela · irmão mais velho e mais novo · o nosso professor e o de vocês"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "Não liga duas frases, e quase nunca dois verbos ou adjetivos. Pra acrescentar uma frase, use 还 ou 也."
+      }
+    ],
+    "palavras": [
+      "he-e"
+    ]
+  },
+  {
+    "id": "c08-hai",
+    "capitulo": "cap8",
+    "ordem": 8,
+    "titulo": "还: e tem mais",
+    "resumo": "Acrescenta um item ao que já foi dito.",
+    "blocos": [
+      {
+        "tipo": "exemplo",
+        "hanzi": "这是五口人，还有谁？",
+        "pinyin": "Zhè shì wǔ kǒu rén, hái yǒu shéi?",
+        "pt": "Isso dá cinco. Quem mais?"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我有两个姐姐，还有一个弟弟。",
+        "pinyin": "Wǒ yǒu liǎng ge jiějie, hái yǒu yí ge dìdi.",
+        "pt": "Tenho duas irmãs mais velhas, e também um irmão mais novo."
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我认识马大为，还认识他朋友。",
+        "pinyin": "Wǒ rènshi Mǎ Dàwéi, hái rènshi tā péngyou.",
+        "pt": "Conheço o Ma Dawei, e também o amigo dele."
+      },
+      {
+        "tipo": "texto",
+        "pt": "Vem antes do verbo, como o 也. É ele que faz o papel do “e” entre frases, que o 和 não faz."
+      }
+    ],
+    "palavras": [
+      "hai-ainda"
+    ]
+  },
+  {
+    "id": "c08-butai",
+    "capitulo": "cap8",
+    "ordem": 9,
+    "titulo": "不太大: “não muito”",
+    "resumo": "O 太 muda de sentido com o 不.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "不太 + adjetivo",
+        "pt": "não muito … (= 不很)"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "语言学院大不大？——不太大。",
+        "pinyin": "Yǔyán Xuéyuàn dà bu dà? — Bú tài dà.",
+        "pt": "O Instituto é grande? — Não muito."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "太 + adjetivo + 了",
+        "pt": "… demais"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "太大了 · 太忙了",
+        "pt": "grande demais · ocupado demais"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "不太大 é “não muito grande”, não “não grande demais”. E o 不 vira bú antes do 4º tom do 太."
+      }
+    ],
+    "palavras": [
+      "tai-muito"
+    ]
+  },
+  {
+    "id": "c08-hen-duo",
+    "capitulo": "cap8",
+    "ordem": 10,
+    "titulo": "很 ou 多? Os dois são “muito”",
+    "resumo": "Do caderno: um é intensidade, o outro é quantidade.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "很 + adjetivo / verbo",
+        "pt": "intensidade: 很大, 很喜欢"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "很多 + substantivo",
+        "pt": "quantidade: 很多老师"
+      },
+      {
+        "tipo": "exemplo",
+        "hanzi": "我们系的老师也很多。",
+        "pinyin": "Wǒmen xì de lǎoshī yě hěn duō.",
+        "pt": "O nosso departamento também tem muitos professores."
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "少",
+        "pt": "o oposto do 多: 学生很少 = há poucos alunos"
+      },
+      {
+        "tipo": "cuidado",
+        "pt": "多 sozinho quase não anda: diz-se 很多, com o 很 na frente. E 多少 junta os dois pra perguntar a quantidade."
+      }
+    ],
+    "palavras": [
+      "hen",
+      "duo-muito",
+      "shao-pouco",
+      "duoshao"
+    ]
+  },
+  {
+    "id": "c08-sentido",
+    "capitulo": "cap8",
+    "ordem": 11,
+    "titulo": "O sentido não está só no radical",
+    "resumo": "Notas de margem da aula.",
+    "blocos": [
+      {
+        "tipo": "padrao",
+        "hanzi": "犭 → 狗 · 猫",
+        "pt": "o bicho de quatro patas"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "照",
+        "pt": "tem o fogo 灬 embaixo, mas é 'iluminar'; em 照片, foto. O ideograma nem sempre quer dizer o que o radical diz"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "可 + 爱 → 可爱",
+        "pt": "pode + amar: dá vontade de amar — fofo"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "鸟 · 鱼",
+        "pt": "desenhos: o pássaro com o rabo, o peixe com as escamas (田) e o rabo"
+      },
+      {
+        "tipo": "padrao",
+        "hanzi": "位 = 亻 + 立",
+        "pt": "pessoa de pé: o classificador educado"
+      }
+    ],
+    "palavras": [
+      "gou",
+      "mao",
+      "zhaopian",
+      "keai",
+      "niao",
+      "yu-peixe"
+    ]
+  }
+]

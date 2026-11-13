@@ -366,8 +366,13 @@ function showCard(card) {
   $('back-hanzi').textContent = card.hanzi;
   renderBackHanzi(card, relampago);
   $('back-pinyin').innerHTML = pinyinColored(card.pinyin);
+  $('back-lit').innerHTML = htmlLiteral(card);
   $('back-pt').textContent = card.pt;
   $('back-nota').textContent = card.nota || '';
+  // 🧩 de que é feito cada 汉字: fechado a cada carta nova, aberto pelo ⓘ ao lado do 🔊
+  $('back-ideias').innerHTML = '';
+  $('ideia-btn').classList.toggle('show', temIdeia(card));
+  $('ideia-btn').setAttribute('aria-pressed', 'false');
   const s = srs[card.id];
   $('iv-again').textContent = srsPreview(s, 'again');
   $('iv-hard').textContent = phase === 'practice' ? 'prática' : srsPreview(s, 'hard');
