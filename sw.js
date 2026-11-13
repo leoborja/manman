@@ -2,7 +2,7 @@
 //
 // Três regras, uma pra cada tipo de arquivo:
 //
-//   casca (página, app.js, fonte, traçados, ícones)
+//   casca (página, js/, fonte, traçados, ícones)
 //     rede com prazo de 3s, cópia se a rede não vier. Com internet boa você sempre vê a
 //     versão nova; com sinal ruim (metrô, elevador) o app abre da cópia em vez de ficar em
 //     branco esperando — internet ruim era pior que internet nenhuma, que falha na hora.
@@ -15,7 +15,7 @@
 //     o que falta — ~4 MB na primeira vez, depois só o que entrar de novo.
 //
 //   Supabase e qualquer outro domínio
-//     não passa por aqui. O app.js tem o próprio plano B (cartas salvas no aparelho e o
+//     não passa por aqui. O js/dados.js tem o próprio plano B (cartas salvas no aparelho e o
 //     aviso 📴), e cache de resposta do banco serviria progresso velho.
 //
 // O Safari do iPhone pede áudio em pedaços (cabeçalho Range) e não toca uma resposta
@@ -23,10 +23,11 @@
 //
 // Se um dia este arquivo quebrar o app: trocar a versão da CASCA força todo celular a
 // baixar tudo de novo na próxima abertura com internet (o activate apaga a cópia antiga).
-const CASCA = 'manman-casca-v2';
+const CASCA = 'manman-casca-v3';
 const AUDIO = 'manman-audio';   // sem versão: trocar a casca não rebaixa os 4 MB de áudio
 const PRAZO_MS = 3000;
-const ARQUIVOS_CASCA = ['./', './index.html', './app.js', './config.js', './manifest.webmanifest',
+const ARQUIVOS_CASCA = ['./', './index.html', './config.js',
+  './js/base.js', './js/desenho.js', './js/teclado.js', './js/dados.js', './js/estudar.js', './js/cartas.js', './js/progresso.js', './js/main.js', './manifest.webmanifest',
   './fonts/hanzi.woff2', './strokes/strokes.json', './seed/dialogos.json', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {

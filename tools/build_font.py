@@ -12,6 +12,7 @@ Rodar sempre que entrar carta com caractere novo:
 O ukai.ttc tem 4 faces (CN, HK, TW, TW MBE) — usamos a CN, de formas simplificadas.
 A fonte completa (~20MB) NÃO vai pro repo — só o subset.
 """
+import glob
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +29,7 @@ src_font = sys.argv[1] if len(sys.argv) > 1 else "/tmp/ukai.ttc"
 FACE_CN = 0  # índice da face "AR PL UKai CN" dentro do .ttc
 
 chars = set()
-for path in ["seed/seed_cards.json", "index.html", "app.js"]:
+for path in ["seed/seed_cards.json", "index.html"] + sorted(glob.glob("js/*.js", root_dir=root)) + sorted(glob.glob("seed/*.json", root_dir=root)):
     with open(os.path.join(root, path), encoding="utf-8") as f:
         text = f.read()
     # CJK unificado + extensões comuns + pontuação CJK
