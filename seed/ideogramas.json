@@ -1,0 +1,5626 @@
+{
+ "一": {
+  "sentido": "um",
+  "tipo": "ideia",
+  "partes": [],
+  "explica": "Um traço só, deitado: a forma mais simples de contar um. É uma marca, não o desenho de uma coisa."
+ },
+ "二": {
+  "sentido": "dois",
+  "tipo": "ideia",
+  "partes": [],
+  "explica": "Dois traços deitados = dois. O de baixo é um pouco mais comprido, como num prato que sustenta o de cima."
+ },
+ "三": {
+  "sentido": "três",
+  "tipo": "ideia",
+  "partes": [],
+  "explica": "Três traços deitados = três. Depois do três a conta por tracinhos parou; o quatro já é outra história."
+ },
+ "四": {
+  "sentido": "quatro",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "囗",
+    "pt": "cerca",
+    "papel": "forma"
+   },
+   {
+    "c": "儿",
+    "pt": "pernas",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Antigamente o quatro era 亖, quatro tracinhos. A forma 四 era outra palavra (talvez uma boca soltando ar) e foi emprestada pelo som. Pra lembrar: uma caixa de quatro lados."
+ },
+ "五": {
+  "sentido": "cinco",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Nas inscrições antigas era um X entre duas linhas, e o sentido 'cinco' veio emprestado. Pra lembrar: no meio dele há um traço que vira e cruza, como contar até cinco nos dedos."
+ },
+ "六": {
+  "sentido": "seis",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "A forma antiga parecia uma cabana com telhado; o nome 'seis' foi emprestado pelo som. Pra lembrar: um chapeuzinho 亠 em cima e duas perninhas 八 embaixo."
+ },
+ "七": {
+  "sentido": "sete",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Antigamente era uma cruz, a ideia de 'cortar' (hoje 切 qiē), emprestada para 'sete'. Para não confundir com 十 (dez), o traço do meio entortou."
+ },
+ "八": {
+  "sentido": "oito",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Dois traços que se afastam: a ideia original era 'separar, dividir' (veja 分). O número oito pegou o desenho emprestado pelo som."
+ },
+ "九": {
+  "sentido": "nove",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Parece ter sido o desenho de um braço dobrado ou de um gancho; o sentido 'nove' é empréstimo pelo som. Pra lembrar: um 力 que dobrou o cotovelo."
+ },
+ "十": {
+  "sentido": "dez",
+  "tipo": "ideia",
+  "partes": [],
+  "explica": "No começo era só um traço em pé; depois ganhou um ponto no meio, que virou a cruz. Pra lembrar: os dez dedos das duas mãos cruzados."
+ },
+ "我": {
+  "sentido": "eu",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "扌",
+    "pt": "mão",
+    "papel": "forma"
+   },
+   {
+    "c": "戈",
+    "pt": "lança, alabarda",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Era o desenho de uma arma com lâmina dentada; o som wǒ foi emprestado para dizer 'eu'. Pra lembrar: uma mão 扌 segurando a lança 戈 — sou eu me defendendo."
+ },
+ "你": {
+  "sentido": "você",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "尔",
+    "py": "ěr",
+    "pt": "você (forma antiga)",
+    "papel": "som"
+   }
+  ],
+  "explica": "亻 diz que é uma pessoa; 尔 ěr era a palavra antiga para 'você' e também dá o som — ěr e nǐ eram parecidos no chinês antigo."
+ },
+ "叫": {
+  "sentido": "chamar; chamar-se",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "丩",
+    "py": "jiū",
+    "pt": "nó, enrolado",
+    "papel": "som"
+   }
+  ],
+  "explica": "口 (boca) porque chamar é gritar, falar; 丩 jiū dá o som, bem perto de jiào."
+ },
+ "什": {
+  "sentido": "(em 什么, o quê)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "十",
+    "py": "shí",
+    "pt": "dez",
+    "papel": "som"
+   }
+  ],
+  "explica": "Originalmente um grupo de dez pessoas (亻 + 十 shí, que também dá o som shí → shén). Em 什么 ele entra só pelo som."
+ },
+ "么": {
+  "sentido": "(em 什么, 怎么)",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Simplificação de 麼, que tinha 麻 má em cima dando o som; sobrou só o pedaço de baixo. Sozinho não quer dizer nada: vive grudado em 什么, 怎么, 这么."
+ },
+ "名": {
+  "sentido": "nome",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "夕",
+    "pt": "noite, entardecer",
+    "papel": "ideia"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "夕 (noite) + 口 (boca): no escuro ninguém vê seu rosto, então você diz o seu nome em voz alta."
+ },
+ "字": {
+  "sentido": "caractere, letra",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "宀",
+    "pt": "teto, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "子",
+    "py": "zǐ",
+    "pt": "filho, criança",
+    "papel": "som"
+   }
+  ],
+  "explica": "Uma criança 子 debaixo do teto 宀: o sentido antigo era 'criar filhos', e os 汉字 se multiplicam como uma família. 子 zǐ também dá o som (zǐ → zì)."
+ },
+ "巴": {
+  "sentido": "(em 巴西, só som)",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Nas formas antigas era o desenho de uma cobra grande. Em 巴西 Bāxī (Brasil) e em 爸 ele está só pelo som bā."
+ },
+ "西": {
+  "sentido": "oeste",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Era o desenho de um ninho de pássaro. Os pássaros voltam pro ninho quando o sol se põe — no oeste —, e o ninho virou 'oeste'."
+ },
+ "好": {
+  "sentido": "bom; bem",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "子",
+    "pt": "filho, criança",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma mulher 女 com seu filho 子: a imagem do que é bom."
+ },
+ "很": {
+  "sentido": "muito",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "彳",
+    "pt": "passo",
+    "papel": "ideia"
+   },
+   {
+    "c": "艮",
+    "py": "gèn",
+    "pt": "teimoso, parado",
+    "papel": "som"
+   }
+  ],
+  "explica": "彳 (passo) + 艮 gèn, que dá o som (gèn → hěn). O sentido antigo era 'teimoso, desobediente'; 'muito' é um uso que veio depois."
+ },
+ "也": {
+  "sentido": "também",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "A origem do desenho é discutida (uma bacia? uma cobra?), e 'também' é sentido emprestado. Ele aparece como peça em 他 e 她."
+ },
+ "吗": {
+  "sentido": "(partícula de pergunta)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "马",
+    "py": "mǎ",
+    "pt": "cavalo",
+    "papel": "som"
+   }
+  ],
+  "explica": "口 (boca) marca que é coisa de falar, uma partícula; 马 mǎ só empresta o som (mǎ → ma). Não tem cavalo nenhum na pergunta."
+ },
+ "呢": {
+  "sentido": "(partícula: e…?)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "尼",
+    "py": "ní",
+    "pt": "monja",
+    "papel": "som"
+   }
+  ],
+  "explica": "口 (boca) marca uma partícula falada; 尼 ní dá o som (ní → ne)."
+ },
+ "人": {
+  "sentido": "pessoa",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Uma pessoa de perfil, andando: os dois traços são o corpo e as pernas."
+ },
+ "女": {
+  "sentido": "mulher; feminino",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma mulher ajoelhada, com os braços cruzados na frente do corpo."
+ },
+ "马": {
+  "sentido": "cavalo",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Um cavalo em pé, visto de lado. Na forma tradicional 馬 ainda dá pra ver a crina em cima e as quatro patas (os pontinhos) embaixo."
+ },
+ "妈": {
+  "sentido": "mãe",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "马",
+    "py": "mǎ",
+    "pt": "cavalo",
+    "papel": "som"
+   }
+  ],
+  "explica": "女 (mulher) dá o sentido; 马 mǎ só empresta o som (mǎ → mā)."
+ },
+ "子": {
+  "sentido": "filho, criança",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Um bebê enrolado em panos: a cabeça em cima, os bracinhos abertos e as pernas presas numa perna só."
+ },
+ "木": {
+  "sentido": "árvore; madeira",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Uma árvore: o tronco no meio, os galhos em cima e as raízes embaixo."
+ },
+ "林": {
+  "sentido": "bosque",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Duas árvores 木 lado a lado = um bosque."
+ },
+ "森": {
+  "sentido": "floresta",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "林",
+    "pt": "bosque",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Três árvores 木: mais árvore que o bosque 林 — uma floresta fechada."
+ },
+ "雨": {
+  "sentido": "chuva",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "O céu (o traço de cima) com uma nuvem, e as gotas de chuva caindo — os quatro pontinhos."
+ },
+ "不": {
+  "sentido": "não",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "O desenho antigo é discutido (o cálice de uma flor? raízes?), e o 'não' veio emprestado pelo som. É uma das palavras mais usadas do chinês."
+ },
+ "累": {
+  "sentido": "cansado",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "田",
+    "pt": "campo (resto de 畾)",
+    "papel": "forma"
+   },
+   {
+    "c": "糸",
+    "pt": "seda, fio",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma antiga 纍, era fio 糸 + 畾 léi, que dava o som: fios enrolados, amontoados. De 'acumular' veio 'cansado' — o cansaço que vai se juntando."
+ },
+ "饿": {
+  "sentido": "com fome",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "饣",
+    "pt": "comida",
+    "papel": "ideia"
+   },
+   {
+    "c": "我",
+    "py": "wǒ",
+    "pt": "eu",
+    "papel": "som"
+   }
+  ],
+  "explica": "饣 (comida) dá o sentido; 我 wǒ dava o som — hoje soa diferente (è), mas no chinês antigo eram parecidos. Pra lembrar: eu 我 quero comida 饣."
+ },
+ "渴": {
+  "sentido": "com sede",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "曷",
+    "py": "hé",
+    "pt": "o quê? (antigo)",
+    "papel": "som"
+   }
+  ],
+  "explica": "氵 (água) porque sede é falta de água; 曷 hé dá o som (hé → kě), como em 喝 hē, beber."
+ },
+ "困": {
+  "sentido": "com sono; aperto",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "囗",
+    "pt": "cerca",
+    "papel": "ideia"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma árvore 木 presa dentro de uma cerca 囗: não tem como crescer, está num aperto. Hoje, no dia a dia, 困 é o 'preso' de sono."
+ },
+ "忙": {
+  "sentido": "ocupado",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "忄",
+    "pt": "coração",
+    "papel": "ideia"
+   },
+   {
+    "c": "亡",
+    "py": "wáng",
+    "pt": "perder, sumir",
+    "papel": "som"
+   }
+  ],
+  "explica": "忄 (coração) dá o sentido; 亡 wáng dá o som (no chinês antigo começava com m-, daí máng). Pra lembrar: ocupado é quando o coração 忄 some 亡."
+ },
+ "力": {
+  "sentido": "força",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um arado antigo, a ferramenta de cavar a terra: o trabalho que pede força."
+ },
+ "波": {
+  "sentido": "onda",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "皮",
+    "py": "pí",
+    "pt": "pele",
+    "papel": "som"
+   }
+  ],
+  "explica": "氵 (água) dá o sentido; 皮 pí dá o som (pí → bō). Pra lembrar: a onda é a pele 皮 da água."
+ },
+ "娜": {
+  "sentido": "(nome feminino: Na)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "那",
+    "py": "nà",
+    "pt": "aquele",
+    "papel": "som"
+   }
+  ],
+  "explica": "女 (mulher) avisa que é nome de mulher; 那 nà dá o som exato. Quer dizer 'graciosa', mas aparece mesmo em nomes, como 林娜."
+ },
+ "陆": {
+  "sentido": "terra firme; (sobrenome Lu)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "阝",
+    "pt": "monte",
+    "papel": "ideia"
+   },
+   {
+    "c": "击",
+    "pt": "(forma simplificada)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "阝 à esquerda (monte) traz a ideia de terra. Na forma tradicional 陸, a direita era 坴 lù, que dava o som; a simplificação trocou por uma forma parecida com 击."
+ },
+ "平": {
+  "sentido": "plano; em paz",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "A origem é discutida: há quem veja uma balança equilibrada. Pra lembrar: uma linha reta em cima e dois pratinhos iguais dos lados — tudo nivelado, tranquilo."
+ },
+ "他": {
+  "sentido": "ele",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "也",
+    "py": "yě",
+    "pt": "também",
+    "papel": "som"
+   }
+  ],
+  "explica": "亻 (pessoa) dá o sentido; 也 yě dava o som — hoje yě e tā soam bem diferente, mas no chinês antigo eram próximos. Sentido antigo: 'o outro'."
+ },
+ "她": {
+  "sentido": "ela",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "也",
+    "py": "yě",
+    "pt": "também",
+    "papel": "som"
+   }
+  ],
+  "explica": "Inventado por volta de 1920: pegaram 他 (ele) e trocaram 亻 por 女 (mulher). O 也 veio junto do 他; a pronúncia é a mesma, tā."
+ },
+ "火": {
+  "sentido": "fogo",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Uma fogueira: a chama no meio e as faíscas pulando dos dois lados."
+ },
+ "门": {
+  "sentido": "porta",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Na forma tradicional 門 dá pra ver as duas folhas da porta, uma de cada lado; o simplificado 门 é a versão rápida, à mão."
+ },
+ "爸": {
+  "sentido": "pai",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "父",
+    "pt": "pai",
+    "papel": "ideia"
+   },
+   {
+    "c": "巴",
+    "py": "bā",
+    "pt": "(som de 巴西)",
+    "papel": "som"
+   }
+  ],
+  "explica": "父 (pai, em cima) dá o sentido; 巴 bā dá o som (bā → bà)."
+ },
+ "哥": {
+  "sentido": "irmão mais velho",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "可",
+    "py": "kě",
+    "pt": "poder",
+    "papel": "som"
+   },
+   {
+    "c": "可",
+    "py": "kě",
+    "pt": "poder",
+    "papel": "som"
+   }
+  ],
+  "explica": "Dois 可 kě empilhados, que dão o som (kě → gē). Antes era a palavra 'cantar' (hoje 歌); 'irmão mais velho' veio por empréstimo."
+ },
+ "弟": {
+  "sentido": "irmão mais novo",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma corda enrolada num pau, volta depois de volta: a ideia de 'ordem, sequência'. O irmão mais novo é o que vem depois na fila."
+ },
+ "姐": {
+  "sentido": "irmã mais velha",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "且",
+    "py": "qiě",
+    "pt": "além disso",
+    "papel": "som"
+   }
+  ],
+  "explica": "女 (mulher) dá o sentido; 且 qiě dá o som (qiě → jiě), quase igual."
+ },
+ "妹": {
+  "sentido": "irmã mais nova",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "未",
+    "py": "wèi",
+    "pt": "ainda não",
+    "papel": "som"
+   }
+  ],
+  "explica": "女 (mulher) dá o sentido; 未 wèi dá o som (no chinês antigo começava com m-, daí mèi). Pra lembrar: a menina que ainda não 未 cresceu."
+ },
+ "爷": {
+  "sentido": "avô (paterno)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "父",
+    "pt": "pai",
+    "papel": "ideia"
+   },
+   {
+    "c": "卩",
+    "pt": "(resto de 耶)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "父 (pai) diz que é um homem mais velho da família. Na forma tradicional 爺, embaixo vinha 耶 yé, que dava o som; o simplificado guardou só um pedacinho dele."
+ },
+ "们": {
+  "sentido": "(plural de pessoas)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "门",
+    "py": "mén",
+    "pt": "porta",
+    "papel": "som"
+   }
+  ],
+  "explica": "亻 (pessoa) porque marca plural de gente (我们, 你们); 门 mén dá o som (mén → men)."
+ },
+ "都": {
+  "sentido": "todos; ambos",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "者",
+    "py": "zhě",
+    "pt": "aquele que",
+    "papel": "som"
+   },
+   {
+    "c": "阝",
+    "pt": "cidade",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "阝 à direita é cidade: o sentido original é 'capital' (dū, em 首都). 者 zhě dava o som, próximo no chinês antigo. 'Todos' (dōu) é outro uso da mesma letra."
+ },
+ "男": {
+  "sentido": "homem; masculino",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "田",
+    "pt": "campo",
+    "papel": "ideia"
+   },
+   {
+    "c": "力",
+    "pt": "força",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Campo 田 + força 力: quem fazia a força na lavoura. Assim os antigos escreveram 'homem'."
+ },
+ "朋": {
+  "sentido": "amigo (em 朋友)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "月",
+    "pt": "fieira de conchas",
+    "papel": "ideia"
+   },
+   {
+    "c": "月",
+    "pt": "fieira de conchas",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Não é lua: eram duas fieiras de conchas (as conchas eram dinheiro) lado a lado. Duas coisas iguais que andam juntas — companheiros."
+ },
+ "友": {
+  "sentido": "amigo",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "ナ",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "又",
+    "pt": "mão",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Duas mãos direitas juntas (a de cima ficou meio deitada): dar a mão, ajudar — amigo. De quebra, 又 yòu soa quase igual a yǒu."
+ },
+ "咖": {
+  "sentido": "(só em 咖啡, café)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "加",
+    "py": "jiā",
+    "pt": "somar",
+    "papel": "som"
+   }
+  ],
+  "explica": "Criado para escrever palavra estrangeira: 口 (boca) avisa 'isto é só som'; 加 jiā dá a pronúncia (jiā → kā), imitando o 'ca' de café."
+ },
+ "啡": {
+  "sentido": "(só em 咖啡, café)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "非",
+    "py": "fēi",
+    "pt": "não, errado",
+    "papel": "som"
+   }
+  ],
+  "explica": "Mesmo esquema de 咖: 口 (boca) marca 'só som', e 非 fēi dá a pronúncia exata, o 'fé' de café."
+ },
+ "饮": {
+  "sentido": "beber; bebida",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "饣",
+    "pt": "comida",
+    "papel": "ideia"
+   },
+   {
+    "c": "欠",
+    "pt": "boca aberta",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "饣 (comida) + 欠, uma pessoa de boca aberta: abrir a boca para engolir — beber. Por isso 饮料 é 'bebida'."
+ },
+ "料": {
+  "sentido": "material, ingrediente",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "米",
+    "pt": "arroz",
+    "papel": "ideia"
+   },
+   {
+    "c": "斗",
+    "pt": "medida (concha)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Arroz 米 dentro de uma medida 斗: medir os grãos. Daí 'material, ingrediente' — o que se separa para preparar algo."
+ },
+ "可": {
+  "sentido": "poder; pode ser",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "丂",
+    "py": "kǎo",
+    "pt": "(hoje parece 丁)",
+    "papel": "som"
+   }
+  ],
+  "explica": "口 (boca): dizer 'sim, pode'. O traço de cima era 丂 kǎo, que dava o som (kǎo → kě); hoje parece um 丁. Em 可乐 (Coca-Cola) vale pelo som."
+ },
+ "乐": {
+  "sentido": "alegre; (yuè) música",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional 樂, era um instrumento de cordas sobre um suporte de madeira 木: música, e daí alegria. O simplificado apagou o desenho."
+ },
+ "汉": {
+  "sentido": "chinês (os Han)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "又",
+    "pt": "(forma simplificada)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Han era o nome de um rio (氵); a dinastia Han tirou o nome dele, e o povo chinês virou 'os Han'. Na forma tradicional 漢, a direita dava o som; o 又 é só simplificação."
+ },
+ "堡": {
+  "sentido": "fortaleza; (em 汉堡)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "保",
+    "py": "bǎo",
+    "pt": "proteger",
+    "papel": "som"
+   },
+   {
+    "c": "土",
+    "pt": "terra",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Muros de terra 土 que protegem 保: uma fortaleza. 保 bǎo dá o som exato. Em 汉堡 (hambúrguer) imita o 'burg' de Hamburgo."
+ },
+ "包": {
+  "sentido": "embrulhar; pacote, bolsa",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "勹",
+    "pt": "envolver",
+    "papel": "ideia"
+   },
+   {
+    "c": "巳",
+    "pt": "bebê (feto)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um bebê 巳 envolvido 勹 na barriga da mãe: algo embrulhado por fora. Daí 'pacote, bolsa' e o pão recheado 包子."
+ },
+ "要": {
+  "sentido": "querer; precisar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "覀",
+    "pt": "duas mãos (hoje parece 西)",
+    "papel": "ideia"
+   },
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Era uma pessoa com as mãos na cintura: 要 queria dizer 'cintura' (hoje 腰). O sentido 'querer' veio por empréstimo e ficou."
+ },
+ "喝": {
+  "sentido": "beber",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "曷",
+    "py": "hé",
+    "pt": "o quê? (antigo)",
+    "papel": "som"
+   }
+  ],
+  "explica": "口 (boca) porque se bebe pela boca; 曷 hé dá o som (hé → hē). Compare com 渴 kě, sede: mesmo 曷, com água 氵."
+ },
+ "丁": {
+  "sentido": "prego; (sobrenome Ding)",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um prego visto de lado: a cabeça em cima e a ponta descendo. Também é sobrenome, como em 丁力波."
+ },
+ "打": {
+  "sentido": "bater; fazer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "扌",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "丁",
+    "py": "dīng",
+    "pt": "prego",
+    "papel": "som"
+   }
+  ],
+  "explica": "扌 (mão) dá o sentido; 丁 dīng dá o som (dīng → dǎ). Pra lembrar: a mão batendo no prego."
+ },
+ "开": {
+  "sentido": "abrir; começar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "一",
+    "pt": "tranca",
+    "papel": "ideia"
+   },
+   {
+    "c": "廾",
+    "pt": "duas mãos",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional 開, eram duas mãos 廾 tirando a tranca 一 de uma porta 門. O simplificado jogou fora a porta e ficou só com a tranca e as mãos."
+ },
+ "书": {
+  "sentido": "livro",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional 書, em cima vinha 聿, uma mão segurando o pincel: escrever. O simplificado veio da escrita cursiva e apagou o desenho."
+ },
+ "页": {
+  "sentido": "página",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Era o desenho de uma cabeça grande sobre um corpo (por isso, dentro de outros 汉字, 页 quer dizer 'cabeça'). 'Página' é um sentido que veio depois, emprestado."
+ },
+ "百": {
+  "sentido": "cem",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "一",
+    "pt": "um",
+    "papel": "ideia"
+   },
+   {
+    "c": "白",
+    "py": "bái",
+    "pt": "branco",
+    "papel": "som"
+   }
+  ],
+  "explica": "一 (um) em cima de 白 bái, que dá o som (bái → bǎi): 'uma centena'."
+ },
+ "狗": {
+  "sentido": "cachorro",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "犭",
+    "pt": "bicho",
+    "papel": "ideia"
+   },
+   {
+    "c": "句",
+    "py": "gōu",
+    "pt": "frase (lido gōu antigo)",
+    "papel": "som"
+   }
+  ],
+  "explica": "犭 (bicho) dá o sentido; 句, que antigamente também se lia gōu, dá o som (gōu → gǒu)."
+ },
+ "米": {
+  "sentido": "arroz (cru); metro",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Grãos de arroz espalhados em volta de uma cruz (talvez a peneira ou o pé da planta). 'Metro' é empréstimo de som: mǐ ≈ 'me' de metro."
+ },
+ "饭": {
+  "sentido": "comida; arroz cozido",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "饣",
+    "pt": "comida",
+    "papel": "ideia"
+   },
+   {
+    "c": "反",
+    "py": "fǎn",
+    "pt": "virar, contrário",
+    "papel": "som"
+   }
+  ],
+  "explica": "饣 (comida) dá o sentido; 反 fǎn dá o som (fǎn → fàn)."
+ },
+ "水": {
+  "sentido": "água",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Um rio correndo: a corrente no meio e os respingos dos lados. Como parte de outros 汉字, vira 氵 (três gotas)."
+ },
+ "茶": {
+  "sentido": "chá",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "艹",
+    "pt": "planta",
+    "papel": "ideia"
+   },
+   {
+    "c": "人",
+    "pt": "pessoa",
+    "papel": "forma"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Vem de 荼 tú, nome de uma erva amarga; tiraram um traço e nasceu 茶. Pra lembrar: uma pessoa 人 entre a planta 艹 e a árvore 木 — as folhas de chá."
+ },
+ "粥": {
+  "sentido": "mingau de arroz",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "弓",
+    "pt": "vapor (parece arco)",
+    "papel": "ideia"
+   },
+   {
+    "c": "米",
+    "pt": "arroz",
+    "papel": "ideia"
+   },
+   {
+    "c": "弓",
+    "pt": "vapor (parece arco)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Arroz 米 no meio, com o vapor subindo dos dois lados — os 弓 não são arcos, são as fumacinhas da panela."
+ },
+ "汤": {
+  "sentido": "sopa",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "昜",
+    "py": "yáng",
+    "pt": "sol subindo (simplificado)",
+    "papel": "som"
+   }
+  ],
+  "explica": "氵 (água) dá o sentido: líquido quente. A direita é a forma simplificada de 昜 yáng, que dava o som (tradicional 湯); o som mudou com os séculos."
+ },
+ "豆": {
+  "sentido": "feijão, soja",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Era o desenho de uma tigela alta, com pé e tampa. 'Feijão' veio por empréstimo de som. Pra lembrar: a tigela cheia de feijão."
+ },
+ "腐": {
+  "sentido": "podre; (em 豆腐)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "府",
+    "py": "fǔ",
+    "pt": "palácio, repartição",
+    "papel": "som"
+   },
+   {
+    "c": "肉",
+    "pt": "carne",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "肉 (carne) embaixo: carne que estraga. 府 fǔ dá o som exato. Em 豆腐 (tofu) é o feijão 'coalhado'."
+ },
+ "啤": {
+  "sentido": "(só em 啤酒, cerveja)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "卑",
+    "py": "bēi",
+    "pt": "baixo, humilde",
+    "papel": "som"
+   }
+  ],
+  "explica": "Criado para palavra estrangeira: 口 (boca) marca 'isto é som', e 卑 bēi dá a pronúncia (bēi → pí), imitando o 'bier'/'beer'."
+ },
+ "酒": {
+  "sentido": "bebida alcoólica",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "酉",
+    "pt": "jarra de vinho",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "酉 é o desenho de uma jarra de bebida fermentada; com 氵 (líquido), vira o que vai dentro: bebida alcoólica."
+ },
+ "热": {
+  "sentido": "quente; com calor",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "执",
+    "pt": "(forma simplificada)",
+    "papel": "forma"
+   },
+   {
+    "c": "灬",
+    "pt": "fogo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "灬 embaixo é fogo: calor. Na forma tradicional 熱, em cima vinha 埶 yì, que dava o som; o simplificado trocou por 执, que não ajuda na pronúncia."
+ },
+ "冷": {
+  "sentido": "frio",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "冫",
+    "pt": "gelo",
+    "papel": "ideia"
+   },
+   {
+    "c": "令",
+    "py": "lìng",
+    "pt": "ordem",
+    "papel": "som"
+   }
+  ],
+  "explica": "冫 (gelo) dá o sentido; 令 lìng dá o som (lìng → lěng)."
+ },
+ "慢": {
+  "sentido": "devagar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "忄",
+    "pt": "coração",
+    "papel": "ideia"
+   },
+   {
+    "c": "曼",
+    "py": "màn",
+    "pt": "longo, estendido",
+    "papel": "som"
+   }
+  ],
+  "explica": "忄 (coração): um jeito de ser, sem pressa. 曼 màn dá o som exato e combina: algo comprido, que se estende."
+ },
+ "未": {
+  "sentido": "ainda não",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "一",
+    "pt": "galho a mais",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma árvore 木 com galhos novos a mais no alto: ramos que ainda não cresceram. Muitos acham que 'ainda não' é empréstimo de som; vale como imagem."
+ },
+ "婚": {
+  "sentido": "casamento",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "昏",
+    "py": "hūn",
+    "pt": "anoitecer",
+    "papel": "som"
+   }
+  ],
+  "explica": "女 (mulher) + 昏 hūn, que dá o som exato e ainda ajuda no sentido: antigamente o casamento era celebrado ao anoitecer."
+ },
+ "妻": {
+  "sentido": "esposa",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "十",
+    "pt": "grampo de cabelo",
+    "papel": "ideia"
+   },
+   {
+    "c": "彐",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma mão 彐 prendendo o cabelo de uma mulher 女 com um grampo: prender o cabelo era sinal de mulher casada."
+ },
+ "老": {
+  "sentido": "velho",
+  "tipo": "desenho",
+  "partes": [
+   {
+    "c": "耂",
+    "pt": "cabelo comprido, corpo curvado",
+    "papel": "forma"
+   },
+   {
+    "c": "匕",
+    "pt": "bengala",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Desenho de um velho curvado, de cabelo comprido, apoiado numa bengala. Em 老师 e 老婆 virou carinho e respeito, não idade."
+ },
+ "婆": {
+  "sentido": "senhora idosa; (em 老婆)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "波",
+    "py": "bō",
+    "pt": "onda",
+    "papel": "som"
+   },
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "女 (mulher, embaixo) dá o sentido; 波 bō dá o som (bō → pó). Em 外婆 é a avó materna; em 老婆, a esposa."
+ },
+ "是": {
+  "sentido": "ser; sim, certo",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   },
+   {
+    "c": "疋",
+    "pt": "forma antiga de 正, reto",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "No antigo era 日 (sol) em cima de 正 (reto, certo): o sol bem a prumo, direto. De 'direto, certo' veio 'é isso', e daí o verbo 'ser'."
+ },
+ "爱": {
+  "sentido": "amar",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "爫",
+    "pt": "mão (vinda de cima)",
+    "papel": "forma"
+   },
+   {
+    "c": "冖",
+    "pt": "cobertura",
+    "papel": "forma"
+   },
+   {
+    "c": "友",
+    "pt": "amigo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 愛, o 心 (coração) ficava bem no meio. A simplificada tirou o coração e pôs 友 (amigo). Pra lembrar: amar é cobrir o amigo 友 com a mão."
+ },
+ "喜": {
+  "sentido": "alegria; gostar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "壴",
+    "pt": "tambor",
+    "papel": "ideia"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um tambor 壴 em cima e uma boca 口 cantando embaixo: festa, alegria. De 'ficar alegre com' veio 喜欢, gostar."
+ },
+ "欢": {
+  "sentido": "alegre, contente",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "又",
+    "pt": "mão (aqui só abrevia 雚)",
+    "papel": "forma"
+   },
+   {
+    "c": "欠",
+    "pt": "boca aberta",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 歡, a esquerda era 雚 guàn, que dava o som; a simplificada trocou por 又. O 欠 (boca aberta) ficou: a boca aberta de quem ri, alegre."
+ },
+ "说": {
+  "sentido": "falar, dizer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "兑",
+    "py": "duì",
+    "pt": "trocar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) põe a palavra no campo do falar; o 兑 duì emprestava o som no chinês antigo — hoje shuō e duì se afastaram bastante."
+ },
+ "嗨": {
+  "sentido": "oi! (saudação)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "海",
+    "py": "hǎi",
+    "pt": "mar",
+    "papel": "som"
+   }
+  ],
+  "explica": "Caractere moderno feito para o 'hi' do inglês: 口 (boca) avisa que é um som da fala, e 海 hǎi dá a pronúncia — hǎi → hāi."
+ },
+ "谢": {
+  "sentido": "agradecer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "射",
+    "py": "shè",
+    "pt": "atirar (flecha)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) mostra que agradecer é coisa que se diz; o 射 shè dá o som — shè e xiè eram bem parecidos no chinês antigo."
+ },
+ "中": {
+  "sentido": "meio, centro; China",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "quadrado, área (não é boca)",
+    "papel": "ideia"
+   },
+   {
+    "c": "丨",
+    "pt": "traço vertical",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um traço 丨 atravessando um quadrado bem no meio: 'centro'. 中国, o 'país do meio', era como a China se via no centro do mundo."
+ },
+ "国": {
+  "sentido": "país",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "囗",
+    "pt": "cerca",
+    "papel": "ideia"
+   },
+   {
+    "c": "玉",
+    "pt": "jade",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma fronteira 囗 guardando o tesouro 玉 (jade): o país. Na forma tradicional, 國, dentro havia 或 — gente com arma 戈 defendendo o território."
+ },
+ "美": {
+  "sentido": "bonito, belo; América",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "羊",
+    "pt": "carneiro (chifres, enfeite)",
+    "papel": "ideia"
+   },
+   {
+    "c": "大",
+    "pt": "pessoa grande",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa 大 com enfeite de chifres 羊 na cabeça: vistosa, bonita. Uma leitura antiga diz 'carneiro grande', coisa boa. Em 美国 entra pelo som: Amé-rica."
+ },
+ "日": {
+  "sentido": "sol; dia",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Um sol redondo com um traço no meio, desenhado quadrado. Do sol veio 'dia'; 日本 é 'a origem do sol', o Japão, a leste da China."
+ },
+ "本": {
+  "sentido": "raiz, origem; (classif. de livros)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "一",
+    "pt": "traço que marca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma árvore 木 com um traço 一 marcando embaixo, na raiz: 'raiz, origem'. Compare com 末, que marca a ponta de cima."
+ },
+ "韩": {
+  "sentido": "Coreia; sobrenome Han",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "龺",
+    "py": "gàn",
+    "pt": "pedaço de 倝",
+    "papel": "som"
+   },
+   {
+    "c": "韦",
+    "pt": "couro; cercar",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na origem era a mureta em volta do poço: 韦 (cercar) dá o sentido e 龺, pedaço de 倝 gàn, dá o som (gàn → hán). Depois virou nome de reino e de povo."
+ },
+ "师": {
+  "sentido": "mestre, professor",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "刂",
+    "pt": "tropa (não é faca)",
+    "papel": "ideia"
+   },
+   {
+    "c": "帀",
+    "pt": "rodear",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 師: um monte de terra (o acampamento, as tropas) + 帀 (rodear) — um exército acampado. Do chefe das tropas veio 'mestre', e daí 'professor'. A esquerda aqui NÃO é faca."
+ },
+ "学": {
+  "sentido": "estudar, aprender",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "⺍",
+    "pt": "mãos com varetas (abreviado)",
+    "papel": "ideia"
+   },
+   {
+    "c": "冖",
+    "pt": "teto",
+    "papel": "ideia"
+   },
+   {
+    "c": "子",
+    "pt": "filho, criança",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na tradicional, 學: duas mãos mexendo em varetas de contar no alto, e a criança 子 debaixo de um teto 冖 — a escola. A simplificada resumiu o topo em ⺍."
+ },
+ "生": {
+  "sentido": "nascer; vida",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um broto saindo da terra: o caule com folhas em cima da linha do chão. De 'brotar' vieram 'nascer' e 'vida'; 学生 é 'quem nasce no estudo'."
+ },
+ "大": {
+  "sentido": "grande",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Uma pessoa de frente, com braços e pernas bem abertos, se fazendo grande."
+ },
+ "课": {
+  "sentido": "aula, lição",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "果",
+    "py": "guǒ",
+    "pt": "fruta",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) indica coisa de palavras — a lição; o 果 guǒ dá o som. guǒ e kè soavam mais perto no chinês antigo."
+ },
+ "数": {
+  "sentido": "número; contar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "娄",
+    "py": "lóu",
+    "pt": "(nome antigo; amarrar)",
+    "papel": "som"
+   },
+   {
+    "c": "攵",
+    "pt": "mão com vara, ação",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 攵 (mão em ação) mostra que contar é algo que se faz; o 娄 lóu dá o som. lóu → shù: o som mudou bastante com os séculos."
+ },
+ "音": {
+  "sentido": "som",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "立",
+    "pt": "(só forma aqui)",
+    "papel": "forma"
+   },
+   {
+    "c": "日",
+    "pt": "(boca com traço — não é sol)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Vem de 言 (fala) com um traço a mais dentro da boca: o som que sai dela. O 立 e o 日 de hoje são só o desenho antigo achatado."
+ },
+ "律": {
+  "sentido": "lei, regra",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "彳",
+    "pt": "passo",
+    "papel": "ideia"
+   },
+   {
+    "c": "聿",
+    "py": "yù",
+    "pt": "mão com pincel",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 彳 (passo) é o caminho que todos devem seguir — a regra; o 聿 yù dá o som (yù → lǜ, ainda rimam). Pra lembrar: a lei escrita a pincel 聿."
+ },
+ "对": {
+  "sentido": "certo; de frente para",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "又",
+    "pt": "mão (abreviação)",
+    "papel": "forma"
+   },
+   {
+    "c": "寸",
+    "pt": "mão",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 對, a esquerda era bem mais complicada; a simplificada trocou tudo por 又. Pra lembrar: duas mãos 又 寸 frente a frente, batendo — 'certo!'."
+ },
+ "第": {
+  "sentido": "(marca de ordem: 1º, 2º…)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "⺮",
+    "pt": "bambu",
+    "papel": "ideia"
+   },
+   {
+    "c": "弟",
+    "py": "dì",
+    "pt": "irmão mais novo",
+    "papel": "som"
+   }
+  ],
+  "explica": "As tiras de bambu ⺮ (os livros antigos) iam em ordem; o 弟 dì dá o som igualzinho — e ainda lembra a ordem dos irmãos, do mais velho ao mais novo."
+ },
+ "公": {
+  "sentido": "público; masculino",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "八",
+    "pt": "separar, dividir",
+    "papel": "ideia"
+   },
+   {
+    "c": "厶",
+    "pt": "privado, 'meu'",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "八 (abrir, separar) em cima de 厶 (o privado): repartir o que era de um só — 'público, justo'. De 'senhor' veio o sentido de 'macho': 老公, 公公."
+ },
+ "丈": {
+  "sentido": "homem adulto; medida antiga",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "十",
+    "pt": "dez",
+    "papel": "ideia"
+   },
+   {
+    "c": "又",
+    "pt": "mão",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma mão 又 segurando 十 (dez): dez palmos, a medida 丈 (uns 3 m). Um homem adulto media cerca de um 丈 antigo, daí 丈夫, marido."
+ },
+ "夫": {
+  "sentido": "homem adulto; marido",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "大",
+    "pt": "pessoa grande",
+    "papel": "ideia"
+   },
+   {
+    "c": "一",
+    "pt": "grampo no cabelo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa 大 com um grampo 一 atravessado no coque: o rapaz que, ao virar adulto, prendia o cabelo. Daí 'homem feito', 'marido'."
+ },
+ "先": {
+  "sentido": "antes, primeiro",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "止",
+    "pt": "pé (achatado em cima)",
+    "papel": "ideia"
+   },
+   {
+    "c": "儿",
+    "pt": "pernas, pessoa",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um pé 止 à frente de uma pessoa 儿: quem vai na frente, primeiro. 先生, 'o que nasceu antes', virou 'senhor'."
+ },
+ "儿": {
+  "sentido": "filho, criança; (final -r)",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Na forma tradicional, 兒, era uma criança de cabeça grande, com a moleira aberta, sobre duas perninhas. A simplificada guardou só as pernas 儿."
+ },
+ "非": {
+  "sentido": "não; fora do comum",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Duas asas abertas, uma virada contra a outra, costas com costas: 'oposto, não'. 非常 é 'fora do comum', e daí 'muito'."
+ },
+ "常": {
+  "sentido": "comum; frequente",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "尚",
+    "py": "shàng",
+    "pt": "ainda; estimar",
+    "papel": "som"
+   },
+   {
+    "c": "巾",
+    "pt": "pano",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 巾 (pano) vem do sentido antigo, uma peça de roupa/estandarte; o 尚 shàng dá o som — shàng e cháng rimam. 'Comum' é empréstimo posterior."
+ },
+ "快": {
+  "sentido": "rápido; alegre",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "忄",
+    "pt": "coração",
+    "papel": "ideia"
+   },
+   {
+    "c": "夬",
+    "py": "guài",
+    "pt": "decidir, abrir",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 忄 (coração) diz que é um sentimento — 'contente', como em 快乐; o 夬 guài dá o som (guài → kuài, quase igual). 'Rápido' veio depois."
+ },
+ "高": {
+  "sentido": "alto",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma torre ou prédio alto: telhado em cima, um andar com janela 口 e a base com portão embaixo."
+ },
+ "兴": {
+  "sentido": "ânimo, disposição",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional, 興, eram quatro mãos levantando juntas um objeto: 'erguer, animar'. A simplificada reduziu tudo a ⺍, 一 e 八, e a lógica se perdeu."
+ },
+ "心": {
+  "sentido": "coração",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho do coração: a curva do meio é o órgão e os pontos em volta lembram as câmaras. Para os chineses, é onde se sente E se pensa."
+ },
+ "为": {
+  "sentido": "por, para; ser",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional, 為, era uma mão puxando um elefante: 'fazer, trabalhar'. Os sentidos 'por, para' são empréstimo; a simplificada é o rabisco cursivo de 為."
+ },
+ "医": {
+  "sentido": "medicina; médico",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "匸",
+    "pt": "caixa, estojo",
+    "papel": "ideia"
+   },
+   {
+    "c": "矢",
+    "pt": "flecha",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "医 era um estojo 匸 de flechas 矢. Virou 'médico' por ser pedaço da forma tradicional 醫, que tinha 酉 (jarra de vinho, remédio). Pra lembrar: o médico tira a flecha."
+ },
+ "加": {
+  "sentido": "somar, acrescentar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "力",
+    "pt": "força",
+    "papel": "ideia"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Força 力 mais boca 口: pôr força nas palavras, aumentar — 'acrescentar'. Em 加拿大 (Canadá) entra só pelo som."
+ },
+ "拿": {
+  "sentido": "pegar, segurar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "合",
+    "pt": "juntar, fechar",
+    "papel": "ideia"
+   },
+   {
+    "c": "手",
+    "pt": "mão",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "A mão 手 que se fecha 合 em volta de algo: pegar. Forma tardia; a antiga era 拏, com 奴 nú dando o som."
+ },
+ "墨": {
+  "sentido": "tinta nanquim; México",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "黑",
+    "pt": "preto",
+    "papel": "ideia"
+   },
+   {
+    "c": "土",
+    "pt": "terra",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Terra 土 preta 黑: a tinta do pincel era feita de fuligem prensada. O 黑 também lembrava o som no chinês antigo. Em 墨西哥 (México) entra pelo som."
+ },
+ "语": {
+  "sentido": "língua (falada)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "吾",
+    "py": "wú",
+    "pt": "eu (antigo)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) dá o sentido de língua, conversa; o 吾 wú dá o som — wú → yǔ, eram parecidos no chinês antigo."
+ },
+ "文": {
+  "sentido": "escrita, texto; língua",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma pessoa de frente com uma tatuagem no peito: marcas, desenhos — daí 'escrita, cultura'. 中文 é a língua escrita chinesa."
+ },
+ "上": {
+  "sentido": "em cima; subir; ir a",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "⺊",
+    "pt": "marca em cima",
+    "papel": "ideia"
+   },
+   {
+    "c": "一",
+    "pt": "linha de base",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma linha de base 一 e uma marca acima dela: 'em cima'. É só indicação, como 下 (embaixo), que tem a marca do lado de baixo."
+ },
+ "有": {
+  "sentido": "ter; haver",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "ナ",
+    "py": "yòu",
+    "pt": "mão (forma de 又)",
+    "papel": "som"
+   },
+   {
+    "c": "月",
+    "pt": "carne",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma mão segurando um pedaço de carne 月 (aqui ⺼, não lua): ter. A mão é 又 yòu, que de quebra dá o som — yòu → yǒu."
+ },
+ "英": {
+  "sentido": "flor; herói; Inglaterra",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "艹",
+    "pt": "planta",
+    "papel": "ideia"
+   },
+   {
+    "c": "央",
+    "py": "yāng",
+    "pt": "centro",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 艹 (planta) vem do sentido antigo, 'flor'; o 央 yāng dá o som (yāng → yīng). Em 英国, 英文 entra pelo som: Ing-laterra."
+ },
+ "今": {
+  "sentido": "agora; este (dia, ano)",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Origem discutida: no antigo era uma tampa ou boca virada para baixo sobre um traço. Pra lembrar: debaixo do telhado 人, o momento de agora — 今天, hoje."
+ },
+ "天": {
+  "sentido": "céu; dia",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "一",
+    "pt": "topo (a cabeça)",
+    "papel": "ideia"
+   },
+   {
+    "c": "大",
+    "pt": "pessoa grande",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa 大 com a cabeça destacada em cima 一: o que fica acima de tudo — o céu. Do céu veio 'dia': 今天, 昨天."
+ },
+ "牛": {
+  "sentido": "boi, vaca",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "A cabeça de um boi vista de frente: os dois chifres em cima (um ficou só um tracinho) e o focinho descendo pelo meio."
+ },
+ "奶": {
+  "sentido": "leite; avó",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "乃",
+    "py": "nǎi",
+    "pt": "(partícula antiga)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 女 (mulher) lembra o seio e a mãe que amamenta; o 乃 nǎi dá o som igualzinho. 奶奶 é a avó paterna."
+ },
+ "果": {
+  "sentido": "fruta; resultado",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "田",
+    "pt": "fruto (não é campo)",
+    "papel": "ideia"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma árvore 木 com o fruto redondo em cima — o 田 aqui é a fruta desenhada quadrada, não um campo. Do fruto veio 'resultado'."
+ },
+ "汁": {
+  "sentido": "suco; caldo",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "十",
+    "py": "shí",
+    "pt": "dez",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 氵 (água) diz que é líquido; o 十 shí dá o som — shí → zhī, bem parecidos."
+ },
+ "汽": {
+  "sentido": "vapor; gás",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "气",
+    "py": "qì",
+    "pt": "ar, gás",
+    "papel": "som"
+   }
+  ],
+  "explica": "Água 氵 virando ar 气: vapor. O 气 qì ainda dá o som igualzinho. 汽水, 'água com gás', é o refrigerante."
+ },
+ "苹": {
+  "sentido": "(só em 苹果, maçã)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "艹",
+    "pt": "planta",
+    "papel": "ideia"
+   },
+   {
+    "c": "平",
+    "py": "píng",
+    "pt": "plano",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 艹 (planta) diz que é vegetal; o 平 píng dá o som exato. Sozinho quase não se usa: é o 'píng' de 苹果."
+ },
+ "肉": {
+  "sentido": "carne",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um pedaço de carne com as fibras ou costelas marcadas. Dentro de outros 汉字 vira ⺼, igualzinho a 月."
+ },
+ "刀": {
+  "sentido": "faca",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma faca: a lâmina curva e o cabo. Do lado direito de outros 汉字 vira 刂."
+ },
+ "口": {
+  "sentido": "boca; (classif. família)",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Uma boca aberta, desenhada quadrada. Também conta as 'bocas' da casa: 三口人, três pessoas."
+ },
+ "土": {
+  "sentido": "terra, solo",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Um torrão de terra em cima da linha do chão 一. No antigo, o torrão era redondo; virou cruz quando a escrita ficou reta."
+ },
+ "又": {
+  "sentido": "de novo; também",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma mão direita, com os dedos resumidos a três traços. 'De novo' é empréstimo de som; o sentido 'mão' segue vivo dentro de outros 汉字."
+ },
+ "您": {
+  "sentido": "você (formal)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "你",
+    "pt": "você",
+    "papel": "ideia"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "你 (você) com 心 (coração) embaixo: o 'você' dito com respeito e carinho. O 你 nǐ também deixa o som parecido: nǐ → nín."
+ },
+ "这": {
+  "sentido": "este, isto",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "辶",
+    "pt": "andar, caminho",
+    "papel": "ideia"
+   },
+   {
+    "c": "文",
+    "pt": "(no lugar de 言)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 這, era 辶 + 言 (fala); o sentido 'este' é empréstimo. A simplificada trocou 言 por 文. Pra lembrar: o que está aqui no caminho 辶."
+ },
+ "那": {
+  "sentido": "aquele, aquilo",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "阝",
+    "pt": "cidade",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na origem era o nome de um lugar — por isso o 阝 (cidade) à direita; a esquerda era 冄, que dava o som. 'Aquele' é empréstimo de som."
+ },
+ "哪": {
+  "sentido": "qual; (哪儿) onde",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "那",
+    "py": "nà",
+    "pt": "aquele",
+    "papel": "som"
+   }
+  ],
+  "explica": "那 nà (aquele) com 口 (boca) ao lado: 'aquele... qual?' — a boca marca a pergunta. nà → nǎ, só muda o tom."
+ },
+ "谁": {
+  "sentido": "quem",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "隹",
+    "py": "zhuī",
+    "pt": "pássaro",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) marca a pergunta falada; o 隹 zhuī dá o som — zhuī e shuí (ou shéi) eram parecidos no chinês antigo."
+ },
+ "外": {
+  "sentido": "fora; estrangeiro",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "夕",
+    "pt": "noite, tardinha",
+    "papel": "ideia"
+   },
+   {
+    "c": "卜",
+    "pt": "adivinhar",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Consultar a sorte 卜 de noite 夕, quando o certo era de manhã: fora da regra. Daí 'fora, de fora': 外语, língua estrangeira."
+ },
+ "陈": {
+  "sentido": "Chen (sobrenome); expor",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "阝",
+    "pt": "monte",
+    "papel": "ideia"
+   },
+   {
+    "c": "东",
+    "pt": "leste",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na origem era nome de lugar e queria dizer 'arrumar em fila, expor'; a lógica antiga é discutida. Pra lembrar: um monte 阝 virado para o leste 东."
+ },
+ "贝": {
+  "sentido": "concha, búzio",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma concha (búzio) aberta. Os búzios eram dinheiro na China antiga, por isso 贝 aparece em 汉字 de compra e valor, como 贵 (caro)."
+ },
+ "玉": {
+  "sentido": "jade",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Três pedras de jade enfiadas num cordão — que parecia 王. O pontinho 丶 foi posto depois só para não confundir com 王 (rei)."
+ },
+ "矢": {
+  "sentido": "flecha",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma flecha de ponta para cima: a ponta, a haste e as penas embaixo."
+ },
+ "匕": {
+  "sentido": "colher; punhal",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma colher ou concha de servir, de perfil. Depois passou a nomear também a adaga curta."
+ },
+ "者": {
+  "sentido": "(sufixo) quem faz",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Origem discutida — talvez lenha queimando num fogareiro. O sentido 'quem faz' é empréstimo: 记者 é 'quem registra', o jornalista."
+ },
+ "法": {
+  "sentido": "lei; método; França",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "去",
+    "pt": "ir embora, tirar",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "A lei é plana e justa como a água 氵, e tira 去 do caminho o que está errado. Na forma antiga havia ainda um bicho mítico que julgava. 法国 é França, pelo som."
+ },
+ "意": {
+  "sentido": "sentido, intenção",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "音",
+    "pt": "som",
+    "papel": "ideia"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O som 音 que vem do coração 心: o que se quer dizer, a intenção. Em 意大利 (Itália) entra só pelo som."
+ },
+ "利": {
+  "sentido": "vantagem, lucro",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "禾",
+    "pt": "grão, cereal",
+    "papel": "ideia"
+   },
+   {
+    "c": "刂",
+    "pt": "faca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma faca 刂 cortando o cereal 禾: a colheita. Daí 'afiado' e 'lucro, vantagem'. Em 意大利 entra pelo som."
+ },
+ "德": {
+  "sentido": "virtude; Alemanha",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "彳",
+    "pt": "passo",
+    "papel": "ideia"
+   },
+   {
+    "c": "惪",
+    "py": "dé",
+    "pt": "coração reto",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 彳 (passo) é o modo de andar na vida; o 惪 dé, 'coração 心 reto', dá o som e reforça o sentido: virtude. 德国 é Alemanha (Deutschland), pelo som."
+ },
+ "葡": {
+  "sentido": "(só em 葡萄, uva)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "艹",
+    "pt": "planta",
+    "papel": "ideia"
+   },
+   {
+    "c": "匍",
+    "py": "pú",
+    "pt": "rastejar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 艹 (planta) diz que é vegetal; o 匍 pú dá o som exato. 葡萄 (uva) veio de uma língua da Ásia Central; 葡萄牙, Portugal, é só pelo som."
+ },
+ "萄": {
+  "sentido": "(só em 葡萄, uva)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "艹",
+    "pt": "planta",
+    "papel": "ideia"
+   },
+   {
+    "c": "匋",
+    "py": "táo",
+    "pt": "cerâmica",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 艹 (planta) de novo, e o 匋 táo dando o som igualzinho. Sozinho não se usa: é o 'táo' de 葡萄."
+ },
+ "牙": {
+  "sentido": "dente",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de dois dentes de trás (molares) encaixados um no outro. Em 葡萄牙, Portugal, entra só pelo som."
+ },
+ "泰": {
+  "sentido": "tranquilo; grandioso",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "氺",
+    "pt": "água (forma de 水)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Em cima, uma pessoa 大 com as duas mãos; embaixo, água 氺: alguém deslizando suave na água — 'fluido, tranquilo', e daí 'grandioso'. 泰国 é a Tailândia."
+ },
+ "和": {
+  "sentido": "e; paz, harmonia",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "禾",
+    "py": "hé",
+    "pt": "grão, cereal",
+    "papel": "som"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 口 (boca) vem do sentido antigo, 'responder em coro, harmonizar'; o 禾 hé dá o som exato. O uso como 'e' veio depois."
+ },
+ "认": {
+  "sentido": "reconhecer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "人",
+    "py": "rén",
+    "pt": "pessoa",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) dá o sentido; o 人 rén dá o som (rén → rèn, só muda o tom). Na forma tradicional, 認, o som vinha de 忍 rěn."
+ },
+ "识": {
+  "sentido": "conhecer, saber",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "只",
+    "py": "zhǐ",
+    "pt": "só, apenas",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) dá o sentido; o 只 zhǐ entrou na simplificação só pelo som, parecido com shí. Na tradicional, 識, era 戠 zhí."
+ },
+ "以": {
+  "sentido": "com, por meio de",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Origem discutida: no antigo talvez fosse uma pessoa 人 carregando algo, ou um arado. Quase só aparece em palavras: 可以, poder (ter permissão)."
+ },
+ "进": {
+  "sentido": "entrar; avançar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "辶",
+    "pt": "andar, caminho",
+    "papel": "ideia"
+   },
+   {
+    "c": "井",
+    "py": "jǐng",
+    "pt": "poço",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 辶 (andar) dá o movimento; o 井 jǐng dá o som (jǐng → jìn). Na tradicional, 進, era 隹 (pássaro): pássaro só anda pra frente."
+ },
+ "来": {
+  "sentido": "vir",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um pé de trigo: o caule, as folhas caídas e a espiga. 'Vir' é empréstimo de som — o sentido de trigo se perdeu."
+ },
+ "请": {
+  "sentido": "por favor; convidar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "青",
+    "py": "qīng",
+    "pt": "verde-azul",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) mostra que pedir e convidar se faz com palavras; o 青 qīng dá o som (qīng → qǐng, só muda o tom)."
+ },
+ "记": {
+  "sentido": "anotar, lembrar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "己",
+    "py": "jǐ",
+    "pt": "si mesmo",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) dá o sentido de palavra registrada; o 己 jǐ dá o som (jǐ → jì). 记者 é 'quem registra', o jornalista."
+ },
+ "问": {
+  "sentido": "perguntar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "门",
+    "py": "mén",
+    "pt": "porta",
+    "papel": "som"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 口 (boca) dá o sentido; o 门 mén dá o som — mén e wèn eram parecidos no chinês antigo. Pra lembrar: uma boca na porta, perguntando."
+ },
+ "贵": {
+  "sentido": "caro; nobre",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "中一",
+    "py": "kuì",
+    "pt": "cesto (forma antiga)",
+    "papel": "som"
+   },
+   {
+    "c": "贝",
+    "pt": "concha, dinheiro",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 贝 (concha, dinheiro) diz que é coisa de valor; a parte de cima é o resto de um caractere antigo, kuì, que dava o som. 贵姓 é 'seu nobre sobrenome'."
+ },
+ "姓": {
+  "sentido": "sobrenome; chamar-se",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "女",
+    "pt": "mulher",
+    "papel": "ideia"
+   },
+   {
+    "c": "生",
+    "py": "shēng",
+    "pt": "nascer",
+    "papel": "som"
+   }
+  ],
+  "explica": "女 (mulher) + 生 (nascer): o clã de quem você nasce, contado pela mãe nos tempos antigos. O 生 shēng também dá o som (shēng → xìng)."
+ },
+ "杨": {
+  "sentido": "álamo; Yang (sobrenome)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "昜",
+    "py": "yáng",
+    "pt": "sol subindo (abreviado)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 (árvore) diz que é uma árvore, o álamo; o 昜 yáng dá o som exato. Na forma tradicional, 楊, o 昜 aparece inteiro."
+ },
+ "言": {
+  "sentido": "fala, palavra",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma boca 口 com a língua (ou uma flauta) saindo dela, em traços em cima. À esquerda de outros 汉字 vira 讠."
+ },
+ "院": {
+  "sentido": "pátio; instituição",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "阝",
+    "pt": "monte (aqui: muro de terra)",
+    "papel": "ideia"
+   },
+   {
+    "c": "完",
+    "py": "wán",
+    "pt": "completo",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 阝 lembra muro de terra em volta — o pátio cercado; o 完 wán dá o som (wán → yuàn). De pátio veio 'instituição': 医院, 学院."
+ },
+ "的": {
+  "sentido": "(partícula de posse)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "白",
+    "pt": "branco, claro",
+    "papel": "ideia"
+   },
+   {
+    "c": "勺",
+    "py": "sháo",
+    "pt": "concha, colher",
+    "papel": "som"
+   }
+  ],
+  "explica": "Na origem: 白 (claro) + 勺 sháo para o som — 'brilhante', depois o centro branco do alvo (dì). O 'de' de posse é empréstimo de som."
+ },
+ "习": {
+  "sentido": "praticar",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional, 習, eram asas 羽 sobre 白: o filhote batendo as asas, treinando o voo. A simplificada guardou só meia asa."
+ },
+ "太": {
+  "sentido": "demais; muito",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "大",
+    "pt": "grande",
+    "papel": "ideia"
+   },
+   {
+    "c": "丶",
+    "pt": "ponto, marca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "É 大 (grande) com um pontinho a mais: mais que grande, 'demais'. Nasceu como variante de 大 e 泰. 太太 é 'senhora, esposa'."
+ },
+ "士": {
+  "sentido": "homem culto; (女士) senhora",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Origem discutida — talvez uma lâmina de machado, símbolo do guerreiro. Virou 'homem de valor, letrado'; 女士 é o tratamento formal 'senhora'."
+ },
+ "小": {
+  "sentido": "pequeno",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "亅",
+    "pt": "traço no meio",
+    "papel": "ideia"
+   },
+   {
+    "c": "八",
+    "pt": "dividir, separar",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um traço no meio com dois pontinhos se afastando: algo que já foi dividido, ficou miúdo. Nas formas antigas eram só três grãozinhos — coisa pequena."
+ },
+ "俄": {
+  "sentido": "Rússia (em 俄罗斯)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "我",
+    "py": "wǒ",
+    "pt": "eu",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 我 dava o som no chinês antigo (o é de 俄 e o de 鹅 'ganso' vêm dele). Hoje o caractere quase só serve para escrever o som de 'Rússia', 俄罗斯 É-luó-sī."
+ },
+ "罗": {
+  "sentido": "rede; (som em nomes)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "罒",
+    "pt": "rede",
+    "papel": "ideia"
+   },
+   {
+    "c": "夕",
+    "pt": "entardecer",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 羅 é uma rede (罒) com fio (糸) para pegar pássaros (隹). A simplificação trocou o resto por 夕. Aqui só empresta o som luó em 俄罗斯."
+ },
+ "斯": {
+  "sentido": "isto; (som em nomes)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "其",
+    "py": "qí",
+    "pt": "cesto (hoje: 'seu, dele')",
+    "papel": "som"
+   },
+   {
+    "c": "斤",
+    "pt": "machado",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na origem era 'rachar com o machado' (斤), e o 其 dava o som (qí e sī eram próximos no chinês antigo). Hoje quase só soa sī em nomes estrangeiros, como 俄罗斯."
+ },
+ "笔": {
+  "sentido": "caneta; pincel",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "⺮",
+    "pt": "bambu",
+    "papel": "ideia"
+   },
+   {
+    "c": "毛",
+    "pt": "pelo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um cabo de bambu (⺮) com pelos (毛) na ponta: é o pincel chinês de escrever. Por isso virou a palavra para caneta e lápis."
+ },
+ "橡": {
+  "sentido": "seringueira; borracha",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "象",
+    "py": "xiàng",
+    "pt": "elefante",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 diz que é uma árvore (antes o carvalho, hoje a seringueira, de onde sai a borracha); o 象 xiàng dá o som exato."
+ },
+ "皮": {
+  "sentido": "pele; couro",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "又",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "厂",
+    "pt": "o couro sendo puxado",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Nas formas antigas, uma mão (又) puxa e arranca o couro de um bicho. Daí 'pele, casca'. Em 橡皮, borracha de apagar, é a 'pele' da seringueira."
+ },
+ "尺": {
+  "sentido": "régua; palmo chinês",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma pessoa (尸) com uma marca na perna, medindo a distância com o corpo — o 尺 era uma medida de uns 30 cm. Em 尺子 virou a régua."
+ },
+ "袋": {
+  "sentido": "saco; bolsa",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "代",
+    "py": "dài",
+    "pt": "substituir",
+    "papel": "som"
+   },
+   {
+    "c": "衣",
+    "pt": "roupa, pano",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 衣 (roupa, pano) diz do que o saco é feito; o 代 dài dá o som idêntico. 笔袋 = saco de canetas = estojo."
+ },
+ "手": {
+  "sentido": "mão",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "É o desenho de uma mão aberta: o traço vertical é o braço e os traços de lado são os dedos abertos."
+ },
+ "机": {
+  "sentido": "máquina; ocasião",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "几",
+    "py": "jǐ",
+    "pt": "mesinha",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 lembra que as primeiras máquinas (teares, engrenagens) eram de madeira; o 几 jǐ dá o som jī. Na forma tradicional, 機. 手机 = máquina de mão; 飞机 = máquina que voa."
+ },
+ "去": {
+  "sentido": "ir",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "土",
+    "pt": "terra (era uma pessoa 大)",
+    "papel": "forma"
+   },
+   {
+    "c": "厶",
+    "pt": "boca, saída (antes 口)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Nas formas antigas era uma pessoa (大) sobre uma boca ou entrada (口): alguém saindo de casa, indo embora. A escrita foi achatando e virou 土 + 厶."
+ },
+ "超": {
+  "sentido": "passar de; super-",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "走",
+    "pt": "correr, andar",
+    "papel": "ideia"
+   },
+   {
+    "c": "召",
+    "py": "zhào",
+    "pt": "chamar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 走 (correr) dá a ideia de pular por cima, ultrapassar; o 召 zhào empresta o som (chāo). 超市 = 'super mercado'."
+ },
+ "市": {
+  "sentido": "mercado; cidade",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "亠",
+    "pt": "tampa",
+    "papel": "forma"
+   },
+   {
+    "c": "巾",
+    "pt": "pano",
+    "papel": "forma"
+   }
+  ],
+  "explica": "As formas antigas mostravam um lugar marcado onde se ia (之) para trocar coisas; a escrita mudou tanto que a lógica sumiu. Pra lembrar: um pano (巾) estendido com mercadorias."
+ },
+ "店": {
+  "sentido": "loja",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "广",
+    "pt": "telhado",
+    "papel": "ideia"
+   },
+   {
+    "c": "占",
+    "py": "zhàn",
+    "pt": "ocupar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 广 (telhado, construção aberta) diz que é um estabelecimento; o 占 zhàn dá o som (diàn — mesmo final -an). 书店 livraria, 商店 loja."
+ },
+ "菜": {
+  "sentido": "verdura; prato (comida)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "艹",
+    "pt": "planta",
+    "papel": "ideia"
+   },
+   {
+    "c": "采",
+    "py": "cǎi",
+    "pt": "colher (com a mão)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 艹 diz que é planta, e o 采 cǎi (uma mão colhendo da árvore) dá o som e ajuda no sentido: verdura colhida. Daí 'prato, comida'."
+ },
+ "杯": {
+  "sentido": "copo; xícara",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "不",
+    "py": "bù",
+    "pt": "não",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 lembra que os copos antigos eram de madeira; o 不 bù dá o som (bēi — mesmo b-). Nada a ver com 'não'!"
+ },
+ "冰": {
+  "sentido": "gelo",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "冫",
+    "pt": "gelo",
+    "papel": "ideia"
+   },
+   {
+    "c": "水",
+    "pt": "água",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Água (水) com o sinal de gelo (冫) ao lado: água congelada. O 冫 sozinho já era o desenho de pedrinhas de gelo."
+ },
+ "糖": {
+  "sentido": "açúcar; doce",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "米",
+    "pt": "arroz",
+    "papel": "ideia"
+   },
+   {
+    "c": "唐",
+    "py": "táng",
+    "pt": "dinastia Tang",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 米 (arroz, grão) lembra que os primeiros doces eram feitos de grão, tipo melado de arroz; o 唐 táng dá o som idêntico."
+ },
+ "馆": {
+  "sentido": "casa pública; restaurante",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "饣",
+    "pt": "comida",
+    "papel": "ideia"
+   },
+   {
+    "c": "官",
+    "py": "guān",
+    "pt": "funcionário",
+    "papel": "som"
+   }
+  ],
+  "explica": "Era a hospedaria onde funcionários (官) em viagem comiam (饣) e dormiam; o 官 guān também dá o som. Hoje: 饭馆 restaurante, 图书馆 biblioteca."
+ },
+ "吃": {
+  "sentido": "comer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "乞",
+    "py": "qǐ",
+    "pt": "mendigar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 口 (boca) dá a ideia de comer; o 乞 qǐ empresta o som (chī — os dois soam parecido com i no fim)."
+ },
+ "买": {
+  "sentido": "comprar",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "乛",
+    "pt": "(resto da rede 罒)",
+    "papel": "forma"
+   },
+   {
+    "c": "头",
+    "pt": "(resto de 贝 concha)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 買 é uma rede (罒) sobre uma concha (貝), o dinheiro antigo: juntar coisas com dinheiro. A simplificação apagou isso. Compare 卖 mài 'vender': tem um 十 a mais."
+ },
+ "餐": {
+  "sentido": "refeição",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "歺又",
+    "py": "cán",
+    "pt": "osso + mão",
+    "papel": "som"
+   },
+   {
+    "c": "食",
+    "pt": "comida",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Embaixo, 食 (comida) dá o sentido; em cima, 歺 (osso) + 又 (mão) juntos se liam cán e dão o som (cān). Pra lembrar: a mão tirando a carne do osso na refeição."
+ },
+ "厅": {
+  "sentido": "salão; sala",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "厂",
+    "pt": "penhasco, abrigo",
+    "papel": "ideia"
+   },
+   {
+    "c": "丁",
+    "py": "dīng",
+    "pt": "prego",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 厂 (abrigo, construção) dá a ideia de sala grande; o 丁 dīng dá o som (tīng — mesmo final -ing). Na forma tradicional, 廳, com 聽 'ouvir' no meio."
+ },
+ "在": {
+  "sentido": "estar (em); em",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "才",
+    "py": "cái",
+    "pt": "broto (hoje: 'só então')",
+    "papel": "som"
+   },
+   {
+    "c": "土",
+    "pt": "terra",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 土 (terra) dá a ideia de estar num lugar; o 才 cái — um broto saindo do chão — dá o som (zài — mesmo final -ai). Ele está ali, apertado no canto de cima."
+ },
+ "宿": {
+  "sentido": "pousar; dormir fora",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "宀",
+    "pt": "teto, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "百",
+    "pt": "esteira (de dormir)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa (亻) deitada numa esteira (o 百 aqui era o desenho de uma esteira) debaixo de um teto (宀): passar a noite. 宿舍 = o dormitório."
+ },
+ "舍": {
+  "sentido": "casa; alojamento",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma casinha simples: o 人 em cima é o telhado, embaixo a parede e a base. Não tem nada a ver com 舌 'língua', só parece."
+ },
+ "坐": {
+  "sentido": "sentar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "从",
+    "pt": "duas pessoas",
+    "papel": "ideia"
+   },
+   {
+    "c": "土",
+    "pt": "terra",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Duas pessoas (人 人) sentadas no chão (土), uma de frente pra outra. Na forma atual elas ficaram nos dois lados do traço do meio."
+ },
+ "起": {
+  "sentido": "levantar; começar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "走",
+    "pt": "andar, correr",
+    "papel": "ideia"
+   },
+   {
+    "c": "己",
+    "py": "jǐ",
+    "pt": "si mesmo",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 走 (andar) dá a ideia de se pôr de pé e partir; o 己 jǐ dá o som (qǐ — mesmo final -i, terceiro tom). 起床 = levantar da cama."
+ },
+ "知": {
+  "sentido": "saber",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "矢",
+    "py": "shǐ",
+    "pt": "flecha",
+    "papel": "som"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 口 (boca) mostra que saber é poder dizer; o 矢 shǐ dá o som (zhī — parecido). Pra lembrar: quem sabe responde rápido como uma flecha."
+ },
+ "道": {
+  "sentido": "caminho; dizer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "辶",
+    "pt": "andar, caminho",
+    "papel": "ideia"
+   },
+   {
+    "c": "首",
+    "py": "shǒu",
+    "pt": "cabeça",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 辶 (andar) dá a ideia de caminho; o 首 shǒu dava o som no chinês antigo (hoje bem diferente de dào). Pra lembrar: a cabeça (首) que vai na frente, guiando."
+ },
+ "没": {
+  "sentido": "não (ter); afundar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "殳",
+    "pt": "mão (num redemoinho)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma antiga, uma mão (又) dentro de um redemoinho, junto da água (氵): afundar, sumir. Do 'sumiu' veio o 'não tem': 没有."
+ },
+ "关": {
+  "sentido": "fechar; ligação",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "丷",
+    "pt": "(pedaço da forma antiga)",
+    "papel": "forma"
+   },
+   {
+    "c": "天",
+    "pt": "(pedaço da forma antiga)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 關 é uma porta (門) com a tranca e os fios do ferrolho: fechar, passagem. A simplificação apagou a porta. De 'passagem' veio 'ligação': 关系."
+ },
+ "系": {
+  "sentido": "ligação; departamento",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "丿",
+    "pt": "mão (em cima)",
+    "papel": "ideia"
+   },
+   {
+    "c": "糸",
+    "pt": "seda, fio",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma mão em cima (丿) segurando um feixe de fios (糸): amarrar, ligar. Daí 关系 'ligação, relação' e 系 'departamento' (um ramo ligado à faculdade)."
+ },
+ "再": {
+  "sentido": "de novo",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "一",
+    "pt": "mais um",
+    "papel": "ideia"
+   },
+   {
+    "c": "冉",
+    "pt": "(resto de 冓, estrutura)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Nas formas antigas é uma estrutura (冓) com um traço (一) a mais: 'mais uma vez, de novo'. 再见 = ver de novo = tchau."
+ },
+ "见": {
+  "sentido": "ver; encontrar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "冂",
+    "pt": "olho (era 目)",
+    "papel": "ideia"
+   },
+   {
+    "c": "儿",
+    "pt": "pernas de pessoa",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 見 é um olho (目) em cima das pernas (儿): uma pessoa que é só olho — ver. A simplificação encurtou o olho."
+ },
+ "王": {
+  "sentido": "rei; (sobrenome Wang)",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Nas formas mais antigas é a lâmina de um machado grande, símbolo do poder do rei. Pra lembrar: três linhas (céu, gente, terra) ligadas por quem manda."
+ },
+ "云": {
+  "sentido": "nuvem",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma nuvem: dois traços em cima e um redemoinho embaixo. Na forma tradicional ganhou a chuva por cima: 雲."
+ },
+ "层": {
+  "sentido": "andar (de prédio); camada",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "尸",
+    "pt": "corpo, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "云",
+    "pt": "(no lugar de 曾)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 層 = 尸 (casa) + 曾 céng, que dava o som exato: casa em andares. A simplificação trocou o 曾 por 云 e o som se perdeu."
+ },
+ "零": {
+  "sentido": "zero",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "雨",
+    "pt": "chuva",
+    "papel": "ideia"
+   },
+   {
+    "c": "令",
+    "py": "lìng",
+    "pt": "ordem",
+    "papel": "som"
+   }
+  ],
+  "explica": "Primeiro era 'chuvinha caindo em gotas' (雨), por isso 'miúdo, fração', e daí 'zero'. O 令 lìng dá o som (líng)."
+ },
+ "号": {
+  "sentido": "número; dia do mês",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "丂",
+    "py": "kǎo",
+    "pt": "(som antigo)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 口 (boca) é gritar, chamar — e o que se chama vira nome, sinal, número. O 丂 kǎo dava o som no chinês antigo; hoje mudou (hào)."
+ },
+ "用": {
+  "sentido": "usar",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "A origem é discutida (talvez um balde ou um cercado). Pra lembrar: parece um 月 com uma grade no meio, uma ferramenta pronta pra usar."
+ },
+ "晚": {
+  "sentido": "noite; tarde, atrasado",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   },
+   {
+    "c": "免",
+    "py": "miǎn",
+    "pt": "evitar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 日 (sol) põe no campo do tempo do dia; o 免 miǎn dá o som (wǎn — mesmo final -an, terceiro tom). Pra lembrar: o sol que já foi embora."
+ },
+ "了": {
+  "sentido": "(ação concluída); terminar",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "A forma lembra uma criança enrolada sem braços (compare 子), mas o elo com 'terminar' é obscuro. Hoje é sobretudo a partícula le, que marca que algo já aconteceu."
+ },
+ "宋": {
+  "sentido": "Song (sobrenome; dinastia)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "宀",
+    "pt": "teto, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Teto (宀) sobre madeira (木): uma casa de madeira, morada. Hoje é o nome de uma dinastia e um sobrenome comum: 宋华 Sòng Huá."
+ },
+ "华": {
+  "sentido": "flor; China",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "化",
+    "py": "huà",
+    "pt": "transformar",
+    "papel": "som"
+   },
+   {
+    "c": "十",
+    "pt": "(base da flor)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 華 é o desenho de uma árvore em flor: 'florido, brilhante', e daí 'China'. A simplificação pôs o 化 huà em cima para dar o som."
+ },
+ "早": {
+  "sentido": "cedo; manhã",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   },
+   {
+    "c": "十",
+    "pt": "(base)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "O sol (日) aparecendo em cima: manhã, cedo. A parte de baixo tem origem discutida. Pra lembrar: o sol subindo acima do mato (十)."
+ },
+ "路": {
+  "sentido": "rua; caminho",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "⻊",
+    "pt": "pé",
+    "papel": "ideia"
+   },
+   {
+    "c": "各",
+    "py": "gè",
+    "pt": "cada",
+    "papel": "som"
+   }
+  ],
+  "explica": "O ⻊ (pé) diz que é lugar de andar; o 各 gè dava o som no chinês antigo (compare 洛 luò, 露 lù). Pra lembrar: onde cada (各) pé passa."
+ },
+ "家": {
+  "sentido": "casa; família",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "宀",
+    "pt": "teto, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "豕",
+    "pt": "porco",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Um porco (豕) debaixo do teto (宀): na China antiga a família criava o porco dentro de casa, sinal de lar com fartura."
+ },
+ "校": {
+  "sentido": "escola",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "交",
+    "py": "jiāo",
+    "pt": "cruzar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 (madeira) vem do sentido antigo, uma cerca de troncos cruzados; o 交 jiāo dá o som (xiào). 学校 = escola."
+ },
+ "司": {
+  "sentido": "dirigir; (em 公司, empresa)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "乛",
+    "pt": "braço erguido",
+    "papel": "forma"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "A origem é discutida. Pra lembrar: alguém de braço levantado dando ordens com a boca (口) — quem dirige. 公司 = a empresa."
+ },
+ "商": {
+  "sentido": "comércio",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Origem obscura; 商 também é o nome da dinastia Shang, cujo povo ficou famoso como mercador — daí 'comércio'. Pra lembrar: uma barraca com telhado e um balcão (口) embaixo."
+ },
+ "银": {
+  "sentido": "prata; dinheiro",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "钅",
+    "pt": "metal",
+    "papel": "ideia"
+   },
+   {
+    "c": "艮",
+    "py": "gèn",
+    "pt": "duro, firme",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 钅 (metal) diz que é a prata, o metal do dinheiro; o 艮 gèn dá o som (yín — mesmo final -n). 银行 = casa da prata = banco."
+ },
+ "行": {
+  "sentido": "andar; ok, dá certo",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um cruzamento de ruas visto de cima (nas formas antigas, um 十 alargado). Rua → andar → 'vai, dá certo'. Lido háng: 'loja, ramo', como em 银行."
+ },
+ "厕": {
+  "sentido": "banheiro",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "厂",
+    "pt": "penhasco, abrigo",
+    "papel": "ideia"
+   },
+   {
+    "c": "则",
+    "py": "zé",
+    "pt": "regra",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 厂 (abrigo, construção) diz que é um cômodo; o 则 zé dá o som (cè — mesmo final -e, quarto tom). 厕所 = banheiro."
+ },
+ "所": {
+  "sentido": "lugar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "户",
+    "py": "hù",
+    "pt": "porta",
+    "papel": "som"
+   },
+   {
+    "c": "斤",
+    "pt": "machado",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na origem era o barulho do machado (斤) cortando lenha; o 户 hù dava o som no chinês antigo. Depois virou 'lugar': 厕所 = o lugar do banheiro."
+ },
+ "游": {
+  "sentido": "nadar; passear",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "斿",
+    "py": "yóu",
+    "pt": "fitas de bandeira",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 氵 (água) dá a ideia de nadar; o 斿 yóu (fitas de bandeira tremulando) dá o som idêntico e lembra o corpo ondulando. 游泳 = nadar."
+ },
+ "泳": {
+  "sentido": "nadar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "永",
+    "py": "yǒng",
+    "pt": "eterno",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 氵 (água) dá o sentido; o 永 yǒng dá o som idêntico. O próprio 永 era o desenho de um rio comprido, então combina."
+ },
+ "昨": {
+  "sentido": "ontem; antes",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   },
+   {
+    "c": "乍",
+    "py": "zhà",
+    "pt": "de repente",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 日 (sol) põe a palavra no campo do tempo, dos dias; o 乍 zhà só empresta o som — zuó e zhà eram parecidos no chinês antigo."
+ },
+ "京": {
+  "sentido": "capital",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma construção alta — telhado (亠), o prédio (口) e a base (小) — erguida num morro: a sede do governo, a capital. 北京 = capital do norte."
+ },
+ "剧": {
+  "sentido": "teatro; ópera",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "居",
+    "py": "jū",
+    "pt": "morar",
+    "papel": "som"
+   },
+   {
+    "c": "刂",
+    "pt": "faca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 居 jū dá o som (jù); o 刂 (faca) vem do sentido antigo, 'intenso, violento', e daí 'drama, peça'. Na forma tradicional, 劇 com 豦."
+ },
+ "怎": {
+  "sentido": "como? (em 怎么)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "乍",
+    "py": "zhà",
+    "pt": "de repente",
+    "papel": "som"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 心 (coração, mente) entra porque é uma pergunta que se pensa; o 乍 zhà dá o som (zěn — parecido). Mesmo 乍 de 昨 zuó."
+ },
+ "样": {
+  "sentido": "jeito; forma",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "羊",
+    "py": "yáng",
+    "pt": "carneiro",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 vem do sentido antigo (uma árvore, a castanheira); o 羊 yáng dá o som (yàng). 怎么样 = de que jeito? que tal?"
+ },
+ "思": {
+  "sentido": "pensar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "田",
+    "pt": "cabeça (era 囟, moleira)",
+    "papel": "ideia"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O de cima não é campo: era 囟, a moleira da cabeça. Cabeça + coração (心) = pensar. 意思 = o sentido, a ideia."
+ },
+ "气": {
+  "sentido": "ar; gás; clima",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de fiapos de vapor subindo no ar. Na forma tradicional, 氣 tinha arroz (米) embaixo: o vapor do arroz cozinhando. 天气 = o tempo, o clima."
+ },
+ "时": {
+  "sentido": "hora; tempo",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   },
+   {
+    "c": "寸",
+    "pt": "(resto de 寺)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 時 = 日 (sol) + 寺 sì, que dava o som (shí). A simplificação cortou o 寺 e ficou só o 寸; o 日 ainda mostra que é coisa de tempo."
+ },
+ "候": {
+  "sentido": "esperar; momento",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "侯",
+    "py": "hóu",
+    "pt": "marquês",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 亻 (pessoa) dá a ideia de alguém que espera, vigia; o 侯 hóu (com um traço a menos) dá o som (hòu). 时候 = momento."
+ },
+ "现": {
+  "sentido": "aparecer; agora",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "王",
+    "pt": "jade",
+    "papel": "ideia"
+   },
+   {
+    "c": "见",
+    "py": "jiàn",
+    "pt": "ver",
+    "papel": "som"
+   }
+  ],
+  "explica": "O brilho do jade (王) que se deixa ver: aparecer, estar presente → 'agora' (现在). O 见 jiàn dá o som (xiàn) e ajuda no sentido."
+ },
+ "明": {
+  "sentido": "claro; brilhante",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   },
+   {
+    "c": "月",
+    "pt": "lua",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Sol (日) + lua (月): as duas luzes do céu juntas — claro, brilhante. 明天 = o dia que vem clarear = amanhã."
+ },
+ "间": {
+  "sentido": "entre; espaço",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "门",
+    "pt": "porta",
+    "papel": "ideia"
+   },
+   {
+    "c": "日",
+    "pt": "sol, dia",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "A luz (日) passando pela fresta da porta (门): o vão, o espaço entre. Antes era a lua (月) na porta. 时间 = o espaço do tempo."
+ },
+ "话": {
+  "sentido": "fala; palavras",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "舌",
+    "pt": "língua",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Fala (讠) + língua (舌): o que a língua diz. Na origem o lado direito era outro componente, que dava o som; com o tempo ficou parecido com 舌."
+ },
+ "遍": {
+  "sentido": "vez (do começo ao fim)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "辶",
+    "pt": "andar, caminho",
+    "papel": "ideia"
+   },
+   {
+    "c": "扁",
+    "py": "biǎn",
+    "pt": "achatado",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 辶 (andar) dá a ideia de percorrer tudo, de ponta a ponta; o 扁 biǎn dá o som (biàn). 再说一遍 = diga mais uma vez, inteira."
+ },
+ "球": {
+  "sentido": "bola",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "王",
+    "pt": "jade",
+    "papel": "ideia"
+   },
+   {
+    "c": "求",
+    "py": "qiú",
+    "pt": "pedir",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 王 (jade) vem do sentido antigo, uma bolinha de jade; o 求 qiú dá o som idêntico. 打球 = jogar bola."
+ },
+ "抱": {
+  "sentido": "abraçar; segurar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "扌",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "包",
+    "py": "bāo",
+    "pt": "embrulhar",
+    "papel": "som"
+   }
+  ],
+  "explica": "Mãos (扌) que envolvem, embrulham (包): abraçar. O 包 bāo também dá o som (bào). 抱歉 = 'carregar' a culpa = sentir muito."
+ },
+ "歉": {
+  "sentido": "desculpa; faltar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "兼",
+    "py": "jiān",
+    "pt": "juntar",
+    "papel": "som"
+   },
+   {
+    "c": "欠",
+    "pt": "boca aberta",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 欠 (boca aberta, bocejo) também quer dizer 'faltar, dever'; daí 'colheita fraca' e 'ficar devendo, sentir muito'. O 兼 jiān dá o som (qiàn)."
+ },
+ "恐": {
+  "sentido": "medo; temer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "巩",
+    "py": "gǒng",
+    "pt": "firme",
+    "papel": "som"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 心 (coração) diz que é um sentimento, o medo; o 巩 gǒng dá o som (kǒng — mesmo final -ong, terceiro tom). 恐怕 = receio que…"
+ },
+ "怕": {
+  "sentido": "ter medo",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "忄",
+    "pt": "coração",
+    "papel": "ideia"
+   },
+   {
+    "c": "白",
+    "py": "bái",
+    "pt": "branco",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 忄 (coração) diz que é um sentimento; o 白 bái dá o som (pà — mesmo a). Pra lembrar: ficar branco (白) de medo."
+ },
+ "看": {
+  "sentido": "olhar; ver; ler",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "手",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "目",
+    "pt": "olho",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma mão (手, achatada em cima) sobre o olho (目), fazendo sombra para enxergar longe: olhar."
+ },
+ "写": {
+  "sentido": "escrever",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "冖",
+    "pt": "cobertura (era 宀)",
+    "papel": "forma"
+   },
+   {
+    "c": "与",
+    "pt": "(no lugar de 舄)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 寫 = 宀 (casa) + 舄 xì, que dava o som: 'pôr as coisas no lugar', e daí 'copiar, escrever'. A simplificação deixou só o esqueleto."
+ },
+ "念": {
+  "sentido": "ler em voz alta; lembrar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "今",
+    "py": "jīn",
+    "pt": "agora",
+    "papel": "som"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 心 (coração, mente) dá o sentido de ter na cabeça, lembrar; o 今 jīn dá o som (niàn — mesmo final -n). Do 'repetir de cor' veio 'ler em voz alta'."
+ },
+ "听": {
+  "sentido": "ouvir",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "forma"
+   },
+   {
+    "c": "斤",
+    "pt": "machado",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 聽 tem orelha (耳), olho e coração: ouvir com atenção. A simplificação pegou emprestado um caractere antigo de som parecido, 听. Pra lembrar: a boca que fala e a orelha que escuta."
+ },
+ "办": {
+  "sentido": "fazer; resolver",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "力",
+    "pt": "força",
+    "papel": "ideia"
+   },
+   {
+    "c": "八",
+    "pt": "(dois pingos)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 辦 = 力 (força) entre dois 辛, e 辡 biàn dava o som. A simplificação deixou o 力 (fazer com força) e trocou o resto por dois pingos."
+ },
+ "室": {
+  "sentido": "sala; quarto",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "宀",
+    "pt": "teto, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "至",
+    "py": "zhì",
+    "pt": "chegar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 宀 (teto) diz que é um cômodo; o 至 zhì dá o som (shì) e ajuda: o lugar aonde se chega para ficar. 办公室 = escritório."
+ },
+ "北": {
+  "sentido": "norte",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "人",
+    "pt": "pessoa (virada)",
+    "papel": "ideia"
+   },
+   {
+    "c": "匕",
+    "pt": "pessoa (virada)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Duas pessoas de costas uma para a outra: 'costas' (hoje 背). Como as casas chinesas viram as costas para o norte, virou 'norte'."
+ },
+ "李": {
+  "sentido": "ameixa; (sobrenome Li)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "子",
+    "py": "zǐ",
+    "pt": "filho, criança",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 diz que é árvore, a ameixeira; o 子 zǐ dava o som no chinês antigo e lembra o fruto. Hoje é sobretudo o sobrenome 李 Lǐ."
+ },
+ "玛": {
+  "sentido": "ágata; (som em nomes)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "王",
+    "pt": "jade",
+    "papel": "ideia"
+   },
+   {
+    "c": "马",
+    "py": "mǎ",
+    "pt": "cavalo",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 王 (jade, pedra) vem de 玛瑙, a ágata; o 马 mǎ dá o som idêntico. Por isso é usado para escrever nomes como 玛丽 Mǎlì, Mary."
+ },
+ "丽": {
+  "sentido": "bonito; (som em nomes)",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional, 麗 é um cervo (鹿) com um par de chifres enfeitados por cima: bonito. A simplificação ficou só com o par de enfeites. Em 玛丽 dá o som lì."
+ },
+ "方": {
+  "sentido": "quadrado; lado; direção",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "A origem é discutida (talvez um arado ou uma pessoa com uma canga). Hoje quer dizer 'quadrado, lado, direção' e aparece em nomes como 陈方方."
+ },
+ "下": {
+  "sentido": "embaixo; descer",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "一",
+    "pt": "linha de referência",
+    "papel": "ideia"
+   },
+   {
+    "c": "卜",
+    "pt": "marca embaixo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma linha (一) e uma marca debaixo dela: 'embaixo'. É o espelho de 上 (em cima), que tem a marca por cima."
+ },
+ "片": {
+  "sentido": "fatia; lâmina; cartão",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de meio tronco de árvore cortado ao comprido: uma lasca, uma tábua fina. Daí 'coisa fina e chata': 名片 cartão, 照片 foto."
+ },
+ "啊": {
+  "sentido": "ah! (exclamação)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "阿",
+    "py": "ā",
+    "pt": "(prefixo de nomes)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 口 (boca) marca que é um som falado, uma exclamação; o 阿 ā dá o som 'a'. O tom muda conforme a emoção."
+ },
+ "教": {
+  "sentido": "ensinar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "孝",
+    "py": "xiào",
+    "pt": "respeito aos pais",
+    "papel": "som"
+   },
+   {
+    "c": "攵",
+    "pt": "mão com vara",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 攵 (mão com uma varinha) é o mestre corrigindo; à esquerda, uma criança (子) aprendendo. Essa parte parece 孝 xiào, de som próximo a jiào."
+ },
+ "授": {
+  "sentido": "dar; ensinar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "扌",
+    "pt": "mão",
+    "papel": "ideia"
+   },
+   {
+    "c": "受",
+    "py": "shòu",
+    "pt": "receber",
+    "papel": "som"
+   }
+  ],
+  "explica": "Mão (扌) que entrega para alguém receber (受): dar, transmitir — ensinar. O 受 shòu também dá o som idêntico. 教授 = professor titular."
+ },
+ "张": {
+  "sentido": "esticar; (sobrenome Zhang)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "弓",
+    "pt": "arco",
+    "papel": "ideia"
+   },
+   {
+    "c": "长",
+    "py": "zhǎng",
+    "pt": "longo; crescer",
+    "papel": "som"
+   }
+  ],
+  "explica": "Esticar a corda do arco (弓); o 长 zhǎng/cháng dá o som (zhāng). Do 'esticado' veio o classificador de coisas planas: 一张纸, uma folha."
+ },
+ "介": {
+  "sentido": "ficar entre; (em 介绍)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "人",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "八",
+    "pt": "dois lados",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa (人) com algo dos dois lados: estar no meio. Quem fica entre duas pessoas é quem apresenta uma à outra: 介绍."
+ },
+ "绍": {
+  "sentido": "(em 介绍, apresentar)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "纟",
+    "pt": "seda, fio",
+    "papel": "ideia"
+   },
+   {
+    "c": "召",
+    "py": "zhào",
+    "pt": "chamar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 纟 (fio) dá a ideia de ligar, emendar — apresentar é ligar uma pessoa à outra; o 召 zhào dá o som: zhào → shào."
+ },
+ "专": {
+  "sentido": "especial; concentrado",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional, 專 era uma mão (寸) girando um fuso — trabalho concentrado numa coisa só. O 专 simplificado vem da escrita cursiva e apagou o desenho."
+ },
+ "业": {
+  "sentido": "ofício; estudo",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Na forma tradicional, 業 era o desenho de uma tábua dentada onde se penduravam sinos e tambores. O 业 ficou só com a parte de cima. Pra lembrar: a base firme do seu ofício — 专业."
+ },
+ "术": {
+  "sentido": "técnica, arte",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "forma"
+   },
+   {
+    "c": "丶",
+    "pt": "ponto",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 術 tinha 行 (rua, caminho) em volta e 朮 zhú no meio dando o som: o 'caminho' de fazer algo, o método. O simplificado guardou só o 朮 — parece 木 com um ponto."
+ },
+ "物": {
+  "sentido": "coisa; ser",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "牛",
+    "pt": "boi",
+    "papel": "ideia"
+   },
+   {
+    "c": "勿",
+    "py": "wù",
+    "pt": "não (proibir)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 牛 (boi) entra porque, no dicionário antigo, o boi era 'a maior das coisas'; o 勿 wù dá o som igualzinho. 物理 = 'a lógica das coisas', física."
+ },
+ "理": {
+  "sentido": "razão, lógica; arrumar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "王",
+    "pt": "jade",
+    "papel": "ideia"
+   },
+   {
+    "c": "里",
+    "py": "lǐ",
+    "pt": "aldeia; dentro",
+    "papel": "som"
+   }
+  ],
+  "explica": "Começou como 'lapidar o jade seguindo os veios da pedra' — daí 'ordem natural, lógica'. O 王 é o jade; o 里 lǐ dá o som igualzinho."
+ },
+ "化": {
+  "sentido": "transformar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "匕",
+    "pt": "pessoa de cabeça pra baixo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa de pé (亻) e outra virada de cabeça pra baixo (匕): a figura mudou — transformar. 化学 é a 'ciência das transformações', a química."
+ },
+ "历": {
+  "sentido": "passar por; calendário",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "厂",
+    "pt": "penhasco, abrigo",
+    "papel": "forma"
+   },
+   {
+    "c": "力",
+    "py": "lì",
+    "pt": "força",
+    "papel": "som"
+   }
+  ],
+  "explica": "Simplifica 歷 (atravessar, passar) e 曆 (calendário). Do desenho antigo sobrou um 厂 sem papel claro; o 力 lì entrou porque dá o som exato. 历史 = o que já passou, a história."
+ },
+ "史": {
+  "sentido": "história, crônica",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "(aqui) registro, instrumento de escrever",
+    "papel": "ideia"
+   },
+   {
+    "c": "乂",
+    "pt": "mão (resto de 又)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "No desenho antigo, uma mão (又, hoje achatada em 乂) segura um instrumento de registro: o escrivão que anota os fatos. Daí 'crônica, história'."
+ },
+ "哲": {
+  "sentido": "sábio",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "折",
+    "py": "zhé",
+    "pt": "dobrar, quebrar",
+    "papel": "som"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 口 (boca) liga à fala sábia, ao saber dizer; o 折 zhé dá o som igualzinho. 哲学 = 'estudo da sabedoria', a filosofia."
+ },
+ "经": {
+  "sentido": "passar por; clássico",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "纟",
+    "pt": "seda, fio",
+    "papel": "ideia"
+   },
+   {
+    "c": "巠",
+    "py": "jīng",
+    "pt": "fios esticados no tear",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 纟 (fio) e o 巠 jīng — os fios esticados no tear, que também dão o som. O fio que 'passa por tudo' virou 'passar por' e 'clássico'. No simplificado o 巠 encolheu."
+ },
+ "济": {
+  "sentido": "ajudar; atravessar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "齐",
+    "py": "qí",
+    "pt": "igual, alinhado",
+    "papel": "som"
+   }
+  ],
+  "explica": "Começou como 'atravessar o rio', por isso o 氵 (água); o 齐 qí dá o som — qí e jì eram parecidos. De 'fazer atravessar' veio 'socorrer'; 经济 = economia."
+ },
+ "育": {
+  "sentido": "criar, educar",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "亠厶",
+    "pt": "bebê de cabeça pra baixo",
+    "papel": "ideia"
+   },
+   {
+    "c": "月",
+    "pt": "carne, corpo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Em cima, um bebê de cabeça pra baixo (cabeça 亠, corpo 厶) saindo; embaixo, o corpo da mãe (月, carne): dar à luz. Depois, criar e educar — 教育."
+ },
+ "选": {
+  "sentido": "escolher",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "辶",
+    "pt": "andar, caminho",
+    "papel": "ideia"
+   },
+   {
+    "c": "先",
+    "py": "xiān",
+    "pt": "antes, primeiro",
+    "papel": "som"
+   }
+  ],
+  "explica": "Começou como 'mandar ir, enviar' — por isso o 辶 (andar); o 先 xiān dá o som (xiān → xuǎn). De 'separar quem vai' veio 'escolher'."
+ },
+ "修": {
+  "sentido": "consertar; estudar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "攸",
+    "py": "yōu",
+    "pt": "(som)",
+    "papel": "som"
+   },
+   {
+    "c": "彡",
+    "pt": "traços de enfeite",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 彡 (três traços de enfeite) dá 'enfeitar, arrumar'; o 攸 yōu dá o som — yōu e xiū rimam. Arrumar → consertar → cultivar-se, estudar. 选修 = cursar optativa."
+ },
+ "几": {
+  "sentido": "quantos; alguns",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma mesinha baixa de duas pernas. O sentido 'quantos?' é empréstimo: no simplificado, 几 também ficou no lugar de 幾 jǐ, que soava igual."
+ },
+ "照": {
+  "sentido": "iluminar; fotografar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "昭",
+    "py": "zhāo",
+    "pt": "claro, brilhante",
+    "papel": "som"
+   },
+   {
+    "c": "灬",
+    "pt": "fogo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 灬 (fogo) dá a luz; o 昭 zhāo (claro) dá o som: zhāo → zhào. 照片 é a imagem 'tirada com luz', a foto."
+ },
+ "个": {
+  "sentido": "(classificador geral)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "人",
+    "pt": "pessoa",
+    "papel": "forma"
+   },
+   {
+    "c": "丨",
+    "pt": "traço",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 個 = 亻 (pessoa) + 固 gù (som). O 个 é uma forma antiga paralela. Pra lembrar: um telhadinho (人) com um traço só embaixo — uma unidade."
+ },
+ "两": {
+  "sentido": "dois; ambos",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Vem do desenho de uma canga dupla, a peça que prende dois cavalos à carroça — daí 'par, dois'. Pra lembrar: os dois 人 lado a lado dentro da moldura."
+ },
+ "共": {
+  "sentido": "juntos; total",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "廿",
+    "pt": "objeto erguido",
+    "papel": "ideia"
+   },
+   {
+    "c": "八",
+    "pt": "duas mãos (desenho antigo)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "No desenho antigo, duas mãos (a base 八) erguem juntas um mesmo objeto: fazer junto, em comum. 一共 = 'tudo junto', no total."
+ },
+ "还": {
+  "sentido": "ainda; também; devolver",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "辶",
+    "pt": "andar, caminho",
+    "papel": "ideia"
+   },
+   {
+    "c": "不",
+    "pt": "não",
+    "papel": "forma"
+   }
+  ],
+  "explica": "O 辶 (andar) dá 'voltar, devolver' (huán). Na forma tradicional, 還, o lado direito dava o som; o simplificado trocou por 不 só por ser fácil. hái 'ainda' usa o mesmo caractere."
+ },
+ "当": {
+  "sentido": "servir de; quando",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "⺌",
+    "pt": "(resto de 尚)",
+    "papel": "forma"
+   },
+   {
+    "c": "彐",
+    "pt": "(no lugar de 田)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 當 = 田 (campo) + 尚 shàng (som): campos que se equivalem, 'corresponder'. O 当 guardou só a ponta de 尚 e um 彐 no lugar do campo."
+ },
+ "然": {
+  "sentido": "assim; (em 当然, claro)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "肰",
+    "py": "rán",
+    "pt": "carne (月) de cão (犬)",
+    "papel": "som"
+   },
+   {
+    "c": "灬",
+    "pt": "fogo",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Começou como 'queimar' (hoje 燃): o 灬 (fogo) embaixo e, em cima, 肰 rán — carne de cão no fogo — dando o som. Depois virou 'assim'; 当然 = claro."
+ },
+ "真": {
+  "sentido": "verdadeiro; realmente",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Origem discutida — no bronze antigo talvez uma colher sobre um caldeirão. Pra lembrar: um olho (目) bem aberto em cima de uma base firme — ver de verdade."
+ },
+ "做": {
+  "sentido": "fazer",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "故",
+    "pt": "causa; antigo",
+    "papel": "forma"
+   }
+  ],
+  "explica": "做 é uma variante tardia de 作 (zuò, fazer), criada para o sentido de 'fazer, produzir'. Pra lembrar: a pessoa (亻) que é a causa (故) de a coisa acontecer."
+ },
+ "工": {
+  "sentido": "trabalho; operário",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma ferramenta de trabalho — um esquadro ou um malho de socar terra, com o cabo no meio. Daí 'trabalho, operário': 工作, 工程师."
+ },
+ "作": {
+  "sentido": "fazer; obra",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "乍",
+    "py": "zhà",
+    "pt": "de repente",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 亻 (pessoa) é quem faz; o 乍 zhà dá o som — o mesmo par do 昨 zuó: zhà e zuò eram parecidos no chinês antigo."
+ },
+ "多": {
+  "sentido": "muito, muitos",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "夕",
+    "pt": "noite",
+    "papel": "ideia"
+   },
+   {
+    "c": "夕",
+    "pt": "noite",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Dois 夕 empilhados: a leitura clássica é noite depois de noite, muitas. (No desenho antigo talvez fossem dois pedaços de carne.) Uma coisa repetida = muito."
+ },
+ "少": {
+  "sentido": "pouco",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "小",
+    "pt": "pequeno",
+    "papel": "ideia"
+   },
+   {
+    "c": "丿",
+    "pt": "traço",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Começou como uns grãozinhos espalhados, parente do 小 (pequeno, xiǎo — som vizinho de shǎo). Pra lembrar: algo pequeno (小) perdendo ainda um pedaço (丿)."
+ },
+ "位": {
+  "sentido": "lugar; (classif. educado)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "立",
+    "pt": "de pé",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma pessoa (亻) de pé (立) no seu lugar na corte: posição, lugar. Por isso 位 é o classificador respeitoso para pessoas: 一位老师."
+ },
+ "车": {
+  "sentido": "carro, veículo",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma carroça vista de cima: as duas rodas e o eixo atravessando. Na forma tradicional, 車, as rodas e a caixa aparecem melhor."
+ },
+ "电": {
+  "sentido": "eletricidade; raio",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um raio: o traço que corta a nuvem e se dobra no fim. Na forma tradicional, 電, vinha embaixo da chuva (雨). Eletricidade = a força do raio: 电脑, 电视."
+ },
+ "脑": {
+  "sentido": "cérebro",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "月",
+    "pt": "carne, corpo",
+    "papel": "ideia"
+   },
+   {
+    "c": "㐫",
+    "pt": "crânio com a moleira",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 月 aqui é carne, corpo; o outro lado vem do desenho do crânio com a moleira. Na forma tradicional, 腦, ainda tinha os cabelos em cima. 电脑 = 'cérebro elétrico'."
+ },
+ "词": {
+  "sentido": "palavra",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "司",
+    "py": "sī",
+    "pt": "cuidar, administrar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 讠 (fala) diz que é coisa de palavra; o 司 sī dá o som — sī e cí rimam. 词典 = 'livro-padrão das palavras', o dicionário."
+ },
+ "典": {
+  "sentido": "livro de referência; norma",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "曲",
+    "pt": "livro de tiras de bambu (册)",
+    "papel": "ideia"
+   },
+   {
+    "c": "八",
+    "pt": "suporte, mesa",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Em cima, um livro antigo de tiras de bambu amarradas (册, aqui achatado); embaixo, a mesa que o apoia com respeito: livro importante, de consulta. 词典 = dicionário."
+ },
+ "孩": {
+  "sentido": "criança",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "子",
+    "pt": "filho, criança",
+    "papel": "ideia"
+   },
+   {
+    "c": "亥",
+    "py": "hài",
+    "pt": "(12º ramo, porco)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 子 (criança) dá o sentido; o 亥 hài dá o som: hài → hái. 孩子 = criança, filho."
+ },
+ "助": {
+  "sentido": "ajudar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "且",
+    "py": "qiě",
+    "pt": "e, além disso",
+    "papel": "som"
+   },
+   {
+    "c": "力",
+    "pt": "força",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 力 (força) dá a ideia: emprestar força a alguém. O 且 dá o som — hoje qiě, mas antigamente perto de zǔ/zhù (compare 祖 zǔ e 租 zū). 助教 = monitor."
+ },
+ "主": {
+  "sentido": "dono; principal",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma lamparina: o ponto 丶 em cima é a chama e o resto (não é 王, rei) é o suporte. Quem cuida da luz da casa é o dono — daí 'senhor, principal'."
+ },
+ "任": {
+  "sentido": "cargo; encarregar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "壬",
+    "py": "rén",
+    "pt": "(9º tronco)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 亻 (pessoa) é quem assume a tarefa; o 壬 rén dá o som: rén → rèn. 主任 = o encarregado principal, o chefe."
+ },
+ "程": {
+  "sentido": "regra; percurso",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "禾",
+    "pt": "cereal",
+    "papel": "ideia"
+   },
+   {
+    "c": "呈",
+    "py": "chéng",
+    "pt": "apresentar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 禾 (cereal) vem de uma antiga medida de grãos — medir, regra; o 呈 chéng dá o som igualzinho. Daí 'processo', e 工程师 = engenheiro."
+ },
+ "年": {
+  "sentido": "ano",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "禾",
+    "pt": "cereal (forma antiga)",
+    "papel": "ideia"
+   },
+   {
+    "c": "人",
+    "pt": "pessoa (forma antiga)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "No desenho antigo, uma pessoa (人) carregando um feixe de cereal (禾) nas costas: a colheita, que vem uma vez por ano. A forma moderna fundiu tudo e escondeu o desenho."
+ },
+ "前": {
+  "sentido": "frente; antes",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "丷",
+    "pt": "(resto de 止, pé)",
+    "papel": "ideia"
+   },
+   {
+    "c": "月",
+    "pt": "(resto de 舟, barco)",
+    "papel": "ideia"
+   },
+   {
+    "c": "刂",
+    "pt": "faca",
+    "papel": "forma"
+   }
+  ],
+  "explica": "No antigo, um pé (止) sobre um barco (舟): avançar, ir pra frente. A faca 刂 veio de uma palavra parecida ('cortar') que tomou o lugar, e o desenho se perdeu."
+ },
+ "只": {
+  "sentido": "(classif. de animais); só",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "forma"
+   },
+   {
+    "c": "八",
+    "pt": "(dois traços)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Como classificador, 只 simplifica 隻: uma mão (又) segurando um pássaro (隹) — um bicho só. Lido zhǐ ('só, apenas') é outro caractere antigo que caiu na mesma forma."
+ },
+ "条": {
+  "sentido": "(classif. de coisas compridas)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "夂",
+    "pt": "(forma)",
+    "papel": "forma"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 條 = 木 (árvore) + 攸 (som): um galho fino e comprido. O simplificado guardou o 木 e pôs um 夂 em cima. Daí: 一条鱼, 一条路."
+ },
+ "辆": {
+  "sentido": "(classif. de veículos)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "车",
+    "pt": "carro",
+    "papel": "ideia"
+   },
+   {
+    "c": "两",
+    "py": "liǎng",
+    "pt": "dois, par",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 车 (carro) diz o assunto; o 两 liǎng dá o som (liǎng → liàng) e ainda lembra o par de rodas. 一辆车 = um carro."
+ },
+ "台": {
+  "sentido": "plataforma; (classif. de aparelhos)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "厶",
+    "pt": "(forma)",
+    "papel": "forma"
+   },
+   {
+    "c": "口",
+    "pt": "(forma)",
+    "papel": "forma"
+   }
+  ],
+  "explica": "台 é uma forma antiga emprestada para 臺 (terraço, plataforma) e 檯 (mesa). Pra lembrar: algo em cima de uma base (口) — aparelho que fica sobre a mesa: 一台电脑."
+ },
+ "猫": {
+  "sentido": "gato",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "犭",
+    "pt": "bicho",
+    "papel": "ideia"
+   },
+   {
+    "c": "苗",
+    "py": "miáo",
+    "pt": "broto",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 犭 (bicho) diz que é animal; o 苗 miáo dá o som — e de quebra imita o miado: miáo → māo."
+ },
+ "鸟": {
+  "sentido": "pássaro",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um pássaro de perfil: a cabeça com o olho (o ponto), o corpo, a cauda e as patas embaixo. A forma tradicional, 鳥, mostra melhor."
+ },
+ "鱼": {
+  "sentido": "peixe",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um peixe de pé: a cabeça em cima (⺈), o corpo com escamas (田) e a cauda embaixo (一). Na forma tradicional, 魚, a cauda era 灬."
+ },
+ "点": {
+  "sentido": "ponto; hora (em ponto)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "占",
+    "py": "zhān",
+    "pt": "adivinhar; ocupar",
+    "papel": "som"
+   },
+   {
+    "c": "灬",
+    "pt": "(resto de 黑, preto)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 點 = 黑 (preto) + 占 zhān (som): uma manchinha preta, um ponto. O simplificado ficou só com o 灬 de baixo do 黑. 三点 = três horas."
+ },
+ "半": {
+  "sentido": "metade, meia",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "丷",
+    "pt": "separar (八)",
+    "papel": "ideia"
+   },
+   {
+    "c": "牛",
+    "pt": "boi",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Em cima, 八 (separar); embaixo, 牛 (boi): o boi, coisa grande, cortado em dois — metade. 三点半 = três e meia."
+ },
+ "分": {
+  "sentido": "dividir; minuto",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "八",
+    "pt": "separar",
+    "papel": "ideia"
+   },
+   {
+    "c": "刀",
+    "pt": "faca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "八 (duas partes se afastando) + 刀 (faca): cortar e separar, dividir. Do 'pedacinho' veio 'minuto' (分钟) e 'centavo'."
+ },
+ "钟": {
+  "sentido": "sino; relógio",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "钅",
+    "pt": "metal",
+    "papel": "ideia"
+   },
+   {
+    "c": "中",
+    "py": "zhōng",
+    "pt": "meio",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 钅 (metal) diz que é sino de bronze; o 中 zhōng dá o som igualzinho. Do sino que marcava as horas veio 'relógio'; 分钟 = minuto."
+ },
+ "岁": {
+  "sentido": "anos (de idade)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "山",
+    "pt": "montanha",
+    "papel": "forma"
+   },
+   {
+    "c": "夕",
+    "pt": "noite",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 歲 juntava 步 (passos) e um machado — ligado à colheita do ano. O 岁 é abreviação popular. Pra lembrar: montanhas (山) de noites (夕) = anos."
+ },
+ "块": {
+  "sentido": "pedaço; (yuan, na fala)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "土",
+    "pt": "terra",
+    "papel": "ideia"
+   },
+   {
+    "c": "夬",
+    "py": "guài",
+    "pt": "(som)",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 土 (terra) dá a ideia: torrão, pedaço; o 夬 guài dá o som — guài e kuài rimam. De 'pedaço' veio a moeda na fala: 五块钱."
+ },
+ "钱": {
+  "sentido": "dinheiro",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "钅",
+    "pt": "metal",
+    "papel": "ideia"
+   },
+   {
+    "c": "戋",
+    "py": "jiān",
+    "pt": "pequeno",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 钅 (metal) diz que é coisa de metal — moeda; o 戋 jiān dá o som: jiān → qián."
+ },
+ "月": {
+  "sentido": "lua; mês",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho da lua crescente, com dois traços de marca dentro. Como o mês segue a lua, 月 também é 'mês': 一月 = janeiro."
+ },
+ "星": {
+  "sentido": "estrela",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "日",
+    "pt": "(aqui) astro, estrela",
+    "papel": "ideia"
+   },
+   {
+    "c": "生",
+    "py": "shēng",
+    "pt": "nascer",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 日 aqui era o desenho de uma estrela (antes eram três: 曐); o 生 shēng dá o som — shēng e xīng são parecidos. 星期 = semana."
+ },
+ "期": {
+  "sentido": "período; prazo",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "其",
+    "py": "qí",
+    "pt": "seu, dele",
+    "papel": "som"
+   },
+   {
+    "c": "月",
+    "pt": "lua",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 月 (lua) marca o prazo pelo ciclo da lua; o 其 qí dá o som: qí → qī. 星期 = semana."
+ },
+ "午": {
+  "sentido": "meio-dia",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "Começou como o desenho de um pilão de socar grão. Foi emprestado pelo som para o 7º 'ramo' do relógio antigo, a hora do meio-dia — daí 中午, 上午, 下午."
+ },
+ "出": {
+  "sentido": "sair",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "屮",
+    "pt": "(no antigo) pé",
+    "papel": "ideia"
+   },
+   {
+    "c": "凵",
+    "pt": "buraco, entrada",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "No desenho antigo, um pé saindo de um buraco ou da entrada de uma casa meio enterrada (凵): sair. 出租 = pôr para alugar; 出租车 = táxi."
+ },
+ "租": {
+  "sentido": "alugar; aluguel",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "禾",
+    "pt": "cereal",
+    "papel": "ideia"
+   },
+   {
+    "c": "且",
+    "py": "qiě",
+    "pt": "e, além disso",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 禾 (cereal) lembra o tributo pago em grãos; o 且 dá o som — hoje qiě, mas antigamente perto de zǔ (como em 祖). Daí 'aluguel, alugar'."
+ },
+ "飞": {
+  "sentido": "voar",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Simplifica 飛, o desenho de um pássaro batendo as asas, com as penas abertas. O 飞 ficou com uma asa e duas penas. 飞机 = 'máquina que voa', avião."
+ },
+ "站": {
+  "sentido": "ficar de pé; estação",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "立",
+    "pt": "de pé",
+    "papel": "ideia"
+   },
+   {
+    "c": "占",
+    "py": "zhàn",
+    "pt": "ocupar",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 立 (de pé) dá o sentido; o 占 zhàn dá o som igualzinho. O lugar onde se para de pé esperando: estação. 火车站 = estação de trem."
+ },
+ "影": {
+  "sentido": "sombra; imagem",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "景",
+    "py": "jǐng",
+    "pt": "luz do sol; paisagem",
+    "papel": "som"
+   },
+   {
+    "c": "彡",
+    "pt": "traços de luz",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 景 jǐng (luz do sol) dá o som (jǐng → yǐng) e a ideia de luz; o 彡 são traços de brilho e sombra. 电影 = 'sombra elétrica', o filme."
+ },
+ "面": {
+  "sentido": "rosto; lado",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um rosto: o contorno da cara com um olho (目) no meio. Daí 'rosto' e 'lado, superfície' — 前面, 后面. (Também simplifica 麵, macarrão.)"
+ },
+ "后": {
+  "sentido": "atrás; depois",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "后 já existia, com o sentido de 'soberano, rainha'. O simplificado usou ele também no lugar de 後 (atrás, depois), que tinha 彳 (passo) — por isso 后面 e 皇后 dividem o caractere."
+ },
+ "里": {
+  "sentido": "dentro; aldeia",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "田",
+    "pt": "campo",
+    "papel": "ideia"
+   },
+   {
+    "c": "土",
+    "pt": "terra",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "田 (campo) sobre 土 (terra): aldeia, lugar de morar. O sentido 'dentro' vem de 裏 (com 衣, roupa: o forro), outro caractere que foi simplificado em 里."
+ },
+ "衣": {
+  "sentido": "roupa",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de uma túnica antiga: a gola em cima (亠) e as abas cruzadas embaixo. Quando entra de lado em outro caractere, vira 衤."
+ },
+ "服": {
+  "sentido": "roupa; servir",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "月",
+    "pt": "(antigo 舟, barco)",
+    "papel": "forma"
+   },
+   {
+    "c": "卩",
+    "pt": "pessoa ajoelhada",
+    "papel": "ideia"
+   },
+   {
+    "c": "又",
+    "pt": "mão",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O lado direito mostra uma mão (又) dominando uma pessoa ajoelhada (卩): 'submeter, servir'. O 月 era 舟 (barco). De 'servir, usar' veio 'vestir'; 衣服 = roupa."
+ },
+ "桌": {
+  "sentido": "mesa",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "卓",
+    "py": "zhuó",
+    "pt": "alto, elevado",
+    "papel": "som"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 木 (madeira) diz que é móvel; o 卓 zhuó (alto) dá o som — zhuó → zhuō — e lembra que a mesa é a peça alta. O 木 tomou o lugar do 十 de baixo."
+ },
+ "椅": {
+  "sentido": "cadeira",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   },
+   {
+    "c": "奇",
+    "py": "qí",
+    "pt": "estranho",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 木 (madeira) diz que é móvel; o 奇 dá o som — sozinho é qí, mas em 倚 yǐ (encostar) e 椅 vira yǐ. A cadeira é onde você se encosta."
+ },
+ "视": {
+  "sentido": "olhar, ver",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "礻",
+    "py": "shì",
+    "pt": "altar; aqui é 示, mostrar",
+    "papel": "som"
+   },
+   {
+    "c": "见",
+    "pt": "ver",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 见 (ver) dá o sentido; o 礻 aqui é 示 shì (mostrar), que dá o som igualzinho. 电视 = 'ver por eletricidade', a TV."
+ },
+ "东": {
+  "sentido": "leste; (em 东西, coisa)",
+  "tipo": "outro",
+  "partes": [],
+  "explica": "No desenho antigo, 東 era um saco amarrado nas duas pontas, emprestado pelo som para 'leste'. A leitura popular 'sol (日) nascendo atrás da árvore (木)' é ótima pra lembrar."
+ },
+ "些": {
+  "sentido": "alguns; um pouco",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "此",
+    "py": "cǐ",
+    "pt": "este",
+    "papel": "som"
+   },
+   {
+    "c": "二",
+    "pt": "dois",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 此 cǐ dá o som (cǐ e xiē eram mais próximos no chinês antigo). Pra lembrar o 二 embaixo: 'uns dois', alguns. 一些 = um pouco, alguns."
+ },
+ "喂": {
+  "sentido": "alô; ei!",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "畏",
+    "py": "wèi",
+    "pt": "temer",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 口 (boca) mostra que é som de chamar; o 畏 wèi dá o som igualzinho. No telefone se fala wéi: 喂？= alô?"
+ },
+ "客": {
+  "sentido": "visita, hóspede",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "宀",
+    "pt": "teto, casa",
+    "papel": "ideia"
+   },
+   {
+    "c": "各",
+    "py": "gè",
+    "pt": "cada",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 宀 (teto) dá a ideia de alguém recebido em casa; o 各 gè dá o som: gè → kè. 客气 = cerimônia de visita; 不客气 = de nada."
+ },
+ "回": {
+  "sentido": "voltar",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um redemoinho, uma espiral girando, que ficou quadrado: um 口 dentro do outro. Girar, dar a volta → voltar."
+ },
+ "会": {
+  "sentido": "saber (fazer); reunião",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "人",
+    "pt": "pessoa",
+    "papel": "forma"
+   },
+   {
+    "c": "云",
+    "pt": "nuvem; dizer",
+    "papel": "forma"
+   }
+  ],
+  "explica": "Na forma tradicional, 會 era uma panela com a tampa encaixada: juntar, reunir. O 会 é abreviação cursiva. Pra lembrar: gente (人) reunida conversando (云)."
+ },
+ "能": {
+  "sentido": "poder, conseguir",
+  "tipo": "desenho",
+  "partes": [],
+  "explica": "Desenho de um urso (hoje 熊): a cabeça 厶, o corpo 月 e as patas 匕 匕. Forte como um urso → ser capaz, poder."
+ },
+ "想": {
+  "sentido": "pensar; querer",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "相",
+    "py": "xiāng",
+    "pt": "mútuo; olhar",
+    "papel": "som"
+   },
+   {
+    "c": "心",
+    "pt": "coração",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 心 (coração, que para os chineses também pensa) dá o sentido; o 相 xiāng dá o som: xiāng → xiǎng."
+ },
+ "读": {
+  "sentido": "ler (em voz alta)",
+  "tipo": "outro",
+  "partes": [
+   {
+    "c": "讠",
+    "pt": "fala, palavra",
+    "papel": "ideia"
+   },
+   {
+    "c": "卖",
+    "pt": "vender",
+    "papel": "forma"
+   }
+  ],
+  "explica": "O 讠 (fala) diz que é ler em voz alta. O lado direito parece 卖 (vender), mas no tradicional, 讀, era outro componente, parecido com 賣, que dava o som; na simplificação ficaram iguais."
+ },
+ "住": {
+  "sentido": "morar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亻",
+    "pt": "pessoa",
+    "papel": "ideia"
+   },
+   {
+    "c": "主",
+    "py": "zhǔ",
+    "pt": "dono",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 亻 (pessoa) dá o sentido; o 主 zhǔ dá o som: zhǔ → zhù. A pessoa que para e fica num lugar: morar."
+ },
+ "睡": {
+  "sentido": "dormir",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "目",
+    "pt": "olho",
+    "papel": "ideia"
+   },
+   {
+    "c": "垂",
+    "py": "chuí",
+    "pt": "pender, cair",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 目 (olho) e o 垂 chuí (pender): a pálpebra caindo de sono. O 垂 também dá o som: chuí → shuì."
+ },
+ "觉": {
+  "sentido": "sentir; (em 睡觉, sono)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "⺍",
+    "py": "xué",
+    "pt": "(topo de 學)",
+    "papel": "som"
+   },
+   {
+    "c": "见",
+    "pt": "ver",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 见 (ver) dá 'perceber, despertar'; o topo vem de 學 xué, que dá o som: xué → jué. Em 睡觉 lê-se jiào, outra pronúncia do mesmo caractere."
+ },
+ "床": {
+  "sentido": "cama",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "广",
+    "pt": "telhado",
+    "papel": "ideia"
+   },
+   {
+    "c": "木",
+    "pt": "árvore",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Madeira (木) debaixo do telhado (广): o móvel de madeira dentro de casa, a cama. É a forma popular de 牀, em que 爿 (tábua) dava o som. 起床 = levantar."
+ },
+ "班": {
+  "sentido": "turma; turno",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "王",
+    "pt": "jade",
+    "papel": "ideia"
+   },
+   {
+    "c": "刂",
+    "pt": "faca",
+    "papel": "ideia"
+   },
+   {
+    "c": "王",
+    "pt": "jade",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Uma faca (刂) entre duas peças de jade (王): dividir o jade e distribuir. Daí 'grupo, turno, turma' — 上班 é entrar no turno, ir trabalhar."
+ },
+ "唱": {
+  "sentido": "cantar",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   },
+   {
+    "c": "昌",
+    "py": "chāng",
+    "pt": "próspero",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 口 (boca) dá o sentido; o 昌 chāng dá o som: chāng → chàng. 唱歌 = cantar."
+ },
+ "歌": {
+  "sentido": "canção",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "哥",
+    "py": "gē",
+    "pt": "irmão mais velho",
+    "papel": "som"
+   },
+   {
+    "c": "欠",
+    "pt": "boca aberta",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "O 欠 (boca aberta soltando o ar) dá 'cantar'; o 哥 gē dá o som igualzinho."
+ },
+ "卖": {
+  "sentido": "vender",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "十",
+    "pt": "(era 出, sair)",
+    "papel": "ideia"
+   },
+   {
+    "c": "买",
+    "pt": "comprar",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Na forma tradicional, 賣 = 出 (pôr pra fora) + 買 (comprar): vender é fazer sair o que se comprou. No simplificado o 出 encolheu para 十: 卖 mài × 买 mǎi."
+ },
+ "同": {
+  "sentido": "igual; junto",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "冂",
+    "pt": "cobertura",
+    "papel": "ideia"
+   },
+   {
+    "c": "口",
+    "pt": "boca",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "No dicionário antigo, 'juntar': uma cobertura (冂) sobre uma boca (口). Pra lembrar: todos debaixo do mesmo teto falando a mesma coisa. 同学 = quem estuda junto."
+ },
+ "漂": {
+  "sentido": "boiar; (em 漂亮, bonito)",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "氵",
+    "pt": "água",
+    "papel": "ideia"
+   },
+   {
+    "c": "票",
+    "py": "piào",
+    "pt": "bilhete",
+    "papel": "som"
+   }
+  ],
+  "explica": "O 氵 (água): boiar, ir com a correnteza; o 票 piào dá o som igualzinho. Em 漂亮 (bonito) ele entra só pelo som."
+ },
+ "亮": {
+  "sentido": "claro, brilhante",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "高",
+    "pt": "alto (resumido)",
+    "papel": "ideia"
+   },
+   {
+    "c": "几",
+    "pt": "pessoa (antes 儿)",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Em cima, 高 (alto) resumido; embaixo, uma pessoa (几, antes 儿): alguém num lugar alto, à vista, onde bate a luz — claro, brilhante. 漂亮 = bonito."
+ },
+ "新": {
+  "sentido": "novo",
+  "tipo": "som",
+  "partes": [
+   {
+    "c": "亲",
+    "py": "qīn",
+    "pt": "parente; aqui, 辛 xīn + 木",
+    "papel": "som"
+   },
+   {
+    "c": "斤",
+    "pt": "machado",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Começou como 'cortar lenha': o 斤 (machado) e, do outro lado, uma árvore (木) com 辛 xīn em cima dando o som. Lenha recém-cortada → novo. 新年 = ano novo."
+ },
+ "祝": {
+  "sentido": "desejar (votos)",
+  "tipo": "ideia",
+  "partes": [
+   {
+    "c": "礻",
+    "pt": "altar, espírito",
+    "papel": "ideia"
+   },
+   {
+    "c": "兄",
+    "pt": "pessoa de boca aberta",
+    "papel": "ideia"
+   }
+  ],
+  "explica": "Diante do altar (礻), uma pessoa de boca aberta (兄: um 口 em cima de um corpo) rezando: pedir pelos outros, desejar. 祝你生日快乐！"
+ }
+}

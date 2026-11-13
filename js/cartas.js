@@ -83,7 +83,7 @@ function cartaLinha(c) {
     '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
     '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
     (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
-    '</div></div>';
+    '</div>' + htmlLiteral(c) + '</div>';
 }
 // as seções da lista quando "agrupar por" está ligado. Independente do filtro de cima:
 // agrupa o que quer que tenha sobrado dele. Grupo é ordenado (tema por rótulo, origem
@@ -134,6 +134,22 @@ function renderList() {
   $('cardlist').innerHTML = list.length ? cartasGrupos(list).map(g =>
     (g.rot ? '<h3 class="cartas-sec">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></h3>' : '') +
     g.cards.map(cartaLinha).join('')).join('') : vazio;
+  // 🧩 na lista é sempre (o interruptor do Estudar é sobre a carta entregar a resposta,
+  // e aqui ela já está à mostra): toque no meio da linha abre e fecha
+  $('cardlist').querySelectorAll('.card .mid').forEach(m => {
+    const linha = m.closest('.card');
+    const c = cards.find(x => x.id === linha.querySelector('.spk-row').dataset.id);
+    if (!c || !ideogramasDaCarta(c).length) { m.style.cursor = 'default'; return; }
+    m.title = 'De que é feito cada 汉字';
+    m.onclick = () => {
+      const aberto = linha.querySelector('.ideias');
+      if (aberto) { aberto.remove(); return; }
+      const d = document.createElement('div');
+      d.className = 'ideias';
+      d.innerHTML = htmlIdeogramas(c);
+      linha.appendChild(d);
+    };
+  });
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
     if (c) speak(c);

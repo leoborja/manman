@@ -72,6 +72,7 @@ function renderModeSheet() {
   $('lento-opt').classList.toggle('active', !!settings.lento);
   $('tag-opt').classList.toggle('active', !!settings.tag);
   $('pron-opt').classList.toggle('active', !!settings.pron);
+  $('ideias-opt').classList.toggle('active', settings.ideias !== false);
   $('flash-opt').classList.toggle('active', !!settings.flash);
   $('flashtime').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', parseInt(b.dataset.ms, 10) === settings.flashMs));
@@ -204,6 +205,14 @@ function bindEvents() {
     renderModeSheet();
     if (current) speak(current); // ouve na hora a diferença que acabou de ligar
   };
+  $('ideias-opt').onclick = () => {
+    settings.ideias = settings.ideias === false; save(K.settings, settings);
+    renderModeSheet();
+    if (current) { // a carta na tela já obedece
+      $('ideia-btn').classList.toggle('show', temIdeia(current));
+      if (!temIdeia(current)) { $('back-ideias').innerHTML = ''; ajustaAltura(); }
+    }
+  };
   $('pron-opt').onclick = () => {
     settings.pron = !settings.pron; save(K.settings, settings);
     renderModeSheet(); applyPron();
@@ -216,6 +225,19 @@ function bindEvents() {
     $('fcard').classList.toggle('semtag', !settings.tag);
   };
   $('spk-back').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
+  $('ideia-btn').onclick = (e) => {
+    e.stopPropagation(); // tocar no ⓘ não pode desvirar a carta
+    if (!current) return;
+    const abrir = !$('back-ideias').innerHTML;
+    $('back-ideias').innerHTML = abrir ? htmlIdeogramas(current) : '';
+    $('ideia-btn').setAttribute('aria-pressed', String(abrir));
+    ajustaAltura();
+  };
+  $('back-ideias').onclick = (e) => e.stopPropagation(); // ler a explicação não vira a carta
+  $('teoriabtn').onclick = abreTeoria;
+  $('teoriasheet-bg').onclick = fechaTeoria;
+  $('teoria-fechar').onclick = fechaTeoria;
+  $('teoria-voltar').onclick = voltaTeoria;
   $('spk-front').onclick = (e) => { e.stopPropagation(); if (current) speak(current); };
   bindPad();
   // Enquanto não respondeu, o toque no teclado não pode virar a carta — o campo e os
@@ -305,7 +327,7 @@ async function init() {
   bindEvents();
   bindTips();
   renderModeUI();
-  await Promise.all([loadCards(), loadStrokes(), loadDialogos()]);
+  await Promise.all([loadCards(), loadStrokes(), loadDialogos(), loadConteudoIOS()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
   else if (dataSource === 'vazio') showBanner('error', 'Não consegui carregar nenhuma carta. Verifique a conexão e recarregue.');

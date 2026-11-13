@@ -899,6 +899,94 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   @keyframes sheetpop{from{opacity:0;transform:translate(-50%,-50%) scale(.97);}
     to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
 }
+
+/* ── literal, 汉字 desmontado, teoria e sons (js/teoria.js) ── */
+.literal{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;margin:2px 0 4px;}
+.literal .lit{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.literal .lit b{font-size:19px;font-weight:500;}
+.literal .lit i{font-style:normal;font-size:12px;font-weight:600;color:var(--mut);white-space:nowrap;}
+.literal .lit.fn i{font-weight:400;color:var(--soft);}
+.ideia-btn{right:58px;font-size:19px;font-weight:600;color:var(--mut);display:none;}
+.ideia-btn.show{display:block;}
+.ideia-btn[aria-pressed="true"]{background:var(--txt);color:var(--surface);}
+.ideias{display:flex;flex-direction:column;gap:8px;width:100%;max-width:440px;}
+.ideias:empty{display:none;}
+.ideia{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:12px;border-radius:16px;background:var(--surface2);border:1px solid var(--line);}
+.ideia .ic{font-size:38px;line-height:1;min-width:44px;text-align:center;}
+.ideia .ib{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0;}
+.ideia .ih{display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
+.ideia .ih b{font-size:15px;}
+.ideia .ih span{font-size:11px;font-weight:600;color:var(--soft);white-space:nowrap;}
+.ideia .ip{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:baseline;}
+.ideia .pc{display:inline-flex;gap:4px;align-items:baseline;white-space:nowrap;}
+.ideia .pc b{font-size:19px;font-weight:500;}
+.ideia .pc i{font-style:normal;font-size:12px;color:var(--mut);}
+.ideia .pc i.id{color:var(--txt);font-weight:600;}
+.ideia .pc i.som{color:var(--rad);font-weight:700;}
+.ideia .mais{color:var(--soft);font-size:13px;}
+.ideia .ix{font-size:13px;line-height:1.45;color:var(--mut);}
+.card .ideias{margin-top:8px;max-width:none;}
+.card .literal{justify-content:flex-start;gap:4px 14px;margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);}
+.card .mid{cursor:pointer;}
+.teoriabtn{display:block;margin:-4px auto 12px;border:0;background:none;color:var(--mut);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;padding:6px 10px;border-radius:999px;}
+.teoriabtn:hover{background:var(--pill);}
+.sheet.teoria{display:flex;flex-direction:column;height:86vh;max-height:86vh;padding-bottom:0;}
+.teoria-cab{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.teoria-cab h3{flex:1;margin:0;}
+.tvolta{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--txt);font-size:18px;cursor:pointer;line-height:1;}
+.teoria-corpo{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px;}
+.teoria-corpo .vazio{color:var(--mut);text-align:center;}
+.tlinha{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:12px;margin-bottom:6px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--txt);font:inherit;cursor:pointer;}
+.tlinha:hover{background:var(--surface2);}
+.tlinha.topo{align-items:center;}
+.tlinha .ticone{flex:0 0 36px;height:36px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;}
+.tlinha .tponto{flex:0 0 8px;height:8px;border-radius:50%;margin-top:7px;}
+.tlinha .tponto.on{background:var(--red);}
+.tlinha .tinfo{display:flex;flex-direction:column;gap:2px;}
+.tlinha .tinfo b{font-size:16px;}
+.tlinha .tinfo small{font-size:13px;color:var(--mut);}
+.tlinha .tinfo em{font-style:normal;font-size:12px;color:var(--soft);}
+.nota-t h4{margin:4px 0 4px;font-size:22px;}
+.nota-t .res{margin:0 0 16px;color:var(--mut);}
+.nota-t p{font-size:16px;line-height:1.5;margin:0 0 14px;}
+.b-padrao{display:flex;flex-direction:column;gap:3px;margin:0 0 14px;}
+.b-padrao b{font-size:21px;font-weight:600;color:var(--red);}
+.b-padrao span{color:var(--mut);font-size:15px;}
+.b-cuidado{background:var(--warn-bg);border-radius:12px;padding:10px 12px;margin:0 0 14px;font-size:15px;line-height:1.45;}
+.b-exemplo{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface2);color:var(--txt);border-radius:14px;padding:10px 12px;margin:0 0 10px;font:inherit;cursor:pointer;}
+.b-exemplo>span:first-child{display:flex;flex-direction:column;gap:2px;}
+.b-exemplo b{font-size:23px;font-weight:500;}
+.b-exemplo .pinyin{font-size:15px;}
+.b-exemplo small{color:var(--mut);font-size:14px;}
+.b-som{margin:0 0 14px;}
+.b-som .l1{display:flex;gap:12px;align-items:baseline;}
+.b-som .l1 b{font-size:20px;min-width:34px;}
+.b-som .l2{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.b-som .l2 button,.tons4 button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:6px 12px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;}
+.b-tracos{display:flex;gap:10px;flex-wrap:wrap;color:var(--txt);margin:0 0 14px;cursor:pointer;}
+.b-tracos.destaque{align-items:center;gap:14px;cursor:default;flex-wrap:nowrap;}
+.b-tracos.destaque svg{flex:0 0 auto;}
+.b-tracos.destaque div{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
+.b-tracos.destaque b{font-size:23px;color:var(--rad);font-weight:500;}
+.b-tracos .py{font-weight:700;}
+.b-tracos small{color:var(--mut);}
+.b-tracos svg{border:1px dashed var(--line);border-radius:6px;}
+.nota-nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px;}
+.nota-nav button:disabled{opacity:.35;cursor:default;}
+table.sons{border-collapse:collapse;width:100%;margin-top:4px;}
+table.sons th{font-size:13px;color:var(--mut);padding:6px 4px;text-align:center;position:sticky;top:0;background:var(--surface);}
+table.sons tbody th{position:static;text-align:right;padding-right:10px;width:52px;}
+table.sons th.apagado{color:var(--soft);opacity:.55;}
+table.sons td{padding:3px;text-align:center;}
+.sil{width:100%;border:1px solid var(--line);background:var(--surface2);color:var(--txt);border-radius:10px;padding:8px 2px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;}
+.sil.apagado{color:var(--soft);font-weight:500;opacity:.6;}
+.sil.on{background:var(--txt);color:var(--surface);opacity:1;}
+.sons-folha{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);margin-top:10px;padding:12px 2px 4px;}
+.sons-folha p{margin:8px 0 0;font-size:14px;color:var(--mut);}
+.sons-folha p b{color:var(--txt);margin-right:4px;}
+.tons4{display:flex;gap:8px;flex-wrap:wrap;}
+.tons4 button{display:flex;gap:6px;align-items:baseline;font-size:18px;}
+.tons4 small{font-size:11px;color:var(--soft);}
 </style>
 </head>
 <body>
@@ -936,6 +1024,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
     <span class="marrow">▼</span>
   </button>
   <div class="counter" id="counter"></div>
+  <button class="teoriabtn" id="teoriabtn">📚 Teoria e sons do pinyin</button>
   <div class="flashrow" id="flashrow">
     <div class="flashbar" id="flashbar"><i id="flashfill"></i></div>
     <button class="flashpause" id="flashpause" title="Pausar">⏸</button>
@@ -992,11 +1081,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
         <span class="deckpill" id="deckpill-b"></span>
         <span class="favstar" aria-label="favorita">★</span>
         <button class="spk" id="spk-back" title="Ouvir pronúncia">🔊</button>
+        <button class="spk ideia-btn" id="ideia-btn" title="De que é feito cada 汉字" aria-pressed="false">ⓘ</button>
         <div class="strokes" id="back-strokes" style="display:none" title="Toque para repetir o traçado"></div>
         <div class="hanzi-md zh" id="back-hanzi" lang="zh-Hans"></div>
         <div class="pinyin" id="back-pinyin"></div>
+        <div id="back-lit"></div>
         <div class="pt-back" id="back-pt"></div>
         <div class="nota" id="back-nota"></div>
+        <div class="ideias" id="back-ideias"></div>
         <span class="flashtag" id="flashtag" style="display:none"></span>
       </div>
     </div>
@@ -1395,6 +1487,11 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <span class="info"><b>Pronúncia aproximada</b><small>o som em letras de português atrás do pinyin — hǎo (rau). Muleta pra ler; a referência é o áudio</small></span>
       <span class="check"></span>
     </button>
+    <button class="modeopt" id="ideias-opt">
+      <span class="zhx">🧩</span>
+      <span class="info"><b>De que é feito cada 汉字</b><small>no verso, o ⓘ ao lado do 🔊 desmonta o caractere: 好 = 女 mulher + 子 filho</small></span>
+      <span class="check"></span>
+    </button>
     <button class="modeopt" id="tag-opt">
       <span class="zhx">🏷️</span>
       <span class="info"><b>Mostrar o tema na carta</b><small>a etiqueta no canto — desligue se ela estiver entregando a resposta</small></span>
@@ -1410,6 +1507,21 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       <span class="info"><b>Falar devagar</b><small>0,75× do normal, na gravação e no TTS. O navegador estica o tempo sem mexer na altura da voz, então o tom continua o mesmo</small></span>
       <span class="check"></span>
     </button>
+  </div>
+</div>
+
+<!-- 📚 teoria: lista por capítulo → nota; e a tabela de sons. Uma folha só, que troca
+     de conteúdo: ler é um desvio de onde se está, e fecha tocando fora. -->
+<div class="sheetwrap" id="teoriasheet">
+  <div class="sheetbg" id="teoriasheet-bg"></div>
+  <div class="sheet teoria">
+    <div class="handle"></div>
+    <div class="teoria-cab">
+      <button class="tvolta" id="teoria-voltar" title="Voltar">‹</button>
+      <h3 id="teoria-titulo">Teoria</h3>
+      <button class="tvolta" id="teoria-fechar" title="Fechar">✕</button>
+    </div>
+    <div class="teoria-corpo" id="teoria-corpo"></div>
   </div>
 </div>
 
@@ -1431,6 +1543,14 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
       Luilui6666, Jouketou, Shangkuanlc, 雲角, BlueCamille e Fake estate
       <span class="lic">CC BY-SA 4.0</span>; CanonNi <span class="lic">CC0</span><br>
       Carta a carta: <a href="https://github.com/leoborja/manman/blob/main/audio/nativo/CREDITS.md" target="_blank" rel="noopener">audio/nativo/CREDITS.md</a>
+    </div>
+
+    <div class="cred">
+      <b>🔤 Sons do pinyin</b>
+      Uma gravação por sílaba e tom, do projeto <a href="https://github.com/hugolpz/audio-cmn" target="_blank" rel="noopener">audio-cmn</a>
+      (Hugo Lopez, PLIDAM/INALCO) — voz de Chen Wang <span class="lic">CC BY-SA 3.0</span>.
+      O jù do 4º tom é do Shtooka (Wei Gao e Vion Nicolas) <span class="lic">CC BY 2.0 FR</span>.
+      Detalhes: <a href="https://github.com/leoborja/manman/blob/main/audio/sons/CREDITS.md" target="_blank" rel="noopener">audio/sons/CREDITS.md</a>
     </div>
 
     <div class="cred">
@@ -1488,6 +1608,7 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 <script src="./js/estudar.js"></script>
 <script src="./js/cartas.js"></script>
 <script src="./js/progresso.js"></script>
+<script src="./js/teoria.js"></script>
 <script src="./js/main.js"></script>
 <script>
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
