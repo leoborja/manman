@@ -109,6 +109,7 @@ function falaTexto(hanzi) {
 let teoriaLida = {};
 let teoriaTela = 'lista';   // 'lista' | 'nota' | 'sons'
 let leitura = null;         // { titulo, notas, i }
+let teoriaVoltaPro = null;  // 'curso' quando a nota foi aberta pela trilha: o ‹ volta pra lá
 function capitulosDaTeoria() {
   return [...new Set(teoriaDB.map(t => t.capitulo))].sort((a, b) => ordemOrigem(a) - ordemOrigem(b) || a.localeCompare(b));
 }
@@ -136,6 +137,7 @@ function marcaLida(t) {
 // nota e voltou dias depois quer ver o que está esquecido, não a página onde parou.
 function abreTeoria() {
   teoriaLida = load(uk(K_TEORIA_LIDA), {});
+  teoriaVoltaPro = null;
   teoriaTela = 'lista';
   sonsSilaba = null;
   renderTeoria();
@@ -322,6 +324,7 @@ function renderSons(box) {
   box.querySelectorAll('.tons4 button').forEach(b => b.onclick = () => tocaSilaba(sonsSilaba.pinyin, +b.dataset.tom));
 }
 function voltaTeoria() {
+  if (teoriaVoltaPro) { const v = teoriaVoltaPro; teoriaVoltaPro = null; switchView(v); return; }
   teoriaTela = 'lista';
   sonsSilaba = null;
   renderTeoria();

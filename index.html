@@ -1007,6 +1007,7 @@ table.sons td{padding:3px;text-align:center;}
 <!-- as abas abrem o conteúdo: mandam na tela inteira, os chips só no que ela lista -->
 <div class="tabs">
   <button class="tab active" data-v="estudar">Estudar</button>
+  <button class="tab" data-v="curso">Curso</button>
   <button class="tab" data-v="teoria">Teoria</button>
   <button class="tab" data-v="cartas">Cartas</button>
   <button class="tab" data-v="grade">Grade</button>
@@ -1139,6 +1140,13 @@ table.sons td{padding:3px;text-align:center;}
 </section>
 
 <!-- ══════ CARTAS (consulta) ══════ -->
+<!-- ══════ CURSO ══════ o livro como trilha (js/curso.js); as folhas do professor abrem
+     aqui mesmo, por cima da trilha -->
+<section class="view" id="view-curso">
+  <div class="curso-faixa" id="curso-faixa"></div>
+  <div id="curso-corpo"></div>
+</section>
+
 <!-- ══════ TEORIA ══════ lista por capítulo → nota; e a tabela de sons. A mesma tela
      troca de conteúdo, com o ‹ voltando pra lista. -->
 <section class="view" id="view-teoria">
@@ -1603,6 +1611,9 @@ table.sons td{padding:3px;text-align:center;}
 <script src="./js/cartas.js"></script>
 <script src="./js/progresso.js"></script>
 <script src="./js/teoria.js"></script>
+<script src="./js/curso.js"></script>
+<script src="./js/ex-escolha.js"></script>
+<script src="./js/ex-escrita.js"></script>
 <script src="./js/main.js"></script>
 <script>
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
