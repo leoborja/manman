@@ -100,8 +100,8 @@ function cartaLinha(c) {
 //              também fosse nunca vista (os chips do Mostrar são um E).
 //   Mostrar  — cada chip ESCONDE uma classe quando apagado; todos nascem ligados
 const K_VISTA = 'manman.cartas.vista.v1';
-const VISTA_GRUPOS = [['nada', 'Sem grupo'], ['tema', 'Tema'], ['origem', 'Origem'], ['tropecos', 'Tropeços'], ['semelhanca', 'Semelhança']];
-const VISTA_ORDENS = [['erro', 'Erros'], ['dominio', 'Domínio'], ['pinyin', 'Pinyin'], ['seed', 'Deck']];
+const VISTA_GRUPOS = [['nada', 'Sem grupo'], ['tema', 'Tema'], ['origem', 'Origem'], ['tropecos', 'Tropeços'], ['semelhanca', 'Semelhança'], ['favoritas', '⭐ Favoritas']];
+const VISTA_ORDENS = [['erro', 'Erros'], ['dominio', 'Domínio'], ['pinyin', 'Pinyin'], ['seed', 'Deck'], ['favoritas', '⭐ Favoritas']];
 const VISTA_CLASSES = [
   ['favoritas', '⭐ Favoritas', 'favorita', c => isFav(c.id)],
   ['desligadas', '🚫 Desligadas', 'desligada', c => foraDaRotacao(c)],
@@ -115,16 +115,20 @@ function vistaCfg() {
   v.mostrar = Object.assign({ aprendidas: true, nuncaVistas: true, desligadas: true }, v.mostrar || {});
   if (!Array.isArray(v.faixas) || v.faixas.length !== ERRO_FAIXAS.length + 1) v.faixas = ERRO_FAIXAS.concat([0]).map(() => true);
   if (!VISTA_CLASSES.some(([k]) => k === v.so)) v.so = null;
+  v.soFavoritas = !!v.soFavoritas;
   return v;
 }
 function salvaVista(v) { save(K_VISTA, v); }
 function filtroLigado() { return cartasDeck !== 'todos' && cartasDeck !== 'todas'; }
 function filtroRotulo() { return cartasFiltro === 'origem' ? origemLabel(cartasDeck) : deckLabel(cartasDeck); }
 function vistaCortada(v) {
-  return filtroLigado() || !!v.so || !v.mostrar.aprendidas || !v.mostrar.nuncaVistas || !v.mostrar.desligadas || !v.faixas.every(Boolean);
+  return filtroLigado() || v.soFavoritas || !!v.so || !v.mostrar.aprendidas || !v.mostrar.nuncaVistas || !v.mostrar.desligadas || !v.faixas.every(Boolean);
 }
 function vistaFiltra(list) {
   const v = vistaCfg();
+  // ⭐ é FILTRO, não Isolar: soma com o tema/origem e com os cortes do Mostrar —
+  // "as favoritas do Cap. 2 que eu ainda não aprendi"
+  if (v.soFavoritas) list = list.filter(c => isFav(c.id));
   if (v.so) { const f = VISTA_CLASSES.find(([k]) => k === v.so)[3]; return list.filter(f); }
   return list.filter(c => {
     if (foraDaRotacao(c) && !v.mostrar.desligadas) return false;
@@ -139,6 +143,8 @@ function vistaOrdena(list) {
   if (o === 'erro') return arr.sort((a, b) => erroKey(b) - erroKey(a));
   if (o === 'dominio') return arr.sort((a, b) => dominio(a.id) - dominio(b.id));
   if (o === 'pinyin') return arr.sort((a, b) => (a.pinyin || '').localeCompare(b.pinyin || '', 'pt', { sensitivity: 'base' }));
+  // as ⭐ primeiro; dentro de cada parte, a ordem de erros (o que mais pega em cima)
+  if (o === 'favoritas') return arr.sort((a, b) => (isFav(b.id) - isFav(a.id)) || (erroKey(b) - erroKey(a)));
   return arr;
 }
 // "Sem parecido" no fim; uma carta mora em TODO grupo de um caractere seu (天气 no de
@@ -183,12 +189,17 @@ function cartasGrupos(list) {
     return out;
   }
   if (g === 'semelhanca') return gruposDeSemelhanca(list);
+  if (g === 'favoritas') {
+    return [{ rot: '⭐ Favoritas', cards: list.filter(c => isFav(c.id)) }, { rot: 'Outras', cards: list.filter(c => !isFav(c.id)) }]
+      .filter(x => x.cards.length);
+  }
   return [{ rot: null, cards: list }];
 }
 // O resumo diz "sem aprendidas" e não "aprendidas": o chip apagado ESCONDE.
 function vistaResumo() {
   const v = vistaCfg(), rot = (l, k) => l.find(([x]) => x === k)[1];
   const p = [rot(VISTA_ORDENS, v.ordem)];
+  if (v.soFavoritas) p.unshift('só ⭐');
   if (filtroLigado()) p.unshift(filtroRotulo());
   if (v.agrupar !== 'nada') p.unshift('por ' + rot(VISTA_GRUPOS, v.agrupar).toLowerCase());
   if (v.so) return p.concat(['só as ' + VISTA_CLASSES.find(([k]) => k === v.so)[1].replace(/^\S+\s/, '').toLowerCase()]).join(' · ');
@@ -220,7 +231,9 @@ function renderVista() {
     '<div class="sheetsep">agrupar</div>' + chips(VISTA_GRUPOS, v.agrupar, 'data-ag') +
     '<p class="vista-nota">Independente do filtro — dá pra filtrar por um capítulo e ainda ver o resultado separado por tema. Na semelhança, os caracteres parecidos ficam lado a lado.</p>' +
     '<div class="sheetsep">ordenar dentro do grupo</div>' + chips(VISTA_ORDENS, v.ordem, 'data-or') +
-    '\u0000' + '<div class="sheetsep">isolar</div>' + chips([['', 'Nenhuma']].concat(VISTA_CLASSES.map(([k, t]) => [k, t])), v.so || '', 'data-so') +
+    '\u0000' + '<div class="filtros wrapchips vista-fav"><button class="chip' + (v.soFavoritas ? ' active' : '') + '" data-fav="1">⭐ Só as favoritas</button></div>' +
+    '<p class="vista-nota">Soma com o tema ou a origem e com o Mostrar: dá pra ver só as favoritas do Cap. 2 que ainda não foram aprendidas.</p>' +
+    '<div class="sheetsep">isolar</div>' + chips([['', 'Nenhuma']].concat(VISTA_CLASSES.map(([k, t]) => [k, t])), v.so || '', 'data-so') +
     '<p class="vista-nota">Isolar responde "quais são as desligadas?"; o Mostrar abaixo responde "o que sai da tela?". São perguntas diferentes, e por isso uma de cada vez.</p>' +
     '<div class="sheetsep">mostrar</div><div class="vista-mostrar' + (isolando ? ' apagado' : '') + '">' +
     '<div class="filtros wrapchips">' + [['aprendidas', '✅ Aprendidas'], ['nuncaVistas', '🌱 Nunca vistas'], ['desligadas', '🚫 Desligadas']].map(([k, t]) =>
@@ -240,6 +253,7 @@ function renderVista() {
   box.querySelectorAll('[data-ag]').forEach(b => b.onclick = () => muda(x => { x.agrupar = b.dataset.ag; }));
   box.querySelectorAll('[data-or]').forEach(b => b.onclick = () => muda(x => { x.ordem = b.dataset.or; }));
   box.querySelectorAll('[data-so]').forEach(b => b.onclick = () => muda(x => { x.so = b.dataset.so || null; }));
+  box.querySelectorAll('[data-fav]').forEach(b => b.onclick = () => muda(x => { x.soFavoritas = !x.soFavoritas; }));
   box.querySelectorAll('[data-mo]').forEach(b => b.onclick = () => muda(x => { x.mostrar[b.dataset.mo] = !x.mostrar[b.dataset.mo]; }));
   box.querySelectorAll('[data-fx]').forEach(b => b.onclick = () => muda(x => { x.faixas[+b.dataset.fx] = !x.faixas[+b.dataset.fx]; }));
   $('vista-ok').onclick = () => $('vistasheet').classList.remove('show');
