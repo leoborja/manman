@@ -130,8 +130,10 @@ function quandoLida(ms) {
   return n < 1 ? 'lida hoje' : n === 1 ? 'lida ontem' : 'lida há ' + n + ' dias';
 }
 function marcaLida(t) {
+  teoriaLida = load(uk(K_TEORIA_LIDA), {}); // o pull pode ter trazido as do iPhone
   teoriaLida[t.id] = Date.now();
   save(uk(K_TEORIA_LIDA), teoriaLida);
+  marcaEstado('teoria_lida');
 }
 // A aba Teoria do menu. Entrar nela volta sempre pra lista: quem saiu no meio de uma
 // nota e voltou dias depois quer ver o que está esquecido, não a página onde parou.

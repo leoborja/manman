@@ -399,6 +399,8 @@ async function syncPull() {
       save(uk(K.log), log);
     }
   } catch (e) { /* offline — segue local */ }
+  // teoria lida, folhas, lições do Hoje: o que o iPhone fez aparece aqui (js/estado.js)
+  if (await pullEstado()) redesenhaEstado();
   return changed;
 }
 async function syncPush(id) {
@@ -470,6 +472,7 @@ function flushDirty() {
   [...dirtyOff].forEach(id => { if (off[id]) pushOff(id); });
   if (dirtyFav) pushFav();
   flushProvas();
+  flushEstado();
 }
 async function syncReset() { // apaga progresso remoto do usuário
   if (!syncEnabled()) return;

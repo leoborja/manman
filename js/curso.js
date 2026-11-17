@@ -27,8 +27,9 @@ const NOMES_CAP = {
   6: ['我们去游泳，好吗', 'Vamos nadar?'], 7: ['你认识不认识他', 'Você conhece ele?'],
   8: ['你们家有几口人', 'Quantas pessoas tem na sua família?']
 };
-const K_EX_FEITOS = 'manman.ex.feitos.v1';    // por usuário: id → { quando, total, acertos }
-const K_EX_PARADOS = 'manman.ex.parados.v1';  // por usuário: id → { proximo, acertos, quando }
+// por usuário: id → { u, feito: {quando, total, acertos}, parado: {proximo, acertos, quando} }
+// — o formato da chave `exercicios` da tabela estado, a mesma do iPhone (js/estado.js)
+const K_EX = 'manman.ex.v2';
 const K_CURSO_CAP = 'manman.curso.cap';       // o capítulo aberto na faixa (do aparelho)
 
 // ── o contrato de um tipo de folha ──────────────────────────
@@ -84,8 +85,17 @@ function progressoDe(lista) {
   }
   return { fracao: lista.length ? soma / lista.length : 0, aprendidas, vistas };
 }
-function exFeitos() { return load(uk(K_EX_FEITOS), {}); }
-function exParados() { return load(uk(K_EX_PARADOS), {}); }
+function exGuardados() { return load(uk(K_EX), {}); }
+function exFeitos() { const g = exGuardados(), o = {}; for (const k in g) if (g[k] && g[k].feito) o[k] = g[k].feito; return o; }
+function exParados() { const g = exGuardados(), o = {}; for (const k in g) if (g[k] && g[k].parado) o[k] = g[k].parado; return o; }
+function mudaFolha(id, f) {
+  const g = exGuardados(), e = g[id] || {};
+  f(e);
+  e.u = Date.now();
+  g[id] = e;
+  save(uk(K_EX), g);
+  marcaEstado('exercicios');
+}
 function pecasDoCap(cap) {
   const lidas = load(uk(K_TEORIA_LIDA), {}), feitos = exFeitos();
   let feitas = 0, total = 0;
@@ -228,16 +238,12 @@ function fechaFolha() {
   if (somTocando) somTocando.pause();
   renderCurso();
 }
-function paraFolha(valor) {
-  const ps = exParados();
-  if (valor) ps[cursoFolha.id] = valor; else delete ps[cursoFolha.id];
-  save(uk(K_EX_PARADOS), ps);
-}
+function paraFolha(valor) { mudaFolha(cursoFolha.id, e => { e.parado = valor || null; }); }
 function registraFolha() {
-  const fs = exFeitos();
-  fs[cursoFolha.id] = { quando: Date.now(), total: cursoFolha.itens.length, acertos: folhaAcertos };
-  save(uk(K_EX_FEITOS), fs);
-  paraFolha(null);
+  mudaFolha(cursoFolha.id, e => {
+    e.feito = { quando: Date.now(), total: cursoFolha.itens.length, acertos: folhaAcertos };
+    e.parado = null;
+  });
 }
 function refazFolha() {
   paraFolha(null);

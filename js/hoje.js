@@ -7,12 +7,17 @@
    FECHADA, de N cartas — é promessa cumprida: "as 10 que você mais erra" acaba nas 10.
 
    O ✓ é do dia e cai quando a rodada chega ao fim. Amanhã as lições voltam abertas.
-   As lições e os ✓ ficam neste aparelho, como no iPhone — não há tabela pra elas no
-   banco, e a turma não tem por que ver o horário de estudo de cada um. */
+
+   As lições e os ✓ seguem a CONTA (tabela `estado`, chaves `licoes` e `licoes_feitas`,
+   ver js/estado.js) e são as mesmas do iPhone. Por isso o que fica guardado é o
+   `Lembrete` do iOS como ele o grava — id UUID, hora e minuto, dias 1–7 com 1 =
+   domingo, a pauta com a fonte como enum ({"recorte": {...}}) — e a tela converte na
+   ida e na volta. Lição que a web não sabe rodar (simulado, habilidade) aparece e não
+   é tocada; ao editar, a web parte do objeto original e só mexe no que entende. */
 'use strict';
 
-const K_LICOES = 'manman.licoes.v1';               // por usuário: [lição]
-const K_LICOES_FEITAS = 'manman.licoes.feitas.v1'; // por usuário: { 'YYYY-MM-DD': [id] }
+const K_LICOES = 'manman.licoes.v2';               // por usuário: { id: Lembrete do iOS + u (ou lápide) }
+const K_LICOES_FEITAS = 'manman.licoes.feitas.v2'; // por usuário: { id: 'YYYY-MM-DD' }
 const LICAO_LIMITES = [5, 10, 20, 30];
 // Os modos que fecham uma rodada carta a carta. O quiz de tom, o relâmpago e o diálogo
 // montam a própria fila, e uma lição dentro deles não seria a pauta que se prometeu.
@@ -25,16 +30,75 @@ const LICOES_SUGERIDAS = [
   { nome: 'No almoço', hora: '12:30', dias: [0, 1, 2, 3, 4, 5, 6], pauta: { fonte: 'maisErro', tipo: 'palavra', limite: 10, modo: 'mix' } },
   { nome: 'À noite', hora: '21:00', dias: [0, 1, 2, 3, 4, 5, 6], pauta: { fonte: 'vencidas', tipo: 'palavra', limite: 20, modo: 'mix' } }
 ];
+const FONTES_DA_WEB = ['vencidas', 'maisErro', 'recorte'];
 
-function licoes() { return load(uk(K_LICOES), []); }
-function salvaLicoes(l) { save(uk(K_LICOES), l); }
-function feitasHoje() { return (load(uk(K_LICOES_FEITAS), {})[todayStr()]) || []; }
+// ── o formato do iOS ↔ o da tela ────────────────────────────
+// Guardado: { id: {id, hora, minuto, dias:[1..7], ativo, pauta:{fonte:{tipo:{…}}, tipo,
+// limite, modoPedido, …}, u} }. Na tela: {id, hora:'08:00', dias:[0..6], pauta:{fonte:
+// 'recorte', origens, temas, tipo, limite, modo, favoritas, misto}, suportada}.
+const dois2 = n => String(n).padStart(2, '0');
+function paraTela(raw) {
+  const p = raw.pauta || {}, f = p.fonte || {}, k = Object.keys(f)[0] || '?';
+  const rec = f.recorte || {};
+  return {
+    id: raw.id, hora: dois2(raw.hora || 0) + ':' + dois2(raw.minuto || 0),
+    dias: (raw.dias || []).map(d => d - 1), ativo: raw.ativo !== false,
+    suportada: FONTES_DA_WEB.includes(k),
+    pauta: { fonte: k, origens: rec.origens || [], temas: rec.temas || [], tipo: p.tipo === 'frase' ? 'frase' : 'palavra',
+      limite: p.limite || 20, modo: p.modoPedido || 'mix', favoritas: !!p.favoritas, misto: !!p.misto,
+      habilidade: f.habilidade && f.habilidade._0 }
+  };
+}
+// Parte do objeto guardado e só troca o que a tela entende: os campos do iOS que a web
+// não conhece (modosPedidos, questoesPorTipo, soltos…) voltam como estavam.
+function paraGuardar(l, raw) {
+  const o = raw ? JSON.parse(JSON.stringify(raw)) : { ativo: true, pauta: {
+    modosPedidos: [], sortear: false, soltos: false, favoritas: false, misto: false, questoesPorTipo: {} } };
+  const [h, m] = (l.hora || '08:00').split(':').map(Number);
+  o.id = l.id; o.hora = h || 0; o.minuto = m || 0;
+  o.dias = l.dias.map(d => d + 1).sort((a, b) => a - b);
+  const p = o.pauta, w = l.pauta;
+  if (FONTES_DA_WEB.includes(w.fonte)) {
+    p.fonte = w.fonte === 'recorte' ? { recorte: { temas: w.temas || [], origens: w.origens || [] } } : { [w.fonte]: {} };
+    p.tipo = w.tipo; p.limite = w.limite;
+    // o modo só é trocado se a pessoa mexeu: um modo que só o iPhone tem fica intacto
+    if (!raw || (LICAO_MODOS[w.tipo] || []).includes(w.modo)) p.modoPedido = w.modo;
+  }
+  o.u = Date.now();
+  delete o.apagada;
+  return o;
+}
+function licoesGuardadas() { return load(uk(K_LICOES), {}); }
+function licoes() {
+  return Object.values(licoesGuardadas()).filter(r => r && !r.apagada && r.pauta && Array.isArray(r.dias)).map(paraTela);
+}
+function salvaLicao(l) {
+  const g = licoesGuardadas();
+  g[l.id] = paraGuardar(l, g[l.id]);
+  save(uk(K_LICOES), g);
+  marcaEstado('licoes');
+}
+// Apagar deixa a lápide: sem ela, o outro aparelho traria a lição de volta.
+function apagaLicao(id) {
+  const g = licoesGuardadas();
+  g[id] = { u: Date.now(), apagada: true };
+  save(uk(K_LICOES), g);
+  marcaEstado('licoes');
+}
+function novoIdDeLicao() {
+  return (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16);
+  })).toUpperCase(); // o UUID() do Swift escreve em maiúsculas
+}
+function feitasHoje() {
+  const f = load(uk(K_LICOES_FEITAS), {}), t = todayStr();
+  return Object.keys(f).filter(id => f[id] === t);
+}
 function marcaFeita(id) {
-  const t = todayStr();
-  // só o dia de hoje fica guardado: o ✓ de ontem não serve pra nada
-  const f = { [t]: feitasHoje() };
-  if (!f[t].includes(id)) f[t].push(id);
+  const f = load(uk(K_LICOES_FEITAS), {});
+  f[id] = todayStr();
   save(uk(K_LICOES_FEITAS), f);
+  marcaEstado('licoes_feitas');
 }
 function hojeDia() { const [a, m, d] = todayStr().split('-').map(Number); return new Date(a, m - 1, d).getDay(); }
 function licoesDeHoje() {
@@ -44,18 +108,29 @@ function licoesDeHoje() {
 
 // ── a pauta: que cartas a rodada entrega ────────────────────
 function nomeDaPauta(p) {
+  const base = nomeDaFonte(p);
+  if (!p.favoritas) return base;
+  if (p.fonte === 'recorte') return (p.origens || []).length || (p.temas || []).length ? 'Favoritas de ' + base : 'Minhas favoritas';
+  return base + ' · favoritas';
+}
+function nomeDaFonte(p) {
   if (p.fonte === 'vencidas') return 'O que vence hoje';
   if (p.fonte === 'maisErro') return 'As que eu mais erro';
-  const o = p.origens || [];
-  if (!o.length) return 'Capítulos';
-  const nomes = o.slice().sort((a, b) => ordemOrigem(a) - ordemOrigem(b)).map(origemLabel);
+  if (p.fonte === 'simulado') return 'Simulado curto';
+  if (p.fonte === 'habilidade') return 'Treino de uma habilidade';
+  if (p.fonte !== 'recorte') return 'Lição do iPhone';
+  const nomes = (p.origens || []).slice().sort((a, b) => ordemOrigem(a) - ordemOrigem(b)).map(origemLabel)
+    .concat((p.temas || []).map(deckLabel));
+  if (!nomes.length) return 'Capítulos';
   return nomes.length > 3 ? nomes.slice(0, 2).join(' + ') + ' + ' + (nomes.length - 2) + ' mais' : nomes.join(' + ');
 }
 // As cartas da rodada, na ordem em que vêm. Roda com o modo e o tipo da lição JÁ
 // aplicados, pra que o podePerguntar descarte o que este modo não sabe perguntar.
 function cartasDaPauta(p) {
   const t = todayStr();
-  const base = cards.filter(c => ehFrase(c) === (p.tipo === 'frase') && !foraDaRotacao(c) && podePerguntar(c));
+  if (!FONTES_DA_WEB.includes(p.fonte)) return [];
+  const base = cards.filter(c => (p.misto || ehFrase(c) === (p.tipo === 'frase')) && !foraDaRotacao(c) && podePerguntar(c)
+    && (!p.favoritas || isFav(c.id)));
   const vence = c => srs[c.id] && srs[c.id].due <= t;
   const porDue = (a, b) => (srs[a.id].due < srs[b.id].due ? -1 : 1);
   let lista;
@@ -67,8 +142,10 @@ function cartasDaPauta(p) {
   } else {
     // capítulos SOMADOS: tudo do 2 e tudo do 3. As vencidas na frente, depois as novas,
     // depois o resto — quem marcou um capítulo quer o capítulo, não só o que venceu.
-    const o = new Set(p.origens || []);
-    const doRecorte = base.filter(c => o.has(origemDe(c)));
+    // capítulo OU tema: "Cap. 2 + Comida" é tudo do 2 e toda a Comida. Sem nada marcado
+    // e com a ⭐, são todas as favoritas.
+    const o = new Set(p.origens || []), t = new Set(p.temas || []);
+    const doRecorte = (!o.size && !t.size) ? base : base.filter(c => o.has(origemDe(c)) || t.has(c.deck));
     lista = doRecorte.filter(vence).sort(porDue)
       .concat(shuffle(doRecorte.filter(c => !srs[c.id])))
       .concat(shuffle(doRecorte.filter(c => srs[c.id] && !vence(c))));
@@ -78,8 +155,9 @@ function cartasDaPauta(p) {
 // Quantas a rodada traria agora. Muda o modo só pra perguntar e devolve o de antes:
 // contar não pode mexer na sessão que está aberta no Estudar.
 function quantasNaPauta(p) {
+  if (!FONTES_DA_WEB.includes(p.fonte)) return 0;
   const antes = { mode: settings.mode, tipo: settings.tipo }, mc = modoCarta;
-  settings.mode = p.modo; settings.tipo = p.tipo; modoCarta = null;
+  settings.mode = (LICAO_MODOS[p.tipo] || []).includes(p.modo) ? p.modo : 'mix'; settings.tipo = p.tipo; modoCarta = null;
   try { return cartasDaPauta(p).length; }
   finally { settings.mode = antes.mode; settings.tipo = antes.tipo; modoCarta = mc; }
 }
@@ -95,8 +173,10 @@ function textoDaPauta(p, n) {
 // filtro…) encerra a lição — a pessoa saiu dela por conta própria.
 let licaoPendente = null, licaoAtiva = null;
 function abreLicao(l) {
+  if (!l || !l.suportada) return;
   settings.tipo = l.pauta.tipo;
-  settings.mode = l.pauta.modo;
+  // modo que só o iPhone tem (casar, falar…) roda no 🔀 aqui
+  settings.mode = (LICAO_MODOS[l.pauta.tipo] || []).includes(l.pauta.modo) ? l.pauta.modo : 'mix';
   save(K.settings, settings);
   const ids = cartasDaPauta(l.pauta).map(c => c.id);
   if (!ids.length) return;
@@ -141,11 +221,12 @@ function diasTexto(d) {
 function linhaDeLicao(l, deHoje) {
   const feita = deHoje && feitasHoje().includes(l.id);
   const n = quantasNaPauta(l.pauta);
-  const modo = MODE_TITLES[l.pauta.modo] || '';
-  const sub = l.hora + (deHoje ? '' : ' · ' + diasTexto(l.dias)) + ' · ' + textoDaPauta(l.pauta, n) + (modo ? ' · ' + modo : '');
+  const modo = MODE_TITLES[l.pauta.modo] || 'um modo do iPhone';
+  const sub = l.hora + (deHoje ? '' : ' · ' + diasTexto(l.dias)) + ' · ' +
+    (l.suportada ? textoDaPauta(l.pauta, n) + ' · ' + modo : 'só no iPhone');
   return '<div class="licao' + (feita ? ' feita' : '') + (n ? '' : ' vazia') + '">' +
     '<button class="licao-abre" data-abre="' + esc(l.id) + '"' + (n ? '' : ' disabled') + '>' +
-      '<span class="licao-ico">' + svgIco(feita ? ICO_LICAO.feita : ICO_LICAO[l.pauta.fonte]) + '</span>' +
+      '<span class="licao-ico">' + svgIco(feita ? ICO_LICAO.feita : (ICO_LICAO[l.pauta.fonte] || ICO_LICAO.recorte)) + '</span>' +
       '<span class="licao-tx"><b>' + esc(l.nome || nomeDaPauta(l.pauta)) + '</b><small>' + esc(sub) + '</small></span></button>' +
     '<button class="licao-edita" data-edita="' + esc(l.id) + '" title="Editar lição" aria-label="Editar lição">' +
       svgIco('<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>') + '</button></div>';
@@ -164,7 +245,7 @@ function renderHoje() {
       '</div>';
     box.querySelectorAll('[data-sug]').forEach(b => b.onclick = () => {
       const s = LICOES_SUGERIDAS[+b.dataset.sug];
-      salvaLicoes(licoes().concat([Object.assign({ id: 'l' + Date.now() }, JSON.parse(JSON.stringify(s)))]));
+      salvaLicao({ id: novoIdDeLicao(), hora: s.hora, dias: s.dias.slice(), pauta: Object.assign({ origens: [], temas: [] }, s.pauta) });
       renderHoje();
     });
     return;
@@ -179,14 +260,18 @@ function renderHoje() {
   if (outras.length) h += '<div class="painel" style="margin-top:14px"><h3 class="hoje-tit">Outros dias</h3>' + outras.map(l => linhaDeLicao(l, false)).join('') + '</div>';
   box.innerHTML = h;
   box.querySelectorAll('[data-abre]').forEach(b => b.onclick = () => abreLicao(licoes().find(l => l.id === b.dataset.abre)));
-  box.querySelectorAll('[data-edita]').forEach(b => b.onclick = () => abreEditorLicao(licoes().find(l => l.id === b.dataset.edita)));
+  box.querySelectorAll('[data-edita]').forEach(b => b.onclick = () => {
+    const l = licoes().find(x => x.id === b.dataset.edita);
+    if (l && !l.suportada) { alert('Esta lição (' + nomeDaPauta(l.pauta) + ') só roda no iPhone. Edite por lá.'); return; }
+    abreEditorLicao(l);
+  });
 }
 
 // ── o editor (folha de baixo) ───────────────────────────────
 let licaoEditando = null;
 function abreEditorLicao(l) {
   licaoEditando = l ? JSON.parse(JSON.stringify(l))
-    : { id: 'l' + Date.now(), nome: '', hora: '08:00', dias: [1, 2, 3, 4, 5], pauta: { fonte: 'vencidas', tipo: 'palavra', limite: 20, modo: 'mix', origens: [] }, nova: true };
+    : { id: novoIdDeLicao(), hora: '08:00', dias: [1, 2, 3, 4, 5], pauta: { fonte: 'vencidas', tipo: 'palavra', limite: 20, modo: 'mix', origens: [], temas: [] }, nova: true };
   renderEditorLicao();
   $('licaosheet').classList.add('show');
 }
@@ -210,12 +295,11 @@ function renderEditorLicao() {
       chip(p.modo === m, 'data-modo="' + m + '"', esc(MODE_TITLES[m] || m))).join('') + '</div>' +
     '<div class="sheetsep">quando</div><div class="le-quando"><input type="time" id="le-hora" value="' + esc(l.hora) + '">' +
     '<div class="le-dias">' + DIAS_CURTO.map((d, i) => chip(l.dias.includes(i), 'data-dia="' + i + '"', d)).join('') + '</div></div>' +
-    '<div class="sheetsep">nome (opcional)</div><input class="le-nome" id="le-nome" placeholder="' + esc(nomeDaPauta(p)) + '" value="' + esc(l.nome || '') + '">' +
     '<div class="le-botoes"><button class="exprox" id="le-salva">Salvar</button>' +
     (l.nova ? '' : '<button class="typeskip le-apaga" id="le-apaga">Apagar lição</button>') + '</div>';
   const box = $('licao-corpo');
   box.innerHTML = h;
-  const re = () => { l.nome = $('le-nome').value; l.hora = $('le-hora').value || l.hora; renderEditorLicao(); };
+  const re = () => { l.hora = $('le-hora').value || l.hora; renderEditorLicao(); };
   box.querySelectorAll('[data-fonte]').forEach(b => b.onclick = () => { p.fonte = b.dataset.fonte; re(); });
   box.querySelectorAll('[data-cap]').forEach(b => b.onclick = () => {
     const o = new Set(p.origens || []); o.has(b.dataset.cap) ? o.delete(b.dataset.cap) : o.add(b.dataset.cap); p.origens = [...o]; re();
@@ -227,17 +311,15 @@ function renderEditorLicao() {
     const d = +b.dataset.dia; l.dias = l.dias.includes(d) ? l.dias.filter(x => x !== d) : l.dias.concat([d]); re();
   });
   $('le-salva').onclick = () => {
-    l.nome = $('le-nome').value.trim(); l.hora = $('le-hora').value || '08:00';
+    l.hora = $('le-hora').value || '08:00';
     if (!l.dias.length) { alert('Marque pelo menos um dia da semana.'); return; }
     if (p.fonte === 'recorte' && !(p.origens || []).length) { alert('Marque pelo menos um capítulo.'); return; }
     delete l.nova;
-    const todas = licoes(), i = todas.findIndex(x => x.id === l.id);
-    if (i >= 0) todas[i] = l; else todas.push(l);
-    salvaLicoes(todas); fechaEditorLicao(); renderHoje();
+    salvaLicao(l); fechaEditorLicao(); renderHoje();
   };
   if ($('le-apaga')) $('le-apaga').onclick = () => {
-    if (!confirm('Apagar a lição "' + (l.nome || nomeDaPauta(p)) + '"?')) return;
-    salvaLicoes(licoes().filter(x => x.id !== l.id)); fechaEditorLicao(); renderHoje();
+    if (!confirm('Apagar a lição "' + nomeDaPauta(p) + '"? Ela some do iPhone também.')) return;
+    apagaLicao(l.id); fechaEditorLicao(); renderHoje();
   };
 }
 
