@@ -186,7 +186,7 @@ async function pushFav() {
     const r = await fetch(base + '?on_conflict=user_name,card_id', {
       method: 'POST',
       headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-      body: JSON.stringify({ user_name: settings.user, card_id: FAV_ROW, hab })
+      body: JSON.stringify(comDono({ user_name: settings.user, card_id: FAV_ROW, hab }))
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     dirtyFav = false;
@@ -225,7 +225,7 @@ function loadUserState() {
 }
 const ICO_PESSOA = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 function renderUserPill() {
-  const nome = settings.user ? (USERS[settings.user] || settings.user) : '';
+  const nome = settings.user ? (settings.conta && settings.conta.nome) || nomeDe(settings.user) : '';
   // no topo do celular o nome inteiro não cabe: a inicial, ou o bonequinho de quem não escolheu
   if (nome) $('profile-ini').textContent = nome[0].toUpperCase();
   else $('profile-ini').innerHTML = ICO_PESSOA;
@@ -235,8 +235,7 @@ function renderUserPill() {
 // a folha de perfil guarda os dois estados que o botão redondo esconde: quem está
 // estudando e o tema
 function renderPerfilSheet() {
-  document.querySelectorAll('#perfilsheet [data-pu]').forEach(b =>
-    b.classList.toggle('active', b.dataset.pu === settings.user));
+  renderContaNoPerfil();
   applyTheme();
 }
 async function selectUser(u) {
@@ -257,7 +256,8 @@ function sbConfigured() { return HW_CONFIG.SUPABASE_URL && HW_CONFIG.SUPABASE_AN
 function sbHeaders(extra) {
   return Object.assign({
     apikey: HW_CONFIG.SUPABASE_ANON_KEY,
-    Authorization: 'Bearer ' + HW_CONFIG.SUPABASE_ANON_KEY,
+    // com conta, o token da sessão: é ele que faz o auth.uid() do RLS valer
+    Authorization: 'Bearer ' + (tokenDaSessao() || HW_CONFIG.SUPABASE_ANON_KEY),
     'Content-Type': 'application/json'
   }, extra || {});
 }
@@ -312,7 +312,8 @@ async function loadCards() {
 }
 
 // ── sync de progresso (Supabase) ────────────────────────────
-function syncEnabled() { return sbConfigured() && settings.user && settings.user !== 'convidado'; }
+// só com conta: sem sessão o banco não sabe quem está gravando
+function syncEnabled() { return sbConfigured() && settings.user && settings.user !== 'convidado' && !!sessaoAuth; }
 // Vira false quando o banco responde que ainda não tem as colunas da V2.7. Só nesta
 // sessão: na próxima o ALTER TABLE já pode ter rodado, e ela tenta de novo.
 let habColunaOk = true;
@@ -407,7 +408,7 @@ async function syncPush(id) {
   const l = log[t] || { rev: 0, new: 0 };
   // a linha pode ter só contagem e nenhum agendamento (carta avaliada na prática
   // livre sem nunca ter entrado na fila) — por isso os campos de srs são opcionais
-  const linha = { user_name: settings.user, card_id: id };
+  const linha = comDono({ user_name: settings.user, card_id: id });
   if (s) Object.assign(linha, { reps: s.reps, ivl: s.ivl, ease: s.ease, due: s.due, updated_ms: s.u });
   if (stats[id]) {
     Object.assign(linha, { n_good: stats[id].g, n_hard: stats[id].h, n_again: stats[id].a });
@@ -420,7 +421,7 @@ async function syncPush(id) {
   fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/review_log?on_conflict=user_name,day', {
     method: 'POST',
     headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-    body: JSON.stringify({ user_name: settings.user, day: t, rev: l.rev, new_cnt: l.new })
+    body: JSON.stringify(comDono({ user_name: settings.user, day: t, rev: l.rev, new_cnt: l.new }))
   }).catch(() => {});
   const post = (corpo) => fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
     method: 'POST',
@@ -454,7 +455,7 @@ async function pushOff(id) {
     const r = await fetch(HW_CONFIG.SUPABASE_URL + '/rest/v1/progress?on_conflict=user_name,card_id', {
       method: 'POST',
       headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-      body: JSON.stringify({ user_name: settings.user, card_id: id, suspended: o.off, off_ms: o.u })
+      body: JSON.stringify(comDono({ user_name: settings.user, card_id: id, suspended: o.off, off_ms: o.u }))
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     dirtyOff = dirtyOff.filter(x => x !== id);

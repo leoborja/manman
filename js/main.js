@@ -131,11 +131,6 @@ function bindEvents() {
   document.querySelectorAll('#perfilsheet [data-t]').forEach(b => b.onclick = () => {
     settings.theme = b.dataset.t; save(K.settings, settings); applyTheme();
   });
-  // trocar de usuário recarrega progresso e sessão; tocar em quem já está só fecha
-  document.querySelectorAll('#perfilsheet [data-pu]').forEach(b => b.onclick = () => {
-    if (b.dataset.pu === settings.user) { $('perfilsheet').classList.remove('show'); return; }
-    selectUser(b.dataset.pu);
-  });
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
   // a folha se monta no próprio renderGrade, então abrir é só mostrar
@@ -322,10 +317,9 @@ function bindEvents() {
   };
   $('search').oninput = renderList;
   // login
-  document.querySelectorAll('#login [data-u]').forEach(b => b.onclick = () => selectUser(b.dataset.u));
   // progresso
   $('resetbtn').onclick = () => {
-    if (!confirm('Zerar TODO o seu progresso de estudo (' + (USERS[settings.user] || '') + ')? As cartas não são apagadas.')) return;
+    if (!confirm('Zerar TODO o seu progresso de estudo (' + nomeDe(settings.user) + ')? As cartas não são apagadas.')) return;
     srs = {}; log = {}; dirty = []; stats = {}; fav = {}; dirtyFav = false;
     localStorage.removeItem(uk(K.fav)); localStorage.removeItem(uk(K.dirtyFav));
     localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log));
@@ -352,6 +346,7 @@ async function init() {
   bindEvents();
   bindTips();
   renderModeUI();
+  await garanteToken(); // a sessão de ontem pode ter vencido: renova antes da primeira leitura
   await Promise.all([loadCards(), loadStrokes(), loadDialogos(), loadConteudoIOS(), loadExercicios()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
   else if (dataSource === 'cache') showBanner('info', '📴 Sem conexão — usando as cartas salvas neste aparelho.');
@@ -369,7 +364,19 @@ async function init() {
   renderGrade();
   renderProgress();
   renderStreak();
-  if (settings.user) {
+  // Quem estava num dos nomes fixos (sem senha) precisa entrar com a conta: o progresso
+  // deste navegador fica guardado no nome e volta quando a conta recuperar o nome antigo.
+  const semConta = settings.user && settings.user !== 'convidado' && !sessaoAuth;
+  if (sessaoAuth && !settings.conta) {
+    // entrou mas não terminou o cadastro (fechou no meio do @ ou do código)
+    startSession();
+    mostraLogin();
+    continuarComConta().catch(() => {});
+  } else if (semConta) {
+    startSession();
+    mostraLogin('O Mànmàn agora tem conta, com e-mail e senha. Entre (ou crie a sua) e, se você estudava como ' +
+      nomeDe(settings.user) + ', o código que recebeu traz o progresso de volta.');
+  } else if (settings.user) {
     startSession();
     const changed = await syncPull();
     flushDirty();
@@ -380,8 +387,11 @@ async function init() {
     renderProgress();
     renderStreak(); // o syncPull pode ter trazido revisões feitas em outro aparelho
   } else {
-    $('login').classList.add('show');
+    mostraLogin();
     startSession();
   }
+  // o token dura uma hora: renova de tempos em tempos e quando a aba volta da sombra
+  setInterval(garanteToken, 4 * 60 * 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) garanteToken(); });
 }
 init();

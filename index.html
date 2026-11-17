@@ -1373,17 +1373,9 @@ table.sons td{padding:3px;text-align:center;}
 </main>
 
 <!-- login simples -->
+<!-- entrar: e-mail e senha, o @ e o nome, e o código de quem já usava (js/conta.js) -->
 <div class="login" id="login">
-  <div class="login-box">
-    <div class="zh-big zh">你好!</div>
-    <h2>Quem está estudando?</h2>
-    <p>Seu progresso fica salvo no seu nome.</p>
-    <button class="userbtn" data-u="leo">Leo</button>
-    <button class="userbtn" data-u="henrique">Henrique</button>
-    <button class="userbtn" data-u="david">David</button>
-    <button class="userbtn" data-u="fraga">Fraga</button>
-    <button class="guestbtn" data-u="convidado">só dar uma olhada (convidado)</button>
-  </div>
+  <div class="login-box" id="login-box"></div>
 </div>
 
 <!-- perfil (bottom sheet): quem está estudando + tema, atrás do botão redondo do topo -->
@@ -1392,32 +1384,8 @@ table.sons td{padding:3px;text-align:center;}
   <div class="sheet scroll">
     <div class="handle"></div>
     <h3>Perfil</h3>
-    <div class="sheetsep">quem está estudando</div>
-    <button class="modeopt" data-pu="leo">
-      <span class="zhx">L</span>
-      <span class="info"><b>Leo</b><small>o progresso fica salvo neste nome</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-pu="henrique">
-      <span class="zhx">H</span>
-      <span class="info"><b>Henrique</b><small>o progresso fica salvo neste nome</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-pu="david">
-      <span class="zhx">D</span>
-      <span class="info"><b>David</b><small>o progresso fica salvo neste nome</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-pu="fraga">
-      <span class="zhx">F</span>
-      <span class="info"><b>Fraga</b><small>o progresso fica salvo neste nome</small></span>
-      <span class="check"></span>
-    </button>
-    <button class="modeopt" data-pu="convidado">
-      <span class="zhx">👀</span>
-      <span class="info"><b>Convidado</b><small>só dar uma olhada — não sobe pro ranking da turma</small></span>
-      <span class="check"></span>
-    </button>
+    <div class="sheetsep">conta</div>
+    <div id="pf-conta"></div>
     <div class="sheetsep">tema</div>
     <button class="modeopt" data-t="light">
       <span class="zhx">☀️</span>
@@ -1655,6 +1623,7 @@ table.sons td{padding:3px;text-align:center;}
 <script src="./js/progresso.js"></script>
 <script src="./js/teoria.js"></script>
 <script src="./js/curso.js"></script>
+<script src="./js/conta.js"></script>
 <script src="./js/ex-escolha.js"></script>
 <script src="./js/ex-escrita.js"></script>
 <script src="./js/prova.js"></script>

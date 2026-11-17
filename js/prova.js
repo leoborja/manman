@@ -99,7 +99,7 @@ async function pushProva(cap) {
     const r = await fetch(base + '?on_conflict=user_name,card_id', {
       method: 'POST',
       headers: sbHeaders({ Prefer: 'resolution=merge-duplicates' }),
-      body: JSON.stringify({ user_name: settings.user, card_id: id, hab: provasLocais()[cap] })
+      body: JSON.stringify(comDono({ user_name: settings.user, card_id: id, hab: provasLocais()[cap] }))
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     salvaSujas(sujas());
@@ -251,7 +251,7 @@ function renderProvasTurma() {
         const z = h[h.length - 1];
         const sub = !h.length ? 'ainda não fez' : h.length === 1 ? '1 tentativa'
           : h.length + ' tentativas · ' + difTexto(z.nota - h[0].nota) + ' desde a 1ª';
-        return '<div class="pvt-linha' + (u === settings.user ? ' eu' : '') + '"><span class="pvt-nome"><b>' + esc(USERS[u] || u) + '</b><small>' + sub + '</small></span>' +
+        return '<div class="pvt-linha' + (u === settings.user ? ' eu' : '') + '"><span class="pvt-nome"><b>' + esc(nomeDe(u)) + '</b><small>' + sub + '</small></span>' +
           '<span class="pvt-barras">' + h.slice(-10).map(r => '<i style="height:' + Math.max(8, r.nota * 10) + '%;background:' + corDaNota(r.nota) +
           ';opacity:' + (r === z ? 1 : 0.45) + '"></i>').join('') + '</span>' +
           '<span class="pvt-nota" style="color:' + (z ? corDaNota(z.nota) : 'var(--soft)') + '">' + (z ? notaTexto(z.nota) : '—') + '</span></div>';

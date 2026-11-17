@@ -195,7 +195,7 @@ function renderTurma() {
       return '<b class="' + cls + '">' + (v || '–') + '</b>';
     }).join('');
     return '<div class="userrow"><span class="nome' + (u === settings.user ? ' eu' : '') + '">' +
-      esc(USERS[u] || u) + '</span><span class="dias">' + celulas + '</span>' +
+      esc(nomeDe(u)) + '</span><span class="dias">' + celulas + '</span>' +
       '<span class="tot">' + tot + '</span></div>';
   }).join('') +
     '<p class="turmaleg">últimos 7 dias · <i></i> meta de ' + META_DIARIA + ' batida</p>';
@@ -223,6 +223,7 @@ async function loadCompeticao() {
     const ehFr = {}; cards.forEach(c => { ehFr[c.id] = ehFrase(c); });
     const by = {};
     provasTurma = {};
+    await carregaNomesDaTurma();
     for (const row of prows) {
       const u = row.user_name;
       if (/^prova:/.test(row.card_id || '')) { guardaProvaDaTurma(row); continue; }
@@ -309,7 +310,7 @@ function compGrafico(us) {
   const xlabs = [0, dias.length - 1].map(i => '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) +
     '" text-anchor="' + (i ? 'end' : 'start') + '" font-size="9" fill="var(--soft)">' + diaLabel(dias[i]) + '</text>').join('');
   const leg = us.map((u, k) => '<span class="cglegi"><i style="background:' + COMP_CORES[k % COMP_CORES.length] +
-    '"></i>' + esc(USERS[u] || u) + '</span>').join('');
+    '"></i>' + esc(nomeDe(u)) + '</span>').join('');
   return '<div class="card"><svg class="cgsvg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet">' +
     guias + linhas + xlabs + '</svg><div class="cgleg">' + leg + '</div></div>';
 }
@@ -326,7 +327,7 @@ function renderCompeticao() {
     ['comp-graf', 'comp-hab', 'comp-tema', 'comp-tipo', 'comp-tom', 'comp-erram'].forEach(id => $(id).innerHTML = '');
     return;
   }
-  const nome = u => USERS[u] || u;
+  const nome = nomeDe;
   const MEDALHA = ['🥇', '🥈', '🥉'];
   const ligadasTotal = cards.length;
 
