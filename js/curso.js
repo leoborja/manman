@@ -130,8 +130,9 @@ function renderCurso() {
   $('curso-faixa').innerHTML = caps.map(c => {
     const p = pecasDoCap(c);
     const f = p.total ? p.feitas / p.total : 0;
-    return '<button class="capchip' + (c === cap ? ' active' : '') + '" data-cap="' + c + '" style="--f:' + Math.round(f * 360) + 'deg">' +
-      '<span>' + numCap(c) + '</span></button>';
+    // o chip diz o capítulo por extenso; o quanto ele já fechou é o filete embaixo
+    return '<button class="capchip' + (c === cap ? ' active' : '') + (f >= 1 ? ' feito' : '') + '" data-cap="' + c + '" style="--f:' + Math.round(f * 100) + '%">' +
+      (f >= 1 ? '✓ ' : '') + 'Cap. ' + numCap(c) + '</button>';
   }).join('');
   $('curso-faixa').querySelectorAll('.capchip').forEach(b => b.onclick = () => {
     localStorage.setItem(K_CURSO_CAP, b.dataset.cap); renderCurso();
@@ -167,11 +168,22 @@ function renderCurso() {
       : 'As palavras e as frases enchem o círculo conforme se firmam na revisão; ele fecha quando todas estão aprendidas.') + '</p>';
   }
   h += linhaDaProva(cap);
-  box.innerHTML = h;
+  box.innerHTML = '<div class="painel">' + h + '</div>';
+  if (sonsDB) {
+    $('pageacoes').innerHTML = '<button class="pageacao" id="curso-sons"><b>æ</b> Sons do pinyin</button>';
+    $('curso-sons').onclick = abreSonsDoCurso;
+  }
   box.querySelectorAll('[data-prova]').forEach(b => b.onclick = () => abreProva(b.dataset.prova));
   box.querySelectorAll('[data-nota]').forEach(b => b.onclick = () => abreNotaDoCurso(cap, +b.dataset.nota));
   box.querySelectorAll('[data-cartas]').forEach(b => b.onclick = () => estudarCapitulo(cap, b.dataset.cartas));
   box.querySelectorAll('[data-folha]').forEach(b => b.onclick = () => abreFolha(exerciciosDB.find(e => e.id === b.dataset.folha)));
+}
+// A tabela de sons é do livro todo: abre pelo botão ao lado do título, como no iPhone.
+function abreSonsDoCurso() {
+  switchView('teoria');
+  teoriaTela = 'sons';
+  teoriaVoltaPro = 'curso';
+  renderTeoria();
 }
 // A nota abre no leitor da aba Teoria, e o ‹ de lá volta pra cá.
 function abreNotaDoCurso(cap, i) {
@@ -305,11 +317,13 @@ function saiCurso() { /* a folha fica onde está: voltar à aba cai no mesmo ite
 exEstilo(`
 .curso-faixa{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0 12px;}
 .curso-faixa::-webkit-scrollbar{display:none;}
-.capchip{flex:0 0 auto;width:46px;height:46px;border-radius:50%;border:0;padding:3px;cursor:pointer;
-  background:conic-gradient(var(--red) var(--f), var(--line) 0);font:inherit;}
-.capchip span{display:flex;width:100%;height:100%;border-radius:50%;align-items:center;justify-content:center;
-  background:var(--surface);color:var(--txt);font-weight:800;font-size:16px;}
-.capchip.active span{background:var(--red);color:#fff;}
+.capchip{flex:0 0 auto;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:999px;
+  background:var(--surface);color:var(--txt);font:inherit;font-weight:700;font-size:14px;padding:8px 15px 9px;cursor:pointer;}
+.capchip::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:var(--f);background:var(--red);opacity:.55;}
+.capchip.feito{color:var(--ok);}
+.capchip.feito::after{background:var(--ok);}
+.capchip.active{background:var(--red);border-color:var(--red);color:#fff;}
+.capchip.active::after{background:#fff;opacity:.6;}
 .capcard{display:flex;flex-direction:column;gap:2px;padding:18px;border-radius:var(--radius);background:var(--surface2);border:1px solid var(--line);}
 .capcard small{color:var(--mut);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.4px;}
 .capcard b{font-size:30px;font-weight:500;}
@@ -317,6 +331,11 @@ exEstilo(`
 .cursolinha{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;margin-bottom:6px;
   border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--txt);font:inherit;cursor:pointer;}
 .cursolinha:hover{background:var(--surface2);}
+/* dentro do cartão branco as peças viram linhas de lista, não cartões dentro do cartão */
+.painel .capcard{border:0;padding:4px 2px 8px;background:none;}
+.painel .cursolinha{border:0;border-radius:12px;margin:0;padding:11px 8px;background:none;}
+.painel .cursolinha:hover{background:var(--surface2);}
+.painel .sheetsep{margin:18px 0 6px;}
 .anel{flex:0 0 26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 .anel i{width:18px;height:18px;border-radius:50%;background:var(--surface);}
 .anel.ok{background:var(--ok);color:#fff;font-size:14px;font-weight:800;}

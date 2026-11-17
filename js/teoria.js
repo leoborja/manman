@@ -183,7 +183,7 @@ function renderNota(box) {
   marcaLida(t); // a nota que fica na tela conta como lida
   $('teoria-titulo').textContent = leitura.titulo + (leitura.notas.length > 1 ? ' · ' + (leitura.i + 1) + ' de ' + leitura.notas.length : '');
   $('teoria-voltar').style.display = '';
-  let h = '<div class="nota-t"><h4>' + esc(t.titulo) + '</h4><p class="res">' + esc(t.resumo || '') + '</p>';
+  let h = '<div class="nota-t painel"><h4>' + esc(t.titulo) + '</h4><p class="res">' + esc(t.resumo || '') + '</p>';
   t.blocos.forEach((b, i) => { h += blocoHtml(b, i); });
   h += '</div><div class="nota-nav">' +
     '<button class="typeskip" id="nota-ant"' + (leitura.i ? '' : ' disabled') + '>‹ anterior</button>' +
@@ -311,7 +311,7 @@ function renderSons(box) {
       (s.inicial && di ? '<p><b>' + esc(s.inicial) + '</b> ' + esc(di) + '</p>' : '') +
       (df ? '<p><b>' + esc(s.final) + '</b> ' + esc(df) + '</p>' : '') + '</div>';
   }
-  box.innerHTML = h; // a página não rola sozinha: tocar numa sílaba deixa a tabela onde estava
+  box.innerHTML = '<div class="painel">' + h + '</div>'; // a página não rola sozinha: tocar numa sílaba deixa a tabela onde estava
   box.querySelectorAll('.sons-grupos .chip').forEach(b => b.onclick = () => { sonsGrupo = b.dataset.g; sonsSilaba = null; renderSons(box); });
   box.querySelectorAll('.sons-cap .chip').forEach(b => b.onclick = () => {
     localStorage.setItem('manman.sons.ateCap', b.dataset.cap); renderSons(box);

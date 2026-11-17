@@ -2,6 +2,8 @@
 'use strict';
 
 // ── navegação e eventos ─────────────────────────────────────
+const TITULOS = { curso: 'Curso', hoje: 'Hoje', estudar: 'Estudar', palavras: 'Palavras', frases: 'Frases',
+  grade: 'Grade', competicao: 'Competição', progresso: 'Progresso' };
 // Palavras e Frases são dois itens do menu e uma tela só (a das Cartas), com o tipo trocado.
 function switchView(v) {
   if (v === 'cartas') v = cartasTipo === 'frase' ? 'frases' : 'palavras';
@@ -17,7 +19,11 @@ function switchView(v) {
     }
     renderCartasChips();
   }
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.v === v));
+  // a Teoria saiu do menu: ela só abre pelo Curso (uma nota, os sons), e é ele que fica aceso
+  const noMenu = v === 'teoria' ? 'curso' : v;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.v === noMenu));
+  $('pagetitulo').textContent = TITULOS[noMenu] || '';
+  $('pageacoes').innerHTML = '';
   document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + tela));
   v = tela;
   if (v === 'progresso') renderProgress();
