@@ -11,14 +11,16 @@ let literalDB = {};      // id da frase → "我=eu|是=ser|巴西=Brasil|人=pe
 let ideogramasDB = {};   // 汉字 → { sentido, tipo, partes: [{c, py?, pt, papel}], explica }
 let teoriaDB = [];       // [{ id, capitulo, ordem, titulo, resumo, blocos: [...] }]
 let sonsDB = null;       // { grupos, finais, iniciais, dicaInicial, dicaFinal, silabas }
+let semelhantesDB = null; // { grupos: ['米未本宋果', …] } — os parecidos de formato (agrupar por semelhança)
 const K_TEORIA_LIDA = 'manman.teoria.lida.v1'; // por usuário: id da nota → ms da última leitura
 
 async function loadConteudoIOS() {
   const pega = async (arq, vazio) => {
     try { return await (await fetch('./seed/' + arq)).json(); } catch (e) { return vazio; }
   };
-  [literalDB, ideogramasDB, teoriaDB, sonsDB] = await Promise.all([
-    pega('literal.json', {}), pega('ideogramas.json', {}), pega('teoria.json', []), pega('sons.json', null)]);
+  [literalDB, ideogramasDB, teoriaDB, sonsDB, semelhantesDB] = await Promise.all([
+    pega('literal.json', {}), pega('ideogramas.json', {}), pega('teoria.json', []), pega('sons.json', null),
+    pega('semelhantes.json', null)]);
   if (!Array.isArray(teoriaDB)) teoriaDB = [];
 }
 

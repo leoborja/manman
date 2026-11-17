@@ -29,7 +29,7 @@ const PRAZO_MS = 3000;
 const ARQUIVOS_CASCA = ['./', './index.html', './config.js',
   './js/base.js', './js/desenho.js', './js/teclado.js', './js/dados.js', './js/estudar.js', './js/cartas.js', './js/progresso.js', './js/teoria.js', './js/curso.js', './js/conta.js', './js/ex-escolha.js', './js/ex-escrita.js', './js/prova.js', './js/hoje.js', './js/estado.js', './js/main.js', './manifest.webmanifest',
   './fonts/hanzi.woff2', './strokes/strokes.json', './seed/dialogos.json', './seed/literal.json', './seed/ideogramas.json',
-  './seed/teoria.json', './seed/sons.json', './seed/exercicios.json', './icons/icon-192.png', './icons/icon-512.png'];
+  './seed/teoria.json', './seed/sons.json', './seed/exercicios.json', './seed/semelhantes.json', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
   // um arquivo que falhe não pode derrubar a instalação inteira — o resto já serve offline

@@ -11,6 +11,7 @@
 #   seed/teoria.json       as notas de teoria de cada capítulo
 #   seed/sons.json         a tabela de sons do pinyin (iniciais × finais)
 #   seed/exercicios.json   as folhas de exercício do professor, por capítulo (aba Curso)
+#   seed/semelhantes.json  os grupos de caracteres parecidos (agrupar por semelhança)
 #   audio/sons/            uma gravação por sílaba e tom, ~12 MB (audio-cmn, CC BY-SA)
 #
 # Pra corrigir uma dessas, edite no iOS (onde os scripts de checagem moram:
@@ -26,11 +27,11 @@ res="$ios/Manman/Resources"
 
 [ -d "$res" ] || { echo "não achei o app iOS em $ios (defina MANMAN_IOS)"; exit 1; }
 
-for f in literal ideogramas teoria sons exercicios; do
+for f in literal ideogramas teoria sons exercicios semelhantes; do
   python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$res/$f.json" \
     || { echo "$f.json do iOS não é JSON válido — nada foi copiado"; exit 1; }
 done
-for f in literal ideogramas teoria sons exercicios; do
+for f in literal ideogramas teoria sons exercicios semelhantes; do
   cp "$res/$f.json" "$raiz/seed/$f.json"
 done
 

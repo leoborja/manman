@@ -93,35 +93,167 @@ function cartaLinha(c) {
 // as seções da lista quando "agrupar por" está ligado. Independente do filtro de cima:
 // agrupa o que quer que tenha sobrado dele. Grupo é ordenado (tema por rótulo, origem
 // pela ordem dos capítulos); dentro dele a ordem é a do deck.
+// ── a vista da lista: agrupar, ordenar, isolar, mostrar ─────
+// A mesma folha da aba Cartas do iPhone (CardsConfig). Fica no aparelho, como lá: é
+// como VOCÊ gosta de ver a lista, não progresso.
+//   Agrupar  — sem grupo, tema, origem, tropeços ou semelhança (os parecidos lado a lado)
+//   Ordenar  — dentro de cada grupo: erros, domínio, pinyin ou a ordem do deck
+//   Isolar   — "quais são as desligadas?": SUBSTITUI o Mostrar inteiro em vez de se somar
+//              a ele. Somado, "só as desligadas" abriria vazio sempre que a desligada
+//              também fosse nunca vista (os chips do Mostrar são um E).
+//   Mostrar  — cada chip ESCONDE uma classe quando apagado; todos nascem ligados
+const K_VISTA = 'manman.cartas.vista.v1';
+const VISTA_GRUPOS = [['nada', 'Sem grupo'], ['tema', 'Tema'], ['origem', 'Origem'], ['tropecos', 'Tropeços'], ['semelhanca', 'Semelhança']];
+const VISTA_ORDENS = [['erro', 'Erros'], ['dominio', 'Domínio'], ['pinyin', 'Pinyin'], ['seed', 'Deck']];
+const VISTA_CLASSES = [
+  ['favoritas', '⭐ Favoritas', 'favorita', c => isFav(c.id)],
+  ['desligadas', '🚫 Desligadas', 'desligada', c => foraDaRotacao(c)],
+  ['aprendidas', '✅ Aprendidas', 'aprendida', c => aprendida(c.id)],
+  ['nuncaVistas', '🌱 Nunca vistas', 'nunca vista', c => !srs[c.id]]
+];
+function vistaCfg() {
+  const v = load(K_VISTA, {});
+  if (!VISTA_GRUPOS.some(([k]) => k === v.agrupar)) v.agrupar = cartasGrupo || 'nada'; // quem já tinha agrupado na barra antiga
+  if (!VISTA_ORDENS.some(([k]) => k === v.ordem)) v.ordem = 'erro';
+  v.mostrar = Object.assign({ aprendidas: true, nuncaVistas: true, desligadas: true }, v.mostrar || {});
+  if (!Array.isArray(v.faixas) || v.faixas.length !== ERRO_FAIXAS.length + 1) v.faixas = ERRO_FAIXAS.concat([0]).map(() => true);
+  if (!VISTA_CLASSES.some(([k]) => k === v.so)) v.so = null;
+  return v;
+}
+function salvaVista(v) { save(K_VISTA, v); }
+function vistaCortada(v) {
+  return !!v.so || !v.mostrar.aprendidas || !v.mostrar.nuncaVistas || !v.mostrar.desligadas || !v.faixas.every(Boolean);
+}
+function vistaFiltra(list) {
+  const v = vistaCfg();
+  if (v.so) { const f = VISTA_CLASSES.find(([k]) => k === v.so)[3]; return list.filter(f); }
+  return list.filter(c => {
+    if (foraDaRotacao(c) && !v.mostrar.desligadas) return false;
+    // a aprendida NÃO passa pelas faixas: está fora da escala do vermelho
+    if (aprendida(c.id)) return v.mostrar.aprendidas;
+    if (!srs[c.id] && !v.mostrar.nuncaVistas) return false;
+    return v.faixas[erroTier(c)];
+  });
+}
+function vistaOrdena(list) {
+  const o = vistaCfg().ordem, arr = list.slice(); // sort estável: o empate cai na ordem do deck
+  if (o === 'erro') return arr.sort((a, b) => erroKey(b) - erroKey(a));
+  if (o === 'dominio') return arr.sort((a, b) => dominio(a.id) - dominio(b.id));
+  if (o === 'pinyin') return arr.sort((a, b) => (a.pinyin || '').localeCompare(b.pinyin || '', 'pt', { sensitivity: 'base' }));
+  return arr;
+}
+// "Sem parecido" no fim; uma carta mora em TODO grupo de um caractere seu (天气 no de
+// 天/夫 e no do 气) — escolher um só esconderia a confusão do outro caractere. Grupo que
+// na tela só tem um dos seus caracteres não vira seção: ver 天 sem o 夫 não compara nada.
+function gruposDeSemelhanca(list) {
+  const usadas = new Set(), out = [];
+  for (const g of (semelhantesDB && semelhantesDB.grupos) || []) {
+    const chars = [...g];
+    const pos = c => chars.findIndex(ch => c.hanzi.includes(ch));
+    const dentro = list.filter(c => pos(c) >= 0);
+    const presentes = new Set(chars.filter(ch => dentro.some(c => c.hanzi.includes(ch))));
+    if (presentes.size < 2) continue;
+    out.push({ rot: chars.join(' '), cards: dentro.map((c, i) => [c, i]).sort((x, y) => pos(x[0]) - pos(y[0]) || x[1] - y[1]).map(x => x[0]) });
+    dentro.forEach(c => usadas.add(c.id));
+  }
+  const resto = list.filter(c => !usadas.has(c.id));
+  if (resto.length) out.push({ rot: 'Sem parecido', cards: resto });
+  return out;
+}
 function cartasGrupos(list) {
-  if (cartasGrupo === 'tema') {
+  const g = vistaCfg().agrupar;
+  if (g === 'tema') {
     return [...new Set(list.map(c => c.deck))]
       .sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt'))
       .map(d => ({ rot: deckLabel(d), cards: list.filter(c => c.deck === d) }));
   }
-  if (cartasGrupo === 'origem') {
+  if (g === 'origem') {
     return opcoesOrigem(list).filter(o => o !== 'todas')
       .map(o => ({ rot: origemLabel(o), cards: list.filter(c => origemDe(c) === o) }))
-      .filter(g => g.cards.length);
+      .filter(x => x.cards.length);
   }
+  // do pior pro aprendido, que é a ordem em que se olha: o que me derruba primeiro
+  if (g === 'tropecos') {
+    const out = [];
+    for (let t = ERRO_FAIXAS.length; t >= 0; t--) {
+      const cs = list.filter(c => !aprendida(c.id) && erroTier(c) === t);
+      if (cs.length) out.push({ rot: t ? faixaRot(t) + ' tropeços' : 'Sem tropeço', cards: cs });
+    }
+    const apr = list.filter(c => aprendida(c.id));
+    if (apr.length) out.push({ rot: 'Aprendidas', cards: apr });
+    return out;
+  }
+  if (g === 'semelhanca') return gruposDeSemelhanca(list);
   return [{ rot: null, cards: list }];
 }
-const CARTAS_GRUPOS = [['nada', '⬜ Sem grupo'], ['tema', '🏷️ Tema'], ['origem', '📖 Origem']];
+// O resumo diz "sem aprendidas" e não "aprendidas": o chip apagado ESCONDE.
+function vistaResumo() {
+  const v = vistaCfg(), rot = (l, k) => l.find(([x]) => x === k)[1];
+  const p = [rot(VISTA_ORDENS, v.ordem)];
+  if (v.agrupar !== 'nada') p.unshift('por ' + rot(VISTA_GRUPOS, v.agrupar).toLowerCase());
+  if (v.so) return p.concat(['só as ' + VISTA_CLASSES.find(([k]) => k === v.so)[1].replace(/^\S+\s/, '').toLowerCase()]).join(' · ');
+  if (!v.mostrar.aprendidas) p.push('sem aprendidas');
+  if (!v.mostrar.nuncaVistas) p.push('sem nunca vistas');
+  if (!v.mostrar.desligadas) p.push('sem desligadas');
+  if (!v.faixas.every(Boolean)) {
+    const lig = v.faixas.map((x, i) => x ? i : -1).filter(i => i >= 0);
+    const fim = lig.length && lig[lig.length - 1] === ERRO_FAIXAS.length && lig.length === ERRO_FAIXAS.length + 1 - lig[0];
+    p.push(!lig.length ? 'nenhuma faixa' : fim && lig[0] > 0 ? '≥' + ERRO_FAIXAS[lig[0] - 1] + ' tropeços' : 'só ' + lig.map(faixaRot).join(', '));
+  }
+  return p.join(' · ');
+}
+// A barra da lista: o botão da folha com o resumo, e os chips do Isolar a um toque.
 function renderCartasGrupobar() {
-  $('cartas-grupobar').innerHTML = '<span class="rot">Agrupar</span>' + CARTAS_GRUPOS.map(([k, t]) =>
-    '<button class="chip' + (cartasGrupo === k ? ' active' : '') + '" data-g="' + k + '">' +
-    t + '</button>').join('');
-  $('cartas-grupobar').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cartasGrupo = ch.dataset.g; renderList();
+  const v = vistaCfg();
+  $('cartas-grupobar').innerHTML = '<button class="pageacao vista-btn' + (vistaCortada(v) ? ' cortada' : '') + '" id="vista-btn">' +
+    '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>' +
+    'Configurar</button><span class="vista-resumo">' + esc(vistaResumo()) + '</span>' +
+    '<span class="vista-isolar">' + VISTA_CLASSES.map(([k, t]) =>
+      '<button class="chip' + (v.so === k ? ' active' : '') + '" data-so="' + k + '" title="Só as ' + t.replace(/^\S+\s/, '').toLowerCase() + '">' + t + '</button>').join('') + '</span>';
+  $('vista-btn').onclick = abreVista;
+  $('cartas-grupobar').querySelectorAll('[data-so]').forEach(b => b.onclick = () => {
+    const v2 = vistaCfg(); v2.so = v2.so === b.dataset.so ? null : b.dataset.so; salvaVista(v2); renderList();
   });
+}
+function abreVista() { renderVista(); $('vistasheet').classList.add('show'); }
+function renderVista() {
+  const v = vistaCfg();
+  const chips = (lista, atual, attr) => '<div class="filtros wrapchips">' + lista.map(([k, t]) =>
+    '<button class="chip' + (atual === k ? ' active' : '') + '" ' + attr + '="' + k + '">' + t + '</button>').join('') + '</div>';
+  const isolando = !!v.so;
+  let h = '<h3>Configurações</h3>' +
+    '<div class="sheetsep">agrupar</div>' + chips(VISTA_GRUPOS, v.agrupar, 'data-ag') +
+    '<p class="vista-nota">Independente do filtro — dá pra filtrar por um capítulo e ainda ver o resultado separado por tema. Na semelhança, os caracteres parecidos ficam lado a lado.</p>' +
+    '<div class="sheetsep">ordenar dentro do grupo</div>' + chips(VISTA_ORDENS, v.ordem, 'data-or') +
+    '<div class="sheetsep">isolar</div>' + chips([['', 'Nenhuma']].concat(VISTA_CLASSES.map(([k, t]) => [k, t])), v.so || '', 'data-so') +
+    '<p class="vista-nota">Isolar responde "quais são as desligadas?"; o Mostrar abaixo responde "o que sai da tela?". São perguntas diferentes, e por isso uma de cada vez.</p>' +
+    '<div class="sheetsep">mostrar</div><div class="vista-mostrar' + (isolando ? ' apagado' : '') + '">' +
+    '<div class="filtros wrapchips">' + [['aprendidas', '✅ Aprendidas'], ['nuncaVistas', '🌱 Nunca vistas'], ['desligadas', '🚫 Desligadas']].map(([k, t]) =>
+      '<button class="chip' + (v.mostrar[k] ? ' active' : '') + '" data-mo="' + k + '">' + t + '</button>').join('') + '</div>' +
+    '<div class="vista-sub">Tropeços</div><div class="filtros wrapchips">' + v.faixas.map((lig, i) =>
+      '<button class="chip vfx' + (lig ? ' active' : '') + '" data-fx="' + i + '"><i class="e' + i + '"></i>' + faixaRot(i) + '</button>').join('') + '</div>' +
+    '<p class="vista-nota">' + (isolando ? 'Enquanto uma classe estiver isolada estes cortes ficam de fora — quem recorta a tela é o Isolar, acima.'
+      : 'Chip apagado esconde. Carta que casa com mais de um some do mesmo jeito.') + '</p></div>' +
+    '<div class="le-botoes"><button class="exprox" id="vista-ok">Pronto</button>' +
+    (vistaCortada(v) || v.agrupar !== 'nada' || v.ordem !== 'erro' ? '<button class="typeskip" id="vista-zera">Voltar ao padrão</button>' : '') + '</div>';
+  const box = $('vista-corpo');
+  box.innerHTML = h;
+  const muda = f => { const x = vistaCfg(); f(x); salvaVista(x); renderVista(); renderList(); };
+  box.querySelectorAll('[data-ag]').forEach(b => b.onclick = () => muda(x => { x.agrupar = b.dataset.ag; }));
+  box.querySelectorAll('[data-or]').forEach(b => b.onclick = () => muda(x => { x.ordem = b.dataset.or; }));
+  box.querySelectorAll('[data-so]').forEach(b => b.onclick = () => muda(x => { x.so = b.dataset.so || null; }));
+  box.querySelectorAll('[data-mo]').forEach(b => b.onclick = () => muda(x => { x.mostrar[b.dataset.mo] = !x.mostrar[b.dataset.mo]; }));
+  box.querySelectorAll('[data-fx]').forEach(b => b.onclick = () => muda(x => { x.faixas[+b.dataset.fx] = !x.faixas[+b.dataset.fx]; }));
+  $('vista-ok').onclick = () => $('vistasheet').classList.remove('show');
+  if ($('vista-zera')) $('vista-zera').onclick = () => { salvaVista({}); cartasGrupo = 'nada'; renderVista(); renderList(); };
 }
 function renderList() {
   const q = $('search').value.trim().toLowerCase();
-  const list = cartasFiltradas().filter(c =>
+  const list = vistaOrdena(vistaFiltra(cartasFiltradas().filter(c =>
     (!q ||
       (c.hanzi || '').toLowerCase().includes(q) ||
       (c.pinyin || '').toLowerCase().includes(q) ||
-      (c.pt || '').toLowerCase().includes(q)));
+      (c.pt || '').toLowerCase().includes(q)))));
   // conta o que está na tela; quando há filtro ou busca, mostra também o total do deck
   renderBulk();
   // o nome e o total seguem o TIPO na tela. Antes o rótulo era "cartas" assim que
@@ -134,8 +266,10 @@ function renderList() {
     : '<b>' + base + '</b> ' + nome + ' no deck';
   $('cardlist').className = cartasTipo === 'frase' ? 'frases' : '';
   renderCartasGrupobar();
-  const vazio = '<p style="color:var(--mut);text-align:center">Nenhuma ' +
-      (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
+  const iso = VISTA_CLASSES.find(([k]) => k === vistaCfg().so);
+  const vazio = '<p style="color:var(--mut);text-align:center">' + (iso
+    ? 'Nenhuma ' + (cartasTipo === 'frase' ? 'frase ' : 'palavra ') + iso[2] + ' aqui.'
+    : 'Nenhuma ' + (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.') + '</p>';
   // Uma tabela só, com o nome de cada coluna em cima; o agrupar vira uma linha de
   // título dentro dela, pra que as colunas fiquem alinhadas do começo ao fim.
   const frase = cartasTipo === 'frase';

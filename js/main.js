@@ -136,6 +136,7 @@ function bindEvents() {
   // a folha se monta no próprio renderGrade, então abrir é só mostrar
   $('gradebtn').onclick = () => $('gradesheet').classList.add('show');
   $('gradesheet-bg').onclick = () => $('gradesheet').classList.remove('show');
+  $('vistasheet-bg').onclick = () => $('vistasheet').classList.remove('show');
   // A−/A+ mexem no tamanho do cartão. Parte do efetivo (o escolhido, ou a base) e anda
   // um passo; fica salvo, e vale no celular também (menos/mais colunas).
   $('grade-tam').querySelectorAll('button').forEach(b => b.onclick = () => {

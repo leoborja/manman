@@ -1001,6 +1001,20 @@ table.sons td{padding:3px;text-align:center;}
 .tons4{display:flex;gap:8px;flex-wrap:wrap;}
 .tons4 button{display:flex;gap:6px;align-items:baseline;font-size:18px;}
 .tons4 small{font-size:11px;color:var(--soft);}
+/* ── a barra e a folha da vista das cartas ── */
+#cartas-grupobar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px;}
+.vista-btn{position:relative;}
+.vista-btn .ico{width:16px;height:16px;flex-basis:16px;}
+.vista-btn.cortada::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--red);}
+.vista-resumo{font-size:13px;color:var(--mut);flex:1;min-width:120px;}
+.vista-isolar{display:flex;gap:6px;flex-wrap:wrap;}
+.vista-isolar .chip{font-size:12.5px;padding:6px 11px;}
+.vista-nota{font-size:12.5px;color:var(--soft);line-height:1.45;margin:8px 2px 0;}
+.vista-sub{font-size:12.5px;color:var(--mut);font-weight:700;margin:12px 0 6px;}
+.vista-mostrar.apagado{opacity:.4;pointer-events:none;}
+.vfx{display:inline-flex;align-items:center;gap:6px;}
+.vfx i{width:11px;height:11px;border-radius:3px;background:var(--pill);}
+.vfx i.e1{background:var(--e1);} .vfx i.e2{background:var(--e2);} .vfx i.e3{background:var(--e3);} .vfx i.e4{background:var(--e4);}
 /* ── a tabela das cartas (aba Palavras / Frases, js/cartas.js) ── */
 .cartas-tab{width:100%;border-collapse:separate;border-spacing:0;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;table-layout:auto;}
@@ -1570,6 +1584,12 @@ table.sons td{padding:3px;text-align:center;}
       <span class="check"></span>
     </button>
   </div>
+</div>
+
+<!-- a vista da lista de Palavras / Frases: agrupar, ordenar, isolar, mostrar (js/cartas.js) -->
+<div class="sheetwrap" id="vistasheet">
+  <div class="sheetbg" id="vistasheet-bg"></div>
+  <div class="sheet scroll"><div class="handle"></div><div id="vista-corpo"></div></div>
 </div>
 
 <!-- a lição do Hoje: de onde vêm as cartas, quantas, como, quando -->
