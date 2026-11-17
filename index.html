@@ -49,12 +49,16 @@ align-items:center;gap:8px 10px;padding:10px 16px 8px;}
 .tab{flex:0 0 auto;display:flex;align-items:center;gap:6px;border:0;background:none;border-radius:999px;
 padding:7px 12px;font:inherit;font-size:13.5px;font-weight:700;line-height:1.2;color:var(--mut);
 cursor:pointer;transition:.15s;white-space:nowrap;}
-.tab i{font-style:normal;font-size:15px;line-height:1;width:18px;text-align:center;}
+/* Ícones de traço (desenho do Lucide, licença ISC), embutidos como SVG: o app não tem
+   dependência, e o traço pega a cor do texto — cinza parado, branco no item aceso. */
+.ico{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:currentColor;stroke-width:2;
+stroke-linecap:round;stroke-linejoin:round;}
 .tab.active{background:var(--red);color:#fff;box-shadow:var(--shadow);}
 .navperfil{grid-area:perfil;display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;
 font:inherit;color:var(--txt);cursor:pointer;}
 .profilenome{display:none;}
 /* Redondo com a inicial: nome e tema são coisas que se troca uma vez e esquece. */
+.profileini .ico{width:17px;height:17px;}
 .profileini{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
 width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);
 color:var(--txt);font-size:15px;font-weight:800;line-height:1;box-shadow:var(--shadow);}
@@ -734,8 +738,10 @@ cursor:pointer;margin-top:8px;text-decoration:underline;}
 /* streak no cabeçalho — meta batida acende o fogo; antes disso ele fica apagado */
 .streakpill{display:flex;align-items:center;gap:5px;flex:0 0 auto;background:var(--surface2);
 border:1px solid var(--line);border-radius:999px;padding:5px 11px 5px 9px;}
-.streakpill .fire{font-size:14px;line-height:1;filter:grayscale(1);opacity:.45;}
-.streakpill.hit .fire{filter:none;opacity:1;}
+.streakpill .fire{display:flex;color:var(--soft);}
+.streakpill .fire .ico{width:14px;height:14px;flex-basis:14px;}
+.streakpill.hit .fire{color:#e8590c;}
+.streakpill.hit .fire .ico{fill:#fab005;}
 .streakpill .n{font-size:14px;font-weight:800;color:var(--txt);line-height:1;}
 .streakpill .meta{font-size:10.5px;font-weight:700;color:var(--mut);line-height:1;
 padding-left:6px;border-left:1px solid var(--line);}
@@ -993,26 +999,26 @@ table.sons td{padding:3px;text-align:center;}
   <div class="navtopo">
     <div class="brand">MÀNMÀN <span class="zh">慢慢</span></div>
     <div class="streakpill" id="streakpill">
-      <span class="fire">🔥</span>
+      <span class="fire"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
       <span class="n" id="streak-n">0</span>
       <span class="meta" id="streak-meta">–</span>
     </div>
   </div>
   <div class="navitens tabs">
     <div class="navsec">Teoria</div>
-    <button class="tab" data-v="curso"><i>🗺️</i><span>Curso</span></button>
-    <button class="tab" data-v="teoria"><i>📚</i><span>Teoria</span></button>
-    <button class="tab active" data-v="estudar"><i>🎴</i><span>Estudar</span></button>
+    <button class="tab" data-v="curso"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg><span>Curso</span></button>
+    <button class="tab" data-v="teoria"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg><span>Teoria</span></button>
+    <button class="tab active" data-v="estudar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg><span>Estudar</span></button>
     <div class="navsec">Cards</div>
-    <button class="tab" data-v="palavras"><i class="zh">汉</i><span>Palavras</span></button>
-    <button class="tab" data-v="frases" id="tab-frases"><i>💬</i><span>Frases</span></button>
-    <button class="tab" data-v="grade"><i>🔲</i><span>Grade</span></button>
+    <button class="tab" data-v="palavras"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span>Palavras</span></button>
+    <button class="tab" data-v="frases" id="tab-frases"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg><span>Frases</span></button>
+    <button class="tab" data-v="grade"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span>Grade</span></button>
     <div class="navsec">Dashboard</div>
-    <button class="tab" data-v="competicao"><i>🏆</i><span>Competição</span></button>
-    <button class="tab" data-v="progresso"><i>📈</i><span>Progresso</span></button>
+    <button class="tab" data-v="competicao"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg><span>Competição</span></button>
+    <button class="tab" data-v="progresso"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span>Progresso</span></button>
   </div>
   <button class="navperfil" id="profilebtn" title="Perfil">
-    <span class="profileini" id="profile-ini">👤</span><span class="profilenome" id="profile-nome">Perfil</span>
+    <span class="profileini" id="profile-ini"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="profilenome" id="profile-nome">Perfil</span>
   </button>
 </nav>
 

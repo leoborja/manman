@@ -223,9 +223,12 @@ function loadUserState() {
     localStorage.removeItem(K.srs); localStorage.removeItem(K.log);
   }
 }
+const ICO_PESSOA = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
 function renderUserPill() {
   const nome = settings.user ? (USERS[settings.user] || settings.user) : '';
-  $('profile-ini').textContent = nome ? nome[0].toUpperCase() : '👤'; // no topo do celular o nome inteiro não cabe
+  // no topo do celular o nome inteiro não cabe: a inicial, ou o bonequinho de quem não escolheu
+  if (nome) $('profile-ini').textContent = nome[0].toUpperCase();
+  else $('profile-ini').innerHTML = ICO_PESSOA;
   $('profile-nome').textContent = nome || 'Perfil';                     // na barra do computador, cabe
   $('profilebtn').title = nome ? 'Perfil · ' + nome : 'Perfil';
 }
