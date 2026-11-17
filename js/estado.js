@@ -8,6 +8,7 @@
      exercicios     { folha: { u, feito, parado } }   — mescla: por folha, o u maior
      licoes         { id: Lembrete do iOS + u }        — mescla: por lição, o u maior
      licoes_feitas  { id: 'YYYY-MM-DD' }              — mescla: a data maior
+     dias_de_licao  { dia: {feitas, total, parcial} }  — mescla: o placar que andou mais
    As outras (sons_ouvidos, trocas) são de telas que a web ainda não tem: ela nunca as
    grava, então não tem como estragar.
 
@@ -20,7 +21,8 @@ const ESTADO_LOCAL = {
   teoria_lida: () => K_TEORIA_LIDA,
   exercicios: () => K_EX,
   licoes: () => K_LICOES,
-  licoes_feitas: () => K_LICOES_FEITAS
+  licoes_feitas: () => K_LICOES_FEITAS,
+  dias_de_licao: () => K_DIAS_LICAO
 };
 const PEGA_MAIOR = (a, b) => (a >= b ? a : b);
 function mesclaEstado(chave, a, b) {
@@ -31,9 +33,17 @@ function mesclaEstado(chave, a, b) {
     if (x === undefined || x === null) { out[k] = y; continue; }
     if (y === undefined || y === null) continue;
     if (chave === 'teoria_lida' || chave === 'licoes_feitas') out[k] = PEGA_MAIOR(x, y);
+    else if (chave === 'dias_de_licao') out[k] = melhorDia(x, y);
     else out[k] = ((y.u || 0) > (x.u || 0)) ? y : x; // por item: a mudança mais nova vence
   }
   return out;
+}
+// O placar de um dia só cresce durante o dia: vale o que andou mais (feitas + o que
+// ficou pela metade); empatou, o de mais lições; empatou de novo, o de lá.
+function melhorDia(a, b) {
+  const nota = d => (d && typeof d === 'object') ? (d.feitas || 0) + Object.values(d.parcial || {}).reduce((s, v) => s + v, 0) : -1;
+  if (nota(a) !== nota(b)) return nota(a) > nota(b) ? a : b;
+  return ((a && a.total) || 0) > ((b && b.total) || 0) ? a : b;
 }
 const igual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 function estadoLocal(chave) { return load(uk(ESTADO_LOCAL[chave]()), {}); }
