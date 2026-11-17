@@ -69,23 +69,26 @@ function renderBulk() {
   };
 }
 // uma linha da lista — separada pra servir tanto a lista corrida quanto os grupos
+// Uma linha da tabela. O 🔊 vem primeiro (é o gesto mais comum aqui: ouvir), o
+// interruptor de ligada/desligada fica na ponta direita. Frase bloqueada por palavra
+// desligada fica apagada como as desligadas, mas com o interruptor ligado — porque ele
+// é dela —, e a nota diz qual palavra a está segurando.
+const CARTAS_COLUNAS = 8;
 function cartaLinha(c) {
-  // a frase bloqueada por palavra desligada fica apagada como as desligadas, mas com o
-  // interruptor ligado — porque ele é dela. A linha diz qual palavra a está segurando.
   const bloq = palavraDesligada(c);
-  return '<div class="card' + (isOff(c.id) || bloq ? ' offrow' : '') + '"><div class="rowline">' +
-    '<div class="h zh" lang="zh-Hans">' + esc(c.hanzi) + '</div>' +
-    '<div class="mid"><div class="p">' + pinyinColored(c.pinyin) + '</div><div class="t">' + esc(c.pt) + '</div>' +
-    (c.nota ? '<div class="n">' + esc(c.nota) + '</div>' : '') +
-    (bloq ? '<div class="n">🚫 fora da rotação: ' + esc(bloq) + ' está desligada</div>' : '') + '</div>' +
-    '<span class="pill">' + esc(deckLabel(c.deck)) + '</span>' +
-    '<button class="fav-row' + (isFav(c.id) ? ' on' : '') + '" data-id="' + esc(c.id) + '" title="' +
+  const nota = (c.nota ? esc(c.nota) : '') + (bloq ? (c.nota ? '<br>' : '') + '🚫 fora da rotação: ' + esc(bloq) + ' está desligada' : '');
+  return '<tr class="cl' + (isOff(c.id) || bloq ? ' offrow' : '') + '" data-id="' + esc(c.id) + '">' +
+    '<td class="c-som"><button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir" aria-label="Ouvir">🔊</button></td>' +
+    '<td class="c-hz zh" lang="zh-Hans">' + esc(c.hanzi) + '</td>' +
+    '<td class="c-py">' + pinyinColored(c.pinyin) + '</td>' +
+    '<td class="c-pt">' + esc(c.pt) + htmlLiteral(c) + '</td>' +
+    '<td class="c-nota">' + nota + '</td>' +
+    '<td class="c-tema"><span class="pill">' + esc(deckLabel(c.deck)) + '</span></td>' +
+    '<td class="c-fav"><button class="fav-row' + (isFav(c.id) ? ' on' : '') + '" data-id="' + esc(c.id) + '" title="' +
       (isFav(c.id) ? 'Tirar das favoritas' : 'Favoritar: aparece em toda sessão, mesmo fora do filtro') +
-      '" aria-pressed="' + isFav(c.id) + '">' + (isFav(c.id) ? '★' : '☆') + '</button>' +
-    '<button class="spk-row" data-id="' + esc(c.id) + '" title="Ouvir">🔊</button>' +
-    '<label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
-    (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label>' +
-    '</div>' + htmlLiteral(c) + '</div>';
+      '" aria-pressed="' + isFav(c.id) + '">' + (isFav(c.id) ? '★' : '☆') + '</button></td>' +
+    '<td class="c-on"><label class="switch" title="ativa / desligada"><input type="checkbox" class="offtgl" data-id="' + esc(c.id) + '"' +
+    (isOff(c.id) ? '' : ' checked') + '><span class="knob"></span></label></td></tr>';
 }
 // as seções da lista quando "agrupar por" está ligado. Independente do filtro de cima:
 // agrupa o que quer que tenha sobrado dele. Grupo é ordenado (tema por rótulo, origem
@@ -133,24 +136,31 @@ function renderList() {
   renderCartasGrupobar();
   const vazio = '<p style="color:var(--mut);text-align:center">Nenhuma ' +
       (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
-  $('cardlist').innerHTML = list.length ? cartasGrupos(list).map(g =>
-    (g.rot ? '<h3 class="cartas-sec">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></h3>' : '') +
-    g.cards.map(cartaLinha).join('')).join('') : vazio;
+  // Uma tabela só, com o nome de cada coluna em cima; o agrupar vira uma linha de
+  // título dentro dela, pra que as colunas fiquem alinhadas do começo ao fim.
+  const frase = cartasTipo === 'frase';
+  $('cardlist').innerHTML = list.length ? '<table class="cartas-tab"><thead><tr>' +
+    '<th class="c-som"></th><th class="c-hz">' + (frase ? 'Frase' : '汉字') + '</th><th class="c-py">Pinyin</th>' +
+    '<th class="c-pt">Significado</th><th class="c-nota">Nota</th><th class="c-tema">Tema</th>' +
+    '<th class="c-fav" title="Favorita">⭐</th><th class="c-on">Ativa</th></tr></thead><tbody>' +
+    cartasGrupos(list).map(g =>
+      (g.rot ? '<tr class="cl-grupo"><td colspan="' + CARTAS_COLUNAS + '">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></td></tr>' : '') +
+      g.cards.map(cartaLinha).join('')).join('') + '</tbody></table>' : vazio;
   // 🧩 na lista é sempre (o interruptor do Estudar é sobre a carta entregar a resposta,
-  // e aqui ela já está à mostra): toque no meio da linha abre e fecha
-  $('cardlist').querySelectorAll('.card .mid').forEach(m => {
-    const linha = m.closest('.card');
-    const c = cards.find(x => x.id === linha.querySelector('.spk-row').dataset.id);
-    if (!c || !ideogramasDaCarta(c).length) { m.style.cursor = 'default'; return; }
-    m.title = 'De que é feito cada 汉字';
-    m.onclick = () => {
-      const aberto = linha.querySelector('.ideias');
-      if (aberto) { aberto.remove(); return; }
-      const d = document.createElement('div');
-      d.className = 'ideias';
-      d.innerHTML = htmlIdeogramas(c);
-      linha.appendChild(d);
-    };
+  // e aqui ela já está à mostra): tocar no 汉字 ou no pinyin abre, embaixo da linha, de
+  // que é feito cada caractere
+  $('cardlist').querySelectorAll('tr.cl').forEach(tr => {
+    const c = cards.find(x => x.id === tr.dataset.id);
+    if (!c || !ideogramasDaCarta(c).length) return;
+    tr.querySelectorAll('.c-hz, .c-py').forEach(td => {
+      td.classList.add('abre-ideia');
+      td.title = 'De que é feito cada 汉字';
+      td.onclick = () => {
+        const prox = tr.nextElementSibling;
+        if (prox && prox.classList.contains('cl-ideias')) { prox.remove(); return; }
+        tr.insertAdjacentHTML('afterend', '<tr class="cl-ideias"><td colspan="' + CARTAS_COLUNAS + '"><div class="ideias">' + htmlIdeogramas(c) + '</div></td></tr>');
+      };
+    });
   });
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
@@ -753,3 +763,4 @@ function renderGrade() {
     save(K.settings, settings); renderGrade();
   });
 }
+
