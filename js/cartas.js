@@ -23,15 +23,12 @@ function renderCartasChips() {
   // conta quem está FORA da rotação, não só quem tem o interruptor desligado: a frase
   // que carrega palavra desligada também não vai cair no estudo, e escondê-la aqui
   // deixaria o usuário procurando por que a frase sumiu.
-  const nOff = base.filter(c => foraDaRotacao(c)).length;
-  const opcoes = porOrigem ? opcoesOrigem(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
-  if (!opcoes.includes(cartasDeck) && cartasDeck !== '__off__') cartasDeck = opcoes[0];
+    const opcoes = porOrigem ? opcoesOrigem(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
+  if (!opcoes.includes(cartasDeck)) cartasDeck = opcoes[0];
   let html = opcoes.map(o =>
     '<button class="chip' + (cartasDeck === o ? ' active' : '') + '" data-d="' + esc(o) + '">' +
     (porOrigem ? esc(origemLabel(o)) : o === 'todos' ? 'Todas' : esc(deckLabel(o))) + '</button>').join('');
-  if (nOff > 0 || cartasDeck === '__off__') {
-    html += '<button class="chip' + (cartasDeck === '__off__' ? ' active' : '') + '" data-d="__off__">🚫 Desligadas (' + nOff + ')</button>';
-  }
+  // as desligadas não são mais um chip daqui: quem responde "quais são?" é o Isolar
   $('cartas-chips').innerHTML = html;
   $('cartas-chips').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
     cartasDeck = ch.dataset.d;
@@ -121,8 +118,10 @@ function vistaCfg() {
   return v;
 }
 function salvaVista(v) { save(K_VISTA, v); }
+function filtroLigado() { return cartasDeck !== 'todos' && cartasDeck !== 'todas'; }
+function filtroRotulo() { return cartasFiltro === 'origem' ? origemLabel(cartasDeck) : deckLabel(cartasDeck); }
 function vistaCortada(v) {
-  return !!v.so || !v.mostrar.aprendidas || !v.mostrar.nuncaVistas || !v.mostrar.desligadas || !v.faixas.every(Boolean);
+  return filtroLigado() || !!v.so || !v.mostrar.aprendidas || !v.mostrar.nuncaVistas || !v.mostrar.desligadas || !v.faixas.every(Boolean);
 }
 function vistaFiltra(list) {
   const v = vistaCfg();
@@ -190,6 +189,7 @@ function cartasGrupos(list) {
 function vistaResumo() {
   const v = vistaCfg(), rot = (l, k) => l.find(([x]) => x === k)[1];
   const p = [rot(VISTA_ORDENS, v.ordem)];
+  if (filtroLigado()) p.unshift(filtroRotulo());
   if (v.agrupar !== 'nada') p.unshift('por ' + rot(VISTA_GRUPOS, v.agrupar).toLowerCase());
   if (v.so) return p.concat(['só as ' + VISTA_CLASSES.find(([k]) => k === v.so)[1].replace(/^\S+\s/, '').toLowerCase()]).join(' · ');
   if (!v.mostrar.aprendidas) p.push('sem aprendidas');
@@ -207,13 +207,8 @@ function renderCartasGrupobar() {
   const v = vistaCfg();
   $('cartas-grupobar').innerHTML = '<button class="pageacao vista-btn' + (vistaCortada(v) ? ' cortada' : '') + '" id="vista-btn">' +
     '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>' +
-    'Configurar</button><span class="vista-resumo">' + esc(vistaResumo()) + '</span>' +
-    '<span class="vista-isolar">' + VISTA_CLASSES.map(([k, t]) =>
-      '<button class="chip' + (v.so === k ? ' active' : '') + '" data-so="' + k + '" title="Só as ' + t.replace(/^\S+\s/, '').toLowerCase() + '">' + t + '</button>').join('') + '</span>';
+    'Configurar</button><span class="vista-resumo">' + esc(vistaResumo()) + '</span>';
   $('vista-btn').onclick = abreVista;
-  $('cartas-grupobar').querySelectorAll('[data-so]').forEach(b => b.onclick = () => {
-    const v2 = vistaCfg(); v2.so = v2.so === b.dataset.so ? null : b.dataset.so; salvaVista(v2); renderList();
-  });
 }
 function abreVista() { renderVista(); $('vistasheet').classList.add('show'); }
 function renderVista() {
@@ -225,7 +220,7 @@ function renderVista() {
     '<div class="sheetsep">agrupar</div>' + chips(VISTA_GRUPOS, v.agrupar, 'data-ag') +
     '<p class="vista-nota">Independente do filtro — dá pra filtrar por um capítulo e ainda ver o resultado separado por tema. Na semelhança, os caracteres parecidos ficam lado a lado.</p>' +
     '<div class="sheetsep">ordenar dentro do grupo</div>' + chips(VISTA_ORDENS, v.ordem, 'data-or') +
-    '<div class="sheetsep">isolar</div>' + chips([['', 'Nenhuma']].concat(VISTA_CLASSES.map(([k, t]) => [k, t])), v.so || '', 'data-so') +
+    '\u0000' + '<div class="sheetsep">isolar</div>' + chips([['', 'Nenhuma']].concat(VISTA_CLASSES.map(([k, t]) => [k, t])), v.so || '', 'data-so') +
     '<p class="vista-nota">Isolar responde "quais são as desligadas?"; o Mostrar abaixo responde "o que sai da tela?". São perguntas diferentes, e por isso uma de cada vez.</p>' +
     '<div class="sheetsep">mostrar</div><div class="vista-mostrar' + (isolando ? ' apagado' : '') + '">' +
     '<div class="filtros wrapchips">' + [['aprendidas', '✅ Aprendidas'], ['nuncaVistas', '🌱 Nunca vistas'], ['desligadas', '🚫 Desligadas']].map(([k, t]) =>
@@ -236,8 +231,11 @@ function renderVista() {
       : 'Chip apagado esconde. Carta que casa com mais de um some do mesmo jeito.') + '</p></div>' +
     '<div class="le-botoes"><button class="exprox" id="vista-ok">Pronto</button>' +
     (vistaCortada(v) || v.agrupar !== 'nada' || v.ordem !== 'erro' ? '<button class="typeskip" id="vista-zera">Voltar ao padrão</button>' : '') + '</div>';
-  const box = $('vista-corpo');
-  box.innerHTML = h;
+  const [antes, depois] = h.split('\u0000');
+  $('vista-corpo').innerHTML = antes;
+  $('vista-corpo2').innerHTML = depois;
+  const box = $('vistasheet');
+  renderCartasChips();
   const muda = f => { const x = vistaCfg(); f(x); salvaVista(x); renderVista(); renderList(); };
   box.querySelectorAll('[data-ag]').forEach(b => b.onclick = () => muda(x => { x.agrupar = b.dataset.ag; }));
   box.querySelectorAll('[data-or]').forEach(b => b.onclick = () => muda(x => { x.ordem = b.dataset.or; }));
@@ -245,7 +243,11 @@ function renderVista() {
   box.querySelectorAll('[data-mo]').forEach(b => b.onclick = () => muda(x => { x.mostrar[b.dataset.mo] = !x.mostrar[b.dataset.mo]; }));
   box.querySelectorAll('[data-fx]').forEach(b => b.onclick = () => muda(x => { x.faixas[+b.dataset.fx] = !x.faixas[+b.dataset.fx]; }));
   $('vista-ok').onclick = () => $('vistasheet').classList.remove('show');
-  if ($('vista-zera')) $('vista-zera').onclick = () => { salvaVista({}); cartasGrupo = 'nada'; renderVista(); renderList(); };
+  if ($('vista-zera')) $('vista-zera').onclick = () => {
+    salvaVista({}); cartasGrupo = 'nada';
+    cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
+    renderVista(); renderList();
+  };
 }
 function renderList() {
   const q = $('search').value.trim().toLowerCase();

@@ -1007,8 +1007,8 @@ table.sons td{padding:3px;text-align:center;}
 .vista-btn .ico{width:16px;height:16px;flex-basis:16px;}
 .vista-btn.cortada::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--red);}
 .vista-resumo{font-size:13px;color:var(--mut);flex:1;min-width:120px;}
-.vista-isolar{display:flex;gap:6px;flex-wrap:wrap;}
-.vista-isolar .chip{font-size:12.5px;padding:6px 11px;}
+.vista-filtro #cartas-filtertype{display:flex;gap:6px;margin:0 0 8px;}
+.vista-filtro #cartas-chips .chip{font-size:13px;padding:7px 12px;}
 .vista-nota{font-size:12.5px;color:var(--soft);line-height:1.45;margin:8px 2px 0;}
 .vista-sub{font-size:12.5px;color:var(--mut);font-weight:700;margin:12px 0 6px;}
 .vista-mostrar.apagado{opacity:.4;pointer-events:none;}
@@ -1251,19 +1251,9 @@ table.sons td{padding:3px;text-align:center;}
     <button class="chip filtro tipo active" data-tp="palavra"><span class="zh">汉</span> Palavras</button>
     <button class="chip filtro tipo" data-tp="frase">💬 Frases</button>
   </div>
-  <div class="chipsbar">
-    <div class="filterpin">
-      <div class="filtros" id="cartas-filtertype">
-        <button class="chip filtro active" data-f="tema" title="Filtrar por tema" aria-label="Filtrar por tema">🏷️</button>
-        <button class="chip filtro" data-f="origem" title="Filtrar por origem (capítulo do livro, extras da aula, Duolingo)" aria-label="Filtrar por origem">📖</button>
-      </div>
-    </div>
-    <div class="chips" id="cartas-chips"></div>
-  </div>
   <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
-  <!-- agrupar por, como na Grade: separa a lista em seções com cabeçalho, sem tirar
-       nada da tela. É independente do filtro/📅 acima (que escolhe UM), então dá pra
-       filtrar por aula e ainda ver agrupado por tema. -->
+  <!-- o botão Configurar: filtrar, agrupar, ordenar, isolar e mostrar moram na folha
+       (como na aba Cartas do iPhone); aqui fica só a busca e o resumo do que vale -->
   <div class="grupobar" id="cartas-grupobar"></div>
   <div class="counter" id="cartas-count"></div>
   <div id="bulkbar"></div>
@@ -1589,7 +1579,20 @@ table.sons td{padding:3px;text-align:center;}
 <!-- a vista da lista de Palavras / Frases: agrupar, ordenar, isolar, mostrar (js/cartas.js) -->
 <div class="sheetwrap" id="vistasheet">
   <div class="sheetbg" id="vistasheet-bg"></div>
-  <div class="sheet scroll"><div class="handle"></div><div id="vista-corpo"></div></div>
+  <div class="sheet scroll"><div class="handle"></div>
+    <div id="vista-corpo"></div>
+    <!-- filtrar: tema ou origem. O bloco é fixo (não se redesenha com a folha) porque o
+         renderCartasChips já sabe desenhá-lo pelos ids -->
+    <div class="sheetsep">filtrar</div>
+    <div class="vista-filtro">
+      <div class="filtros" id="cartas-filtertype">
+        <button class="chip filtro active" data-f="tema" title="Filtrar por tema">🏷️ Tema</button>
+        <button class="chip filtro" data-f="origem" title="Filtrar por origem (capítulo do livro, extras da aula, Duolingo)">📖 Origem</button>
+      </div>
+      <div class="filtros wrapchips" id="cartas-chips"></div>
+    </div>
+    <div id="vista-corpo2"></div>
+  </div>
 </div>
 
 <!-- a lição do Hoje: de onde vêm as cartas, quantas, como, quando -->
