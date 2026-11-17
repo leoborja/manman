@@ -59,8 +59,13 @@ async function garanteToken() {
       const s = sessaoDe(await authPost('token?grant_type=refresh_token', { refresh_token: sessaoAuth.refresh }));
       if (s) guardaSessao(s);
     } catch (e) {
-      // sem rede a sessão fica: o refresh token continua bom e a próxima tentativa acerta
-      if (!/Sem conexão/.test(e.message)) guardaSessao(null);
+      // sem rede a sessão fica: o refresh token continua bom e a próxima tentativa acerta.
+      // Recusa é sessão morta (senha trocada em outro aparelho revoga o refresh token):
+      // sem ela nada sincroniza, então pede o login em vez de seguir calado.
+      if (!/Sem conexão/.test(e.message)) {
+        guardaSessao(null);
+        if (settings.user && settings.user !== 'convidado') mostraLogin('Sua sessão expirou (a senha pode ter sido trocada em outro aparelho). Entre de novo — o que você estudou aqui fica guardado e sobe quando entrar.');
+      }
     } finally { renovando = null; }
   })();
   await renovando;
