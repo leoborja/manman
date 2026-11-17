@@ -218,8 +218,7 @@ function linhaDaProva(cap) {
   const feita = provaDaSemana(cap);
   const sub = feita ? 'Nota ' + notaTexto(feita.nota) + ' nesta semana · toque para refazer'
     : n + ' palavras, uma vez cada · nota de 0 a 10';
-  return '<div class="sheetsep">provas</div>' +
-    linhaCurso('data-prova="' + esc(cap) + '"', '📝', capituloDaSemana() === cap ? 'Prova da semana' : 'Prova', sub, feita ? 1 : 0);
+  return linhaCurso('data-prova="' + esc(cap) + '"', '📝', capituloDaSemana() === cap ? 'Prova da semana' : 'Prova', sub, feita ? 1 : 0);
 }
 
 // ── as notas da turma (aba Competição) ──────────────────────

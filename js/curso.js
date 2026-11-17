@@ -149,36 +149,45 @@ function renderCurso() {
   });
   const nome = NOMES_CAP[numCap(cap)];
   const lidas = load(uk(K_TEORIA_LIDA), {}), feitos = exFeitos(), parados = exParados();
+  // Cada parte do capítulo num cartão seu, como as seções do Hoje: teoria, as cartas, as
+  // folhas do professor e a prova. O título diz o quanto aquela parte já fechou.
+  const secao = (titulo, conta, corpo, nota) => '<div class="painel curso-sec"><div class="curso-sec-cab"><h3>' + esc(titulo) + '</h3>' +
+    (conta ? '<span>' + esc(conta) + '</span>' : '') + '</div>' + corpo + (nota ? '<p class="cursonota">' + nota + '</p>' : '') + '</div>';
   let h = '<div class="capcard"><small>' + esc(origemLabel(cap)) + '</small><b class="zh" lang="zh-Hans">' +
     esc(nome ? nome[0] : origemLabel(cap)) + '</b>' + (nome ? '<span>' + esc(nome[1]) + '</span>' : '') + '</div>';
   const notas = teoriaDoCap(cap);
   if (notas.length) {
-    h += '<div class="sheetsep">teoria</div>';
-    notas.forEach((t, i) => { h += linhaCurso('data-nota="' + i + '"', '📚', t.titulo, t.resumo || '', lidas[t.id] ? 1 : 0); });
+    const n = notas.filter(t => lidas[t.id]).length;
+    h += secao('Teoria', n + ' de ' + notas.length + ' lidas',
+      notas.map((t, i) => linhaCurso('data-nota="' + i + '"', '📚', t.titulo, t.resumo || '', lidas[t.id] ? 1 : 0)).join(''));
   }
   const palavras = cartasDoCap(cap, false), frases = cartasDoCap(cap, true), folhas = exerciciosDoCap(cap);
-  if (palavras.length || frases.length || folhas.length) {
-    h += '<div class="sheetsep">exercícios</div>';
+  if (palavras.length || frases.length) {
+    let corpo = '', aprendidas = 0, total = 0;
     [[false, palavras, 'Palavras', '汉'], [true, frases, 'Frases', '💬']].forEach(([fr, l, nomeT, ico]) => {
       if (!l.length) return;
       const p = progressoDe(l);
+      aprendidas += p.aprendidas; total += l.length;
       const sub = p.vistas === 0 ? l.length + (fr ? ' frases novas' : ' palavras novas') : p.aprendidas + ' de ' + l.length + ' aprendidas';
-      h += linhaCurso('data-cartas="' + (fr ? 'frase' : 'palavra') + '"', ico, nomeT, sub, p.aprendidas === l.length ? 1 : Math.min(p.fracao, 0.99));
+      corpo += linhaCurso('data-cartas="' + (fr ? 'frase' : 'palavra') + '"', ico, nomeT, sub, p.aprendidas === l.length ? 1 : Math.min(p.fracao, 0.99));
     });
-    folhas.forEach(e => {
+    h += secao('Cartas', aprendidas + ' de ' + total + ' aprendidas', corpo,
+      'Enchem o círculo conforme se firmam na revisão; ele fecha quando todas estão aprendidas.');
+  }
+  if (folhas.length) {
+    const feitas = folhas.filter(e => feitos[e.id]).length;
+    h += secao('Exercícios do professor', feitas + ' de ' + folhas.length + ' feitos', folhas.map(e => {
       const f = feitos[e.id], par = parados[e.id] && parados[e.id].proximo < e.itens.length ? parados[e.id] : null;
       // largada no meio fala mais alto que feita antes: é o que se vai encontrar ao tocar
       const sub = par ? 'Parou no ' + (par.proximo + 1) + ' de ' + e.itens.length + ' · toque para continuar'
         : f ? f.acertos + ' de ' + f.total + ' de primeira · toque para refazer' : e.resumo;
       const fr = par ? Math.min(0.99, par.proximo / Math.max(1, e.itens.length)) : f ? 1 : 0;
-      h += linhaCurso('data-folha="' + esc(e.id) + '"', EX_TIPOS[e.tipo].icone || '📋', e.titulo, sub, fr);
-    });
-    h += '<p class="cursonota">' + (folhas.length
-      ? 'As palavras e as frases enchem o círculo conforme se firmam na revisão. Os exercícios do professor fecham quando são feitos até o fim — e não mexem na revisão.'
-      : 'As palavras e as frases enchem o círculo conforme se firmam na revisão; ele fecha quando todas estão aprendidas.') + '</p>';
+      return linhaCurso('data-folha="' + esc(e.id) + '"', EX_TIPOS[e.tipo].icone || '📋', e.titulo, sub, fr);
+    }).join(''), 'Fecham quando são feitos até o fim — e não mexem na revisão.');
   }
-  h += linhaDaProva(cap);
-  box.innerHTML = '<div class="painel">' + h + '</div>';
+  const prova = linhaDaProva(cap);
+  if (prova) h += secao('Prova', provaDaSemana(cap) ? 'feita nesta semana' : '', prova);
+  box.innerHTML = h;
   if (sonsDB) {
     $('pageacoes').innerHTML = '<button class="pageacao" id="curso-sons"><b>æ</b> Sons do pinyin</button>';
     $('curso-sons').onclick = abreSonsDoCurso;
@@ -342,6 +351,11 @@ exEstilo(`
 .painel .cursolinha{border:0;border-radius:12px;margin:0;padding:11px 8px;background:none;}
 .painel .cursolinha:hover{background:var(--surface2);}
 .painel .sheetsep{margin:18px 0 6px;}
+.curso-sec{margin-top:14px;}
+.curso-sec-cab{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 0 6px;}
+.curso-sec-cab h3{margin:0;font-size:17px;}
+.curso-sec-cab span{font-size:13px;color:var(--mut);}
+.curso-sec .cursonota{margin:8px 8px 0;}
 .anel{flex:0 0 26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 .anel i{width:18px;height:18px;border-radius:50%;background:var(--surface);}
 .anel.ok{background:var(--ok);color:#fff;font-size:14px;font-weight:800;}
