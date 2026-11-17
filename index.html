@@ -1019,6 +1019,7 @@ table.sons td{padding:3px;text-align:center;}
   <div class="navitens tabs">
     <div class="navsec">Teoria</div>
     <button class="tab" data-v="curso"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg><span>Curso</span></button>
+    <button class="tab" data-v="hoje"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg><span>Hoje</span></button>
     <button class="tab" data-v="teoria" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg><span>Teoria</span></button>
     <button class="tab active" data-v="estudar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg><span>Estudar</span></button>
     <div class="navsec">Cards</div>
@@ -1172,6 +1173,11 @@ table.sons td{padding:3px;text-align:center;}
 <section class="view" id="view-curso">
   <div class="curso-faixa" id="curso-faixa"></div>
   <div id="curso-corpo"></div>
+</section>
+
+<!-- ══════ HOJE ══════ as lições do dia (js/hoje.js) -->
+<section class="view" id="view-hoje">
+  <div id="hoje-corpo"></div>
 </section>
 
 <!-- ══════ TEORIA ══════ lista por capítulo → nota; e a tabela de sons. A mesma tela
@@ -1558,6 +1564,12 @@ table.sons td{padding:3px;text-align:center;}
   </div>
 </div>
 
+<!-- a lição do Hoje: de onde vêm as cartas, quantas, como, quando -->
+<div class="sheetwrap" id="licaosheet">
+  <div class="sheetbg" id="licaosheet-bg"></div>
+  <div class="sheet scroll"><div class="handle"></div><div id="licao-corpo"></div></div>
+</div>
+
 <!-- créditos: as licenças CC BY e Arphic PL exigem atribuição a quem RECEBE a obra,
      então precisa estar aqui no app, não só no repositório -->
 <div class="sheetwrap" id="credsheet">
@@ -1646,6 +1658,7 @@ table.sons td{padding:3px;text-align:center;}
 <script src="./js/ex-escolha.js"></script>
 <script src="./js/ex-escrita.js"></script>
 <script src="./js/prova.js"></script>
+<script src="./js/hoje.js"></script>
 <script src="./js/main.js"></script>
 <script>
 if ('serviceWorker' in navigator && location.protocol === 'https:') {

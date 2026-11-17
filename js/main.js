@@ -29,6 +29,7 @@ function switchView(v) {
   if (v === 'progresso') renderProgress();
   if (v === 'teoria') abreTeoria(); else saiTeoria();
   if (v === 'curso') renderCurso();
+  if (v === 'hoje') renderHoje();
   if (v === 'cartas') renderList();
   if (v === 'grade') renderGrade();
   if (v === 'competicao') {
@@ -296,7 +297,9 @@ function bindEvents() {
   $('g-hard').onclick = () => grade('hard');
   $('g-good').onclick = () => grade('good');
   $('nextbtn').onclick = () => { queue.shift(); nextCard(); };
+  $('licaosheet-bg').onclick = fechaEditorLicao;
   $('freebtn').onclick = () => {
+    if ($('freebtn').dataset.hoje) { delete $('freebtn').dataset.hoje; switchView('hoje'); return; }
     if (dialogoOn()) startDialogo();
     else if (quizOn()) startToneQuiz();
     else if (flashOn()) startFlash();

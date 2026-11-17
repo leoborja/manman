@@ -149,6 +149,8 @@ function podePerguntar(c) {
 // O que a SESSÃO pode mostrar — é isso que o contador do alto conta, não o pool inteiro
 function poolSessao() { return activePool().filter(podePerguntar); }
 function buildQueue() {
+  // a lição do Hoje é rodada fechada: as cartas da pauta, nem uma a mais
+  if (licaoAtiva) { queue = licaoAtiva.ids.slice(); favAdiantadas = new Set(); phase = 'licao'; return; }
   const t = todayStr();
   const pool = poolSessao();
   const due = pool.filter(c => srs[c.id] && srs[c.id].due <= t)
@@ -282,6 +284,9 @@ function renderCounter() {
   } else if (phase === 'flash') {
     $('counter').innerHTML = '<b>relâmpago ' + (settings.flashMs / 1000) + 's</b> · ' +
       flashScore.ok + '/' + flashScore.n + ' certas · ' + queue.length + ' restantes';
+  } else if (phase === 'licao' && licaoAtiva) {
+    $('counter').innerHTML = '<b>📅 ' + esc(licaoAtiva.nome) + '</b> · ' +
+      Math.min(licaoAtiva.total, licaoAtiva.total - queue.length + 1) + ' de ' + licaoAtiva.total;
   } else if (phase === 'practice') {
     $('counter').innerHTML = 'revisões do dia ✅ · <b>prática livre</b> · "Errei" ainda reagenda';
   } else if (settings.erro) {
@@ -388,6 +393,7 @@ function showCard(card) {
   if (relampago) { runFlashClock(); renderPausa(); } // por último: relógio com a carta já montada
 }
 function nextCard() {
+  if (!queue.length && phase === 'licao') { concluiLicao(); return; }
   if (!queue.length) {
     // quiz e relâmpago são rodadas fechadas: acabou o baralho, mostra o placar
     if (phase === 'quiz' || phase === 'flash' || !poolSessao().length) { finishSession(); return; }
@@ -404,6 +410,7 @@ function nextCard() {
   showCard(card);
 }
 function finishSession() {
+  delete $('freebtn').dataset.hoje;
   clearFlash();
   current = null;
   modoCarta = null; // o placar do fim é do modo escolhido, não do sorteado na última carta
@@ -479,6 +486,7 @@ function finishSession() {
   renderCounter();
 }
 function startSession() {
+  trocaDeSessao(); // uma lição do Hoje pedida agora, ou o fim da que estava rodando
   clearFlash();
   modoCarta = null; // senão a última carta do aleatório decidiria que sessão começa agora
   if (dialogoOn()) { startDialogo(); return; }
@@ -869,9 +877,10 @@ function grade(g) {
   if (modoKey() === 'zh_all' && !flashOn()) bumpHab(current.id, 'rec', g === 'again');
   // A ⭐ favorita puxada antes do dia é prática, não revisão: acertá-la todo dia jogaria
   // o intervalo pra meses e ela sumiria do agendado justo por ser a que você mais treina.
+  // na lição a carta agenda como na revisão do dia: é o mesmo SRS, só a fila é outra
   if (phase === 'sched' && favAdiantadas.has(current.id) && g !== 'again') {
     syncPush(current.id);
-  } else if (phase === 'sched') {
+  } else if (phase === 'sched' || phase === 'licao') {
     const isNew = !srs[current.id];
     srsApply(current.id, g);
     if (isNew) logToday('new');

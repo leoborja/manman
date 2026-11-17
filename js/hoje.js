@@ -1,0 +1,273 @@
+/* Mànmàn — 📅 A aba Hoje: as lições do dia, cada uma com a rodada a um toque.
+
+   Uma lição é o lembrete do app iOS sem a notificação: um horário, os dias da semana e
+   uma PAUTA — de onde saem as cartas (o que vence hoje, as que mais erro, capítulos), o
+   tipo, quantas e em que modo. A pauta não é um segundo sistema de estudo: é um recorte
+   do mesmo deck, respondido no Estudar com o mesmo SRS. A diferença é que a rodada é
+   FECHADA, de N cartas — é promessa cumprida: "as 10 que você mais erra" acaba nas 10.
+
+   O ✓ é do dia e cai quando a rodada chega ao fim. Amanhã as lições voltam abertas.
+   As lições e os ✓ ficam neste aparelho, como no iPhone — não há tabela pra elas no
+   banco, e a turma não tem por que ver o horário de estudo de cada um. */
+'use strict';
+
+const K_LICOES = 'manman.licoes.v1';               // por usuário: [lição]
+const K_LICOES_FEITAS = 'manman.licoes.feitas.v1'; // por usuário: { 'YYYY-MM-DD': [id] }
+const LICAO_LIMITES = [5, 10, 20, 30];
+// Os modos que fecham uma rodada carta a carta. O quiz de tom, o relâmpago e o diálogo
+// montam a própria fila, e uma lição dentro deles não seria a pauta que se prometeu.
+const LICAO_MODOS = { palavra: ['mix', 'zh_all', 'pt_type', 'draw'], frase: ['mix', 'zh_all', 'pt_type', 'ordenar'] };
+const DIAS_CURTO = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']; // getDay(): 0 = domingo
+
+// Sem lição nenhuma, três a um toque — o mesmo começo da tela de lembretes do iPhone.
+const LICOES_SUGERIDAS = [
+  { nome: 'De manhã', hora: '08:00', dias: [1, 2, 3, 4, 5], pauta: { fonte: 'vencidas', tipo: 'palavra', limite: 20, modo: 'mix' } },
+  { nome: 'No almoço', hora: '12:30', dias: [0, 1, 2, 3, 4, 5, 6], pauta: { fonte: 'maisErro', tipo: 'palavra', limite: 10, modo: 'mix' } },
+  { nome: 'À noite', hora: '21:00', dias: [0, 1, 2, 3, 4, 5, 6], pauta: { fonte: 'vencidas', tipo: 'palavra', limite: 20, modo: 'mix' } }
+];
+
+function licoes() { return load(uk(K_LICOES), []); }
+function salvaLicoes(l) { save(uk(K_LICOES), l); }
+function feitasHoje() { return (load(uk(K_LICOES_FEITAS), {})[todayStr()]) || []; }
+function marcaFeita(id) {
+  const t = todayStr();
+  // só o dia de hoje fica guardado: o ✓ de ontem não serve pra nada
+  const f = { [t]: feitasHoje() };
+  if (!f[t].includes(id)) f[t].push(id);
+  save(uk(K_LICOES_FEITAS), f);
+}
+function hojeDia() { const [a, m, d] = todayStr().split('-').map(Number); return new Date(a, m - 1, d).getDay(); }
+function licoesDeHoje() {
+  const d = hojeDia();
+  return licoes().filter(l => l.dias.includes(d)).sort((a, b) => a.hora.localeCompare(b.hora));
+}
+
+// ── a pauta: que cartas a rodada entrega ────────────────────
+function nomeDaPauta(p) {
+  if (p.fonte === 'vencidas') return 'O que vence hoje';
+  if (p.fonte === 'maisErro') return 'As que eu mais erro';
+  const o = p.origens || [];
+  if (!o.length) return 'Capítulos';
+  const nomes = o.slice().sort((a, b) => ordemOrigem(a) - ordemOrigem(b)).map(origemLabel);
+  return nomes.length > 3 ? nomes.slice(0, 2).join(' + ') + ' + ' + (nomes.length - 2) + ' mais' : nomes.join(' + ');
+}
+// As cartas da rodada, na ordem em que vêm. Roda com o modo e o tipo da lição JÁ
+// aplicados, pra que o podePerguntar descarte o que este modo não sabe perguntar.
+function cartasDaPauta(p) {
+  const t = todayStr();
+  const base = cards.filter(c => ehFrase(c) === (p.tipo === 'frase') && !foraDaRotacao(c) && podePerguntar(c));
+  const vence = c => srs[c.id] && srs[c.id].due <= t;
+  const porDue = (a, b) => (srs[a.id].due < srs[b.id].due ? -1 : 1);
+  let lista;
+  if (p.fonte === 'vencidas') {
+    lista = base.filter(vence).sort(porDue);
+  } else if (p.fonte === 'maisErro') {
+    const erros = c => { const s = stats[c.id]; return s ? (s.h || 0) + (s.a || 0) : 0; };
+    lista = base.filter(c => erros(c) > 0).sort((a, b) => erros(b) - erros(a));
+  } else {
+    // capítulos SOMADOS: tudo do 2 e tudo do 3. As vencidas na frente, depois as novas,
+    // depois o resto — quem marcou um capítulo quer o capítulo, não só o que venceu.
+    const o = new Set(p.origens || []);
+    const doRecorte = base.filter(c => o.has(origemDe(c)));
+    lista = doRecorte.filter(vence).sort(porDue)
+      .concat(shuffle(doRecorte.filter(c => !srs[c.id])))
+      .concat(shuffle(doRecorte.filter(c => srs[c.id] && !vence(c))));
+  }
+  return lista.slice(0, p.limite || 20);
+}
+// Quantas a rodada traria agora. Muda o modo só pra perguntar e devolve o de antes:
+// contar não pode mexer na sessão que está aberta no Estudar.
+function quantasNaPauta(p) {
+  const antes = { mode: settings.mode, tipo: settings.tipo }, mc = modoCarta;
+  settings.mode = p.modo; settings.tipo = p.tipo; modoCarta = null;
+  try { return cartasDaPauta(p).length; }
+  finally { settings.mode = antes.mode; settings.tipo = antes.tipo; modoCarta = mc; }
+}
+function textoDaPauta(p, n) {
+  if (!n) return p.fonte === 'vencidas' ? 'em dia, nada vence agora' : p.fonte === 'maisErro' ? 'nenhum erro pendente' : 'nenhuma carta neste recorte';
+  const fr = p.tipo === 'frase';
+  return n + ' ' + (n === 1 ? (fr ? 'frase' : 'palavra') : (fr ? 'frases' : 'palavras'));
+}
+
+// ── a rodada da lição, dentro do Estudar ────────────────────
+// O Estudar só olha estas duas: licaoPendente é a lição que o próximo startSession vai
+// abrir; licaoAtiva é a que está rodando. Qualquer outro startSession (trocar modo,
+// filtro…) encerra a lição — a pessoa saiu dela por conta própria.
+let licaoPendente = null, licaoAtiva = null;
+function abreLicao(l) {
+  settings.tipo = l.pauta.tipo;
+  settings.mode = l.pauta.modo;
+  save(K.settings, settings);
+  const ids = cartasDaPauta(l.pauta).map(c => c.id);
+  if (!ids.length) return;
+  licaoPendente = { id: l.id, nome: l.nome || nomeDaPauta(l.pauta), ids, total: ids.length };
+  renderModeSheet(); renderModeUI(); startSession();
+  switchView('estudar');
+}
+// chamada do startSession: decide se a sessão que começa é a da lição
+function trocaDeSessao() {
+  licaoAtiva = licaoPendente;
+  licaoPendente = null;
+  if (licaoAtiva) $('modescope').textContent = '📅 ' + licaoAtiva.nome;
+}
+function concluiLicao() {
+  const l = licaoAtiva;
+  licaoAtiva = null;
+  marcaFeita(l.id);
+  finishSession();
+  $('done-title').textContent = 'Lição feita!';
+  $('done-sub').textContent = l.nome + ': as ' + l.total + ' cartas da rodada. ' +
+    'O ✓ fica no Hoje até amanhã, e refazer pode sempre.';
+  $('freebtn').textContent = '📅 Voltar ao Hoje';
+  $('freebtn').style.display = '';
+  $('freebtn').dataset.hoje = '1';
+}
+
+// ── a tela ──────────────────────────────────────────────────
+const ICO_LICAO = {
+  vencidas: '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M12 14v2l1.5 1.5"/>',
+  maisErro: '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
+  recorte: '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+  feita: '<path d="M20 6 9 17l-5-5"/>'
+};
+const svgIco = p => '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + p + '</svg>';
+function diasTexto(d) {
+  const s = d.slice().sort();
+  if (s.length === 7) return 'todo dia';
+  if (s.join() === '1,2,3,4,5') return 'seg a sex';
+  if (s.join() === '0,6') return 'fim de semana';
+  return s.map(i => ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'][i]).join(', ');
+}
+function linhaDeLicao(l, deHoje) {
+  const feita = deHoje && feitasHoje().includes(l.id);
+  const n = quantasNaPauta(l.pauta);
+  const modo = MODE_TITLES[l.pauta.modo] || '';
+  const sub = l.hora + (deHoje ? '' : ' · ' + diasTexto(l.dias)) + ' · ' + textoDaPauta(l.pauta, n) + (modo ? ' · ' + modo : '');
+  return '<div class="licao' + (feita ? ' feita' : '') + (n ? '' : ' vazia') + '">' +
+    '<button class="licao-abre" data-abre="' + esc(l.id) + '"' + (n ? '' : ' disabled') + '>' +
+      '<span class="licao-ico">' + svgIco(feita ? ICO_LICAO.feita : ICO_LICAO[l.pauta.fonte]) + '</span>' +
+      '<span class="licao-tx"><b>' + esc(l.nome || nomeDaPauta(l.pauta)) + '</b><small>' + esc(sub) + '</small></span></button>' +
+    '<button class="licao-edita" data-edita="' + esc(l.id) + '" title="Editar lição" aria-label="Editar lição">' +
+      svgIco('<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>') + '</button></div>';
+}
+function renderHoje() {
+  $('pageacoes').innerHTML = '<button class="pageacao" id="hoje-nova">+ Nova lição</button>';
+  $('hoje-nova').onclick = () => abreEditorLicao(null);
+  const box = $('hoje-corpo');
+  const todas = licoes();
+  if (!todas.length) {
+    box.innerHTML = '<div class="painel"><h3 class="hoje-tit">Monte o seu dia</h3>' +
+      '<p class="cursonota" style="margin:0 0 12px">Cada lição é uma rodada fechada, com hora marcada. As do dia aparecem aqui, e o ✓ dura até amanhã.</p>' +
+      LICOES_SUGERIDAS.map((s, i) => '<button class="licao-sug" data-sug="' + i + '">' +
+        '<span class="licao-ico">' + svgIco(ICO_LICAO[s.pauta.fonte]) + '</span><span class="licao-tx"><b>' + esc(s.nome) + '</b>' +
+        '<small>' + s.hora + ' · ' + diasTexto(s.dias) + ' · ' + nomeDaPauta(s.pauta).toLowerCase() + '</small></span><span class="licao-mais">+</span></button>').join('') +
+      '</div>';
+    box.querySelectorAll('[data-sug]').forEach(b => b.onclick = () => {
+      const s = LICOES_SUGERIDAS[+b.dataset.sug];
+      salvaLicoes(licoes().concat([Object.assign({ id: 'l' + Date.now() }, JSON.parse(JSON.stringify(s)))]));
+      renderHoje();
+    });
+    return;
+  }
+  const hoje = licoesDeHoje(), deHoje = new Set(hoje.map(l => l.id)), outras = todas.filter(l => !deHoje.has(l.id));
+  const feitas = hoje.filter(l => feitasHoje().includes(l.id)).length;
+  let h = '<div class="painel"><h3 class="hoje-tit">Lições para hoje</h3>';
+  h += hoje.length ? hoje.map(l => linhaDeLicao(l, true)).join('') : '<p class="vazio">Nenhuma lição marcada para hoje.</p>';
+  h += '<p class="cursonota">' + (!hoje.length ? 'O + Nova lição cria uma.' : feitas === hoje.length
+    ? 'Tudo feito por hoje. Amanhã as lições voltam abertas.'
+    : feitas + ' de ' + hoje.length + ' feitas. Uma lição fica feita quando a rodada chega ao fim.') + '</p></div>';
+  if (outras.length) h += '<div class="painel" style="margin-top:14px"><h3 class="hoje-tit">Outros dias</h3>' + outras.map(l => linhaDeLicao(l, false)).join('') + '</div>';
+  box.innerHTML = h;
+  box.querySelectorAll('[data-abre]').forEach(b => b.onclick = () => abreLicao(licoes().find(l => l.id === b.dataset.abre)));
+  box.querySelectorAll('[data-edita]').forEach(b => b.onclick = () => abreEditorLicao(licoes().find(l => l.id === b.dataset.edita)));
+}
+
+// ── o editor (folha de baixo) ───────────────────────────────
+let licaoEditando = null;
+function abreEditorLicao(l) {
+  licaoEditando = l ? JSON.parse(JSON.stringify(l))
+    : { id: 'l' + Date.now(), nome: '', hora: '08:00', dias: [1, 2, 3, 4, 5], pauta: { fonte: 'vencidas', tipo: 'palavra', limite: 20, modo: 'mix', origens: [] }, nova: true };
+  renderEditorLicao();
+  $('licaosheet').classList.add('show');
+}
+function fechaEditorLicao() { $('licaosheet').classList.remove('show'); licaoEditando = null; }
+function renderEditorLicao() {
+  const l = licaoEditando, p = l.pauta;
+  if (!LICAO_MODOS[p.tipo].includes(p.modo)) p.modo = 'mix';
+  const chip = (ativo, attrs, txt) => '<button class="chip' + (ativo ? ' active' : '') + '" ' + attrs + '>' + txt + '</button>';
+  const caps = capitulosDoCurso();
+  let h = '<h3>' + (l.nova ? 'Nova lição' : 'Editar lição') + '</h3>' +
+    '<div class="sheetsep">de onde vêm as cartas</div><div class="chips le-chips">' +
+    chip(p.fonte === 'vencidas', 'data-fonte="vencidas"', 'O que vence hoje') +
+    chip(p.fonte === 'maisErro', 'data-fonte="maisErro"', 'As que eu mais erro') +
+    chip(p.fonte === 'recorte', 'data-fonte="recorte"', 'Capítulos') + '</div>';
+  if (p.fonte === 'recorte') h += '<div class="chips le-chips">' + caps.map(c =>
+    chip((p.origens || []).includes(c), 'data-cap="' + c + '"', origemLabel(c))).join('') + '</div>';
+  h += '<div class="sheetsep">o quê</div><div class="chips le-chips">' +
+    chip(p.tipo === 'palavra', 'data-tipo="palavra"', 'Palavras') + (temFrases() ? chip(p.tipo === 'frase', 'data-tipo="frase"', 'Frases') : '') + '</div>' +
+    '<div class="sheetsep">quantas</div><div class="chips le-chips">' + LICAO_LIMITES.map(n => chip(p.limite === n, 'data-lim="' + n + '"', n)).join('') + '</div>' +
+    '<div class="sheetsep">como pergunta</div><div class="chips le-chips">' + LICAO_MODOS[p.tipo].map(m =>
+      chip(p.modo === m, 'data-modo="' + m + '"', esc(MODE_TITLES[m] || m))).join('') + '</div>' +
+    '<div class="sheetsep">quando</div><div class="le-quando"><input type="time" id="le-hora" value="' + esc(l.hora) + '">' +
+    '<div class="le-dias">' + DIAS_CURTO.map((d, i) => chip(l.dias.includes(i), 'data-dia="' + i + '"', d)).join('') + '</div></div>' +
+    '<div class="sheetsep">nome (opcional)</div><input class="le-nome" id="le-nome" placeholder="' + esc(nomeDaPauta(p)) + '" value="' + esc(l.nome || '') + '">' +
+    '<div class="le-botoes"><button class="exprox" id="le-salva">Salvar</button>' +
+    (l.nova ? '' : '<button class="typeskip le-apaga" id="le-apaga">Apagar lição</button>') + '</div>';
+  const box = $('licao-corpo');
+  box.innerHTML = h;
+  const re = () => { l.nome = $('le-nome').value; l.hora = $('le-hora').value || l.hora; renderEditorLicao(); };
+  box.querySelectorAll('[data-fonte]').forEach(b => b.onclick = () => { p.fonte = b.dataset.fonte; re(); });
+  box.querySelectorAll('[data-cap]').forEach(b => b.onclick = () => {
+    const o = new Set(p.origens || []); o.has(b.dataset.cap) ? o.delete(b.dataset.cap) : o.add(b.dataset.cap); p.origens = [...o]; re();
+  });
+  box.querySelectorAll('[data-tipo]').forEach(b => b.onclick = () => { p.tipo = b.dataset.tipo; re(); });
+  box.querySelectorAll('[data-lim]').forEach(b => b.onclick = () => { p.limite = +b.dataset.lim; re(); });
+  box.querySelectorAll('[data-modo]').forEach(b => b.onclick = () => { p.modo = b.dataset.modo; re(); });
+  box.querySelectorAll('[data-dia]').forEach(b => b.onclick = () => {
+    const d = +b.dataset.dia; l.dias = l.dias.includes(d) ? l.dias.filter(x => x !== d) : l.dias.concat([d]); re();
+  });
+  $('le-salva').onclick = () => {
+    l.nome = $('le-nome').value.trim(); l.hora = $('le-hora').value || '08:00';
+    if (!l.dias.length) { alert('Marque pelo menos um dia da semana.'); return; }
+    if (p.fonte === 'recorte' && !(p.origens || []).length) { alert('Marque pelo menos um capítulo.'); return; }
+    delete l.nova;
+    const todas = licoes(), i = todas.findIndex(x => x.id === l.id);
+    if (i >= 0) todas[i] = l; else todas.push(l);
+    salvaLicoes(todas); fechaEditorLicao(); renderHoje();
+  };
+  if ($('le-apaga')) $('le-apaga').onclick = () => {
+    if (!confirm('Apagar a lição "' + (l.nome || nomeDaPauta(p)) + '"?')) return;
+    salvaLicoes(licoes().filter(x => x.id !== l.id)); fechaEditorLicao(); renderHoje();
+  };
+}
+
+exEstilo(`
+.hoje-tit{margin:0 0 10px;font-size:17px;}
+.licao{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);}
+.licao:last-of-type{border-bottom:0;}
+.licao-abre,.licao-sug{flex:1;display:flex;align-items:center;gap:12px;text-align:left;border:0;background:none;
+  color:var(--txt);font:inherit;padding:12px 6px;border-radius:12px;cursor:pointer;min-width:0;}
+.licao-sug{width:100%;border-bottom:1px solid var(--line);border-radius:0;}
+.licao-abre:hover:not(:disabled),.licao-sug:hover{background:var(--surface2);}
+.licao-abre:disabled{cursor:default;opacity:.55;}
+.licao-ico{flex:0 0 34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--pill);color:var(--red);}
+.licao.feita .licao-ico{background:var(--red);color:#fff;}
+.licao-tx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.licao-tx b{font-size:16px;}
+.licao-tx small{font-size:13px;color:var(--mut);}
+.licao-edita{flex:0 0 36px;height:36px;border:0;background:none;color:var(--soft);border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.licao-edita:hover{background:var(--surface2);color:var(--txt);}
+.licao-edita .ico{width:16px;height:16px;}
+.licao-mais{font-size:22px;color:var(--red);font-weight:700;padding:0 6px;}
+.le-chips{flex-wrap:wrap;padding-bottom:0;}
+.le-quando{display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
+.le-quando input,.le-nome{border:1px solid var(--line);background:var(--surface2);color:var(--txt);border-radius:10px;
+  padding:9px 12px;font:inherit;font-size:15px;}
+.le-nome{width:100%;box-sizing:border-box;}
+.le-dias{display:flex;gap:6px;}
+.le-dias .chip{width:38px;padding:7px 0;text-align:center;}
+.le-botoes{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:20px;}
+.le-apaga{color:var(--err);}
+`);
