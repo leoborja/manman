@@ -2,9 +2,24 @@
 'use strict';
 
 // ── navegação e eventos ─────────────────────────────────────
+// Palavras e Frases são dois itens do menu e uma tela só (a das Cartas), com o tipo trocado.
 function switchView(v) {
+  if (v === 'cartas') v = cartasTipo === 'frase' ? 'frases' : 'palavras';
+  const tela = v === 'palavras' || v === 'frases' ? 'cartas' : v;
+  if (tela === 'cartas') {
+    const tp = v === 'frases' ? 'frase' : 'palavra';
+    if (cartasTipo !== tp) {
+      cartasTipo = tp;
+      // os temas de palavra e de frase não são os mesmos, e a busca por "水" não devolve
+      // nada em frase: trocar de tipo recomeça a consulta em vez de herdar o filtro
+      cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
+      $('search').value = '';
+    }
+    renderCartasChips();
+  }
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.v === v));
-  document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + v));
+  document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + tela));
+  v = tela;
   if (v === 'progresso') renderProgress();
   if (v === 'teoria') abreTeoria(); else saiTeoria();
   if (v === 'curso') renderCurso();

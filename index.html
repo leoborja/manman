@@ -36,36 +36,29 @@ font:16px/1.6 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,A
 padding-bottom:40px;-webkit-font-smoothing:antialiased;}
 .zh{font-family:'HanziKai','Kaiti SC','STKaiti','Kaiti','BiauKai','PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif;}
 
-header{position:sticky;top:0;z-index:50;background:var(--bg);
-backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
-.brandrow{display:flex;align-items:center;justify-content:space-between;gap:10px;
-padding:12px 16px 8px;max-width:720px;margin:0 auto;}
-.brand{font-weight:800;letter-spacing:-.2px;font-size:15px;color:var(--txt);flex:1;}
+.brand{font-weight:800;letter-spacing:-.2px;font-size:15px;color:var(--txt);white-space:nowrap;}
 .brand span{color:var(--red);}
-.brand small{color:var(--mut);font-weight:600;font-size:11px;margin-left:6px;}
-@media (max-width:460px){.brand small{display:none;}}
-/* Um botão só pra "quem sou eu e como quero ver": nome e tema são as duas coisas que
-   se troca uma vez e esquece, então não merecem dois lugares fixos no topo. Redondo com
-   a inicial porque o nome inteiro espremia o 🔥 no celular. */
-.profilebtn{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
-width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);
-color:var(--txt);font-size:15px;font-weight:800;line-height:1;cursor:pointer;box-shadow:var(--shadow);}
-.profilebtn:active{border-color:var(--red);color:var(--red);}
-/* As três telas ficam logo acima da fila de chips: é a ordem em que a escolha acontece
-   — primeiro em que tela estou, depois o que ela filtra. Já esteve presa no rodapé, como
-   a navegação de um app nativo, mas no navegador — janela larga, sem polegar — uma barra
-   flutuando embaixo fica deslocada.
-   UM controle segmentado, e não três botões soltos: são três estados da mesma escolha,
-   e só um vale por vez. Sem ícone e sem duas linhas de texto, a barra caiu de 62 pra
-   40px — a carta começa mais alto, que é o que se quer ver na tela do celular. */
-.tabs{display:flex;background:var(--surface2);border:1px solid var(--line);
-border-radius:999px;padding:3px;gap:2px;margin:0 0 12px;
-overflow-x:auto;scrollbar-width:none;}
-.tabs::-webkit-scrollbar{display:none;}
-.tab{flex:1 0 auto;border:0;background:none;border-radius:999px;padding:8px 6px;
-font:inherit;font-size:13.5px;font-weight:700;line-height:1.2;color:var(--mut);
+/* ── a barra de navegação (celular: o topo; computador: a lateral, no @media abaixo) ── */
+.nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line);
+display:grid;grid-template-columns:1fr auto;grid-template-areas:"topo perfil" "itens itens";
+align-items:center;gap:8px 10px;padding:10px 16px 8px;}
+.navtopo{grid-area:topo;display:flex;align-items:center;gap:10px;min-width:0;}
+.navitens{grid-area:itens;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px;}
+.navitens::-webkit-scrollbar{display:none;}
+.navsec{display:none;}
+.tab{flex:0 0 auto;display:flex;align-items:center;gap:6px;border:0;background:none;border-radius:999px;
+padding:7px 12px;font:inherit;font-size:13.5px;font-weight:700;line-height:1.2;color:var(--mut);
 cursor:pointer;transition:.15s;white-space:nowrap;}
+.tab i{font-style:normal;font-size:15px;line-height:1;width:18px;text-align:center;}
 .tab.active{background:var(--red);color:#fff;box-shadow:var(--shadow);}
+.navperfil{grid-area:perfil;display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;
+font:inherit;color:var(--txt);cursor:pointer;}
+.profilenome{display:none;}
+/* Redondo com a inicial: nome e tema são coisas que se troca uma vez e esquece. */
+.profileini{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);
+color:var(--txt);font-size:15px;font-weight:800;line-height:1;box-shadow:var(--shadow);}
+.navperfil:active .profileini{border-color:var(--red);color:var(--red);}
 
 main{max-width:720px;margin:0 auto;padding:16px;}
 .view{display:none;}
@@ -826,16 +819,20 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   /* — barra lateral: as abas do topo viram um menu vertical fixo, fundo claro (branco
        no tema claro; o equivalente do tema escuro no escuro). O conteúdo desloca pra
        depois dela. — */
-  .tabs{position:fixed;left:0;top:0;bottom:0;width:216px;z-index:60;
-    flex-direction:column;align-items:stretch;justify-content:flex-start;gap:4px;
-    background:var(--surface);border:0;border-right:1px solid var(--line);
-    border-radius:0;padding:74px 14px 20px;overflow-y:auto;}
-  .tab{flex:0 0 auto;text-align:left;padding:12px 16px;border-radius:12px;font-size:15px;
-    font-weight:700;}
+  .nav{position:fixed;left:0;top:0;bottom:0;width:232px;z-index:60;
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--surface);border:0;border-right:1px solid var(--line);padding:18px 14px 14px;}
+  .navtopo{justify-content:space-between;padding:0 4px 14px;}
+  .navitens{flex:1;flex-direction:column;gap:2px;overflow-y:auto;overflow-x:hidden;margin:0;padding:0;}
+  .navsec{display:block;padding:16px 12px 6px;font-size:11px;font-weight:800;letter-spacing:.6px;
+    text-transform:uppercase;color:var(--soft);}
+  .navsec:first-child{padding-top:4px;}
+  .tab{gap:12px;padding:10px 12px;border-radius:12px;font-size:15px;}
   .tab:not(.active):hover{background:var(--surface2);}
-  header{margin-left:216px;}
-  .brandrow{max-width:none;} /* o topo do conteúdo ocupa a largura toda, como as telas */
-  main{margin-left:216px;max-width:none;padding:22px 32px 60px;}
+  .navperfil{border-top:1px solid var(--line);padding:12px 6px 0;margin-top:8px;border-radius:0;}
+  .navperfil:hover .profilenome{color:var(--red);}
+  .profilenome{display:block;font-weight:700;font-size:15px;}
+  main{margin-left:232px;max-width:none;padding:22px 32px 60px;}
 
   /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior. A tela
      fica centrada num tamanho confortável, como no celular. */
@@ -989,31 +986,39 @@ table.sons td{padding:3px;text-align:center;}
 </style>
 </head>
 <body>
-<header>
-  <div class="brandrow">
-    <div class="brand">MÀNMÀN <span class="zh">慢慢</span><small>flashcards de mandarim</small></div>
+<!-- A navegação: no computador, a barra da esquerda — o nome e o 🔥 em cima, as telas
+     agrupadas no meio, quem está estudando embaixo. No celular a mesma barra vira o topo:
+     nome, 🔥 e perfil numa linha, e as telas numa fila que rola de lado. -->
+<nav class="nav" id="nav">
+  <div class="navtopo">
+    <div class="brand">MÀNMÀN <span class="zh">慢慢</span></div>
     <div class="streakpill" id="streakpill">
       <span class="fire">🔥</span>
       <span class="n" id="streak-n">0</span>
       <span class="meta" id="streak-meta">–</span>
     </div>
-    <button class="profilebtn" id="profilebtn" title="Perfil">👤</button>
   </div>
-</header>
+  <div class="navitens tabs">
+    <div class="navsec">Teoria</div>
+    <button class="tab" data-v="curso"><i>🗺️</i><span>Curso</span></button>
+    <button class="tab" data-v="teoria"><i>📚</i><span>Teoria</span></button>
+    <button class="tab active" data-v="estudar"><i>🎴</i><span>Estudar</span></button>
+    <div class="navsec">Cards</div>
+    <button class="tab" data-v="palavras"><i class="zh">汉</i><span>Palavras</span></button>
+    <button class="tab" data-v="frases" id="tab-frases"><i>💬</i><span>Frases</span></button>
+    <button class="tab" data-v="grade"><i>🔲</i><span>Grade</span></button>
+    <div class="navsec">Dashboard</div>
+    <button class="tab" data-v="competicao"><i>🏆</i><span>Competição</span></button>
+    <button class="tab" data-v="progresso"><i>📈</i><span>Progresso</span></button>
+  </div>
+  <button class="navperfil" id="profilebtn" title="Perfil">
+    <span class="profileini" id="profile-ini">👤</span><span class="profilenome" id="profile-nome">Perfil</span>
+  </button>
+</nav>
+
 <main>
 
 <div class="banner" id="banner"></div>
-
-<!-- as abas abrem o conteúdo: mandam na tela inteira, os chips só no que ela lista -->
-<div class="tabs">
-  <button class="tab active" data-v="estudar">Estudar</button>
-  <button class="tab" data-v="curso">Curso</button>
-  <button class="tab" data-v="teoria">Teoria</button>
-  <button class="tab" data-v="cartas">Cartas</button>
-  <button class="tab" data-v="grade">Grade</button>
-  <button class="tab" data-v="competicao">Competição</button>
-  <button class="tab" data-v="progresso">Progresso</button>
-</div>
 
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">

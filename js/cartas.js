@@ -6,8 +6,10 @@ function renderCartasChips() {
   const porOrigem = cartasFiltro === 'origem';
   // sem frase publicada a linha inteira some, igual à do estudar: um botão que só abre
   // lista vazia é pior que botão nenhum
+  // o tipo agora se escolhe no menu (Palavras / Frases); o par de chips da tela fica guardado
   const tem = temFrases();
-  $('cartas-tipotype').style.display = tem ? '' : 'none';
+  $('cartas-tipotype').style.display = 'none';
+  $('tab-frases').style.display = tem ? '' : 'none';
   if (!tem) cartasTipo = 'palavra';
   $('cartas-tipotype').querySelectorAll('button').forEach(b =>
     b.classList.toggle('active', b.dataset.tp === cartasTipo));

@@ -225,9 +225,9 @@ function loadUserState() {
 }
 function renderUserPill() {
   const nome = settings.user ? (USERS[settings.user] || settings.user) : '';
-  const b = $('profilebtn');
-  b.textContent = nome ? nome[0].toUpperCase() : '👤'; // o nome inteiro não cabe no topo
-  b.title = nome ? 'Perfil · ' + nome : 'Perfil';
+  $('profile-ini').textContent = nome ? nome[0].toUpperCase() : '👤'; // no topo do celular o nome inteiro não cabe
+  $('profile-nome').textContent = nome || 'Perfil';                     // na barra do computador, cabe
+  $('profilebtn').title = nome ? 'Perfil · ' + nome : 'Perfil';
 }
 // a folha de perfil guarda os dois estados que o botão redondo esconde: quem está
 // estudando e o tema
