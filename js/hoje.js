@@ -70,7 +70,10 @@ function paraGuardar(l, raw) {
 }
 function licoesGuardadas() { return load(uk(K_LICOES), {}); }
 function licoes() {
-  return Object.values(licoesGuardadas()).filter(r => r && !r.apagada && r.pauta && Array.isArray(r.dias)).map(paraTela);
+  // o id é a CHAVE do mapa: o iPhone pode mandar o objeto sem o id dentro, e a grafia
+  // da chave é a que o outro lado reconhece
+  return Object.entries(licoesGuardadas()).filter(([, r]) => r && !r.apagada && r.pauta && Array.isArray(r.dias))
+    .map(([id, r]) => paraTela(Object.assign({}, r, { id })));
 }
 function salvaLicao(l) {
   const g = licoesGuardadas();
