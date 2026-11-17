@@ -346,6 +346,7 @@ async function init() {
   bindEvents();
   bindTips();
   renderModeUI();
+  const peloEmail = await trataLinkDoEmail(); // abriu pelo link de "esqueci a senha"?
   await garanteToken(); // a sessão de ontem pode ter vencido: renova antes da primeira leitura
   await Promise.all([loadCards(), loadStrokes(), loadDialogos(), loadConteudoIOS(), loadExercicios()]);
   if (dataSource === 'seed' || dataSource === 'cache-noconfig') showBanner('info', 'Rodando com o deck local — Supabase ainda não configurado.');
@@ -367,7 +368,9 @@ async function init() {
   // Quem estava num dos nomes fixos (sem senha) precisa entrar com a conta: o progresso
   // deste navegador fica guardado no nome e volta quando a conta recuperar o nome antigo.
   const semConta = settings.user && settings.user !== 'convidado' && !sessaoAuth;
-  if (sessaoAuth && !settings.conta) {
+  if (peloEmail) {
+    startSession(); // a tela de senha nova (ou o aviso do link) já está aberta
+  } else if (sessaoAuth && !settings.conta) {
     // entrou mas não terminou o cadastro (fechou no meio do @ ou do código)
     startSession();
     mostraLogin();

@@ -171,6 +171,70 @@ async function sairDaConta() {
   mostraLogin();
 }
 
+// ── esqueci a senha ─────────────────────────────────────────
+// O Supabase manda um e-mail com um link de uso único. O link volta pro app com a sessão
+// no fragmento da URL (#access_token=…&type=recovery), e aí o app pede a senha nova.
+// Pra onde o link volta é a Site URL do painel do Auth (ou o redirect_to, se ele estiver
+// na lista de URLs permitidas lá) — sem isso configurado, o link aponta pro localhost.
+async function esqueciASenha() {
+  const email = $('lg-email').value.trim();
+  if (!email) { erroLogin('Digite o seu e-mail acima e toque de novo.'); return; }
+  carregandoLogin(true);
+  try {
+    await authPost('recover?redirect_to=' + encodeURIComponent(location.origin + location.pathname), { email });
+    erroLogin('');
+    $('lg-ok').textContent = 'Se existe uma conta com esse e-mail, o link pra trocar a senha chegou lá. Ele vale uma vez só.';
+    $('lg-ok').style.display = '';
+  } catch (e) { erroLogin(e.message); }
+  finally { carregandoLogin(false); }
+}
+// Abriu pelo link do e-mail? Guarda a sessão de recuperação e pede a senha nova. Devolve
+// true quando o login deve ficar na tela (senha nova ou erro do link).
+async function trataLinkDoEmail() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (!h.get('access_token') && !h.get('error_code')) return false;
+  history.replaceState(null, '', location.pathname + location.search); // o token não fica na barra
+  if (h.get('error_code')) {
+    cadastro = null;
+    mostraLogin(h.get('error_code') === 'otp_expired'
+      ? 'Esse link já foi usado ou venceu. Peça outro em "Esqueci a senha".'
+      : 'O link do e-mail não funcionou (' + (h.get('error_description') || h.get('error_code')) + '). Peça outro.');
+    return true;
+  }
+  try {
+    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/auth/v1/user', {
+      headers: { apikey: HW_CONFIG.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + h.get('access_token') } });
+    const u = await r.json();
+    if (!r.ok || !u.id) throw new Error('HTTP ' + r.status);
+    guardaSessao({ access: h.get('access_token'), refresh: h.get('refresh_token'), userId: String(u.id).toLowerCase(),
+      email: u.email || null, expira: +h.get('expires_at') || Date.now() / 1000 + (+h.get('expires_in') || 3600) });
+  } catch (e) {
+    mostraLogin('O link do e-mail não funcionou (' + e.message + '). Peça outro.');
+    return true;
+  }
+  if (h.get('type') !== 'recovery') return false; // outro tipo de link: só entra
+  cadastro = 'senha';
+  mostraLogin();
+  return true;
+}
+async function salvaSenhaNova() {
+  const s = $('lg-nova').value;
+  if (s.length < 6) { erroLogin('A senha precisa ter pelo menos 6 caracteres.'); return; }
+  carregandoLogin(true);
+  try {
+    await garanteToken();
+    const r = await fetch(HW_CONFIG.SUPABASE_URL + '/auth/v1/user', {
+      method: 'PUT', headers: { apikey: HW_CONFIG.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + tokenDaSessao(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: s })
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(erroDoAuth(j, r.status));
+    cadastro = null;
+    await continuarComConta();
+  } catch (e) { erroLogin(e.message); }
+  finally { carregandoLogin(false); }
+}
+
 // ── a tela ──────────────────────────────────────────────────
 function mostraLogin(aviso) {
   avisoLogin = aviso || '';
@@ -183,7 +247,13 @@ function carregandoLogin(s) { document.querySelectorAll('#login-box button').for
 function renderLogin() {
   const box = $('login-box');
   let h = '<div class="zh-big zh">慢慢</div>';
-  if (cadastro === 'perfil') {
+  if (cadastro === 'senha') {
+    h += '<h2>Escolha uma senha nova</h2><p>' + esc(sessaoAuth && sessaoAuth.email || '') + '</p>' +
+      '<input class="lg-input" id="lg-nova" type="password" autocomplete="new-password" placeholder="senha nova">' +
+      '<p class="lg-nota">Pelo menos 6 caracteres. Ela passa a valer no iPhone também.</p>' +
+      '<div class="lg-erro" id="lg-erro" style="display:none"></div>' +
+      '<button class="userbtn lg-principal" id="lg-salva-senha">Salvar e entrar</button>';
+  } else if (cadastro === 'perfil') {
     h += '<h2>Como você quer aparecer?</h2><p>Seus amigos te acham pelo @ para competir na Turma.</p>' +
       '<label class="lg-campo"><span>@</span><input id="lg-handle" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="seu_nome"></label>' +
       '<input class="lg-input" id="lg-nome" autocomplete="name" placeholder="Nome no placar">' +
@@ -206,7 +276,8 @@ function renderLogin() {
       '<div class="lg-erro" id="lg-erro" style="display:none"></div>' +
       '<button class="userbtn lg-principal" id="lg-entrar">Entrar</button>' +
       '<button class="userbtn" id="lg-criar">Criar conta</button>' +
-      '<p class="lg-nota">A senha precisa ter pelo menos 6 caracteres.</p>' +
+      '<div class="lg-okmsg" id="lg-ok" style="display:none"></div>' +
+      '<p class="lg-nota">A senha precisa ter pelo menos 6 caracteres. <button class="lg-link" id="lg-esqueci">Esqueci a senha</button></p>' +
       '<button class="guestbtn" id="lg-convidado">Continuar sem conta</button>' +
       '<p class="lg-nota">Sem conta, o progresso fica só neste navegador e você não aparece na Turma.</p>';
   }
@@ -215,6 +286,8 @@ function renderLogin() {
   on('lg-entrar', () => entrarComConta(false));
   on('lg-criar', () => entrarComConta(true));
   on('lg-convidado', entrarSemConta);
+  on('lg-esqueci', esqueciASenha);
+  on('lg-salva-senha', salvaSenhaNova);
   on('lg-perfil', criarPerfil);
   on('lg-recupera', recuperarProgresso);
   on('lg-novo', pularRecuperacao);
@@ -270,6 +343,8 @@ exEstilo(`
 .login-box .lg-aviso{background:var(--warn-bg);color:var(--txt);border-radius:12px;padding:10px 12px;font-size:13.5px;text-align:left;}
 .lg-erro{background:var(--err-bg);color:var(--err);border-radius:12px;padding:9px 12px;font-size:13.5px;font-weight:600;margin:0 0 10px;text-align:left;}
 .lg-principal{background:var(--red);border-color:var(--red);color:#fff;}
+.lg-okmsg{background:var(--ok-bg);color:var(--ok);border-radius:12px;padding:9px 12px;font-size:13.5px;font-weight:600;margin:0 0 10px;text-align:left;}
+.lg-link{border:0;background:none;color:var(--red);font:inherit;font-weight:700;padding:0;cursor:pointer;text-decoration:underline;}
 .login-box button:disabled{opacity:.6;cursor:default;}
 .pf-conta{display:flex;align-items:center;gap:12px;padding:6px 4px 12px;}
 .pf-conta .info{display:flex;flex-direction:column;gap:2px;min-width:0;}
