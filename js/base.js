@@ -50,7 +50,7 @@ const K = {                      // chaves do localStorage (as por-usuário ganh
 const DECK_LABELS = { saudacoes: 'Saudações', numeros: 'Números', pronomes: 'Pronomes',
   verbos: 'Verbos', uteis: 'Úteis', radicais: 'Radicais', estados: 'Como estou',
   nomes: 'Nomes', familia: 'Família', geral: 'Geral', comida: 'Comida',
-  paises: 'Países', escola: 'Escola' };
+  paises: 'Países', escola: 'Escola', tempo: 'Tempo', interrogativos: 'Interrogativos' };
 // O eixo 📖 fatia pela ORIGEM da carta: de que capítulo do livro (New Practical Chinese
 // Reader 1) ela saiu, ou se veio de fora dele. Mora na coluna `fonte`, que já existia —
 // ninguém do time tem DDL pra criar coluna nova (ver o schema.sql). Capítulo novo não
