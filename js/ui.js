@@ -229,3 +229,27 @@ function seletorVisao(opcoes, valor, muda) {
   g.querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.k !== valor) muda(b.dataset.k); });
   return g;
 }
+
+// <Abas> (DESIGN_SYSTEM.md 7): sublinhado laranja, sem fundo. No HTML:
+//   <div class="abas" data-abas="chave"><button data-aba="a">A</button>…</div>
+//   …e, em qualquer lugar da mesma tela, <div data-painel="a">…</div>
+// A aba escolhida fica no aparelho (manman.aba.<chave>), como as outras preferências de tela.
+function iniciaAbas() {
+  document.querySelectorAll('.abas[data-abas]').forEach(barra => {
+    const tela = barra.closest('.view') || document;
+    const k = 'manman.aba.' + barra.dataset.abas;
+    const botoes = [...barra.querySelectorAll('[data-aba]')];
+    const mostra = aba => {
+      if (!botoes.some(b => b.dataset.aba === aba)) aba = botoes[0].dataset.aba;
+      botoes.forEach(b => { const on = b.dataset.aba === aba; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+      tela.querySelectorAll('[data-painel]').forEach(p => { if (botoes.some(b => b.dataset.aba === p.dataset.painel)) p.hidden = p.dataset.painel !== aba; });
+      try { localStorage.setItem(k, aba); } catch (e) {}
+    };
+    barra.setAttribute('role', 'tablist');
+    botoes.forEach(b => { b.type = 'button'; b.setAttribute('role', 'tab'); b.onclick = () => mostra(b.dataset.aba); });
+    let salva = null;
+    try { salva = localStorage.getItem(k); } catch (e) {}
+    mostra(salva);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciaAbas); else iniciaAbas();

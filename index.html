@@ -521,7 +521,6 @@ font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
    quer dizer nada pra quem abriu a tela pela primeira vez */
 
 /* competição */
-#view-competicao{max-width:1100px;margin:0 auto;}
 .complacar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 6px;}
 .compcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
 box-shadow:var(--shadow);padding:12px 14px;}
@@ -564,7 +563,6 @@ font-size:12px;color:var(--mut);}
 .ctonrow.eu > b{color:var(--red);}
 .ctonv{font-size:13px;color:var(--mut);}
 .ctonv small{color:var(--soft);}
-.pcol{display:contents;}
 .lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
 background:var(--surface);flex:0 0 auto;}
 .gradegrupo{margin:0 0 16px;}
@@ -871,14 +869,10 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   #view-progresso{max-width:1400px;}
   #view-progresso .stats{grid-template-columns:repeat(5,1fr);}
   #view-progresso .stat.wide{grid-column:auto;}
-  .pgrid{display:flex;gap:22px;align-items:flex-start;}
-  .pcol{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
-  .pcol:nth-child(2){flex:1.3;}
   .pblock{margin:0 0 6px;}
   .pblock .sec{margin-top:8px;}
 
   /* Competição: placar e gráfico em largura cheia; o resto em duas colunas (masonry) */
-  .cgrid{columns:2;column-gap:22px;}
   .cblock{break-inside:avoid;margin:0 0 6px;}
   .cblock .sec{margin-top:8px;}
 
@@ -1361,6 +1355,34 @@ border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);tr
 .gcard.frase .gh{font-size:max(21px,calc(var(--gtam,76px) * .22));}
 .gcard.frase .gp{font-size:max(11.5px,calc(var(--gtam,76px) * .12));}
 .gcard{border-radius:max(14px,calc(var(--gtam,76px) * .1));}
+
+/* <Abas> (DESIGN_SYSTEM.md 7): linha embaixo, aba ativa com o sublinhado laranja */
+.abas{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:24px 0 4px;}
+.abas::-webkit-scrollbar{display:none;}
+.abas button{position:relative;flex:0 0 auto;border:0;background:none;padding:8px 16px;font:inherit;font-size:12px;font-weight:500;
+color:var(--mut);cursor:pointer;white-space:nowrap;}
+.abas button:hover{color:var(--txt);}
+.abas button.on{color:var(--txt);}
+.abas button.on:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);}
+[data-painel][hidden]{display:none !important;}
+/* Competição: largura toda; dentro da aba, os cartões em duas colunas (uma no celular) */
+.cgrade{display:grid;grid-template-columns:minmax(0,1fr);gap:0 22px;align-items:start;}
+.cgrade .cblock{margin:0 0 6px;}
+/* Progresso: as revisões viram mais um cartão da fileira dos números */
+.stat.revisoes{flex-direction:column;justify-content:flex-end;grid-column:1/-1;}
+.stat.revisoes .bars{height:56px;padding:0;gap:3px;}
+.stat.revisoes .barlabels{gap:3px;margin-top:3px;}
+.stat.revisoes small{order:-1;margin-bottom:6px;}
+.pgrade{display:grid;grid-template-columns:minmax(0,1fr);gap:0 22px;align-items:start;}
+@media (min-width:900px){
+  #view-competicao{max-width:none;}
+  .cgrade{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .cgrade.um{grid-template-columns:minmax(0,1fr);}
+  #view-progresso{max-width:none;}
+  #view-progresso .stats{grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,2fr);}
+  #view-progresso .stat.revisoes{grid-column:auto;}
+  .pgrade{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -1584,85 +1606,86 @@ border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);tr
   <div id="comp-placar"></div>
   <h3 class="sec">Cartas novas ao longo do tempo</h3>
   <div id="comp-graf"></div>
-  <!-- o resto em duas colunas no PC (masonry); no celular os .cblock empilham na ordem -->
-  <div class="cgrid">
-    <div class="cblock">
-      <h3 class="sec">Provas</h3>
-      <div class="card" id="comp-provas"></div>
-    </div>
+  <!-- o resto em <Abas> (DESIGN_SYSTEM.md 7); dentro de cada aba, duas colunas no PC -->
+  <div class="abas" data-abas="competicao">
+    <button data-aba="geral">Geral</button>
+    <button data-aba="provas">Provas</button>
+    <button data-aba="erros">Erros</button>
+  </div>
+  <div class="cgrade" data-painel="geral">
     <div class="cblock">
       <h3 class="sec">Quem estudou mais · 7 dias</h3>
       <div class="card" id="turma"></div>
     </div>
     <div class="cblock">
+      <h3 class="sec">Frases × palavras</h3>
+      <div class="card" id="comp-tipo"></div>
+    </div>
+  </div>
+  <div class="cgrade um" data-painel="provas" hidden>
+    <div class="cblock">
+      <h3 class="sec">Provas</h3>
+      <div class="card" id="comp-provas"></div>
+    </div>
+  </div>
+  <div class="cgrade" data-painel="erros" hidden>
+    <div class="cblock">
       <h3 class="sec">Erro por habilidade</h3>
       <div class="card" id="comp-hab"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">O que a turma mais erra</h3>
+      <div class="card" id="comp-erram"></div>
     </div>
     <div class="cblock">
       <h3 class="sec">Erro por tema</h3>
       <div class="card" id="comp-tema"></div>
     </div>
     <div class="cblock">
-      <h3 class="sec">Frases × palavras</h3>
-      <div class="card" id="comp-tipo"></div>
-    </div>
-    <div class="cblock">
       <h3 class="sec">Tons que cada um confunde</h3>
       <div class="card" id="comp-tom"></div>
-    </div>
-    <div class="cblock">
-      <h3 class="sec">O que a turma mais erra</h3>
-      <div class="card" id="comp-erram"></div>
     </div>
   </div>
 </section>
 
 <!-- ══════ PROGRESSO ══════ -->
 <section class="view" id="view-progresso">
+  <!-- os números e as revisões dos últimos 14 dias numa fileira só de cartões (Kpi) -->
   <div class="stats">
     <div class="stat wide"><b id="s-total">–</b><small id="s-total-lbl">palavras no deck</small></div>
     <div class="stat"><b id="s-hoje">–</b><small>para revisar hoje</small></div>
     <div class="stat"><b id="s-novas">–</b><small>novas disponíveis</small></div>
     <div class="stat"><b id="s-aprendidas">–</b><small>aprendidas (≥21d)</small></div>
     <div class="stat"><b id="s-streak">–</b><small>dias seguidos 🔥</small></div>
+    <div class="stat revisoes">
+      <div class="bars" id="bars"></div>
+      <div class="barlabels" id="barlabels"></div>
+      <small>revisões · últimos 14 dias</small>
+    </div>
   </div>
-  <!-- cada bloco (título + cartão) fica junto num .pblock; no PC o .pgrid espalha os
-       blocos em duas colunas (break-inside:avoid mantém o cartão inteiro). No celular
-       os dois são div sem estilo, então empilham igual a antes. -->
-  <!-- três colunas no PC. Os .pcol são display:contents no celular, então lá os blocos
-       viram filhos diretos do .pgrid e empilham NA ORDEM DO DOM — que é revisões,
-       habilidade, palavra, turma, deck: idêntica à de antes. A do meio é a "palavra por
-       palavra", que é a lista longa e ganha a coluna só pra ela. -->
-  <div class="pgrid">
-    <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">Revisões · últimos 14 dias</h3>
-        <div class="card">
-          <div class="bars" id="bars"></div>
-          <div class="barlabels" id="barlabels"></div>
-        </div>
-      </div>
-      <div class="pblock">
-        <h3 class="sec">Por capítulo</h3>
-        <div class="card" id="capstats"></div>
-      </div>
-      <div class="pblock">
-        <h3 class="sec">Por habilidade</h3>
-        <div class="card" id="habstats"></div>
-      </div>
+  <div class="abas" data-abas="progresso">
+    <button data-aba="geral">Geral</button>
+    <button data-aba="palavra">Palavra por palavra</button>
+  </div>
+  <!-- Geral: os três cartões lado a lado no PC, empilhados no celular -->
+  <div class="pgrade" data-painel="geral">
+    <div class="pblock">
+      <h3 class="sec">Por capítulo</h3>
+      <div class="card" id="capstats"></div>
     </div>
-    <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">Palavra por palavra</h3>
-        <div class="chips" id="statsort"></div>
-        <div class="card" id="wordstats"></div>
-      </div>
+    <div class="pblock">
+      <h3 class="sec">Por habilidade</h3>
+      <div class="card" id="habstats"></div>
     </div>
-    <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">Por deck</h3>
-        <div class="card" id="deckstats"></div>
-      </div>
+    <div class="pblock">
+      <h3 class="sec">Por deck</h3>
+      <div class="card" id="deckstats"></div>
+    </div>
+  </div>
+  <div data-painel="palavra" hidden>
+    <div class="pblock">
+      <div class="chips" id="statsort"></div>
+      <div class="card" id="wordstats"></div>
     </div>
   </div>
   <div style="text-align:center;margin-top:22px">
