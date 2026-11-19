@@ -414,10 +414,9 @@ let modoCarta = null;            // no aleatório, o modo sorteado pra carta atu
 let modoCartaAnterior = null;    // o da carta passada, pra não repetir duas seguidas
 let cartasEm = 0;                // quando as cartas vieram do banco pela última vez (0 = nunca, nesta abertura)
 let dataSource = '';             // 'supabase' | 'cache' | 'cache-noconfig' | 'seed' | 'vazio'
-let cartasDeck = 'todos';        // filtro da aba Cartas
-let cartasFiltro = 'tema';       // 'tema' | 'origem' — mesma ideia do filtro de estudo
+let cartasTemas = [];            // filtro Tema da aba Palavras/Frases (vazio = todos)
+let cartasOrigens = [];          // filtro Origem (vazio = todas); os dois somam
 let cartasTipo = 'palavra';      // 'palavra' | 'frase' — a aba lista UM tipo por vez
-let cartasGrupo = 'nada';        // 'nada' | 'tema' | 'origem' — agrupa a lista em seções
 
 // ── helpers ─────────────────────────────────────────────────
 function load(key, fallback) {

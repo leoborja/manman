@@ -14,7 +14,7 @@ function switchView(v) {
       cartasTipo = tp;
       // os temas de palavra e de frase não são os mesmos, e a busca por "水" não devolve
       // nada em frase: trocar de tipo recomeça a consulta em vez de herdar o filtro
-      cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
+      cartasTemas = []; cartasOrigens = [];
       $('search').value = '';
     }
     renderCartasChips();
@@ -133,10 +133,6 @@ function bindEvents() {
   });
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
-  // a folha se monta no próprio renderGrade, então abrir é só mostrar
-  $('gradebtn').onclick = () => $('gradesheet').classList.add('show');
-  $('gradesheet-bg').onclick = () => $('gradesheet').classList.remove('show');
-  $('vistasheet-bg').onclick = () => $('vistasheet').classList.remove('show');
   // A−/A+ mexem no tamanho do cartão. Parte do efetivo (o escolhido, ou a base) e anda
   // um passo; fica salvo, e vale no celular também (menos/mais colunas).
   $('grade-tam').querySelectorAll('button').forEach(b => b.onclick = () => {
@@ -171,17 +167,12 @@ function bindEvents() {
     settings.filtro = b.dataset.f; save(K.settings, settings);
     renderChips(); startSession();
   });
-  $('cartas-filtertype').querySelectorAll('button').forEach(b => b.onclick = () => {
-    cartasFiltro = b.dataset.f;
-    cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
-    renderCartasChips(); renderList();
-  });
   $('cartas-tipotype').querySelectorAll('button').forEach(b => b.onclick = () => {
     cartasTipo = b.dataset.tp;
     // os temas de palavra e de frase não são os mesmos, e a busca por "水" não devolve
     // nada em frase: trocar de tipo recomeça a consulta em vez de herdar um filtro que
     // provavelmente não existe do outro lado
-    cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
+    cartasTemas = []; cartasOrigens = [];
     $('search').value = '';
     renderCartasChips(); renderList();
   });

@@ -508,16 +508,7 @@ font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
 .cartas-sec span{font-size:11px;font-weight:700;color:var(--soft);letter-spacing:0;}
 
 /* grade — o deck inteiro numa tela só */
-#gradesheet .filtros{display:flex;gap:6px;flex-wrap:wrap;}
-#gradesheet .chip{font-size:13px;padding:7px 12px;}
-#gradesheet #grade-mostrar .chip:not(.active),
-#gradesheet #grade-faixas .chip:not(.active){opacity:.55;text-decoration:line-through;}
 /* o chip da faixa carrega o próprio quadradinho da escala — ele É a legenda dela */
-#gradesheet #grade-faixas .chip{display:inline-flex;align-items:center;gap:6px;}
-#gradesheet #grade-radical .chip{display:inline-flex;align-items:center;gap:5px;}
-#gradesheet #grade-radical .chip .zh{font-size:16px;}
-#gradesheet #grade-radical .chip i{font-style:normal;font-size:11px;color:var(--soft);}
-#gradesheet #grade-radical .chip.active i{color:rgba(255,255,255,.75);}
 /* radical ativo: a que TEM ele desenha os traços a pincel (a fonte não pinta pedaço),
    e a que NÃO tem recua pro fundo — o olho vai direto pro conjunto que compartilha o
    radical, que é a pergunta que este modo responde */
@@ -908,7 +899,6 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   /* Grade é a única que quer a largura toda — é a tela do "ver tudo". Só o botão e a
      linha do contador ficam centrados; a grade vai de ponta a ponta. O tamanho do
      cartão parte de um pouco maior no PC, e o A−/A+ ajusta a partir daí. */
-  #gradebtn{max-width:600px;margin-left:auto;margin-right:auto;}
   .gradetop{max-width:600px;margin-left:auto;margin-right:auto;}
   #gradewrap{--gtam:96px;}
 
@@ -1224,6 +1214,136 @@ html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
   #view-progresso .stats{gap:12px;}
   .pblock .sec,.cblock .sec{margin-top:4px;}
 }
+
+/* ── Gaveta (DESIGN_SYSTEM.md 11.1) — js/ui.js ── */
+.gaveta-wrap{position:fixed;inset:0;z-index:90;visibility:hidden;}
+.gaveta-wrap.show{visibility:visible;}
+.gaveta-bg{position:absolute;inset:0;background:rgba(0,0,0,.2);opacity:0;transition:opacity .2s;}
+.gaveta-wrap.show .gaveta-bg{opacity:1;}
+.gaveta{position:absolute;top:0;right:0;bottom:0;width:100%;background:var(--bg);border-left:1px solid var(--line);
+display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.12);transform:translateX(100%);
+transition:transform .25s cubic-bezier(.2,.7,.3,1);}
+.gaveta-wrap.show .gaveta{transform:none;}
+@media (min-width:640px){.gaveta{width:50vw;min-width:640px;}}
+.gaveta-cab{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
+min-height:36px;padding:16px 16px 12px 24px;background:var(--bg);}
+.gaveta-esq{display:flex;align-items:center;gap:10px;min-width:0;}
+.gaveta-x{flex:0 0 36px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--txt2);cursor:pointer;}
+.gaveta-x:hover{background:var(--hover);}
+.gaveta-x .ico{width:16px;height:16px;}
+.gaveta-titulo{margin:0;font-size:14px;font-weight:500;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gaveta-acoes{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+.gaveta-corpo{flex:1;overflow-y:auto;padding:4px 16px 32px 24px;-webkit-overflow-scrolling:touch;}
+.gaveta-corpo > * + *{margin-top:20px;}
+@media (max-width:640px){
+  .gaveta-cab{padding:12px 16px;flex-wrap:wrap;}
+  .gaveta-esq{flex:1 1 100%;}
+  .gaveta-corpo{padding:4px 16px 32px;}
+}
+body.com-gaveta{overflow:hidden;}
+.gcodigo{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;color:var(--soft);}
+.gcodigo code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;}
+.gtag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;
+background:var(--pill);color:var(--mut);}
+.gtag.ok{background:var(--ok-bg);color:var(--ok);} .gtag.warn{background:var(--warn-bg);color:var(--warn);}
+.gtag.err{background:var(--err-bg);color:var(--err);}
+.gsec-cab{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px;}
+.gsec-cab h3{margin:0;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);}
+.gsec-cab span{font-size:12px;color:var(--soft);}
+.gcampos{display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:8px 16px;margin:0;font-size:12px;}
+.gcampos dt{color:var(--soft);}
+.gcampos dd{margin:0;text-align:right;color:var(--txt);}
+.gkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+@media (max-width:640px){.gkpis{grid-template-columns:repeat(2,1fr);}}
+.gkpi{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:10px 12px;}
+.gkpi small{display:block;font-size:11px;color:var(--mut);}
+.gkpi b{display:block;margin-top:2px;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;}
+.ghero{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:16px;}
+.ghero .zh{font-size:56px;line-height:1.1;}
+.ghero.frase{flex-direction:column;align-items:flex-start;gap:8px;}
+.ghero.frase .zh{font-size:28px;line-height:1.35;}
+.ghero .gpy{font-size:15px;font-weight:500;}
+.ghero .gpt{font-size:13px;color:var(--mut);margin-top:2px;}
+.gtexto{font-size:13px;line-height:1.55;color:var(--txt);border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:12px 14px;}
+.gaveta-corpo .ideias{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:12px;}
+.gbotao{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:6px;
+background:var(--hover);color:var(--mut);font:inherit;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.gbotao:hover{background:var(--pill);color:var(--txt);}
+.gbotao.on{color:var(--txt);border-color:var(--red);}
+/* a nota da teoria dentro da gaveta: sem o cartão em volta, a gaveta já é o lugar */
+.gaveta-corpo .nota-t.painel{border:0;background:none;padding:0;}
+.gaveta-corpo .nota-nav{position:static;margin-top:20px;}
+
+/* ── Barra de filtros (DESIGN_SYSTEM.md 8.5 e 9) — js/ui.js ── */
+.ft-barra{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:4px 0;margin:0 0 8px;}
+.ft-esq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;flex:1;min-width:0;}
+.ft-dir{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.ft-btn{display:inline-flex;align-items:center;gap:6px;height:36px;width:160px;padding:0 8px 0 10px;
+border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--soft);font:inherit;font-size:12px;
+cursor:pointer;text-align:left;}
+.ft-btn span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ft-btn .ft-seta{width:14px;height:14px;flex:0 0 14px;opacity:.6;}
+.ft-btn:hover{background:var(--hover);}
+.ft-btn.cheio{border:2px solid var(--add);padding:0 7px 0 9px;color:var(--txt);}
+.ft-btn em{font-style:normal;flex:0 0 auto;min-width:18px;height:18px;padding:0 5px;border-radius:4px;background:var(--add);
+color:#fff;font-size:10px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;}
+.ft-quad{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--line);
+border-radius:6px;background:var(--bg);color:var(--txt2);cursor:pointer;flex:0 0 36px;}
+.ft-quad:hover,.ft-quad.aberto{background:var(--hover);}
+.ft-quad.ativo{border-color:var(--red);}
+.ft-quad .ico{width:16px;height:16px;}
+.ft-quad.txt{width:auto;padding:0 10px;font:inherit;font-size:12px;font-weight:500;flex:0 0 auto;}
+.ft-quad.txt.ativo{color:var(--txt);}
+.ft-pop{position:absolute;z-index:120;max-height:min(60vh,420px);overflow-y:auto;padding:8px;border:1px solid var(--line);
+border-radius:8px;background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.14);font-size:13px;}
+.ft-pop-tit{padding:4px 8px 6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);}
+.ft-pop-tit2{display:flex;align-items:center;justify-content:space-between;}
+.ft-item{display:flex;align-items:center;gap:8px;width:100%;padding:7px 8px;border:0;border-radius:4px;background:none;
+color:var(--txt);font:inherit;font-size:13px;text-align:left;cursor:pointer;}
+.ft-item:hover{background:var(--hover);}
+.ft-q{flex:0 0 14px;width:14px;height:14px;border:1px solid var(--line);border-radius:3px;background:var(--bg);position:relative;}
+.ft-item.on .ft-q{background:var(--add);border-color:var(--add);}
+.ft-item.on .ft-q:after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+.ft-item.on{color:var(--txt);}
+.ft-item span{flex:1;min-width:0;}
+.ft-item .zh{font-size:15px;}
+.ft-pop-busca{display:block;margin:0 0 6px;}
+.ft-pop-busca input{width:100%;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 8px;
+font:inherit;font-size:12px;color:var(--txt);outline:none;}
+.ft-pop-rod{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);margin-top:6px;padding:6px 4px 0;}
+.ft-link{border:0;background:none;padding:2px 4px;font:inherit;font-size:12px;color:var(--mut);cursor:pointer;}
+.ft-link:hover{color:var(--txt);text-decoration:underline;}
+.ft-vazio{margin:6px 8px;color:var(--soft);font-size:12px;}
+.ft-sep{height:1px;background:var(--line);margin:6px 0;}
+@media (max-width:640px){
+  /* no celular os filtros tomam a linha toda, dois por fileira; os ícones vão pra baixo, à direita */
+  .ft-esq{flex:1 1 100%;}
+  .ft-btn{width:calc(50% - 4px);}
+  .ft-esq .dt-busca{width:100%;}
+}
+
+.ft-contents{display:contents;}
+.dt-vazio{margin:0;padding:32px 16px;text-align:center;font-size:12px;color:var(--mut);}
+.cartas-tab tr.cl{cursor:pointer;}
+.cartas-tab tr.cl-grupo{cursor:pointer;}
+.cartas-tab tr.cl-grupo td:before{content:"";display:inline-block;width:6px;height:6px;margin:0 8px 2px 2px;
+border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}
+.cartas-tab tr.cl-grupo.fechado td:before{transform:rotate(-45deg);}
+.cartas-tab.oc-som .c-som,.cartas-tab.oc-py .c-py,.cartas-tab.oc-nota .c-nota,.cartas-tab.oc-tema .c-tema,
+.cartas-tab.oc-fav .c-fav,.cartas-tab.oc-on .c-on{display:none;}
+.lgq{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px;
+background:var(--surface);border:1px solid var(--line);}
+.lgq.e1{background:var(--e1);} .lgq.e2{background:var(--e2);} .lgq.e3{background:var(--e3);} .lgq.e4{background:var(--e4);}
+
+/* Grade: a contagem e a legenda à esquerda, tamanho e significado à direita */
+.gradetop{gap:12px;justify-content:flex-start;flex-wrap:wrap;}
+.gradetop .counter{font-size:12px;color:var(--mut);}
+.gradetop .gradelegend{display:flex;gap:12px;margin:0 auto 0 0;font-size:12px;color:var(--soft);}
+.gradetop .gradelegend span{display:inline-flex;align-items:center;gap:5px;}
+.gradetam button,.gradetgl{height:36px;border-radius:6px;font-size:12px;font-weight:500;box-shadow:none;}
+.gradetgl.on{background:var(--bg);color:var(--txt);border:2px solid var(--add);}
+@media (max-width:640px){.gradetop .gradelegend{display:none;}}
 </style>
 </head>
 <body>
@@ -1420,13 +1540,16 @@ html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
     <button class="chip filtro tipo active" data-tp="palavra"><span class="zh">汉</span> Palavras</button>
     <button class="chip filtro tipo" data-tp="frase">💬 Frases</button>
   </div>
-  <!-- Barra do DataTable (DESIGN_SYSTEM.md, 8.1): busca à esquerda, Configurar à direita.
-       O Configurar é o "Agrupar por" daqui: filtrar, agrupar, ordenar, isolar e mostrar
-       moram na folha (como na aba Cartas do iPhone). -->
-  <div class="dt-barra">
-    <label class="dt-busca"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="search" placeholder="Buscar hanzi, pinyin ou tradução" autocomplete="off"></label>
-    <div class="grupobar" id="cartas-grupobar"></div>
+  <!-- Barra do DataTable (DESIGN_SYSTEM.md 8.1 e 9): busca e filtros à esquerda, Ordenar,
+       Agrupar por e Colunas à direita. A busca é fixa (não perde o foco ao digitar); os
+       botões são redesenhados pelo renderCartasBarra (js/cartas.js). -->
+  <div class="ft-barra">
+    <div class="ft-esq">
+      <label class="dt-busca"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="search" placeholder="Buscar hanzi, pinyin ou tradução" autocomplete="off"></label>
+      <span id="cartas-filtros" class="ft-contents"></span>
+    </div>
+    <div class="ft-dir" id="cartas-dir"></div>
   </div>
   <div id="bulkbar"></div>
   <!-- moldura só com linha em cima e embaixo; a contagem é a primeira faixa dela -->
@@ -1438,17 +1561,15 @@ html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
 
 <!-- ══════ GRADE (o deck inteiro numa tela só) ══════ -->
 <section class="view" id="view-grade">
-  <!-- Três eixos, e os três valem ao mesmo tempo. Eles moram numa folha, e não em três
-       filas de chips na tela: em 375px aquilo eram 150px de controle antes da primeira
-       carta — metade da tela gasta pra escolher como ver a outra metade. Mesmo botão da
-       aba Estudar: uma linha que diz o estado inteiro, e a escolha acontece na folha. -->
-  <button class="modebtn" id="gradebtn">
-    <span class="mscope" id="gradescope">🏷️ Tema</span>
-    <span class="mcur" id="gradecur">🔥 Erros</span>
-    <span class="marrow">▼</span>
-  </button>
+  <!-- A barra de filtros do Design System (DESIGN_SYSTEM.md 9), a mesma de Palavras:
+       filtros à esquerda, Ordenar e Agrupar por à direita (renderGradeBarra). -->
+  <div class="ft-barra">
+    <div class="ft-esq" id="grade-filtros"></div>
+    <div class="ft-dir" id="grade-dir"></div>
+  </div>
   <div class="gradetop">
     <div class="counter" id="grade-count"></div>
+    <div class="gradelegend"><span><i class="lg ok"></i> aprendida</span><span><i class="lg off"></i> fora da rotação</span></div>
     <div class="gradetam" id="grade-tam">
       <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
       <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
@@ -1457,44 +1578,6 @@ html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
   </div>
   <div id="gradewrap"></div>
 </section>
-
-<!-- como ver a grade (bottom sheet) — os três eixos e o que as cores dizem -->
-<div class="sheetwrap" id="gradesheet">
-  <div class="sheetbg" id="gradesheet-bg"></div>
-  <div class="sheet scroll">
-    <div class="handle"></div>
-    <h3>Como ver a grade</h3>
-    <div class="sheetsep">agrupar</div>
-    <div class="filtros wrapchips" id="grade-grupo"></div>
-    <div class="sheetsep">ordenar dentro do grupo</div>
-    <div class="filtros wrapchips" id="grade-ordem"></div>
-    <!-- este eixo TIRA coisa da tela. Chip aceso = aparece; apagado e riscado =
-         escondido — sem o risco, um chip branco aqui se lê como "clique pra mostrar",
-         que é o contrário do que ele está dizendo. -->
-    <div class="sheetsep">mostrar</div>
-    <div class="filtros wrapchips" id="grade-mostrar"></div>
-    <!-- Os degraus da escala viraram filtro, e com isso a legenda dela: o chip leva o
-         quadradinho da cor e quantos tropeços ela quer dizer, então não existe mais uma
-         escala desenhada num canto pra você casar com os quadradinhos na tela. -->
-    <div class="sheetsep">…e quantos tropeços</div>
-    <div class="filtros wrapchips" id="grade-faixas"></div>
-    <!-- pintar o radical é OUTRA pergunta que não a do erro, então ligar um radical
-         apaga o vermelho da tela: uma lente por vez. O seletor só lista radical que
-         aparece em ≥2 cartas — radical solitário não mostra relação nenhuma. -->
-    <div class="sheetsep">radical em azul</div>
-    <div class="filtros wrapchips" id="grade-radical"></div>
-    <!-- só aparece com um radical escolhido: o que o radical FAZ com a tela. Pintar
-         (recua o resto), Agrupar (com/sem, em dois montes) ou Só essas (esconde o resto).
-         No Agrupar, o com/sem substitui o eixo Agrupar enquanto o radical estiver ligado. -->
-    <div class="filtros wrapchips" id="grade-radmodo"></div>
-    <!-- aprendida e fora da rotação falam por borda, não por cor de fundo, então não
-         entram na escala acima e continuam precisando de legenda -->
-    <div class="gradelegend">
-      <span><i class="lg ok"></i> aprendida (fora da escala — quem manda nela é o ✅)</span>
-      <span><i class="lg off"></i> fora da rotação</span>
-    </div>
-  </div>
-</div>
 
 <!-- ══════ COMPETIÇÃO (comparar os 4) ══════ -->
 <section class="view" id="view-competicao">
@@ -1753,24 +1836,6 @@ html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
 </div>
 
 <!-- a vista da lista de Palavras / Frases: agrupar, ordenar, isolar, mostrar (js/cartas.js) -->
-<div class="sheetwrap" id="vistasheet">
-  <div class="sheetbg" id="vistasheet-bg"></div>
-  <div class="sheet scroll"><div class="handle"></div>
-    <div id="vista-corpo"></div>
-    <!-- filtrar: tema ou origem. O bloco é fixo (não se redesenha com a folha) porque o
-         renderCartasChips já sabe desenhá-lo pelos ids -->
-    <div class="sheetsep">filtrar</div>
-    <div class="vista-filtro">
-      <div class="filtros" id="cartas-filtertype">
-        <button class="chip filtro active" data-f="tema" title="Filtrar por tema">🏷️ Tema</button>
-        <button class="chip filtro" data-f="origem" title="Filtrar por origem (capítulo do livro, extras da aula, Duolingo)">📖 Origem</button>
-      </div>
-      <div class="filtros wrapchips" id="cartas-chips"></div>
-    </div>
-    <div id="vista-corpo2"></div>
-  </div>
-</div>
-
 <!-- a lição do Hoje: de onde vêm as cartas, quantas, como, quando -->
 <div class="sheetwrap" id="licaosheet">
   <div class="sheetbg" id="licaosheet-bg"></div>
@@ -1854,6 +1919,7 @@ html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
 
 <script src="./config.js"></script>
 <script src="./js/base.js"></script>
+<script src="./js/ui.js"></script>
 <script src="./js/desenho.js"></script>
 <script src="./js/teclado.js"></script>
 <script src="./js/dados.js"></script>

@@ -204,13 +204,9 @@ function abreSonsDoCurso() {
   teoriaVoltaPro = 'curso';
   renderTeoria();
 }
-// A nota abre no leitor da aba Teoria, e o ‹ de lá volta pra cá.
+// A nota abre na gaveta à direita, com o capítulo atrás (js/teoria.js).
 function abreNotaDoCurso(cap, i) {
-  switchView('teoria');
-  leitura = { titulo: origemLabel(cap), notas: teoriaDoCap(cap), i };
-  teoriaTela = 'nota';
-  teoriaVoltaPro = 'curso';
-  renderTeoria();
+  abreNotaGaveta({ titulo: origemLabel(cap), notas: teoriaDoCap(cap), i });
 }
 // A rodada do capítulo: o Estudar com o capítulo como única origem, no 🔀 (que já
 // sorteia um modo por carta). Troca o escopo salvo de propósito — é o que a pessoa vai
@@ -332,13 +328,16 @@ function saiCurso() { /* a folha fica onde está: voltar à aba cai no mesmo ite
 exEstilo(`
 .curso-faixa{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0 12px;}
 .curso-faixa::-webkit-scrollbar{display:none;}
-.capchip{flex:0 0 auto;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:999px;
-  background:var(--surface);color:var(--txt);font:inherit;font-weight:700;font-size:14px;padding:8px 15px 9px;cursor:pointer;}
-.capchip::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:var(--f);background:var(--red);opacity:.55;}
+/* no tamanho dos filtros do Design System (h-9, 12px, raio 6px); o escolhido ganha a
+   borda verde de 2px, e o filete embaixo continua dizendo o quanto o capítulo fechou */
+.capchip{flex:0 0 auto;position:relative;overflow:hidden;display:inline-flex;align-items:center;height:36px;
+  border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--mut);font:inherit;
+  font-weight:500;font-size:12px;padding:0 12px;cursor:pointer;}
+.capchip:hover{background:var(--hover);}
+.capchip::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--f);background:var(--red);opacity:.55;}
 .capchip.feito{color:var(--ok);}
 .capchip.feito::after{background:var(--ok);}
-.capchip.active{background:var(--red);border-color:var(--red);color:#fff;}
-.capchip.active::after{background:#fff;opacity:.6;}
+.capchip.active{border:2px solid var(--add);padding:0 11px;color:var(--txt);}
 .capcard{display:flex;flex-direction:column;gap:2px;padding:18px;border-radius:var(--radius);background:var(--surface2);border:1px solid var(--line);}
 .capcard small{color:var(--mut);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.4px;}
 .capcard b{font-size:30px;font-weight:500;}
