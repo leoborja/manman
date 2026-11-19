@@ -319,10 +319,7 @@ function bindEvents() {
   $('ideias-opt').onclick = () => {
     settings.ideias = settings.ideias === false; save(K.settings, settings);
     renderModeSheet();
-    if (current) { // a carta na tela já obedece
-      $('ideia-btn').classList.toggle('show', temIdeia(current));
-      if (!temIdeia(current)) { $('back-ideias').innerHTML = ''; ajustaAltura(); }
-    }
+    if (current) { mostraIdeias(current); ajustaAltura(); } // a carta na tela já obedece
   };
   $('pron-opt').onclick = () => {
     settings.pron = !settings.pron; save(K.settings, settings);
