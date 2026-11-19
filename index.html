@@ -1349,6 +1349,18 @@ border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);tr
 .gradegrupo.fechado > h3:before{transform:rotate(-45deg);}
 .gradegrupo.fechado > h3{margin-bottom:0;}
 .gradegrupo.fechado > :not(h3){display:none;}
+
+/* A letra acompanha o cartão: até o tamanho de sempre fica igual (o max() segura o
+   piso), e daí pra cima cresce na proporção do --gtam (30px de hanzi num cartão de 96). */
+.gcard .gh{font-size:max(30px,calc(var(--gtam,76px) * .31));}
+.gcard.n2 .gh{font-size:max(27px,calc(var(--gtam,76px) * .28));}
+.gcard.n3 .gh{font-size:max(21px,calc(var(--gtam,76px) * .22));}
+.gcard.n4 .gh{font-size:max(16px,calc(var(--gtam,76px) * .17));}
+.gcard .gp{font-size:max(11px,calc(var(--gtam,76px) * .115));}
+.gcard .gsig{font-size:max(10.5px,calc(var(--gtam,76px) * .11));}
+.gcard.frase .gh{font-size:max(21px,calc(var(--gtam,76px) * .22));}
+.gcard.frase .gp{font-size:max(11.5px,calc(var(--gtam,76px) * .12));}
+.gcard{border-radius:max(14px,calc(var(--gtam,76px) * .1));}
 </style>
 </head>
 <body>

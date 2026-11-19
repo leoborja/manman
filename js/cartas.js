@@ -599,7 +599,9 @@ function gradeCfg() {
   delete g.frases;
   return g;
 }
-const GTAM_MIN = 56, GTAM_MAX = 168, GTAM_PASSO = 16, GTAM_BASE = 96;
+// até 320px: o cartão grande serve pra ler de longe / estudar o traço, e a letra cresce
+// junto (o CSS escala pelo --gtam). Passo de 24 pra não precisar de 11 cliques até o fim.
+const GTAM_MIN = 56, GTAM_MAX = 320, GTAM_PASSO = 24, GTAM_BASE = 96;
 const RAD_MODOS = [['pintar', '🖌️ Pintar'], ['agrupar', '📑 Agrupar'], ['so', '🔎 Só essas']];
 // os dois montes do modo Agrupar: com o radical em cima, sem embaixo. Substitui o eixo
 // Agrupar enquanto o radical está ligado — aninhar "tema dentro de com-氵" viraria
@@ -672,7 +674,8 @@ function pintaRadical(rad) {
     const gh = card.querySelector('.gh');
     const chars = [...limpaHanzi(c.hanzi)].filter(ch => strokesDB[ch]);
     if (!chars.length) return;
-    const size = ehFrase(c) ? 30 : chars.length > 2 ? 26 : chars.length > 1 ? 34 : 42;
+    const esc_ = Math.max(1, (gradeCfg().tam || GTAM_BASE) / GTAM_BASE); // cresce com o cartão
+    const size = Math.round((ehFrase(c) ? 30 : chars.length > 2 ? 26 : chars.length > 1 ? 34 : 42) * esc_);
     gh.textContent = '';
     chars.forEach(ch => gh.appendChild(radicalSvg(ch, rad, size)));
   });
