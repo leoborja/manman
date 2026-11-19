@@ -1408,6 +1408,14 @@ p.gtexto{margin:0;}
 .ft-segs button.on{border:2px solid var(--add);color:var(--txt);}
 .ft-item small{color:var(--soft);margin-left:4px;}
 @media (max-width:640px){.ft-btn.largo{width:100%;}}
+
+/* Estudar no computador: a carta quadrada (600 × 600), em todo modo. Em tela baixa o
+   teto é a altura da janela menos a barra e os botões de resposta, pra eles não caírem
+   pra fora; quando o conteúdo pede mais, o ajustaAltura cresce a carta como sempre. */
+@media (min-width:900px){
+  #view-estudar .fcard,#view-estudar .fcard.draw,#view-estudar .fcard.type,#view-estudar .fcard.ord{
+    min-height:max(320px,min(600px,calc(100vh - 260px)));}
+}
 </style>
 </head>
 <body>
