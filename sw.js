@@ -23,11 +23,11 @@
 //
 // Se um dia este arquivo quebrar o app: trocar a versão da CASCA força todo celular a
 // baixar tudo de novo na próxima abertura com internet (o activate apaga a cópia antiga).
-const CASCA = 'manman-casca-v3';
+const CASCA = 'manman-casca-v4';
 const AUDIO = 'manman-audio';   // sem versão: trocar a casca não rebaixa os 4 MB de áudio
 const PRAZO_MS = 3000;
 const ARQUIVOS_CASCA = ['./', './index.html', './config.js',
-  './js/base.js', './js/desenho.js', './js/teclado.js', './js/dados.js', './js/estudar.js', './js/cartas.js', './js/progresso.js', './js/teoria.js', './js/curso.js', './js/conta.js', './js/ex-escolha.js', './js/ex-escrita.js', './js/prova.js', './js/hoje.js', './js/estado.js', './js/main.js', './manifest.webmanifest',
+  './js/base.js', './js/ui.js', './js/desenho.js', './js/teclado.js', './js/dados.js', './js/estudar.js', './js/cartas.js', './js/progresso.js', './js/teoria.js', './js/curso.js', './js/conta.js', './js/ex-escolha.js', './js/ex-escrita.js', './js/prova.js', './js/hoje.js', './js/estado.js', './js/main.js', './manifest.webmanifest',
   './fonts/hanzi.woff2', './strokes/strokes.json', './seed/dialogos.json', './seed/literal.json', './seed/ideogramas.json',
   './seed/teoria.json', './seed/sons.json', './seed/exercicios.json', './seed/semelhantes.json', './icons/icon-192.png', './icons/icon-512.png'];
 

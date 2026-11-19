@@ -133,7 +133,7 @@ function renderHabStats() {
     if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(r.nome) +
       '<small>' + esc(r.dica) + '</small></span><span class="hnum">sem dados</span></div>';
     const pct = Math.round(v.e / v.n * 100);
-    return '<div class="habrow"><span class="hnome">' + esc(r.nome) +
+    return '<div class="habrow abre" data-hab="' + h.k + '" data-g="' + g + '" role="button" tabindex="0"><span class="hnome">' + esc(r.nome) +
       '<small>' + esc(r.dica) + '</small></span>' +
       '<span class="hnum"><b>' + pct + '%</b><small>de erro · ' + v.e + ' de ' + v.n + '</small></span>' +
       '<span class="hbar"><i style="width:' + Math.max(2, pct) + '%"></i></span></div>';
@@ -164,6 +164,7 @@ function renderHabStats() {
       }).join('') + '</div>';
   }
   $('habstats').innerHTML = linhas + cx;
+  ligaLinhas($('habstats'), '.habrow.abre', el => abreHabGaveta(el.dataset.hab, el.dataset.g));
 }
 function renderTurma() {
   if (!logTurma || !logTurma.length) {
@@ -260,7 +261,7 @@ function compUsuarios() {
 // uma célula da matriz: o vermelho cresce com o valor (erro é o que se quer achar), e a
 // coluna do próprio usuário fica marcada. `frac` (0–1) = intensidade; null = sem dado.
 function compCel(txt, frac, eu) {
-  const bg = frac == null ? '' : 'background:rgba(200,16,46,' + (0.08 + 0.5 * frac).toFixed(2) + ')';
+  const bg = frac == null ? '' : 'background:rgba(190,91,55,' + (0.08 + 0.5 * frac).toFixed(2) + ')';
   return '<span class="cmcel' + (eu ? ' eu' : '') + '" style="' + bg + '">' +
     (txt == null ? '<i>–</i>' : txt) + '</span>';
 }
@@ -439,7 +440,7 @@ function renderCapStats() {
     // "12 de 34" em vez de "12/34": o segundo lê como fração e este número não é uma
     const detalhe = apr + ' de ' + pool.length + (vis ? ' · ' + vis + ' começada' + (vis > 1 ? 's' : '') : '')
       + (nOff ? ' · ' + nOff + ' 🚫' : '');
-    return '<div class="caprow' + (apr + vis ? '' : ' vazio') + '">' +
+    return '<div class="caprow abre' + (apr + vis ? '' : ' vazio') + '" data-origem="' + esc(o) + '" role="button" tabindex="0">' +
       '<span class="cnome">' + esc(origemLabel(o)) + '<small>' + esc(detalhe) + '</small></span>' +
       '<span class="cnum"><b>' + pct + '%</b><small>aprendido</small></span>' +
       '<span class="cbar">' +
@@ -451,10 +452,13 @@ function renderCapStats() {
     '<div class="capleg"><span><i></i>aprendida (≥' + LEARNED_IVL + 'd)</span>' +
     '<span><i class="vis"></i>começada</span><span><i class="nao"></i>nunca vista</span></div>'
     : '<p class="wempty">O deck ainda não tem carta com capítulo marcado.</p>';
+  ligaLinhas($('capstats'), '.caprow.abre', el => abreRecorteGaveta(origemLabel(el.dataset.origem), 'Capítulo',
+    cards.filter(c => origemDe(c) === el.dataset.origem), ['cap', el.dataset.origem]));
 }
 
 // ── UI: progresso ───────────────────────────────────────────
 function renderProgress() {
+  gravaFoto();
   renderCapStats();
   renderHabStats();
   renderWordStats();
@@ -485,7 +489,194 @@ function renderProgress() {
     const learned = pool.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
     const seen = pool.filter(c => srs[c.id]).length;
     const nOff = pool.filter(c => isOff(c.id)).length;
-    return '<div class="deckrow"><b>' + esc(deckLabel(dk)) + '</b><span>' + seen + '/' + pool.length +
+    return '<div class="deckrow abre" data-deck="' + esc(dk) + '" role="button" tabindex="0"><b>' + esc(deckLabel(dk)) + '</b><span>' + seen + '/' + pool.length +
       ' vistas · ' + learned + ' aprendidas' + (nOff ? ' · ' + nOff + ' 🚫' : '') + '</span></div>';
   }).join('');
+  ligaLinhas($('deckstats'), '.deckrow.abre', el => abreRecorteGaveta(deckLabel(el.dataset.deck), 'Tema',
+    cards.filter(c => c.deck === el.dataset.deck), ['deck', el.dataset.deck]));
+}
+
+// ── Progresso → gaveta ─────────────────────────────────────
+// Clicar numa linha da aba Geral (capítulo, habilidade, tema) abre o recorte na gaveta
+// (DESIGN_SYSTEM.md 11.1): o que você mais erra ali primeiro, depois o que ainda não
+// aprendeu e o que já aprendeu. Cada carta da lista abre a carta na mesma gaveta.
+function ligaLinhas(box, sel, abre) {
+  box.querySelectorAll(sel).forEach(el => {
+    el.onclick = () => abre(el);
+    el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abre(el); } };
+  });
+}
+// uma carta numa linha: 汉字, pinyin e significado, e à direita o número que importa ali
+function linhaCartaGaveta(c, dir, dirSub) {
+  return '<button class="glinha" data-id="' + esc(c.id) + '"><span class="zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
+    '<span class="gl-meio"><b>' + esc(c.pt) + '</b><small>' + pinyinColored(c.pinyin) + '</small></span>' +
+    (dir != null ? '<span class="gl-dir"><b>' + dir + '</b>' + (dirSub ? '<small>' + esc(dirSub) + '</small>' : '') + '</span>' : '') + '</button>';
+}
+function listaGaveta(lista) { return '<div class="glista">' + lista.join('') + '</div>'; }
+function ligaCartasGaveta(corpo) {
+  corpo.querySelectorAll('.glinha[data-id]').forEach(b => b.onclick = () => abreCartaGaveta(b.dataset.id));
+}
+// Um capítulo ou um tema: as cartas dele que estão na rotação, divididas em três
+function abreRecorteGaveta(titulo, tipo, todas, evo) {
+  const pool = todas.filter(c => !isOff(c.id));
+  const nOff = todas.length - pool.length;
+  const apr = pool.filter(c => aprendida(c.id));
+  const nao = pool.filter(c => !aprendida(c.id));
+  const comErro = nao.filter(c => erroCount(c.id) > 0).sort((a, b) => erroCount(b.id) - erroCount(a.id));
+  const resto = nao.filter(c => !erroCount(c.id)).sort((a, b) => dominio(b.id) - dominio(a.id));
+  const corpo = abreGaveta({ titulo });
+  const pct = pool.length ? Math.round(apr.length / pool.length * 100) : 0;
+  gravaFoto(); // o gráfico mostra hoje com o que acabou de acontecer
+  let h = '<div class="gcodigo"><span>' + esc(tipo) + '</span>' + (nOff ? '<span class="gtag">' + nOff + ' desligada' + (nOff > 1 ? 's' : '') + '</span>' : '') + '</div>' +
+    '<div class="gkpis">' +
+    '<div class="gkpi"><small>Cartas</small><b>' + pool.length + '</b></div>' +
+    '<div class="gkpi"><small>Aprendidas</small><b>' + apr.length + ' <i>' + pct + '%</i></b></div>' +
+    '<div class="gkpi"><small>Com tropeço</small><b>' + comErro.length + '</b></div>' +
+    '<div class="gkpi"><small>Nunca vistas</small><b>' + pool.filter(c => !srs[c.id]).length + '</b></div></div>';
+  if (evo) h += secaoGaveta('Evolução', '', graficoEvolucao(evo[0], evo[1]));
+  h += secaoGaveta('O que você mais erra', comErro.length, comErro.length
+    ? listaGaveta(comErro.map(c => { const n = erroCount(c.id); return linhaCartaGaveta(c, n, n > 1 ? 'tropeços' : 'tropeço'); }))
+    : '<p class="gvazio">Nenhum tropeço nas que faltam aprender. 🎉</p>');
+  if (resto.length) h += secaoGaveta('Ainda não aprendidas', resto.length,
+    listaGaveta(resto.map(c => linhaCartaGaveta(c, srs[c.id] ? Math.round(dominio(c.id) * 100) + '%' : '—', srs[c.id] ? 'domínio' : 'nunca vista'))));
+  if (apr.length) h += secaoGaveta('Aprendidas', apr.length, listaGaveta(apr.map(c => linhaCartaGaveta(c))));
+  corpo.innerHTML = h;
+  ligaCartasGaveta(corpo);
+}
+// Uma habilidade: as cartas em que ela foi medida, da que você mais erra pra que nunca erra
+function abreHabGaveta(k, g) {
+  const hab = HABS.find(x => x.k === k);
+  const r = (hab.porGrupo && hab.porGrupo[g]) || hab;
+  const medidas = cards.filter(c => (ehFrase(c) ? 'frase' : 'palavra') === g)
+    .map(c => ({ c, v: (stats[c.id] && stats[c.id].hab && stats[c.id].hab[k]) || null }))
+    .filter(x => x.v && x.v.n);
+  const erra = medidas.filter(x => x.v.e).sort((a, b) => b.v.e - a.v.e || (b.v.e / b.v.n) - (a.v.e / a.v.n));
+  const limpas = medidas.filter(x => !x.v.e).sort((a, b) => b.v.n - a.v.n);
+  const n = medidas.reduce((t, x) => t + x.v.n, 0), e = medidas.reduce((t, x) => t + x.v.e, 0);
+  gravaFoto();
+  const corpo = abreGaveta({ titulo: r.nome });
+  let h = '<div class="gcodigo"><span>Habilidade · ' + (g === 'frase' ? 'Frases' : 'Palavras') + '</span></div>' +
+    '<p class="gtexto">' + esc(r.dica) + '</p>' +
+    '<div class="gkpis">' +
+    '<div class="gkpi"><small>Erro</small><b>' + (n ? Math.round(e / n * 100) + '%' : '—') + '</b></div>' +
+    '<div class="gkpi"><small>Tentativas</small><b>' + n + '</b></div>' +
+    '<div class="gkpi"><small>Cartas medidas</small><b>' + medidas.length + '</b></div>' +
+    '<div class="gkpi"><small>Com erro</small><b>' + erra.length + '</b></div></div>';
+  h += secaoGaveta('Evolução', '', graficoEvolucao('hab', g + '.' + k));
+  h += secaoGaveta('O que você mais erra', erra.length, erra.length
+    ? listaGaveta(erra.map(x => linhaCartaGaveta(x.c, x.v.e + ' de ' + x.v.n, Math.round(x.v.e / x.v.n * 100) + '% de erro')))
+    : '<p class="gvazio">Nenhum erro nesta habilidade ainda.</p>');
+  if (limpas.length) h += secaoGaveta('Sem erro', limpas.length,
+    listaGaveta(limpas.map(x => linhaCartaGaveta(x.c, x.v.n + '×', 'sem errar'))));
+  corpo.innerHTML = h;
+  ligaCartasGaveta(corpo);
+}
+
+// ── a evolução: uma foto por dia ───────────────────────────
+// O banco só guarda o estado ATUAL de cada carta, então "estou melhorando no Cap. 3?" não
+// tem resposta olhando pra trás. A partir de agora o app tira uma foto por dia, com o
+// ACUMULADO de cada recorte, e o gráfico da gaveta compara uma foto com a anterior:
+//   cap / deck:  [aprendidas, na rotação, acertos, tropeços]   (tropeço = difícil + erro)
+//   hab:         [tentativas, erros]                            chave 'palavra.rec' etc.
+// A foto de hoje é refeita a cada resposta (a última do dia vale). Mora na chave
+// `evolucao` da tabela `estado`, então segue a conta de um aparelho pro outro.
+const K_EVOLUCAO = 'manman.evolucao.v1';
+const EVOLUCAO_DIAS = 200; // ~1 KB por dia; o jsonb da tabela aceita até 256 KB
+function fotoAgora() {
+  const f = { cap: {}, deck: {}, hab: {} };
+  const soma = (m, k, c) => {
+    const x = m[k] || (m[k] = [0, 0, 0, 0]);
+    if (isOff(c.id)) return;
+    const st = statOf(c.id);
+    x[1]++; if (aprendida(c.id)) x[0]++;
+    x[2] += st.g || 0; x[3] += (st.h || 0) + (st.a || 0);
+  };
+  cards.forEach(c => {
+    soma(f.cap, origemDe(c), c);
+    soma(f.deck, c.deck, c);
+    const h = stats[c.id] && stats[c.id].hab;
+    if (h) for (const k of Object.keys(h)) {
+      const key = (ehFrase(c) ? 'frase' : 'palavra') + '.' + k;
+      const x = f.hab[key] || (f.hab[key] = [0, 0]);
+      x[0] += h[k].n || 0; x[1] += h[k].e || 0;
+    }
+  });
+  return f;
+}
+function gravaFoto() {
+  if (!cards.length || !settings.user) return;
+  const ev = load(uk(K_EVOLUCAO), {});
+  const t = todayStr(), f = fotoAgora();
+  const sem = o => o ? JSON.stringify({ cap: o.cap, deck: o.deck, hab: o.hab }) : '';
+  if (sem(ev[t]) === sem(f)) return; // nada mudou desde a última foto de hoje
+  f.u = Date.now();
+  ev[t] = f;
+  const dias = Object.keys(ev).sort();
+  dias.slice(0, Math.max(0, dias.length - EVOLUCAO_DIAS)).forEach(d => delete ev[d]);
+  save(uk(K_EVOLUCAO), ev);
+  if (typeof marcaEstado === 'function') marcaEstado('evolucao');
+}
+let fotoTimer = null;
+// cada resposta refaz a foto de hoje, mas sem pressa: uma rodada são dezenas de respostas
+function agendaFoto() { clearTimeout(fotoTimer); fotoTimer = setTimeout(gravaFoto, 4000); }
+
+// A série de um recorte, dia a dia: o % aprendido naquele dia e o % de tropeço DAQUELE
+// dia (a diferença pra foto anterior). O tropeço acumulado quase não se mexe depois de
+// meses; o do dia é que mostra se você está errando menos agora.
+function serieEvolucao(tipo, chave) {
+  const ev = load(uk(K_EVOLUCAO), {});
+  const dias = Object.keys(ev).sort();
+  let ant = null;
+  return dias.map(d => {
+    const x = ev[d] && ev[d][tipo] && ev[d][tipo][chave];
+    if (!x) { return null; }
+    let apr = null, erro = null, n = 0;
+    if (tipo === 'hab') {
+      if (ant) { n = x[0] - ant[0]; if (n > 0) erro = Math.max(0, Math.min(1, (x[1] - ant[1]) / n)); }
+    } else {
+      apr = x[1] ? x[0] / x[1] : 0;
+      if (ant) { n = (x[2] - ant[2]) + (x[3] - ant[3]); if (n > 0) erro = Math.max(0, Math.min(1, (x[3] - ant[3]) / n)); }
+    }
+    ant = x;
+    return { d, apr, erro, n };
+  }).filter(Boolean);
+}
+// O gráfico da gaveta: linha do % aprendido (cheia) e do % de tropeço do dia (pontilhada,
+// com os pontos), de 0 a 100%. Sem dois dias ainda, diz que começou hoje.
+function graficoEvolucao(tipo, chave) {
+  const s = serieEvolucao(tipo, chave);
+  const temApr = tipo !== 'hab';
+  const comErro = s.filter(p => p.erro != null);
+  const W = 560, H = 150, L = 34, R = 8, T = 10, B = 22;
+  if (s.length < 2 || (!temApr && !comErro.length)) {
+    return '<div class="gevo vazio"><b>Começou hoje</b><span>O app passou a guardar uma foto por dia deste recorte. ' +
+      'Cada dia em que você estudar vira um ponto aqui, e em uma ou duas semanas dá pra ver se está melhorando.</span></div>';
+  }
+  const x = i => L + (s.length === 1 ? 0 : i * (W - L - R) / (s.length - 1));
+  const y = v => T + (1 - v) * (H - T - B);
+  const linha = (key) => s.map((p, i) => p[key] == null ? null : [x(i), y(p[key])]).filter(Boolean)
+    .map((pt, i) => (i ? 'L' : 'M') + pt[0].toFixed(1) + ' ' + pt[1].toFixed(1)).join(' ');
+  const grade = [0, .5, 1].map(v => '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v) + '" y2="' + y(v) + '" class="gevo-g"/>' +
+    '<text x="' + (L - 6) + '" y="' + (y(v) + 3) + '" class="gevo-t" text-anchor="end">' + Math.round(v * 100) + '%</text>').join('');
+  const fmt = d => d.slice(8) + '/' + d.slice(5, 7);
+  const rotX = '<text x="' + x(0) + '" y="' + (H - 6) + '" class="gevo-t">' + fmt(s[0].d) + '</text>' +
+    '<text x="' + x(s.length - 1) + '" y="' + (H - 6) + '" class="gevo-t" text-anchor="end">' + fmt(s[s.length - 1].d) + '</text>';
+  const pontos = s.map((p, i) => p.erro == null ? '' : '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(p.erro).toFixed(1) + '" r="3" class="gevo-pe"><title>' +
+    fmt(p.d) + ': ' + Math.round(p.erro * 100) + '% de tropeço em ' + p.n + ' resposta' + (p.n > 1 ? 's' : '') + '</title></circle>').join('');
+  // a tendência em palavras: o tropeço da primeira metade dos dias contra o da segunda
+  let veredito = '';
+  if (comErro.length >= 4) {
+    const meio = Math.floor(comErro.length / 2);
+    const media = l => l.reduce((t, p) => t + p.erro * p.n, 0) / Math.max(1, l.reduce((t, p) => t + p.n, 0));
+    const a = media(comErro.slice(0, meio)), b = media(comErro.slice(meio));
+    const dif = Math.round((b - a) * 100);
+    veredito = dif <= -3 ? '<span class="gevo-ok">Melhorando: o tropeço caiu de ' + Math.round(a * 100) + '% pra ' + Math.round(b * 100) + '%</span>'
+      : dif >= 3 ? '<span class="gevo-mal">Piorando: o tropeço subiu de ' + Math.round(a * 100) + '% pra ' + Math.round(b * 100) + '%</span>'
+      : '<span>Estável: o tropeço está em torno de ' + Math.round(b * 100) + '%</span>';
+  }
+  return '<div class="gevo"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Evolução">' + grade + rotX +
+    (temApr ? '<path d="' + linha('apr') + '" class="gevo-la"/>' : '') +
+    '<path d="' + linha('erro') + '" class="gevo-le"/>' + pontos + '</svg>' +
+    '<div class="gevo-leg">' + (temApr ? '<span><i class="a"></i>aprendido</span>' : '') +
+    '<span><i class="e"></i>tropeço no dia</span>' + veredito + '</div></div>';
 }

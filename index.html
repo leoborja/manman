@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#c8102e">
+<meta name="theme-color" content="#F9F7F4">
 <title>Mànmàn 慢慢 — Flashcards de Mandarim</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -12,22 +12,28 @@
 <meta name="apple-mobile-web-app-title" content="Mànmàn">
 <style>
 :root{
---red:#c8102e;--red-d:#a30d26;--gold:#e8b34b;
---ok:#2e9e5b;--ok-bg:#e6f5ec;--warn:#d98a00;--warn-bg:#fdf3e0;--err:#c8102e;--err-bg:#fbe9ec;
---bg:#f4f5f7;--surface:#ffffff;--surface2:#f7f8fa;
---line:#e7e9ee;--txt:#1b1d21;--mut:#6b7078;--soft:#8b9098;
---pill:#eef0f4;--pilltx:#4a4f57;
---shadow:0 1px 2px rgba(20,22,28,.05),0 6px 18px rgba(20,22,28,.06);
---radius:18px;
---e1:rgba(200,16,46,.09);--e2:rgba(200,16,46,.19);--e3:rgba(200,16,46,.3);--e4:rgba(200,16,46,.42);
+/* Paleta do Design System RAIZ (DESIGN_SYSTEM.md, seção 2): neutros quentes mn-* e o
+   laranja mn-accent no lugar do vermelho. Os nomes antigos ficam (--red, --surface…)
+   porque o JS lê alguns deles (corVar('--red') no traçado); só os valores mudaram. */
+--red:#BE5B37;--red-d:#9E4C2E;--gold:#e8b34b;
+--add:#22C55D;--primary:#1A1612;--primary-tx:#FEFCF9;
+--ok:#15803d;--ok-bg:#dcfce7;--warn:#b45309;--warn-bg:#fef3c7;--err:#b91c1c;--err-bg:#fee2e2;
+--bg:#F9F7F4;--surface:#FEFCF9;--surface2:#F5F3F0;--hover:#F1EEEB;
+--line:#E5E1D9;--txt:#1A1612;--mut:#6B6662;--soft:#959088;--txt2:#3D3936;
+--pill:#E5E3DC;--pilltx:#3D3936;
+--shadow:0 1px 2px rgba(26,22,18,.04);
+--radius:8px;
+--e1:rgba(190,91,55,.09);--e2:rgba(190,91,55,.19);--e3:rgba(190,91,55,.3);--e4:rgba(190,91,55,.42);
 --rad:#2563eb;}
 html[data-theme="dark"]{
---rad:#6aa4ff;
---bg:#0c0d0f;--surface:#17181c;--surface2:#1c1e23;
---line:#2a2d33;--txt:#eceef2;--mut:#9a9ea6;--soft:#7c828b;
---pill:#25272d;--pilltx:#c9ccd3;
---ok-bg:#12291b;--warn-bg:#2c2214;--err-bg:#2c1216;
---shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);}
+--rad:#6aa4ff;--red:#C86541;--red-d:#BE5B37;
+--primary:#F8F7F1;--primary-tx:#20201E;
+--bg:#20201E;--surface:#2A2A27;--surface2:#252522;--hover:#2A2A27;
+--line:#302F2C;--txt:#F8F7F1;--mut:#A4A198;--soft:#817D74;--txt2:#CDCAC1;
+--pill:#353431;--pilltx:#CDCAC1;
+--ok:#86efac;--warn:#fcd34d;--err:#fca5a5;
+--ok-bg:rgba(20,83,45,.4);--warn-bg:rgba(120,53,15,.4);--err-bg:rgba(127,29,29,.4);
+--shadow:0 1px 2px rgba(0,0,0,.3);}
 /* AR PL UKai CN (subset) — 楷书 clássico de pincel, igual à escrita à mão do professor */
 @font-face{font-family:'HanziKai';src:url('./fonts/hanzi.woff2') format('woff2');font-display:swap;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -130,19 +136,6 @@ box-shadow:0 0 0 2px var(--surface2);}
 .chipsbar .chips{flex:0 0 auto;overflow:visible;padding:0;}
 
 /* modo de estudo: botão + bottom sheet */
-.modebtn{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 10px;
-background:var(--surface);border:1px solid var(--line);border-radius:14px;
-padding:11px 14px;cursor:pointer;box-shadow:var(--shadow);text-align:left;}
-.modebtn .mlabel{flex:0 0 auto;background:var(--pill);color:var(--pilltx);border-radius:8px;
-padding:3px 9px;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;}
-/* o escopo não vira caixa-alta: cabe "≥5 erros" aí, e o teto de largura é pra que um
-   tema de nome longo não coma o nome do modo, que é o texto principal do botão */
-.modebtn .mscope{flex:0 0 auto;max-width:46%;background:var(--pill);color:var(--pilltx);
-border-radius:8px;padding:3px 9px;font-size:11.5px;font-weight:800;
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.modebtn .mcur{flex:1;font-size:14.5px;font-weight:700;color:var(--txt);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.modebtn .marrow{flex:0 0 auto;color:var(--soft);font-size:11px;}
 .sheetwrap{position:fixed;inset:0;z-index:95;display:none;}
 .sheetwrap.show{display:block;}
 .sheetbg{position:absolute;inset:0;background:rgba(10,11,13,.45);animation:fadein .2s ease;}
@@ -450,7 +443,7 @@ font-weight:800;font-size:15px;box-shadow:var(--shadow);}
 .g-hard{background:var(--warn-bg);color:var(--warn);}
 .g-good{background:var(--ok-bg);color:var(--ok);}
 .nextbtn{display:none;width:100%;border:none;border-radius:16px;padding:14px;cursor:pointer;
-font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.35);}
+font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(190,91,55,.35);}
 .nextbtn.show{display:block;}
 .offbtn{display:block;margin:14px auto 0;background:none;border:none;color:var(--soft);
 font-size:12.5px;font-weight:600;cursor:pointer;padding:6px 10px;}
@@ -462,7 +455,7 @@ font-size:12.5px;font-weight:600;cursor:pointer;padding:6px 10px;}
 .done h2{margin:0 0 6px;font-size:22px;letter-spacing:-.3px;}
 .done p{color:var(--mut);font-size:14px;margin:0 0 18px;}
 .btn{display:inline-block;border:none;border-radius:14px;padding:12px 22px;cursor:pointer;
-font-weight:800;font-size:14.5px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.3);}
+font-weight:800;font-size:14.5px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(190,91,55,.3);}
 .btn.ghost{background:var(--surface);color:var(--txt);border:1px solid var(--line);box-shadow:var(--shadow);}
 .btn.danger{background:var(--err-bg);color:var(--err);box-shadow:none;}
 
@@ -502,16 +495,7 @@ font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
 .cartas-sec span{font-size:11px;font-weight:700;color:var(--soft);letter-spacing:0;}
 
 /* grade — o deck inteiro numa tela só */
-#gradesheet .filtros{display:flex;gap:6px;flex-wrap:wrap;}
-#gradesheet .chip{font-size:13px;padding:7px 12px;}
-#gradesheet #grade-mostrar .chip:not(.active),
-#gradesheet #grade-faixas .chip:not(.active){opacity:.55;text-decoration:line-through;}
 /* o chip da faixa carrega o próprio quadradinho da escala — ele É a legenda dela */
-#gradesheet #grade-faixas .chip{display:inline-flex;align-items:center;gap:6px;}
-#gradesheet #grade-radical .chip{display:inline-flex;align-items:center;gap:5px;}
-#gradesheet #grade-radical .chip .zh{font-size:16px;}
-#gradesheet #grade-radical .chip i{font-style:normal;font-size:11px;color:var(--soft);}
-#gradesheet #grade-radical .chip.active i{color:rgba(255,255,255,.75);}
 /* radical ativo: a que TEM ele desenha os traços a pincel (a fonte não pinta pedaço),
    e a que NÃO tem recua pro fundo — o olho vai direto pro conjunto que compartilha o
    radical, que é a pergunta que este modo responde */
@@ -522,21 +506,8 @@ font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
 .gcard.raddim .gh,.gcard.raddim .gp{opacity:.32;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
-.gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
-color:var(--mut);font-size:11.5px;margin:8px 0 2px;}
-.gradetop{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 10px;}
-.gradetop .counter{margin:0;}
-.gradetam{display:inline-flex;gap:4px;flex:0 0 auto;}
-.gradetam button{border:1px solid var(--line);background:var(--surface);color:var(--txt);
-border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;line-height:1;}
-.gradetam button:active{border-color:var(--red);color:var(--red);}
-.gradetam button:disabled{opacity:.4;cursor:default;}
-.gradetgl{border:1px solid var(--line);background:var(--surface);color:var(--txt);
-border-radius:9px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;line-height:1;}
-.gradetgl.on{background:var(--red);border-color:var(--red);color:#fff;}
 
 /* competição */
-#view-competicao{max-width:1100px;margin:0 auto;}
 .complacar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 6px;}
 .compcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
 box-shadow:var(--shadow);padding:12px 14px;}
@@ -579,9 +550,6 @@ font-size:12px;color:var(--mut);}
 .ctonrow.eu > b{color:var(--red);}
 .ctonv{font-size:13px;color:var(--mut);}
 .ctonv small{color:var(--soft);}
-.pcol{display:contents;}
-.gradelegend span{display:flex;align-items:center;gap:5px;}
-.gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
 .lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
 background:var(--surface);flex:0 0 auto;}
 .gradegrupo{margin:0 0 16px;}
@@ -626,11 +594,11 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 /* As quatro faixas do filtro 🔥 (1, 3, 5, 8 tropeços). Camada de cor POR CIMA do
    --surface em vez de cor sólida: o mesmo vermelho serve nos dois temas. */
 .gcard.e1,.lg.e1{background:linear-gradient(var(--e1),var(--e1)),var(--surface);
-border-color:rgba(200,16,46,.26);}
+border-color:rgba(190,91,55,.26);}
 .gcard.e2,.lg.e2{background:linear-gradient(var(--e2),var(--e2)),var(--surface);
-border-color:rgba(200,16,46,.4);}
+border-color:rgba(190,91,55,.4);}
 .gcard.e3,.lg.e3{background:linear-gradient(var(--e3),var(--e3)),var(--surface);
-border-color:rgba(200,16,46,.56);}
+border-color:rgba(190,91,55,.56);}
 .gcard.e4,.lg.e4{background:linear-gradient(var(--e4),var(--e4)),var(--surface);
 border-color:var(--red);}
 /* Aprendida sai da escala do vermelho: fundo branco e borda verde. Não é "o degrau
@@ -854,7 +822,8 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
   /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior. A tela
      fica centrada num tamanho confortável, como no celular. */
-  #view-estudar{max-width:600px;margin:0 auto;}
+  /* a barra ocupa a largura toda; a carta continua num tamanho confortável */
+  #view-estudar > :not(.ft-barra){max-width:600px;margin-left:auto;margin-right:auto;}
 
   /* Cartas: uma LISTA em largura cheia, com cada informação numa coluna alinhada de
      linha em linha — pictograma, pinyin, significado, descrição, categoria, som, o
@@ -888,22 +857,16 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   #view-progresso{max-width:1400px;}
   #view-progresso .stats{grid-template-columns:repeat(5,1fr);}
   #view-progresso .stat.wide{grid-column:auto;}
-  .pgrid{display:flex;gap:22px;align-items:flex-start;}
-  .pcol{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
-  .pcol:nth-child(2){flex:1.3;}
   .pblock{margin:0 0 6px;}
   .pblock .sec{margin-top:8px;}
 
   /* Competição: placar e gráfico em largura cheia; o resto em duas colunas (masonry) */
-  .cgrid{columns:2;column-gap:22px;}
   .cblock{break-inside:avoid;margin:0 0 6px;}
   .cblock .sec{margin-top:8px;}
 
   /* Grade é a única que quer a largura toda — é a tela do "ver tudo". Só o botão e a
      linha do contador ficam centrados; a grade vai de ponta a ponta. O tamanho do
      cartão parte de um pouco maior no PC, e o A−/A+ ajusta a partir daí. */
-  #gradebtn{max-width:600px;margin-left:auto;margin-right:auto;}
-  .gradetop{max-width:600px;margin-left:auto;margin-right:auto;}
   #gradewrap{--gtam:96px;}
 
   /* As folhas param de subir do rodapé — deslocado num monitor — e viram janela central. */
@@ -1056,6 +1019,422 @@ table.sons td{padding:3px;text-align:center;}
   .cartas-tab .spk-row,.cartas-tab .fav-row{width:30px;height:30px;font-size:13px;}
   .cartas-tab th{font-size:10px;letter-spacing:.3px;}
 }
+
+/* ════ Design System RAIZ (DESIGN_SYSTEM.md · ref. Group OS) ════
+   A casca do app (menu, cabeçalho, abas, filtros, botões) segue o padrão de todos os
+   sistemas da pasta. O que é ESTUDO (a carta, o hanzi, o pinyin, a área de desenho)
+   mantém o tamanho próprio: 12px é a base da interface, não do 汉字 que se lê. */
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
+.brand{font-size:14px;font-weight:600;}
+.brand span{color:var(--red);}
+
+/* menu do celular = <Abas>: sem pílula, texto 12px, sublinhado laranja colado na linha */
+.nav{background:var(--surface2);border-bottom:1px solid var(--line);padding:8px 16px 0;}
+.navitens{gap:0;}
+.tab{position:relative;border-radius:0;padding:8px 14px 10px;font-size:12px;font-weight:500;
+color:var(--mut);transition:color .075s;}
+.tab:hover{color:var(--txt);}
+.tab .ico{width:16px;height:16px;flex-basis:16px;stroke-width:1.75;}
+.tab.active{background:none;color:var(--txt);box-shadow:none;}
+.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--red);}
+.profileini{width:28px;height:28px;font-size:11px;font-weight:600;box-shadow:none;background:var(--pill);border:0;}
+.profileini .ico{width:14px;height:14px;}
+
+/* cabeçalho da página: título text-sm font-medium, sem subtítulo; ações = BotaoSecundario */
+.pagecab{min-height:36px;margin:0 0 16px;}
+.pagecab h1{font-size:14px;font-weight:500;letter-spacing:0;color:var(--txt);}
+.pageacao{height:36px;border-radius:6px;border:1px solid var(--line);background:var(--hover);
+color:var(--mut);padding:0 10px;font-size:11px;font-weight:500;box-shadow:none;}
+.pageacao:hover{background:var(--pill);color:var(--txt);}
+.pageacao .ico{width:14px;height:14px;}
+
+.painel{border-radius:8px;box-shadow:none;}
+
+/* filtros: h-9, text-xs, raio 6px; o escolhido ganha a borda VERDE de 2px (filtro
+   preenchido), não fundo colorido */
+.chip{border-radius:6px;padding:0 12px;height:36px;display:inline-flex;align-items:center;
+background:var(--bg);color:var(--mut);font-size:12px;font-weight:500;}
+.chip.active{background:var(--bg);color:var(--txt);border:2px solid var(--add);padding:0 11px;}
+.chip.filtro{font-size:15px;line-height:1;padding:0 10px;}
+.chip.filtro.active{background:var(--pill);border:1px solid var(--line);padding:0 10px;}
+.chip.filtro.tipo{font-size:12px;padding:0 12px;}
+.chip.filtro.filtrando:after{background:var(--add);}
+.search{border-radius:6px;font-size:12px;}
+
+/* botões: principal quase preto (default), secundário com borda, sem sombra colorida */
+.btn,.nextbtn{border-radius:6px;font-weight:500;font-size:13px;background:var(--primary);
+color:var(--primary-tx);box-shadow:none;}
+.btn.ghost{background:var(--bg);color:var(--txt);border:1px solid var(--line);box-shadow:none;}
+.btn.danger{background:var(--err-bg);color:var(--err);}
+.grades button{border-radius:6px;box-shadow:none;font-weight:600;}
+.modeopt{border-radius:8px;border-width:1px;}
+.modeopt.active{border-color:var(--red);}
+.escopo-body.open{border-width:1px;border-radius:0 0 8px 8px;}
+.sheet{border-radius:12px 12px 0 0;}
+.sheet h3{font-size:14px;font-weight:500;}
+
+@media (min-width:900px){
+  /* menu lateral = submenu do Group OS: w-52, bg-mn-bg-menu, itens h-9 12px, ativo em
+     bg-mn-bg-300 com a barrinha laranja à esquerda */
+  .nav{width:208px;background:var(--surface2);padding:12px 8px 8px;}
+  .navtopo{padding:0 8px 12px;}
+  .navsec{height:28px;padding:8px 8px 0;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--txt2);}
+  .navsec:first-child{padding-top:0;}
+  .navitens{gap:1px;}
+  .tab{height:36px;gap:10px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;}
+  .tab .ico{width:18px;height:18px;flex-basis:18px;}
+  .tab:not(.active):hover{background:var(--hover);}
+  .tab.active{background:var(--pill);}
+  .tab.active:after{left:0;right:auto;top:50%;bottom:auto;width:2px;height:20px;transform:translateY(-50%);border-radius:0 2px 2px 0;}
+  .navperfil{padding:10px 8px 0;}
+  .profilenome{font-size:12px;font-weight:500;}
+  main{margin-left:208px;padding:16px 16px 40px 24px;}
+}
+
+/* ── Palavras / Frases no formato DataTable (DESIGN_SYSTEM.md, seção 8) ── */
+.dt-barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:4px 0;margin:0 0 8px;}
+.dt-busca{display:flex;align-items:center;gap:8px;height:36px;width:240px;max-width:100%;
+border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 10px;color:var(--soft);}
+.dt-busca:focus-within{border-color:var(--txt2);}
+.dt-busca .ico{width:14px;height:14px;flex-basis:14px;}
+.dt-busca input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:12px;color:var(--txt);}
+.dt-busca input::placeholder{color:var(--soft);}
+#cartas-grupobar{flex:1;justify-content:flex-end;margin:0;gap:8px;min-width:0;}
+.vista-resumo{order:-1;flex:1;min-width:0;font-size:12px;color:var(--mut);text-align:right;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vista-btn.cortada{border-color:var(--red);color:var(--txt);}
+.vista-btn.cortada::after{display:none;}
+.dt-moldura{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg);overflow-x:auto;}
+.dt-conta{border-bottom:1px solid var(--line);padding:8px 16px;font-size:12px;color:var(--mut);}
+.dt-conta b{font-weight:400;color:var(--mut);}
+.cartas-tab{border:0;border-radius:0;box-shadow:none;background:var(--bg);font-size:12px;}
+.cartas-tab th{height:44px;background:var(--surface2);font-size:11px;font-weight:600;letter-spacing:.06em;
+color:var(--txt2);padding:10px 12px;}
+.cartas-tab td{padding:8px 12px;color:var(--txt);}
+.cartas-tab tr.cl td{transition:background-color .15s;}
+.cartas-tab tr.cl:hover td{background:var(--hover);}
+.cartas-tab .c-py{font-size:12px;font-weight:500;}
+.cartas-tab .c-py .pron{font-size:11px;font-weight:400;color:var(--soft);}
+.cartas-tab .c-pt{font-size:12px;font-weight:500;}
+.cartas-tab .c-nota{font-size:12px;color:var(--txt2);}
+.cartas-tab .c-tema .pill{display:inline-flex;align-items:center;height:20px;border-radius:4px;padding:0 6px;
+font-size:11px;font-weight:500;background:var(--pill);color:var(--mut);}
+/* linha de grupo: fundo próprio, caixa-alta, contagem verde entre parênteses */
+.cartas-tab tr.cl-grupo td{background:#E5E3DC;padding:8px 16px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--txt2);}
+.cartas-tab tr.cl-grupo:hover td{background:#DBD9D2;}
+html[data-theme="dark"] .cartas-tab tr.cl-grupo td{background:#2A2924;}
+html[data-theme="dark"] .cartas-tab tr.cl-grupo:hover td{background:#33312B;}
+.cartas-tab tr.cl-grupo span{color:var(--add);font-weight:600;margin-left:6px;}
+.cartas-tab tr.cl-grupo span:before{content:"(";} .cartas-tab tr.cl-grupo span:after{content:")";}
+.cartas-tab tr.cl-ideias td{background:var(--surface2);}
+.bulkbtn{border-radius:6px;font-size:12px;}
+@media (max-width:640px){
+  .dt-busca{width:100%;}
+  .dt-moldura{margin:0 -16px;}
+  /* No celular a tabela era fixa (table-layout:fixed) e o Significado ficava com ~25px,
+     uma letra por linha. Automática, cada coluna pega o que o conteúdo pede; o que
+     abre espaço é a pronúncia quebrar no hífen e os botões perderem o respiro. */
+  .cartas-tab{table-layout:auto;}
+  .cartas-tab th.c-hz,.cartas-tab th.c-py{width:auto;}
+  .cartas-tab .c-hz{white-space:nowrap;}
+  .cartas-tab .c-py .pron{white-space:normal;}
+  .cartas-tab .c-pt{overflow-wrap:anywhere;}
+  .cartas-tab td,.cartas-tab th{padding-left:5px;padding-right:5px;}
+  .cartas-tab .c-som,.cartas-tab .c-fav{padding-left:2px;padding-right:2px;}
+  .cartas-tab .c-on{padding-left:2px;padding-right:4px;}
+  .cartas-tab td.c-hz{padding-right:3px;}
+  .cartas-tab th{font-size:10px;letter-spacing:.3px;}
+  .cartas-tab tr.cl-grupo td{padding-left:12px;}
+}
+
+/* ── Progresso e Competição: Kpi, Caixa e Subtitulo (DESIGN_SYSTEM.md, seção 12) ── */
+/* Kpi: rótulo em cima (12px), número embaixo (20px semibold, tabular). O HTML tem o
+   número antes do rótulo, então a coluna inverte. */
+.stats{gap:12px;margin:0 0 16px;}
+.stat{display:flex;flex-direction:column-reverse;justify-content:flex-end;border-radius:8px;
+background:var(--surface);box-shadow:none;padding:16px;}
+.stat b{margin-top:4px;font-size:20px;font-weight:600;letter-spacing:0;line-height:1.3;
+font-variant-numeric:tabular-nums;color:var(--txt);}
+.stat small{font-size:12px;font-weight:400;color:var(--mut);}
+/* Subtitulo: título 14px semibold + linha fina até o fim */
+h3.sec{display:flex;align-items:center;gap:12px;margin:20px 0 10px;padding-top:8px;
+font-size:14px;font-weight:600;color:var(--txt);text-transform:none;letter-spacing:0;}
+h3.sec:after{content:"";flex:1;height:1px;background:var(--line);}
+/* Caixa */
+.card{border-radius:8px;box-shadow:none;}
+/* placar da turma: um Kpi por pessoa */
+.compcard{border-radius:8px;box-shadow:none;}
+.cptop .cpnome{font-size:13px;font-weight:600;}
+.cpnums b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;}
+.cpnums small{font-size:11px;}
+.tally{font-weight:500;}
+.tally span{border-radius:4px;}
+.tally .g{background:#dcfce7;color:#166534;} .tally .h{background:#fef3c7;color:#92400e;} .tally .a{background:#fee2e2;color:#991b1b;}
+html[data-theme="dark"] .tally .g{background:rgba(20,83,45,.4);color:#bbf7d0;}
+html[data-theme="dark"] .tally .h{background:rgba(120,53,15,.4);color:#fde68a;}
+html[data-theme="dark"] .tally .a{background:rgba(127,29,29,.4);color:#fecaca;}
+.userrow .nome{font-weight:500;}
+.userrow .dias b{font-weight:500;}
+@media (min-width:900px){
+  #view-progresso .stats{gap:12px;}
+  .pblock .sec,.cblock .sec{margin-top:4px;}
+}
+
+/* ── Gaveta (DESIGN_SYSTEM.md 11.1) — js/ui.js ── */
+.gaveta-wrap{position:fixed;inset:0;z-index:90;visibility:hidden;}
+.gaveta-wrap.show{visibility:visible;}
+.gaveta-bg{position:absolute;inset:0;background:rgba(0,0,0,.2);opacity:0;transition:opacity .2s;}
+.gaveta-wrap.show .gaveta-bg{opacity:1;}
+.gaveta{position:absolute;top:0;right:0;bottom:0;width:100%;background:var(--bg);border-left:1px solid var(--line);
+display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.12);transform:translateX(100%);
+transition:transform .25s cubic-bezier(.2,.7,.3,1);}
+.gaveta-wrap.show .gaveta{transform:none;}
+@media (min-width:640px){.gaveta{width:50vw;min-width:640px;}}
+.gaveta-cab{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
+min-height:36px;padding:16px 16px 12px 24px;background:var(--bg);}
+.gaveta-esq{display:flex;align-items:center;gap:10px;min-width:0;}
+.gaveta-x{flex:0 0 36px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--txt2);cursor:pointer;}
+.gaveta-x:hover{background:var(--hover);}
+.gaveta-x .ico{width:16px;height:16px;}
+.gaveta-titulo{margin:0;font-size:14px;font-weight:500;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gaveta-acoes{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+.gaveta-corpo{flex:1;overflow-y:auto;padding:4px 16px 32px 24px;-webkit-overflow-scrolling:touch;}
+.gaveta-corpo > * + *{margin-top:20px;}
+@media (max-width:640px){
+  .gaveta-cab{padding:12px 16px;flex-wrap:wrap;}
+  .gaveta-esq{flex:1 1 100%;}
+  .gaveta-corpo{padding:4px 16px 32px;}
+}
+body.com-gaveta{overflow:hidden;}
+.gcodigo{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;color:var(--soft);}
+.gcodigo code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;}
+.gtag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;
+background:var(--pill);color:var(--mut);}
+.gtag.ok{background:var(--ok-bg);color:var(--ok);} .gtag.warn{background:var(--warn-bg);color:var(--warn);}
+.gtag.err{background:var(--err-bg);color:var(--err);}
+.gsec-cab{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px;}
+.gsec-cab h3{margin:0;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);}
+.gsec-cab span{font-size:12px;color:var(--soft);}
+/* Dados numa Caixa branca, uma linha por campo com divisória */
+.gcampos{display:grid;grid-template-columns:minmax(110px,auto) 1fr;margin:0;font-size:12px;
+border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden;}
+.gcampos dt,.gcampos dd{padding:9px 14px;border-top:1px solid var(--line);}
+.gcampos dt:first-of-type,.gcampos dd:first-of-type{border-top:0;}
+.gcampos dt{color:var(--soft);}
+.gcampos dd{margin:0;text-align:right;color:var(--txt);}
+.gkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+@media (max-width:640px){.gkpis{grid-template-columns:repeat(2,1fr);}}
+.gkpi{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:10px 12px;}
+.gkpi small{display:block;font-size:11px;color:var(--mut);}
+.gkpi b{display:block;margin-top:2px;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;}
+.ghero{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:16px;}
+.ghero .zh{font-size:56px;line-height:1.1;}
+.ghero.frase{flex-direction:column;align-items:flex-start;gap:8px;}
+.ghero.frase .zh{font-size:28px;line-height:1.35;}
+.ghero .gpy{font-size:15px;font-weight:500;}
+.ghero .gpt{font-size:13px;color:var(--mut);margin-top:2px;}
+.gtexto{font-size:13px;line-height:1.55;color:var(--txt);border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:12px 14px;}
+/* de que é feito cada 汉字: cada caractere é o próprio cartão branco, sem caixa em volta */
+.gaveta-corpo .ideias{max-width:none;}
+.gaveta-corpo .ideia{background:var(--surface);border-radius:8px;padding:14px;}
+.gbotao{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:6px;
+background:var(--hover);color:var(--mut);font:inherit;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.gbotao:hover{background:var(--pill);color:var(--txt);}
+.gbotao.on{color:var(--txt);border-color:var(--red);}
+/* a nota da teoria dentro da gaveta: sem o cartão em volta, a gaveta já é o lugar */
+.gaveta-corpo .nota-t.painel{border:0;background:none;padding:0;}
+.gaveta-corpo .nota-nav{position:static;margin-top:20px;}
+
+/* ── Barra de filtros (DESIGN_SYSTEM.md 8.5 e 9) — js/ui.js ── */
+.ft-barra{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:4px 0;margin:0 0 8px;}
+.ft-esq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;flex:1;min-width:0;}
+.ft-dir{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.ft-btn{display:inline-flex;align-items:center;gap:6px;height:36px;width:160px;padding:0 8px 0 10px;
+border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--soft);font:inherit;font-size:12px;
+cursor:pointer;text-align:left;}
+.ft-btn span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ft-btn .ft-seta{width:14px;height:14px;flex:0 0 14px;opacity:.6;}
+.ft-btn:hover{background:var(--hover);}
+.ft-btn.cheio{border:2px solid var(--add);padding:0 7px 0 9px;color:var(--txt);}
+.ft-btn em{font-style:normal;flex:0 0 auto;min-width:18px;height:18px;padding:0 5px;border-radius:4px;background:var(--add);
+color:#fff;font-size:10px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;}
+.ft-quad{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--line);
+border-radius:6px;background:var(--bg);color:var(--txt2);cursor:pointer;flex:0 0 36px;}
+.ft-quad:hover,.ft-quad.aberto{background:var(--hover);}
+.ft-quad.ativo{border-color:var(--red);}
+.ft-quad .ico{width:16px;height:16px;}
+.ft-quad.txt{width:auto;padding:0 10px;font:inherit;font-size:12px;font-weight:500;flex:0 0 auto;}
+.ft-quad.txt.ativo{color:var(--txt);}
+.ft-pop{position:absolute;z-index:120;max-height:min(60vh,420px);overflow-y:auto;padding:8px;border:1px solid var(--line);
+border-radius:8px;background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.14);font-size:13px;}
+.ft-pop-tit{padding:4px 8px 6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);}
+.ft-pop-tit2{display:flex;align-items:center;justify-content:space-between;}
+.ft-item{display:flex;align-items:center;gap:8px;width:100%;padding:7px 8px;border:0;border-radius:4px;background:none;
+color:var(--txt);font:inherit;font-size:13px;text-align:left;cursor:pointer;}
+.ft-item:hover{background:var(--hover);}
+.ft-q{flex:0 0 14px;width:14px;height:14px;border:1px solid var(--line);border-radius:3px;background:var(--bg);position:relative;}
+.ft-item.on .ft-q{background:var(--add);border-color:var(--add);}
+.ft-item.on .ft-q:after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+.ft-item.on{color:var(--txt);}
+.ft-item span{flex:1;min-width:0;}
+.ft-item .zh{font-size:15px;}
+.ft-pop-busca{display:block;margin:0 0 6px;}
+.ft-pop-busca input{width:100%;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 8px;
+font:inherit;font-size:12px;color:var(--txt);outline:none;}
+.ft-pop-rod{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);margin-top:6px;padding:6px 4px 0;}
+.ft-link{border:0;background:none;padding:2px 4px;font:inherit;font-size:12px;color:var(--mut);cursor:pointer;}
+.ft-link:hover{color:var(--txt);text-decoration:underline;}
+.ft-vazio{margin:6px 8px;color:var(--soft);font-size:12px;}
+.ft-sep{height:1px;background:var(--line);margin:6px 0;}
+@media (max-width:640px){
+  /* no celular os filtros tomam a linha toda, dois por fileira; os ícones vão pra baixo, à direita */
+  .ft-esq{flex:1 1 100%;}
+  .ft-btn{width:calc(50% - 4px);}
+  .ft-esq .dt-busca{width:100%;}
+}
+
+.ft-contents{display:contents;}
+.dt-vazio{margin:0;padding:32px 16px;text-align:center;font-size:12px;color:var(--mut);}
+.cartas-tab tr.cl{cursor:pointer;}
+.cartas-tab tr.cl-grupo{cursor:pointer;}
+.cartas-tab tr.cl-grupo td:before{content:"";display:inline-block;width:6px;height:6px;margin:0 8px 2px 2px;
+border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}
+.cartas-tab tr.cl-grupo.fechado td:before{transform:rotate(-45deg);}
+.cartas-tab.oc-som .c-som,.cartas-tab.oc-py .c-py,.cartas-tab.oc-nota .c-nota,.cartas-tab.oc-tema .c-tema,
+.cartas-tab.oc-fav .c-fav,.cartas-tab.oc-on .c-on{display:none;}
+.lgq{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px;
+background:var(--surface);border:1px solid var(--line);}
+.lgq.e1{background:var(--e1);} .lgq.e2{background:var(--e2);} .lgq.e3{background:var(--e3);} .lgq.e4{background:var(--e4);}
+
+
+/* <SeletorVisao> (DESIGN_SYSTEM.md 8.10) */
+.ft-visao{display:inline-flex;align-items:center;height:36px;padding:2px;border:1px solid var(--line);border-radius:6px;background:var(--bg);}
+.ft-visao button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 8px;border:0;border-radius:4px;background:none;
+color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
+.ft-visao button .ico{width:14px;height:14px;}
+.ft-visao button:hover{color:var(--txt);}
+.ft-visao button.on{background:var(--pill);color:var(--txt);font-weight:500;}
+@media (max-width:640px){.ft-visao:not(.texto) button span{display:none;}}
+#cartas-gradebox[hidden],#cartas-tabela[hidden]{display:none;}
+
+.ft-quad.txt.ligado{border:2px solid var(--add);padding:0 9px;color:var(--txt);}
+.ft-quad:disabled{opacity:.4;cursor:default;}
+#cartas-gradebox #gradewrap{margin-top:8px;}
+
+/* Grade: o título do grupo recolhe os quadradinhos, com a mesma setinha da Tabela */
+.gradegrupo > h3{cursor:pointer;user-select:none;align-items:center;}
+.gradegrupo > h3:before{content:"";display:inline-block;width:6px;height:6px;margin:0 4px 2px 2px;
+border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);transition:transform .15s;}
+.gradegrupo.fechado > h3:before{transform:rotate(-45deg);}
+.gradegrupo.fechado > h3{margin-bottom:0;}
+.gradegrupo.fechado > :not(h3){display:none;}
+
+/* A letra acompanha o cartão: até o tamanho de sempre fica igual (o max() segura o
+   piso), e daí pra cima cresce na proporção do --gtam (30px de hanzi num cartão de 96). */
+.gcard .gh{font-size:max(30px,calc(var(--gtam,76px) * .31));}
+.gcard.n2 .gh{font-size:max(27px,calc(var(--gtam,76px) * .28));}
+.gcard.n3 .gh{font-size:max(21px,calc(var(--gtam,76px) * .22));}
+.gcard.n4 .gh{font-size:max(16px,calc(var(--gtam,76px) * .17));}
+.gcard .gp{font-size:max(11px,calc(var(--gtam,76px) * .115));}
+.gcard .gsig{font-size:max(10.5px,calc(var(--gtam,76px) * .11));}
+.gcard.frase .gh{font-size:max(21px,calc(var(--gtam,76px) * .22));}
+.gcard.frase .gp{font-size:max(11.5px,calc(var(--gtam,76px) * .12));}
+.gcard{border-radius:max(14px,calc(var(--gtam,76px) * .1));}
+
+/* <Abas> (DESIGN_SYSTEM.md 7): linha embaixo, aba ativa com o sublinhado laranja */
+.abas{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:24px 0 4px;}
+.abas::-webkit-scrollbar{display:none;}
+.abas button{position:relative;flex:0 0 auto;border:0;background:none;padding:8px 16px;font:inherit;font-size:12px;font-weight:500;
+color:var(--mut);cursor:pointer;white-space:nowrap;}
+.abas button:hover{color:var(--txt);}
+.abas button.on{color:var(--txt);}
+.abas button.on:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);}
+[data-painel][hidden]{display:none !important;}
+/* Competição: largura toda; dentro da aba, os cartões em duas colunas (uma no celular) */
+.cgrade{display:grid;grid-template-columns:minmax(0,1fr);gap:0 22px;align-items:start;}
+.cgrade .cblock{margin:0 0 6px;}
+/* Progresso: as revisões viram mais um cartão da fileira dos números */
+.stat.revisoes{flex-direction:column;justify-content:flex-end;grid-column:1/-1;}
+.stat.revisoes .bars{height:56px;padding:0;gap:3px;}
+.stat.revisoes .barlabels{gap:3px;margin-top:3px;}
+.stat.revisoes small{order:-1;margin-bottom:6px;}
+.pgrade{display:grid;grid-template-columns:minmax(0,1fr);gap:0 22px;align-items:start;}
+@media (min-width:900px){
+  #view-competicao{max-width:none;}
+  .cgrade{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .cgrade.um{grid-template-columns:minmax(0,1fr);}
+  #view-progresso{max-width:none;}
+  #view-progresso .stats{grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,2fr);}
+  #view-progresso .stat.revisoes{grid-column:auto;}
+  .pgrade{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+
+.abas button:focus{outline:none;}
+.abas button:focus-visible{outline:2px solid var(--red);outline-offset:-2px;border-radius:4px;}
+@media (min-width:900px){
+  .cgrade.tres{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .cgrade .cblock.largo{grid-column:1/-1;}
+}
+/* Progresso: as linhas da aba Geral abrem a gaveta */
+.caprow.abre,.habrow.abre,.deckrow.abre{cursor:pointer;border-radius:6px;transition:background-color .15s;}
+.caprow.abre:hover,.habrow.abre:hover,.deckrow.abre:hover{background:var(--hover);}
+.caprow.abre,.habrow.abre,.deckrow.abre{padding-left:8px;padding-right:8px;}
+.pageacao.perigo{color:var(--err);}
+.pageacao.perigo:hover{background:var(--err-bg);color:var(--err);}
+/* lista de cartas dentro da gaveta */
+.glista{border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden;}
+.glinha{display:flex;align-items:center;gap:12px;width:100%;padding:8px 14px;border:0;border-top:1px solid var(--line);
+background:none;font:inherit;text-align:left;color:var(--txt);cursor:pointer;}
+.glinha:first-child{border-top:0;}
+.glinha:hover{background:var(--hover);}
+.glinha > .zh{flex:0 0 auto;min-width:44px;font-size:22px;line-height:1.2;}
+.gl-meio{flex:1;min-width:0;display:flex;flex-direction:column;}
+.gl-meio b{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gl-meio small{font-size:11px;}
+.gl-dir{flex:0 0 auto;text-align:right;display:flex;flex-direction:column;}
+.gl-dir b{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;}
+.gl-dir small{font-size:11px;color:var(--soft);}
+.gkpi b i{font-style:normal;font-size:12px;font-weight:400;color:var(--soft);}
+.gvazio{margin:0;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:12px;color:var(--mut);}
+p.gtexto{margin:0;}
+
+/* Estudar: o jogo pede um botão mais largo (o nome do modo é comprido) */
+.ft-btn.largo{width:240px;}
+.ft-btn.curto{width:auto;min-width:72px;}
+.ft-fixo{cursor:default;width:auto;max-width:240px;}
+.ft-segs{display:flex;gap:4px;padding:2px 8px 6px;}
+.ft-segs button{flex:1;height:30px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
+.ft-segs button.on{border:2px solid var(--add);color:var(--txt);}
+.ft-item small{color:var(--soft);margin-left:4px;}
+@media (max-width:640px){.ft-btn.largo{width:100%;}}
+
+/* Estudar no computador: a carta quadrada (600 × 600), em todo modo. Em tela baixa o
+   teto é a altura da janela menos a barra e os botões de resposta, pra eles não caírem
+   pra fora; quando o conteúdo pede mais, o ajustaAltura cresce a carta como sempre. */
+@media (min-width:900px){
+  #view-estudar .fcard,#view-estudar .fcard.draw,#view-estudar .fcard.type,#view-estudar .fcard.ord{
+    min-height:max(320px,min(600px,calc(100vh - 260px)));}
+  /* no teclado o conteúdo era colado no topo (no celular a carta é baixa e o teclado do
+     aparelho sobe): na carta quadrada ele fica no meio, na vertical */
+  #view-estudar .fcard.type .face.front{justify-content:center;}
+}
+
+/* gráfico de evolução na gaveta do Progresso */
+.gevo{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:12px 14px;}
+.gevo svg{display:block;width:100%;height:auto;overflow:visible;}
+.gevo-g{stroke:var(--line);stroke-width:1;}
+.gevo-t{font-size:10px;fill:var(--soft);font-family:inherit;}
+.gevo-la{fill:none;stroke:var(--ok);stroke-width:2;}
+.gevo-le{fill:none;stroke:var(--red);stroke-width:1.5;stroke-dasharray:4 3;}
+.gevo-pe{fill:var(--red);}
+.gevo-leg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:8px;font-size:12px;color:var(--mut);}
+.gevo-leg i{display:inline-block;width:14px;height:0;margin-right:5px;vertical-align:middle;border-top:2px solid var(--ok);}
+.gevo-leg i.e{border-top:2px dashed var(--red);}
+.gevo-leg > span:last-child:not(:has(i)){margin-left:auto;font-weight:500;color:var(--txt);}
+.gevo-ok{color:var(--ok) !important;} .gevo-mal{color:var(--err) !important;}
+.gevo.vazio{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut);}
+.gevo.vazio b{font-size:13px;font-weight:600;color:var(--txt);}
 </style>
 </head>
 <body>
@@ -1080,7 +1459,6 @@ table.sons td{padding:3px;text-align:center;}
     <div class="navsec">Cards</div>
     <button class="tab" data-v="palavras"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span>Palavras</span></button>
     <button class="tab" data-v="frases" id="tab-frases"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg><span>Frases</span></button>
-    <button class="tab" data-v="grade"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span>Grade</span></button>
     <div class="navsec">Dashboard</div>
     <button class="tab" data-v="competicao"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg><span>Competição</span></button>
     <button class="tab" data-v="progresso"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span>Progresso</span></button>
@@ -1100,13 +1478,12 @@ table.sons td{padding:3px;text-align:center;}
 
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
-  <!-- um botão só resume a sessão inteira: a pílula diz O QUE está na fila, o texto diz
-       COMO a pergunta vem. Os dois se escolhem na mesma folha. -->
-  <button class="modebtn" id="modebtn">
-    <span class="mscope" id="modescope">🏷️ Todos os temas</span>
-    <span class="mcur" id="modecur">汉字 → pinyin + tradução</span>
-    <span class="marrow">▼</span>
-  </button>
+  <!-- a barra de filtros (DESIGN_SYSTEM.md 9): o jogo, o deck e os filtros à esquerda,
+       as Opções à direita (renderEstudoBarra, js/main.js) -->
+  <div class="ft-barra">
+    <div class="ft-esq" id="estudo-filtros"></div>
+    <div class="ft-dir" id="estudo-dir"></div>
+  </div>
   <div class="counter" id="counter"></div>
   <div class="flashrow" id="flashrow">
     <div class="flashbar" id="flashbar"><i id="flashfill"></i></div>
@@ -1252,166 +1629,115 @@ table.sons td{padding:3px;text-align:center;}
     <button class="chip filtro tipo active" data-tp="palavra"><span class="zh">汉</span> Palavras</button>
     <button class="chip filtro tipo" data-tp="frase">💬 Frases</button>
   </div>
-  <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
-  <!-- o botão Configurar: filtrar, agrupar, ordenar, isolar e mostrar moram na folha
-       (como na aba Cartas do iPhone); aqui fica só a busca e o resumo do que vale -->
-  <div class="grupobar" id="cartas-grupobar"></div>
-  <div class="counter" id="cartas-count"></div>
+  <!-- Barra do DataTable (DESIGN_SYSTEM.md 8.1 e 9): busca e filtros à esquerda, Ordenar,
+       Agrupar por e Colunas à direita. A busca é fixa (não perde o foco ao digitar); os
+       botões são redesenhados pelo renderCartasBarra (js/cartas.js). -->
+  <div class="ft-barra">
+    <div class="ft-esq">
+      <label class="dt-busca"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="search" placeholder="Buscar hanzi, pinyin ou tradução" autocomplete="off"></label>
+      <span id="cartas-filtros" class="ft-contents"></span>
+    </div>
+    <div class="ft-dir" id="cartas-dir"></div>
+  </div>
   <div id="bulkbar"></div>
-  <div id="cardlist"></div>
-</section>
-
-<!-- ══════ GRADE (o deck inteiro numa tela só) ══════ -->
-<section class="view" id="view-grade">
-  <!-- Três eixos, e os três valem ao mesmo tempo. Eles moram numa folha, e não em três
-       filas de chips na tela: em 375px aquilo eram 150px de controle antes da primeira
-       carta — metade da tela gasta pra escolher como ver a outra metade. Mesmo botão da
-       aba Estudar: uma linha que diz o estado inteiro, e a escolha acontece na folha. -->
-  <button class="modebtn" id="gradebtn">
-    <span class="mscope" id="gradescope">🏷️ Tema</span>
-    <span class="mcur" id="gradecur">🔥 Erros</span>
-    <span class="marrow">▼</span>
-  </button>
-  <div class="gradetop">
-    <div class="counter" id="grade-count"></div>
-    <div class="gradetam" id="grade-tam">
-      <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
-      <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
-    </div>
-    <button class="gradetgl" id="grade-sig" title="Mostrar o significado embaixo do pinyin">significado</button>
+  <!-- visão Tabela: moldura só com linha em cima e embaixo; a contagem é a primeira faixa -->
+  <div class="dt-moldura" id="cartas-tabela">
+    <div class="dt-conta" id="cartas-count"></div>
+    <div id="cardlist"></div>
   </div>
-  <div id="gradewrap"></div>
-</section>
-
-<!-- como ver a grade (bottom sheet) — os três eixos e o que as cores dizem -->
-<div class="sheetwrap" id="gradesheet">
-  <div class="sheetbg" id="gradesheet-bg"></div>
-  <div class="sheet scroll">
-    <div class="handle"></div>
-    <h3>Como ver a grade</h3>
-    <div class="sheetsep">agrupar</div>
-    <div class="filtros wrapchips" id="grade-grupo"></div>
-    <div class="sheetsep">ordenar dentro do grupo</div>
-    <div class="filtros wrapchips" id="grade-ordem"></div>
-    <!-- este eixo TIRA coisa da tela. Chip aceso = aparece; apagado e riscado =
-         escondido — sem o risco, um chip branco aqui se lê como "clique pra mostrar",
-         que é o contrário do que ele está dizendo. -->
-    <div class="sheetsep">mostrar</div>
-    <div class="filtros wrapchips" id="grade-mostrar"></div>
-    <!-- Os degraus da escala viraram filtro, e com isso a legenda dela: o chip leva o
-         quadradinho da cor e quantos tropeços ela quer dizer, então não existe mais uma
-         escala desenhada num canto pra você casar com os quadradinhos na tela. -->
-    <div class="sheetsep">…e quantos tropeços</div>
-    <div class="filtros wrapchips" id="grade-faixas"></div>
-    <!-- pintar o radical é OUTRA pergunta que não a do erro, então ligar um radical
-         apaga o vermelho da tela: uma lente por vez. O seletor só lista radical que
-         aparece em ≥2 cartas — radical solitário não mostra relação nenhuma. -->
-    <div class="sheetsep">radical em azul</div>
-    <div class="filtros wrapchips" id="grade-radical"></div>
-    <!-- só aparece com um radical escolhido: o que o radical FAZ com a tela. Pintar
-         (recua o resto), Agrupar (com/sem, em dois montes) ou Só essas (esconde o resto).
-         No Agrupar, o com/sem substitui o eixo Agrupar enquanto o radical estiver ligado. -->
-    <div class="filtros wrapchips" id="grade-radmodo"></div>
-    <!-- aprendida e fora da rotação falam por borda, não por cor de fundo, então não
-         entram na escala acima e continuam precisando de legenda -->
-    <div class="gradelegend">
-      <span><i class="lg ok"></i> aprendida (fora da escala — quem manda nela é o ✅)</span>
-      <span><i class="lg off"></i> fora da rotação</span>
-    </div>
+  <!-- visão Grade: a mesma lista em quadradinhos (era uma aba do menu) -->
+  <div id="cartas-gradebox" hidden>
+    <div id="gradewrap"></div>
   </div>
-</div>
+</section>
 
 <!-- ══════ COMPETIÇÃO (comparar os 4) ══════ -->
 <section class="view" id="view-competicao">
   <div id="comp-placar"></div>
   <h3 class="sec">Cartas novas ao longo do tempo</h3>
   <div id="comp-graf"></div>
-  <!-- o resto em duas colunas no PC (masonry); no celular os .cblock empilham na ordem -->
-  <div class="cgrid">
-    <div class="cblock">
-      <h3 class="sec">Provas</h3>
-      <div class="card" id="comp-provas"></div>
-    </div>
+  <!-- o resto em <Abas> (DESIGN_SYSTEM.md 7); dentro de cada aba, duas colunas no PC -->
+  <div class="abas" data-abas="competicao">
+    <button data-aba="geral">Geral</button>
+    <button data-aba="provas">Provas</button>
+    <button data-aba="erros">Erros</button>
+  </div>
+  <div class="cgrade" data-painel="geral">
     <div class="cblock">
       <h3 class="sec">Quem estudou mais · 7 dias</h3>
       <div class="card" id="turma"></div>
     </div>
     <div class="cblock">
+      <h3 class="sec">Frases × palavras</h3>
+      <div class="card" id="comp-tipo"></div>
+    </div>
+  </div>
+  <div class="cgrade um" data-painel="provas" hidden>
+    <div class="cblock">
+      <h3 class="sec">Provas</h3>
+      <div class="card" id="comp-provas"></div>
+    </div>
+  </div>
+  <div class="cgrade tres" data-painel="erros" hidden>
+    <div class="cblock">
       <h3 class="sec">Erro por habilidade</h3>
       <div class="card" id="comp-hab"></div>
+    </div>
+    <div class="cblock">
+      <h3 class="sec">O que a turma mais erra</h3>
+      <div class="card" id="comp-erram"></div>
     </div>
     <div class="cblock">
       <h3 class="sec">Erro por tema</h3>
       <div class="card" id="comp-tema"></div>
     </div>
-    <div class="cblock">
-      <h3 class="sec">Frases × palavras</h3>
-      <div class="card" id="comp-tipo"></div>
-    </div>
-    <div class="cblock">
+    <div class="cblock largo">
       <h3 class="sec">Tons que cada um confunde</h3>
       <div class="card" id="comp-tom"></div>
-    </div>
-    <div class="cblock">
-      <h3 class="sec">O que a turma mais erra</h3>
-      <div class="card" id="comp-erram"></div>
     </div>
   </div>
 </section>
 
 <!-- ══════ PROGRESSO ══════ -->
 <section class="view" id="view-progresso">
+  <!-- os números e as revisões dos últimos 14 dias numa fileira só de cartões (Kpi) -->
   <div class="stats">
     <div class="stat wide"><b id="s-total">–</b><small id="s-total-lbl">palavras no deck</small></div>
     <div class="stat"><b id="s-hoje">–</b><small>para revisar hoje</small></div>
     <div class="stat"><b id="s-novas">–</b><small>novas disponíveis</small></div>
     <div class="stat"><b id="s-aprendidas">–</b><small>aprendidas (≥21d)</small></div>
     <div class="stat"><b id="s-streak">–</b><small>dias seguidos 🔥</small></div>
-  </div>
-  <!-- cada bloco (título + cartão) fica junto num .pblock; no PC o .pgrid espalha os
-       blocos em duas colunas (break-inside:avoid mantém o cartão inteiro). No celular
-       os dois são div sem estilo, então empilham igual a antes. -->
-  <!-- três colunas no PC. Os .pcol são display:contents no celular, então lá os blocos
-       viram filhos diretos do .pgrid e empilham NA ORDEM DO DOM — que é revisões,
-       habilidade, palavra, turma, deck: idêntica à de antes. A do meio é a "palavra por
-       palavra", que é a lista longa e ganha a coluna só pra ela. -->
-  <div class="pgrid">
-    <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">Revisões · últimos 14 dias</h3>
-        <div class="card">
-          <div class="bars" id="bars"></div>
-          <div class="barlabels" id="barlabels"></div>
-        </div>
-      </div>
-      <div class="pblock">
-        <h3 class="sec">Por capítulo</h3>
-        <div class="card" id="capstats"></div>
-      </div>
-      <div class="pblock">
-        <h3 class="sec">Por habilidade</h3>
-        <div class="card" id="habstats"></div>
-      </div>
-    </div>
-    <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">Palavra por palavra</h3>
-        <div class="chips" id="statsort"></div>
-        <div class="card" id="wordstats"></div>
-      </div>
-    </div>
-    <div class="pcol">
-      <div class="pblock">
-        <h3 class="sec">Por deck</h3>
-        <div class="card" id="deckstats"></div>
-      </div>
+    <div class="stat revisoes">
+      <div class="bars" id="bars"></div>
+      <div class="barlabels" id="barlabels"></div>
+      <small>revisões · últimos 14 dias</small>
     </div>
   </div>
-  <div style="text-align:center;margin-top:22px">
-    <button class="btn danger" id="resetbtn">Zerar meu progresso</button>
+  <div class="abas" data-abas="progresso">
+    <button data-aba="geral">Geral</button>
+    <button data-aba="palavra">Palavra por palavra</button>
   </div>
-  <div style="text-align:center">
-    <button class="creditlink" id="credbtn">Créditos e licenças</button>
+  <!-- Geral: os três cartões lado a lado no PC, empilhados no celular -->
+  <div class="pgrade" data-painel="geral">
+    <div class="pblock">
+      <h3 class="sec">Por capítulo</h3>
+      <div class="card" id="capstats"></div>
+    </div>
+    <div class="pblock">
+      <h3 class="sec">Por habilidade</h3>
+      <div class="card" id="habstats"></div>
+    </div>
+    <div class="pblock">
+      <h3 class="sec">Por deck</h3>
+      <div class="card" id="deckstats"></div>
+    </div>
+  </div>
+  <div data-painel="palavra" hidden>
+    <div class="pblock">
+      <div class="chips" id="statsort"></div>
+      <div class="card" id="wordstats"></div>
+    </div>
   </div>
 </section>
 
@@ -1442,6 +1768,8 @@ table.sons td{padding:3px;text-align:center;}
       <span class="info"><b>Escuro</b><small>pra estudar de noite sem queimar a vista</small></span>
       <span class="check"></span>
     </button>
+    <!-- os créditos moram aqui: as gravações do Commons são CC BY / BY-SA e pedem atribuição -->
+    <button class="creditlink" id="credbtn">Créditos e licenças</button>
   </div>
 </div>
 
@@ -1578,24 +1906,6 @@ table.sons td{padding:3px;text-align:center;}
 </div>
 
 <!-- a vista da lista de Palavras / Frases: agrupar, ordenar, isolar, mostrar (js/cartas.js) -->
-<div class="sheetwrap" id="vistasheet">
-  <div class="sheetbg" id="vistasheet-bg"></div>
-  <div class="sheet scroll"><div class="handle"></div>
-    <div id="vista-corpo"></div>
-    <!-- filtrar: tema ou origem. O bloco é fixo (não se redesenha com a folha) porque o
-         renderCartasChips já sabe desenhá-lo pelos ids -->
-    <div class="sheetsep">filtrar</div>
-    <div class="vista-filtro">
-      <div class="filtros" id="cartas-filtertype">
-        <button class="chip filtro active" data-f="tema" title="Filtrar por tema">🏷️ Tema</button>
-        <button class="chip filtro" data-f="origem" title="Filtrar por origem (capítulo do livro, extras da aula, Duolingo)">📖 Origem</button>
-      </div>
-      <div class="filtros wrapchips" id="cartas-chips"></div>
-    </div>
-    <div id="vista-corpo2"></div>
-  </div>
-</div>
-
 <!-- a lição do Hoje: de onde vêm as cartas, quantas, como, quando -->
 <div class="sheetwrap" id="licaosheet">
   <div class="sheetbg" id="licaosheet-bg"></div>
@@ -1679,6 +1989,7 @@ table.sons td{padding:3px;text-align:center;}
 
 <script src="./config.js"></script>
 <script src="./js/base.js"></script>
+<script src="./js/ui.js"></script>
 <script src="./js/desenho.js"></script>
 <script src="./js/teclado.js"></script>
 <script src="./js/dados.js"></script>

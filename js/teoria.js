@@ -183,22 +183,43 @@ function renderTeoria() {
   });
 }
 function renderNota(box) {
-  const t = leitura.notas[leitura.i];
-  marcaLida(t); // a nota que fica na tela conta como lida
   $('teoria-titulo').textContent = leitura.titulo + (leitura.notas.length > 1 ? ' · ' + (leitura.i + 1) + ' de ' + leitura.notas.length : '');
   $('teoria-voltar').style.display = '';
+  montaNota(box, () => { leitura.i--; renderTeoria(); }, () => { leitura.i++; renderTeoria(); });
+  window.scrollTo(0, 0);
+}
+// O miolo da nota (texto, blocos, anterior/próxima) — o mesmo na aba Teoria e na gaveta.
+function montaNota(box, ant, prox) {
+  const t = leitura.notas[leitura.i];
+  marcaLida(t); // a nota que fica na tela conta como lida
   let h = '<div class="nota-t painel"><h4>' + esc(t.titulo) + '</h4><p class="res">' + esc(t.resumo || '') + '</p>';
   t.blocos.forEach((b, i) => { h += blocoHtml(b, i); });
   h += '</div><div class="nota-nav">' +
     '<button class="typeskip" id="nota-ant"' + (leitura.i ? '' : ' disabled') + '>‹ anterior</button>' +
     '<button class="typeskip" id="nota-prox"' + (leitura.i < leitura.notas.length - 1 ? '' : ' disabled') + '>próxima ›</button></div>';
   box.innerHTML = h;
-  window.scrollTo(0, 0);
   t.blocos.forEach((b, i) => { if (b.tipo === 'tracos') montaTracos(box.querySelector('[data-tr="' + i + '"]'), b); });
   box.querySelectorAll('[data-som]').forEach(el => el.onclick = () => tocaSilaba(el.dataset.som));
   box.querySelectorAll('[data-fala]').forEach(el => el.onclick = () => falaTexto(el.dataset.fala));
-  $('nota-ant').onclick = () => { leitura.i--; renderTeoria(); };
-  $('nota-prox').onclick = () => { leitura.i++; renderTeoria(); };
+  box.querySelector('#nota-ant').onclick = ant;
+  box.querySelector('#nota-prox').onclick = prox;
+}
+// A nota aberta pelo Curso: na gaveta à direita (DESIGN_SYSTEM.md 11.1), com o capítulo
+// atrás. O título é o da nota; o "Cap. 1 · 2 de 5" vai na primeira linha, como o código
+// de um registro. Fechar redesenha o Curso, que conta as lidas.
+function abreNotaGaveta(l) {
+  leitura = l;
+  const desenha = () => {
+    const t = leitura.notas[leitura.i];
+    const corpo = abreGaveta({ titulo: t.titulo, aoFechar: () => { if (somTocando) somTocando.pause(); if (typeof renderCurso === 'function') renderCurso(); } });
+    corpo.innerHTML = '<div class="gcodigo"><span>' + esc(leitura.titulo) + '</span>' +
+      (leitura.notas.length > 1 ? '<span>·</span><span>' + (leitura.i + 1) + ' de ' + leitura.notas.length + '</span>' : '') + '</div><div></div>';
+    montaNota(corpo.lastElementChild, () => { leitura.i--; desenha(); }, () => { leitura.i++; desenha(); });
+    const tit = corpo.querySelector('.nota-t h4');
+    if (tit) tit.remove(); // o título já está no cabeçalho da gaveta
+  };
+  teoriaLida = load(uk(K_TEORIA_LIDA), {});
+  desenha();
 }
 // Bloco de tipo que este app não conhece não aparece: o teoria.json pode andar na frente.
 function blocoHtml(b, i) {

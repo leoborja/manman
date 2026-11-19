@@ -9,6 +9,8 @@
      licoes         { id: Lembrete do iOS + u }        — mescla: por lição, o u maior
      licoes_feitas  { id: 'YYYY-MM-DD' }              — mescla: a data maior
      dias_de_licao  { dia: {feitas, total, parcial} }  — mescla: o placar que andou mais
+     evolucao       { dia: {cap, deck, hab, u} }      — mescla: por dia, o u maior
+                    (só a web grava; o iOS ainda não lê — ver js/progresso.js)
    As outras (sons_ouvidos, trocas) são de telas que a web ainda não tem: ela nunca as
    grava, então não tem como estragar.
 
@@ -22,7 +24,8 @@ const ESTADO_LOCAL = {
   exercicios: () => K_EX,
   licoes: () => K_LICOES,
   licoes_feitas: () => K_LICOES_FEITAS,
-  dias_de_licao: () => K_DIAS_LICAO
+  dias_de_licao: () => K_DIAS_LICAO,
+  evolucao: () => K_EVOLUCAO
 };
 const PEGA_MAIOR = (a, b) => (a >= b ? a : b);
 function mesclaEstado(chave, a, b) {

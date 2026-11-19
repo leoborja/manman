@@ -194,6 +194,13 @@ function dueCount(pool) {
 }
 
 // ── UI: estudar ─────────────────────────────────────────────
+function telaLarga() { return window.matchMedia('(min-width: 900px)').matches; }
+function mostraIdeias(card) {
+  const tem = !!card && temIdeia(card), sempre = tem && telaLarga();
+  $('back-ideias').innerHTML = sempre ? htmlIdeogramas(card) : '';
+  $('ideia-btn').classList.toggle('show', tem && !sempre);
+  $('ideia-btn').setAttribute('aria-pressed', 'false');
+}
 function renderChips() {
   // sem frase no deck a linha inteira some: um botão "Frases" que abre sessão vazia é
   // pior que botão nenhum. Enquanto o Leo não publicar as frases, nada muda de lugar.
@@ -374,10 +381,9 @@ function showCard(card) {
   $('back-lit').innerHTML = htmlLiteral(card);
   $('back-pt').textContent = card.pt;
   $('back-nota').textContent = card.nota || '';
-  // 🧩 de que é feito cada 汉字: fechado a cada carta nova, aberto pelo ⓘ ao lado do 🔊
-  $('back-ideias').innerHTML = '';
-  $('ideia-btn').classList.toggle('show', temIdeia(card));
-  $('ideia-btn').setAttribute('aria-pressed', 'false');
+  // 🧩 de que é feito cada 汉字: no celular fecha a cada carta nova e abre pelo ⓘ ao
+  // lado do 🔊; no computador tem espaço, então já vem aberto no verso e o ⓘ some
+  mostraIdeias(card);
   const s = srs[card.id];
   $('iv-again').textContent = srsPreview(s, 'again');
   $('iv-hard').textContent = phase === 'practice' ? 'prática' : srsPreview(s, 'hard');

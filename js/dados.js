@@ -120,6 +120,7 @@ function logToday(field) {
   if (!log[t]) log[t] = { rev: 0, new: 0 };
   log[t][field] = (log[t][field] || 0) + 1;
   save(uk(K.log), log);
+  if (typeof agendaFoto === 'function') agendaFoto(); // a foto do dia do Progresso
 }
 function gcSrs() { // remove estados de cartas que não existem mais
   const ids = new Set(cards.map(c => c.id));
@@ -247,7 +248,7 @@ async function selectUser(u) {
   gcSrs();
   await syncPull();
   flushDirty();
-  renderChips(); renderCartasChips(); renderList(); renderGrade(); renderProgress();
+  renderChips(); renderCartasChips(); renderList(); renderProgress();
   startSession();
 }
 

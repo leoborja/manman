@@ -2,59 +2,35 @@
 'use strict';
 
 // ── UI: cartas (consulta) ───────────────────────────────────
+// O que sobrou dos chips de tema/origem: a aba Frases some quando não há frase
+// publicada. Os filtros em si moram na barra (renderCartasBarra), desenhada pela lista.
 function renderCartasChips() {
-  const porOrigem = cartasFiltro === 'origem';
-  // sem frase publicada a linha inteira some, igual à do estudar: um botão que só abre
-  // lista vazia é pior que botão nenhum
-  // o tipo agora se escolhe no menu (Palavras / Frases); o par de chips da tela fica guardado
   const tem = temFrases();
   $('cartas-tipotype').style.display = 'none';
   $('tab-frases').style.display = tem ? '' : 'none';
   if (!tem) cartasTipo = 'palavra';
-  $('cartas-tipotype').querySelectorAll('button').forEach(b =>
-    b.classList.toggle('active', b.dataset.tp === cartasTipo));
-
-  $('cartas-filtertype').querySelectorAll('button').forEach(b =>
-    b.classList.toggle('active', (b.dataset.f === 'origem') === porOrigem));
-
-  // tudo daqui pra baixo vive DENTRO do tipo escolhido: os temas, as origens, a contagem
-  // de desligadas. Tema que só existe em frase não vira chip na lista de palavras.
-  const base = cartasBase();
-  // conta quem está FORA da rotação, não só quem tem o interruptor desligado: a frase
-  // que carrega palavra desligada também não vai cair no estudo, e escondê-la aqui
-  // deixaria o usuário procurando por que a frase sumiu.
-    const opcoes = porOrigem ? opcoesOrigem(base) : ['todos'].concat([...new Set(base.map(c => c.deck))]);
-  if (!opcoes.includes(cartasDeck)) cartasDeck = opcoes[0];
-  let html = opcoes.map(o =>
-    '<button class="chip' + (cartasDeck === o ? ' active' : '') + '" data-d="' + esc(o) + '">' +
-    (porOrigem ? esc(origemLabel(o)) : o === 'todos' ? 'Todas' : esc(deckLabel(o))) + '</button>').join('');
-  // as desligadas não são mais um chip daqui: quem responde "quais são?" é o Isolar
-  $('cartas-chips').innerHTML = html;
-  $('cartas-chips').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cartasDeck = ch.dataset.d;
-    renderCartasChips(); renderList();
-  });
 }
 // o tipo que a aba está listando — é a base de tudo o que ela mostra e conta
 function cartasBase() { return cards.filter(c => ehFrase(c) === (cartasTipo === 'frase')); }
-// as cartas que o filtro da aba Cartas está mostrando, ignorando a busca por texto
+// as cartas que os filtros Tema e Origem deixam passar, ignorando a busca e a Situação.
+// Os dois SOMAM (E entre filtros, OU dentro de cada um): "Comida do Cap. 2".
 function cartasFiltradas() {
-  const base = cartasBase();
-  if (cartasDeck === '__off__') return base.filter(c => foraDaRotacao(c));
-  if (cartasFiltro === 'origem') {
-    return cartasDeck === 'todas' ? base : base.filter(c => origemDe(c) === cartasDeck);
-  }
-  return cartasDeck === 'todos' ? base : base.filter(c => c.deck === cartasDeck);
+  return cartasBase().filter(c =>
+    (!cartasTemas.length || cartasTemas.includes(c.deck)) &&
+    (!cartasOrigens.length || cartasOrigens.includes(origemDe(c))));
 }
-// botão de ligar/desligar em bloco — só aparece com um filtro específico escolhido,
-// porque "desligar todas" com o filtro em Todas é um tiro no pé sem querer
+function filtroLigado() { return cartasTemas.length > 0 || cartasOrigens.length > 0; }
+function filtroRotulo() {
+  return cartasTemas.map(deckLabel).concat(cartasOrigens.map(origemLabel)).join(' + ');
+}
+// botão de ligar/desligar em bloco — só aparece com Tema ou Origem escolhido,
+// porque "desligar todas" sem filtro é um tiro no pé sem querer
 function renderBulk() {
   const grupo = cartasFiltradas();
-  const generico = cartasDeck === 'todos' || cartasDeck === 'todas' || cartasDeck === '__off__';
-  if (generico || !grupo.length) { $('bulkbar').innerHTML = ''; return; }
+  if (!filtroLigado() || !grupo.length) { $('bulkbar').innerHTML = ''; return; }
   const ligadas = grupo.filter(c => !isOff(c.id)).length;
   const desligar = ligadas > 0;
-  const rotulo = cartasFiltro === 'origem' ? origemLabel(cartasDeck) : deckLabel(cartasDeck);
+  const rotulo = filtroRotulo();
   $('bulkbar').innerHTML = '<button class="bulkbtn' + (desligar ? '' : ' on') + '" id="bulkbtn">' +
     (desligar ? '🚫 Desligar as ' + ligadas + ' de ' + esc(rotulo)
       : '↩︎ Religar as ' + grupo.length + ' de ' + esc(rotulo)) + '</button>';
@@ -62,7 +38,7 @@ function renderBulk() {
     if (desligar && !confirm('Tirar da rotação as ' + ligadas + ' cartas de ' + rotulo +
       '? Elas somem do estudo até você religar. O progresso delas fica guardado.')) return;
     grupo.forEach(c => { if (isOff(c.id) === desligar) setOff(c.id, desligar); });
-    renderCartasChips(); renderList(); renderGrade(); startSession();
+    renderCartasChips(); renderList(); startSession();
   };
 }
 // uma linha da lista — separada pra servir tanto a lista corrida quanto os grupos
@@ -100,43 +76,45 @@ function cartaLinha(c) {
 //              também fosse nunca vista (os chips do Mostrar são um E).
 //   Mostrar  — cada chip ESCONDE uma classe quando apagado; todos nascem ligados
 const K_VISTA = 'manman.cartas.vista.v1';
-const VISTA_GRUPOS = [['nada', 'Sem grupo'], ['tema', 'Tema'], ['origem', 'Origem'], ['tropecos', 'Tropeços'], ['semelhanca', 'Semelhança'], ['favoritas', '⭐ Favoritas']];
+const VISTA_GRUPOS = [['nada', 'Sem grupo'], ['tema', 'Tema'], ['origem', 'Origem'], ['tropecos', 'Tropeços'], ['semelhanca', 'Semelhança'], ['favoritas', '⭐ Favoritas'], ['meu', '✋ Meu arranjo']];
+// Tabela e Grade são dois jeitos de ver a MESMA lista (DESIGN_SYSTEM.md 8.10): os filtros,
+// a ordem e o agrupamento valem para os dois; só a Grade tem o Radical e o arrastar.
+const VISTA_VISOES = [['tabela', 'Tabela', 'tabela'], ['grade', 'Grade', 'grade']];
 const VISTA_ORDENS = [['erro', 'Erros'], ['dominio', 'Domínio'], ['pinyin', 'Pinyin'], ['seed', 'Deck'], ['favoritas', '⭐ Favoritas']];
+// A Situação: cada opção é uma classe de carta; marcar duas mostra as duas (OU).
+// Substitui o Isolar e o Mostrar da folha antiga — "só as desligadas" é marcar uma,
+// "sem as aprendidas" é marcar as outras.
 const VISTA_CLASSES = [
   ['favoritas', '⭐ Favoritas', 'favorita', c => isFav(c.id)],
   ['desligadas', '🚫 Desligadas', 'desligada', c => foraDaRotacao(c)],
+  ['estudando', '📈 Em estudo', 'em estudo', c => !!srs[c.id] && !aprendida(c.id)],
   ['aprendidas', '✅ Aprendidas', 'aprendida', c => aprendida(c.id)],
   ['nuncaVistas', '🌱 Nunca vistas', 'nunca vista', c => !srs[c.id]]
 ];
+// as colunas que dá pra esconder (o 汉字 e o significado ficam sempre)
+const CARTAS_OCULTAVEIS = [['som', 'Som'], ['py', 'Pinyin'], ['nota', 'Nota'], ['tema', 'Tema'], ['fav', 'Favorita'], ['on', 'Ativa']];
 function vistaCfg() {
   const v = load(K_VISTA, {});
-  if (!VISTA_GRUPOS.some(([k]) => k === v.agrupar)) v.agrupar = cartasGrupo || 'nada'; // quem já tinha agrupado na barra antiga
+  if (!VISTA_GRUPOS.some(([k]) => k === v.agrupar)) v.agrupar = 'nada';
   if (!VISTA_ORDENS.some(([k]) => k === v.ordem)) v.ordem = 'erro';
-  v.mostrar = Object.assign({ aprendidas: true, nuncaVistas: true, desligadas: true }, v.mostrar || {});
-  if (!Array.isArray(v.faixas) || v.faixas.length !== ERRO_FAIXAS.length + 1) v.faixas = ERRO_FAIXAS.concat([0]).map(() => true);
-  if (!VISTA_CLASSES.some(([k]) => k === v.so)) v.so = null;
-  v.soFavoritas = !!v.soFavoritas;
+  if (!VISTA_VISOES.some(([k]) => k === v.visao)) v.visao = 'tabela';
+  v.situacao = (Array.isArray(v.situacao) ? v.situacao : []).filter(k => VISTA_CLASSES.some(([x]) => x === k));
+  v.tropecos = (Array.isArray(v.tropecos) ? v.tropecos : []).filter(t => +t >= 0 && +t <= ERRO_FAIXAS.length).map(String);
+  v.ocultas = (Array.isArray(v.ocultas) ? v.ocultas : []).filter(k => CARTAS_OCULTAVEIS.some(([x]) => x === k));
   return v;
 }
-function salvaVista(v) { save(K_VISTA, v); }
-function filtroLigado() { return cartasDeck !== 'todos' && cartasDeck !== 'todas'; }
-function filtroRotulo() { return cartasFiltro === 'origem' ? origemLabel(cartasDeck) : deckLabel(cartasDeck); }
-function vistaCortada(v) {
-  return filtroLigado() || v.soFavoritas || !!v.so || !v.mostrar.aprendidas || !v.mostrar.nuncaVistas || !v.mostrar.desligadas || !v.faixas.every(Boolean);
-}
+// Grupos recolhidos (linha de grupo da Tabela, título da Grade): guardados por
+// agrupamento + rótulo, pra sobreviverem ao redesenho (A+, favoritar, filtrar) e valerem
+// nas duas visões. Só nesta abertura do app — reabrir mostra tudo de novo.
+const gruposFechados = new Set();
+function chaveGrupo(rot) { return vistaCfg().agrupar + ':' + (rot || ''); }
+function salvaVista(v) { save(K_VISTA, { visao: v.visao, agrupar: v.agrupar, ordem: v.ordem, situacao: v.situacao, tropecos: v.tropecos, ocultas: v.ocultas }); }
 function vistaFiltra(list) {
   const v = vistaCfg();
-  // ⭐ é FILTRO, não Isolar: soma com o tema/origem e com os cortes do Mostrar —
-  // "as favoritas do Cap. 2 que eu ainda não aprendi"
-  if (v.soFavoritas) list = list.filter(c => isFav(c.id));
-  if (v.so) { const f = VISTA_CLASSES.find(([k]) => k === v.so)[3]; return list.filter(f); }
-  return list.filter(c => {
-    if (foraDaRotacao(c) && !v.mostrar.desligadas) return false;
-    // a aprendida NÃO passa pelas faixas: está fora da escala do vermelho
-    if (aprendida(c.id)) return v.mostrar.aprendidas;
-    if (!srs[c.id] && !v.mostrar.nuncaVistas) return false;
-    return v.faixas[erroTier(c)];
-  });
+  const cls = VISTA_CLASSES.filter(([k]) => v.situacao.includes(k)).map(x => x[3]);
+  return list.filter(c =>
+    (!cls.length || cls.some(f => f(c))) &&
+    (!v.tropecos.length || v.tropecos.includes(String(erroTier(c)))));
 }
 function vistaOrdena(list) {
   const o = vistaCfg().ordem, arr = list.slice(); // sort estável: o empate cai na ordem do deck
@@ -167,6 +145,7 @@ function gruposDeSemelhanca(list) {
 }
 function cartasGrupos(list) {
   const g = vistaCfg().agrupar;
+  if (g === 'meu') return gradeMeusGrupos(list);
   if (g === 'tema') {
     return [...new Set(list.map(c => c.deck))]
       .sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt'))
@@ -195,73 +174,126 @@ function cartasGrupos(list) {
   }
   return [{ rot: null, cards: list }];
 }
-// O resumo diz "sem aprendidas" e não "aprendidas": o chip apagado ESCONDE.
-function vistaResumo() {
-  const v = vistaCfg(), rot = (l, k) => l.find(([x]) => x === k)[1];
-  const p = [rot(VISTA_ORDENS, v.ordem)];
-  if (v.soFavoritas) p.unshift('só ⭐');
-  if (filtroLigado()) p.unshift(filtroRotulo());
-  if (v.agrupar !== 'nada') p.unshift('por ' + rot(VISTA_GRUPOS, v.agrupar).toLowerCase());
-  if (v.so) return p.concat(['só as ' + VISTA_CLASSES.find(([k]) => k === v.so)[1].replace(/^\S+\s/, '').toLowerCase()]).join(' · ');
-  if (!v.mostrar.aprendidas) p.push('sem aprendidas');
-  if (!v.mostrar.nuncaVistas) p.push('sem nunca vistas');
-  if (!v.mostrar.desligadas) p.push('sem desligadas');
-  if (!v.faixas.every(Boolean)) {
-    const lig = v.faixas.map((x, i) => x ? i : -1).filter(i => i >= 0);
-    const fim = lig.length && lig[lig.length - 1] === ERRO_FAIXAS.length && lig.length === ERRO_FAIXAS.length + 1 - lig[0];
-    p.push(!lig.length ? 'nenhuma faixa' : fim && lig[0] > 0 ? '≥' + ERRO_FAIXAS[lig[0] - 1] + ' tropeços' : 'só ' + lig.map(faixaRot).join(', '));
+// A barra da lista (DESIGN_SYSTEM.md 8.1 e 9): busca e filtros à esquerda; Ordenar,
+// Agrupar por e Colunas à direita. Redesenhada a cada renderList, menos a busca, que é
+// fixa no HTML pra não perder o foco no meio da digitação.
+function renderCartasBarra(list) {
+  const v = vistaCfg();
+  const grade = v.visao === 'grade';
+  const base = cartasBase();
+  const temas = [...new Set(base.map(c => c.deck))].sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt'))
+    .map(d => [d, esc(deckLabel(d))]);
+  const origens = opcoesOrigem(base).filter(o => o !== 'todas').map(o => [o, esc(origemLabel(o))]);
+  cartasTemas = cartasTemas.filter(k => temas.some(([x]) => x === k));
+  cartasOrigens = cartasOrigens.filter(k => origens.some(([x]) => x === k));
+  const muda = f => { const x = vistaCfg(); f(x); salvaVista(x); renderList(); };
+  const esq = $('cartas-filtros');
+  esq.innerHTML = '';
+  esq.append(
+    filtroMulti('Tema', temas, cartasTemas, s => { cartasTemas = s; renderList(); }),
+    filtroMulti('Origem', origens, cartasOrigens, s => { cartasOrigens = s; renderList(); }),
+    filtroMulti('Situação', VISTA_CLASSES.map(([k, t]) => [k, t]), v.situacao, s => muda(x => { x.situacao = s; })),
+    filtroMulti('Tropeços', [...Array(ERRO_FAIXAS.length + 1).keys()].reverse()
+      .map(t => [String(t), '<i class="lgq e' + t + '"></i>' + (t ? faixaRot(t) + ' tropeços' : 'sem tropeço')]),
+      v.tropecos, s => muda(x => { x.tropecos = s; })));
+  // Na Grade, o radical: pintar o radical é outra pergunta que não a do erro, então com
+  // ele ligado o vermelho sai. O segundo botão diz o que ele faz com a tela.
+  if (grade) {
+    const gc = gradeCfg();
+    const mudaG = f => { f(gc); save(K.settings, settings); renderList(); };
+    const disp = radicaisDisponiveis(list);
+    if (gc.radical && !disp.some(d => d.rad === gc.radical)) disp.unshift({ rad: gc.radical, pt: RADICAL_PT[gc.radical] || '', n: 0 });
+    esq.append(filtroUnico('Radical', disp.map(d => [d.rad, '<span class="zh">' + esc(d.rad) + '</span> ' + esc(d.pt) + (d.n ? ' <small>' + d.n + '</small>' : '')]),
+      gc.radical, k => mudaG(x => { x.radical = k; })));
+    if (gc.radical) {
+      const m = RAD_MODOS.find(([k]) => k === gc.radModo);
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'ft-btn cheio'; b.title = 'O que o radical faz com a tela';
+      b.innerHTML = '<span>' + m[1] + '</span>' + icone('seta', 'ft-seta');
+      b.onclick = () => abrePop(b, 200, el => popItens(el, 'Radical', RAD_MODOS, gc.radModo, k => mudaG(x => { x.radModo = k || 'pintar'; })));
+      esq.append(b);
+    }
   }
-  return p.join(' · ');
+  const dir = $('cartas-dir');
+  dir.innerHTML = '';
+  // Na Grade, o jeito de ver os quadradinhos mora na barra também: o significado
+  // embaixo do pinyin (liga/desliga, borda verde quando ligado) e o tamanho, A− / A+,
+  // que anda um passo a partir do escolhido (ou da base) e vale no celular também.
+  if (grade) {
+    const gc = gradeCfg();
+    const mudaG = f => { f(gc); save(K.settings, settings); renderList(); };
+    const sig = document.createElement('button');
+    sig.type = 'button'; sig.className = 'ft-quad txt' + (gc.sig ? ' ligado' : '');
+    sig.textContent = 'Significado'; sig.title = 'Mostrar o significado embaixo do pinyin';
+    sig.setAttribute('aria-pressed', gc.sig);
+    sig.onclick = () => mudaG(x => { x.sig = !x.sig; });
+    const efet = gc.tam != null ? gc.tam : GTAM_BASE;
+    const tam = d => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'ft-quad txt';
+      b.textContent = d < 0 ? 'A−' : 'A+';
+      b.title = d < 0 ? 'Cartões menores' : 'Cartões maiores'; b.setAttribute('aria-label', b.title);
+      b.disabled = d < 0 ? efet <= GTAM_MIN : efet >= GTAM_MAX;
+      b.onclick = () => mudaG(x => { x.tam = Math.max(GTAM_MIN, Math.min(GTAM_MAX, efet + d * GTAM_PASSO)); });
+      return b;
+    };
+    dir.append(sig, tam(-1), tam(1));
+  }
+  const rot = (l, k) => (l.find(([x]) => x === k) || [, k])[1];
+  // o "Meu arranjo" só existe na Grade: é lá que se arrasta uma carta pra um monte
+  const grupos = VISTA_GRUPOS.filter(([k]) => k !== 'nada' && (grade || k !== 'meu'));
+  dir.append(
+    seletorVisao(VISTA_VISOES, v.visao, k => muda(x => { x.visao = k; if (k !== 'grade' && x.agrupar === 'meu') x.agrupar = 'nada'; })),
+    botaoQuadrado('ordenar', 'Ordenar: ' + rot(VISTA_ORDENS, v.ordem), v.ordem !== 'erro', b =>
+      abrePop(b, 208, el => popItens(el, 'Ordenar por', VISTA_ORDENS, v.ordem, k => muda(x => { x.ordem = k || 'erro'; })))),
+    botaoQuadrado('camadas', 'Agrupar por' + (v.agrupar !== 'nada' ? ': ' + rot(VISTA_GRUPOS, v.agrupar) : ''), v.agrupar !== 'nada', b =>
+      abrePop(b, 208, el => popItens(el, 'Agrupar por', grupos, v.agrupar,
+        k => muda(x => { x.agrupar = k || 'nada'; }), v.agrupar !== 'nada' ? 'Remover agrupamento' : null))));
+  if (!grade) dir.append(botaoQuadrado('colunas', 'Colunas', v.ocultas.length > 0, b =>
+    abrePop(b, 240, el => popColunas(el, CARTAS_OCULTAVEIS, v.ocultas, s => muda(x => { x.ocultas = s; })))));
 }
-// A barra da lista: o botão da folha com o resumo, e os chips do Isolar a um toque.
-function renderCartasGrupobar() {
-  const v = vistaCfg();
-  $('cartas-grupobar').innerHTML = '<button class="pageacao vista-btn' + (vistaCortada(v) ? ' cortada' : '') + '" id="vista-btn">' +
-    '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>' +
-    'Configurar</button><span class="vista-resumo">' + esc(vistaResumo()) + '</span>';
-  $('vista-btn').onclick = abreVista;
-}
-function abreVista() { renderVista(); $('vistasheet').classList.add('show'); }
-function renderVista() {
-  const v = vistaCfg();
-  const chips = (lista, atual, attr) => '<div class="filtros wrapchips">' + lista.map(([k, t]) =>
-    '<button class="chip' + (atual === k ? ' active' : '') + '" ' + attr + '="' + k + '">' + t + '</button>').join('') + '</div>';
-  const isolando = !!v.so;
-  let h = '<h3>Configurações</h3>' +
-    '<div class="sheetsep">agrupar</div>' + chips(VISTA_GRUPOS, v.agrupar, 'data-ag') +
-    '<p class="vista-nota">Independente do filtro — dá pra filtrar por um capítulo e ainda ver o resultado separado por tema. Na semelhança, os caracteres parecidos ficam lado a lado.</p>' +
-    '<div class="sheetsep">ordenar dentro do grupo</div>' + chips(VISTA_ORDENS, v.ordem, 'data-or') +
-    '\u0000' + '<div class="filtros wrapchips vista-fav"><button class="chip' + (v.soFavoritas ? ' active' : '') + '" data-fav="1">⭐ Só as favoritas</button></div>' +
-    '<p class="vista-nota">Soma com o tema ou a origem e com o Mostrar: dá pra ver só as favoritas do Cap. 2 que ainda não foram aprendidas.</p>' +
-    '<div class="sheetsep">isolar</div>' + chips([['', 'Nenhuma']].concat(VISTA_CLASSES.map(([k, t]) => [k, t])), v.so || '', 'data-so') +
-    '<p class="vista-nota">Isolar responde "quais são as desligadas?"; o Mostrar abaixo responde "o que sai da tela?". São perguntas diferentes, e por isso uma de cada vez.</p>' +
-    '<div class="sheetsep">mostrar</div><div class="vista-mostrar' + (isolando ? ' apagado' : '') + '">' +
-    '<div class="filtros wrapchips">' + [['aprendidas', '✅ Aprendidas'], ['nuncaVistas', '🌱 Nunca vistas'], ['desligadas', '🚫 Desligadas']].map(([k, t]) =>
-      '<button class="chip' + (v.mostrar[k] ? ' active' : '') + '" data-mo="' + k + '">' + t + '</button>').join('') + '</div>' +
-    '<div class="vista-sub">Tropeços</div><div class="filtros wrapchips">' + v.faixas.map((lig, i) =>
-      '<button class="chip vfx' + (lig ? ' active' : '') + '" data-fx="' + i + '"><i class="e' + i + '"></i>' + faixaRot(i) + '</button>').join('') + '</div>' +
-    '<p class="vista-nota">' + (isolando ? 'Enquanto uma classe estiver isolada estes cortes ficam de fora — quem recorta a tela é o Isolar, acima.'
-      : 'Chip apagado esconde. Carta que casa com mais de um some do mesmo jeito.') + '</p></div>' +
-    '<div class="le-botoes"><button class="exprox" id="vista-ok">Pronto</button>' +
-    (vistaCortada(v) || v.agrupar !== 'nada' || v.ordem !== 'erro' ? '<button class="typeskip" id="vista-zera">Voltar ao padrão</button>' : '') + '</div>';
-  const [antes, depois] = h.split('\u0000');
-  $('vista-corpo').innerHTML = antes;
-  $('vista-corpo2').innerHTML = depois;
-  const box = $('vistasheet');
-  renderCartasChips();
-  const muda = f => { const x = vistaCfg(); f(x); salvaVista(x); renderVista(); renderList(); };
-  box.querySelectorAll('[data-ag]').forEach(b => b.onclick = () => muda(x => { x.agrupar = b.dataset.ag; }));
-  box.querySelectorAll('[data-or]').forEach(b => b.onclick = () => muda(x => { x.ordem = b.dataset.or; }));
-  box.querySelectorAll('[data-so]').forEach(b => b.onclick = () => muda(x => { x.so = b.dataset.so || null; }));
-  box.querySelectorAll('[data-fav]').forEach(b => b.onclick = () => muda(x => { x.soFavoritas = !x.soFavoritas; }));
-  box.querySelectorAll('[data-mo]').forEach(b => b.onclick = () => muda(x => { x.mostrar[b.dataset.mo] = !x.mostrar[b.dataset.mo]; }));
-  box.querySelectorAll('[data-fx]').forEach(b => b.onclick = () => muda(x => { x.faixas[+b.dataset.fx] = !x.faixas[+b.dataset.fx]; }));
-  $('vista-ok').onclick = () => $('vistasheet').classList.remove('show');
-  if ($('vista-zera')) $('vista-zera').onclick = () => {
-    salvaVista({}); cartasGrupo = 'nada';
-    cartasDeck = cartasFiltro === 'origem' ? 'todas' : 'todos';
-    renderVista(); renderList();
+// O detalhe da carta na gaveta (DESIGN_SYSTEM.md 11.1): a lista continua atrás.
+// Ouvir, favoritar e ligar/desligar ficam no cabeçalho; o corpo tem a carta grande,
+// os números do seu estudo, os dados, a nota e de que é feito cada caractere.
+function abreCartaGaveta(id) {
+  const c = cards.find(x => x.id === id);
+  if (!c) return;
+  const fav = isFav(c.id), off = isOff(c.id), bloq = palavraDesligada(c);
+  const s = srs[c.id], st = statOf(c.id);
+  const situ = foraDaRotacao(c) ? ['err', 'Desligada'] : aprendida(c.id) ? ['ok', 'Aprendida'] : s ? ['warn', 'Em estudo'] : ['', 'Nunca vista'];
+  const bt = (k, txt, on, titulo) => { const b = document.createElement('button'); b.className = 'gbotao' + (on ? ' on' : ''); b.dataset.k = k; b.title = titulo || ''; b.textContent = txt; return b; };
+  const acoes = [bt('som', '🔊 Ouvir'), bt('fav', fav ? '★ Favorita' : '☆ Favoritar', fav,
+    fav ? 'Tirar das favoritas' : 'Favoritar: aparece em toda sessão, mesmo fora do filtro'),
+    bt('on', off ? 'Religar' : 'Desligar', false, off ? 'Volta pra rotação do estudo' : 'Tira da rotação do estudo')];
+  const corpo = abreGaveta({ titulo: c.hanzi + ' · ' + c.pt, acoes });
+  const frase = ehFrase(c);
+  const dataAula = c.data_aula ? new Date(c.data_aula + 'T12:00').toLocaleDateString('pt-BR') : '';
+  let h = '<div class="gcodigo"><code>' + esc(c.id) + '</code><span class="gtag ' + situ[0] + '">' + situ[1] + '</span>' +
+    (fav ? '<span class="gtag">⭐ favorita</span>' : '') + '</div>' +
+    '<div class="ghero' + (frase ? ' frase' : '') + '"><div class="zh" lang="zh-Hans">' + esc(c.hanzi) + '</div><div>' +
+    '<div class="gpy">' + pinyinColored(c.pinyin) + '</div><div class="gpt">' + esc(c.pt) + '</div>' + htmlLiteral(c) + '</div></div>';
+  h += secaoGaveta('Seu estudo', '', '<div class="gkpis">' +
+    '<div class="gkpi"><small>Domínio</small><b>' + (s ? Math.round(dominio(c.id) * 100) + '%' : '—') + '</b></div>' +
+    '<div class="gkpi"><small>Acertos</small><b>' + st.g + '</b></div>' +
+    '<div class="gkpi"><small>Tropeços</small><b>' + erroCount(c.id) + '</b></div>' +
+    '<div class="gkpi"><small>Próxima revisão</small><b>' + (s && s.due ? new Date(s.due + 'T12:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) : '—') + '</b></div></div>');
+  h += secaoGaveta('Dados', '', camposGaveta([
+    ['Tipo', frase ? 'Frase' : 'Palavra'],
+    ['Tema', esc(deckLabel(c.deck))],
+    ['Origem', esc(origemLabel(origemDe(c)))],
+    ['Data da aula', dataAula],
+    ['Na rotação', foraDaRotacao(c) ? (bloq ? 'Não — ' + esc(bloq) + ' está desligada' : 'Não') : 'Sim']]));
+  if (c.nota) h += secaoGaveta('Nota', '', '<div class="gtexto">' + esc(c.nota) + '</div>');
+  const ideias = ideogramasDaCarta(c);
+  if (ideias.length) h += secaoGaveta('De que é feito cada 汉字', ideias.length, '<div class="ideias">' + htmlIdeogramas(c) + '</div>');
+  corpo.innerHTML = h;
+  const cab = $('gaveta').querySelector('.gaveta-acoes');
+  cab.querySelector('[data-k="som"]').onclick = () => speak(c);
+  cab.querySelector('[data-k="fav"]').onclick = () => {
+    setFav(c.id, !isFav(c.id)); renderList(); abreCartaGaveta(c.id);
+    if (phase === 'sched' || phase === 'practice') renderCounter();
   };
+  cab.querySelector('[data-k="on"]').onclick = () => { setOff(c.id, !isOff(c.id)); depoisDeLigar(); abreCartaGaveta(c.id); };
 }
 function renderList() {
   const q = $('search').value.trim().toLowerCase();
@@ -281,36 +313,35 @@ function renderList() {
     ? '<b>' + list.length + '</b> de ' + base + ' ' + nome
     : '<b>' + base + '</b> ' + nome + ' no deck';
   $('cardlist').className = cartasTipo === 'frase' ? 'frases' : '';
-  renderCartasGrupobar();
-  const iso = VISTA_CLASSES.find(([k]) => k === vistaCfg().so);
-  const vazio = '<p style="color:var(--mut);text-align:center">' + (iso
-    ? 'Nenhuma ' + (cartasTipo === 'frase' ? 'frase ' : 'palavra ') + iso[2] + ' aqui.'
-    : 'Nenhuma ' + (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.') + '</p>';
+  renderCartasBarra(list);
+  const v = vistaCfg();
+  const grade = v.visao === 'grade';
+  $('cartas-tabela').hidden = grade;
+  $('cartas-gradebox').hidden = !grade;
+  if (grade) { desenhaGrade(list); return; }
+  const vazio = '<p class="dt-vazio">Nenhuma ' + (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
   // Uma tabela só, com o nome de cada coluna em cima; o agrupar vira uma linha de
   // título dentro dela, pra que as colunas fiquem alinhadas do começo ao fim.
   const frase = cartasTipo === 'frase';
-  $('cardlist').innerHTML = list.length ? '<table class="cartas-tab"><thead><tr>' +
+  $('cardlist').innerHTML = list.length ? '<table class="cartas-tab' + v.ocultas.map(k => ' oc-' + k).join('') + '"><thead><tr>' +
     '<th class="c-som"></th><th class="c-hz">' + (frase ? 'Frase' : '汉字') + '</th><th class="c-py">Pinyin</th>' +
     '<th class="c-pt">Significado</th><th class="c-nota">Nota</th><th class="c-tema">Tema</th>' +
     '<th class="c-fav" title="Favorita">⭐</th><th class="c-on">Ativa</th></tr></thead><tbody>' +
     cartasGrupos(list).map(g =>
-      (g.rot ? '<tr class="cl-grupo"><td colspan="' + CARTAS_COLUNAS + '">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></td></tr>' : '') +
-      g.cards.map(cartaLinha).join('')).join('') + '</tbody></table>' : vazio;
-  // 🧩 na lista é sempre (o interruptor do Estudar é sobre a carta entregar a resposta,
-  // e aqui ela já está à mostra): tocar no 汉字 ou no pinyin abre, embaixo da linha, de
-  // que é feito cada caractere
-  $('cardlist').querySelectorAll('tr.cl').forEach(tr => {
-    const c = cards.find(x => x.id === tr.dataset.id);
-    if (!c || !ideogramasDaCarta(c).length) return;
-    tr.querySelectorAll('.c-hz, .c-py').forEach(td => {
-      td.classList.add('abre-ideia');
-      td.title = 'De que é feito cada 汉字';
-      td.onclick = () => {
-        const prox = tr.nextElementSibling;
-        if (prox && prox.classList.contains('cl-ideias')) { prox.remove(); return; }
-        tr.insertAdjacentHTML('afterend', '<tr class="cl-ideias"><td colspan="' + CARTAS_COLUNAS + '"><div class="ideias">' + htmlIdeogramas(c) + '</div></td></tr>');
-      };
-    });
+      (g.rot ? '<tr class="cl-grupo' + (gruposFechados.has(chaveGrupo(g.rot)) ? ' fechado' : '') + '" data-rot="' + esc(g.rot) + '"><td colspan="' + CARTAS_COLUNAS + '">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></td></tr>' : '') +
+      g.cards.map(c => g.rot && gruposFechados.has(chaveGrupo(g.rot)) ? cartaLinha(c).replace('<tr ', '<tr hidden ') : cartaLinha(c)).join('')).join('') + '</tbody></table>' : vazio;
+  // Clicar na linha abre a carta na gaveta (DESIGN_SYSTEM.md 11.1). Os controles da
+  // própria linha (ouvir, estrela, interruptor) continuam fazendo só o que fazem.
+  $('cardlist').querySelectorAll('tr.cl').forEach(tr => tr.onclick = e => {
+    if (e.target.closest('button, label, input')) return;
+    abreCartaGaveta(tr.dataset.id);
+  });
+  // a linha de grupo recolhe ao clicar, como no DataTable
+  $('cardlist').querySelectorAll('tr.cl-grupo').forEach(tr => tr.onclick = () => {
+    const fecha = !tr.classList.contains('fechado');
+    tr.classList.toggle('fechado', fecha);
+    if (fecha) gruposFechados.add(chaveGrupo(tr.dataset.rot)); else gruposFechados.delete(chaveGrupo(tr.dataset.rot));
+    for (let n = tr.nextElementSibling; n && !n.classList.contains('cl-grupo'); n = n.nextElementSibling) n.hidden = fecha;
   });
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
     const c = cards.find(x => x.id === bt.dataset.id);
@@ -323,18 +354,23 @@ function renderList() {
   });
   $('cardlist').querySelectorAll('.offtgl').forEach(t => t.onchange = () => {
     setOff(t.dataset.id, !t.checked);
-    renderCartasChips(); renderList(); renderGrade();
-    if (phase !== 'quiz') { // realinha a fila de estudo mantendo a carta atual na frente
-      if (phase === 'sched') buildQueue(); else enterPractice();
-      if (current && !foraDaRotacao(current)) {
-        queue = queue.filter(x => x !== current.id);
-        queue.unshift(current.id);
-        renderCounter();
-      } else {
-        nextCard();
-      }
-    }
+    depoisDeLigar();
   });
+}
+// Ligar/desligar uma carta (na linha ou na gaveta) mexe na lista, na grade e na fila
+// do estudo, que se realinha mantendo a carta atual na frente.
+function depoisDeLigar() {
+  renderCartasChips(); renderList();
+  if (phase !== 'quiz') {
+    if (phase === 'sched') buildQueue(); else enterPractice();
+    if (current && !foraDaRotacao(current)) {
+      queue = queue.filter(x => x !== current.id);
+      queue.unshift(current.id);
+      renderCounter();
+    } else {
+      nextCard();
+    }
+  }
 }
 
 // ── UI: grade (o deck inteiro numa tela só) ─────────────────
@@ -344,20 +380,6 @@ function renderList() {
 // enxergar a olho o que a lista só sabe contar — o que já está de pé, o que você erra,
 // o que nunca abriu. Por isso ela não repete os filtros da Cartas: ela agrupa e ordena
 // o deck inteiro, e o que ela pinta é o SEU estado, não o conteúdo da carta.
-const GRADE_GRUPOS = [['tema', '🏷️ Tema'], ['origem', '📖 Origem'], ['tipo', '汉 Tipo'], ['meu', '✋ Meu arranjo'], ['nada', '⬜ Nada']];
-const GRADE_ORDENS = [['erro', '🔥 Erros'], ['dominio', '🌱 Domínio'], ['pinyin', '🔤 Pinyin'], ['seed', '📋 Deck']];
-// O terceiro eixo: cada chip ESCONDE uma classe de carta quando apagado. Todos nascem
-// ligados — a Grade abre no deck inteiro, que é a razão dela existir, e tirar coisa da
-// tela é o que você faz depois, de propósito. Esconder as 86 aprendidas é o caso que
-// pediu isto: o que sobra é exatamente o que ainda falta.
-// Carta que casa com MAIS DE UM chip apagado some do mesmo jeito (a frase aprendida sai
-// com o 💬 e sai com o ✅) — some se QUALQUER um a pegar, que é como se lê "esconder".
-const GRADE_MOSTRAR = [
-  ['frases', '💬 Frases', c => ehFrase(c)],
-  ['aprendidas', '✅ Aprendidas', c => aprendida(c.id)],
-  ['novas', '🌱 Nunca vistas', c => !srs[c.id]],
-  ['off', '🚫 Desligadas', c => foraDaRotacao(c)]
-];
 // Mora dentro do settings pro arranjo sobreviver ao recarregamento, que é o ponto de
 // uma tela de consulta: você monta a vista uma vez e volta nela.
 // ── Grade: o arranjo à mão ──────────────────────────────────
@@ -366,7 +388,7 @@ const GRADE_MOSTRAR = [
 // 书? 我 e 找? Isso não está em campo nenhum, está na sua cabeça, e a única forma de
 // botar na tela é você arrastar uma pra perto da outra.
 // Carta que você não arrastou fica no monte do fim; ela não some, só não foi arrumada.
-function arranjoOn() { return gradeCfg().grupo === 'meu'; }
+function arranjoOn() { const v = vistaCfg(); return v.visao === 'grade' && v.agrupar === 'meu'; }
 function salvaArranjo() { save(uk(K.arranjo), arranjo); }
 function grupoDe(id) { return arranjo.grupos.find(g => g.ids.indexOf(id) >= 0) || null; }
 function novoGrupo(nome) {
@@ -564,21 +586,6 @@ function faixaRot(t) {
 const GRADE_FAIXAS = [0, 1, 2, 3, 4];
 function gradeCfg() {
   const g = settings.grade || (settings.grade = {});
-  if (g.grupo === 'aula') g.grupo = 'origem'; // renomeado quando o filtro virou 'origem'
-  if (!GRADE_GRUPOS.some(([k]) => k === g.grupo)) g.grupo = 'tema';
-  if (!GRADE_ORDENS.some(([k]) => k === g.ordem)) g.ordem = 'erro';
-  // o 💬 solto virou um chip do Mostrar: quem já tinha desligado as frases não vê elas
-  // voltarem sozinhas depois da atualização
-  if (!g.mostrar) {
-    g.mostrar = {};
-    GRADE_MOSTRAR.forEach(([k]) => { g.mostrar[k] = g.frases === false && k === 'frases' ? false : true; });
-  }
-  GRADE_MOSTRAR.forEach(([k]) => { if (g.mostrar[k] === undefined) g.mostrar[k] = true; });
-  // um liga/desliga por degrau da escala de vermelho — "quero ver só as que eu sou
-  // muito ruim" é apagar os degraus claros
-  if (!Array.isArray(g.faixas) || g.faixas.length !== GRADE_FAIXAS.length) {
-    g.faixas = GRADE_FAIXAS.map(() => true);
-  }
   if (g.radical && !RADICAL_PT[g.radical]) g.radical = null; // radical que saiu da lista
   if (!['pintar', 'agrupar', 'so'].includes(g.radModo)) g.radModo = 'pintar';
   // tamanho do cartão: null = deixa o CSS decidir (76 no celular, 96 no PC); número =
@@ -587,10 +594,14 @@ function gradeCfg() {
     g.tam = null;
   }
   g.sig = !!g.sig; // mostrar o significado embaixo do pinyin
+  // filtros, ordem e agrupamento agora são os da lista (vistaCfg): a Grade é uma visão dela
+  ['grupo', 'ordem', 'temas', 'origens', 'tipos', 'situacao', 'tropecos', 'mostrar', 'faixas'].forEach(k => delete g[k]);
   delete g.frases;
   return g;
 }
-const GTAM_MIN = 56, GTAM_MAX = 168, GTAM_PASSO = 16, GTAM_BASE = 96;
+// até 320px: o cartão grande serve pra ler de longe / estudar o traço, e a letra cresce
+// junto (o CSS escala pelo --gtam). Passo de 24 pra não precisar de 11 cliques até o fim.
+const GTAM_MIN = 56, GTAM_MAX = 320, GTAM_PASSO = 24, GTAM_BASE = 96;
 const RAD_MODOS = [['pintar', '🖌️ Pintar'], ['agrupar', '📑 Agrupar'], ['so', '🔎 Só essas']];
 // os dois montes do modo Agrupar: com o radical em cima, sem embaixo. Substitui o eixo
 // Agrupar enquanto o radical está ligado — aninhar "tema dentro de com-氵" viraria
@@ -663,7 +674,8 @@ function pintaRadical(rad) {
     const gh = card.querySelector('.gh');
     const chars = [...limpaHanzi(c.hanzi)].filter(ch => strokesDB[ch]);
     if (!chars.length) return;
-    const size = ehFrase(c) ? 30 : chars.length > 2 ? 26 : chars.length > 1 ? 34 : 42;
+    const esc_ = Math.max(1, (gradeCfg().tam || GTAM_BASE) / GTAM_BASE); // cresce com o cartão
+    const size = Math.round((ehFrase(c) ? 30 : chars.length > 2 ? 26 : chars.length > 1 ? 34 : 42) * esc_);
     gh.textContent = '';
     chars.forEach(ch => gh.appendChild(radicalSvg(ch, rad, size)));
   });
@@ -689,35 +701,6 @@ function erroTier(c) {
 // a aprendida vai pro FIM da ordem por erro, não pro meio junto das de zero: ela não
 // está "sem tropeço nenhum", está fora da conta
 function erroKey(c) { return aprendida(c.id) ? -1 : erroCount(c.id); }
-function gradeOrdena(list) {
-  const o = gradeCfg().ordem;
-  const arr = list.slice(); // sort estável: o empate cai na ordem do deck, que é a do seed
-  if (o === 'erro') return arr.sort((a, b) => erroKey(b) - erroKey(a));
-  if (o === 'dominio') return arr.sort((a, b) => dominio(a.id) - dominio(b.id));
-  if (o === 'pinyin') return arr.sort((a, b) =>
-    (a.pinyin || '').localeCompare(b.pinyin || '', 'pt', { sensitivity: 'base' }));
-  return arr;
-}
-// Ordena primeiro, agrupa depois — o filter é estável, então cada grupo herda a ordem
-// escolhida. Grupo vazio não vira título: com as frases desligadas, "Frases" sumiria
-// como cabeçalho de nada.
-function gradeGrupos(list) {
-  const g = gradeCfg().grupo;
-  if (g === 'meu') return gradeMeusGrupos(list);
-  if (g === 'nada') return [{ rot: '', cards: list }];
-  if (g === 'tipo') {
-    return TIPOS.map(t => ({ rot: TIPO_LABEL[t], cards: list.filter(c => ehFrase(c) === (t === 'frase')) }))
-      .filter(x => x.cards.length);
-  }
-  if (g === 'origem') {
-    return opcoesOrigem(list).filter(o => o !== 'todas')
-      .map(o => ({ rot: origemLabel(o), cards: list.filter(c => origemDe(c) === o) }))
-      .filter(x => x.cards.length);
-  }
-  return [...new Set(list.map(c => c.deck))]
-    .sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt'))
-    .map(d => ({ rot: deckLabel(d), cards: list.filter(c => c.deck === d) }));
-}
 // O quadradinho: pictograma em cima, pinyin embaixo.
 // UMA codificação só, e ela é do fundo: branco = tranquila, e vai ficando vermelho
 // conforme você tropeça. Aprendida é fundo branco com borda verde — a carta saiu da
@@ -767,114 +750,42 @@ function gradeCorpo(list, vazioVisivel) {
     : '') +
     (fr.length ? '<div class="gradefrases">' + fr.map(gradeTile).join('') + '</div>' : '');
 }
-// O botão diz os três eixos em uma linha, porque é o único lugar onde eles aparecem
-// juntos — dentro da folha você vê um eixo de cada vez. A pílula leva o agrupamento
-// (é o que muda a cara da tela) e o texto leva a ordem mais o que está escondido.
-function gradeResumo() {
+// A visão Grade da lista: a mesma lista (filtrada, buscada e ordenada) em quadradinhos.
+// O que é só dela: o radical (pintar / agrupar / só essas), o tamanho e o significado.
+function desenhaGrade(list) {
   const cfg = gradeCfg();
-  const rot = k => (GRADE_GRUPOS.concat(GRADE_ORDENS).find(([x]) => x === k) || [, k])[1];
-  const escondido = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k] && (k !== 'frases' || temFrases()));
-  const partes = [rot(cfg.ordem)];
-  // "≥5 tropeços" quando as faixas ligadas são as mais vermelhas em sequência — que é o
-  // caso que motivou o filtro. Fora disso, lista os degraus, que é sempre verdade.
-  if (!cfg.faixas.every(Boolean)) {
-    const ligadas = GRADE_FAIXAS.filter(t => cfg.faixas[t]);
-    const seguidasAteOFim = ligadas.length &&
-      ligadas[ligadas.length - 1] === GRADE_FAIXAS.length - 1 &&
-      ligadas.length === GRADE_FAIXAS.length - ligadas[0];
-    partes.push(!ligadas.length ? 'nenhuma faixa'
-      : seguidasAteOFim && ligadas[0] > 0 ? '≥' + ERRO_FAIXAS[ligadas[0] - 1] + ' tropeços'
-      : 'só ' + ligadas.map(faixaRot).join(', '));
-  }
-  // "sem aprendidas" e não "aprendidas": o chip apagado ESCONDE, e o resumo tem que
-  // dizer o que sumiu, senão ele lê como se estivesse mostrando só aquilo
-  if (escondido.length) {
-    partes.push('sem ' + escondido.map(([, t]) => t.replace(/^\S+\s/, '').toLowerCase()).join(', '));
-  }
-  if (cfg.radical) {
-    partes.push(cfg.radModo === 'so' ? 'só ' + cfg.radical
-      : cfg.radModo === 'agrupar' ? 'radical ' + cfg.radical
-      : 'radical ' + cfg.radical + ' em azul');
-  }
-  const escopo = (cfg.radical && cfg.radModo === 'agrupar') ? '🔵 ' + cfg.radical
-    : cfg.grupo === 'nada' ? '⬜ Sem grupo' : rot(cfg.grupo);
-  return { escopo, txt: partes.join(' · ') };
-}
-function renderGrade() {
-  const cfg = gradeCfg();
-  const chips = (arr, sel, attr) => arr.map(([k, t]) =>
-    '<button class="chip' + (sel === k ? ' active' : '') + '" data-' + attr + '="' + k + '">' +
-    t + '</button>').join('');
-  $('grade-grupo').innerHTML = chips(GRADE_GRUPOS, cfg.grupo, 'g');
-  $('grade-ordem').innerHTML = chips(GRADE_ORDENS, cfg.ordem, 'o');
-  // sem frase publicada o chip de frase some, igual ao da aba Cartas: botão que só liga
-  // uma lista vazia é pior que botão nenhum
-  const tem = temFrases();
-  $('grade-mostrar').innerHTML = GRADE_MOSTRAR.filter(([k]) => k !== 'frases' || tem)
-    .map(([k, t]) => '<button class="chip' + (cfg.mostrar[k] ? ' active' : '') +
-      '" data-m="' + k + '">' + t + '</button>').join('');
-
-  $('grade-faixas').innerHTML = GRADE_FAIXAS.map(t =>
-    '<button class="chip' + (cfg.faixas[t] ? ' active' : '') + '" data-t="' + t + '">' +
-    '<i class="lg' + (t ? ' e' + t : '') + '"></i>' + faixaRot(t) + '</button>').join('');
-
-  // Some se QUALQUER filtro ligado a pegar — é como se lê "esconder".
-  // A aprendida não passa pelas faixas: ela está FORA da escala do vermelho (é o que a
-  // borda verde diz), então quem manda nela é só o chip ✅. Sem essa exceção, apagar
-  // "sem tropeço" pra ver as difíceis levaria as aprendidas junto, e o ✅ ficaria aceso
-  // dizendo que elas estão na tela.
-  const escondidos = GRADE_MOSTRAR.filter(([k]) => !cfg.mostrar[k]);
-  const todasFaixas = cfg.faixas.every(Boolean);
-  let list = (escondidos.length || !todasFaixas)
-    ? cards.filter(c => !escondidos.some(([, , pega]) => pega(c)) &&
-        (aprendida(c.id) || cfg.faixas[erroTier(c)]))
-    : cards.slice();
   // "só essas": some com quem não tem o radical, em vez de só recuar pro fundo
   if (cfg.radical && cfg.radModo === 'so') list = list.filter(c => temRadical(c, cfg.radical));
-  const apr = list.filter(c => aprendida(c.id)).length;
-  const nunca = list.filter(c => !srs[c.id]).length;
-  // com filtro ligado o total do deck continua na linha: sem ele, "178 cartas" parece o
-  // tamanho do deck, e não o que sobrou do que você escondeu.
-  // A categoria escondida sai do contador em vez de aparecer zerada — "0 aprendidas"
-  // logo abaixo do chip ✅ riscado se lê como "você não aprendeu nenhuma".
-  const partes = [list.length !== cards.length
-    ? '<b>' + list.length + '</b> de ' + cards.length + ' cartas'
-    : '<b>' + cards.length + '</b> cartas'];
-  if (cfg.mostrar.aprendidas) partes.push('<b>' + apr + '</b> aprendidas');
-  if (cfg.mostrar.novas) partes.push('<b>' + nunca + '</b> nunca vistas');
-  $('grade-count').innerHTML = partes.join(' · ');
-  const r = gradeResumo();
-  $('gradescope').textContent = r.escopo;
-  $('gradecur').textContent = r.txt;
-  // o seletor de radical: os rotulados presentes em ≥2 cartas da tela. "nenhum" volta
-  // pro pictograma normal e devolve o vermelho do erro.
-  const disp = radicaisDisponiveis(list);
-  $('grade-radical').innerHTML =
-    '<button class="chip' + (!cfg.radical ? ' active' : '') + '" data-r="">nenhum</button>' +
-    disp.map(d => '<button class="chip' + (cfg.radical === d.rad ? ' active' : '') +
-      '" data-r="' + esc(d.rad) + '"><span class="zh">' + esc(d.rad) + '</span> ' +
-      esc(d.pt) + ' <i>' + d.n + '</i></button>').join('');
-  $('grade-radmodo').innerHTML = cfg.radical
-    ? RAD_MODOS.map(([k, t]) => '<button class="chip' + (cfg.radModo === k ? ' active' : '') +
-        '" data-rm="' + k + '">' + t + '</button>').join('')
-    : '';
   const arr = arranjoOn();
   $('gradewrap').classList.toggle('arrastando', arr);
   const grupos = (cfg.radical && cfg.radModo === 'agrupar')
-    ? gradeRadicalGrupos(gradeOrdena(list), cfg.radical)
-    : gradeGrupos(gradeOrdena(list));
+    ? gradeRadicalGrupos(list, cfg.radical)
+    : cartasGrupos(list).filter(g => g.cards.length || g.grupo);
   $('gradewrap').innerHTML = grupos.map(gr =>
     // o "+ novo monte" vem antes do Sem monte, não depois de tudo: com 161 cartas no
     // fim da lista, um botão embaixo delas é um botão que ninguém acha
     (arr && gr.sem ? '<button class="gnovo" id="gnovo">+ novo monte</button>' : '') +
-    '<div class="gradegrupo"' + (gr.grupo ? ' data-g="' + esc(gr.grupo.id) + '"' : '') + '>' +
-    (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span>' +
+    '<div class="gradegrupo' + (gr.rot && gruposFechados.has(chaveGrupo(gr.rot)) ? ' fechado' : '') + '"' +
+      (gr.grupo ? ' data-g="' + esc(gr.grupo.id) + '"' : '') + (gr.rot ? ' data-rot="' + esc(gr.rot) + '"' : '') + '>' +
+    (gr.rot ? '<h3 role="button" tabindex="0" aria-expanded="' + !gruposFechados.has(chaveGrupo(gr.rot)) + '">' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span>' +
       (arr && gr.grupo ? '<button class="gbtn" data-ren="' + esc(gr.grupo.id) + '" title="Renomear">✏️</button>' +
         '<button class="gbtn" data-del="' + esc(gr.grupo.id) + '" title="Desfazer o monte">✕</button>' : '') +
       '</h3>' : '') +
     gradeCorpo(gr.cards, arr && gr.grupo) + '</div>').join('') ||
-    '<p style="color:var(--mut);text-align:center">Nenhuma carta sobrou — religue um chip do Mostrar.</p>';
+    '<p class="dt-vazio">Nenhuma ' + (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
   if (arr) bindArranjo(); else $('gradewrap').onpointerdown = null;
+  // o título do grupo recolhe/abre os quadradinhos dele (os botões ✏️ ✕ do arranjo não)
+  $('gradewrap').querySelectorAll('.gradegrupo[data-rot] > h3').forEach(h => {
+    const alterna = () => {
+      const gg = h.parentElement, k = chaveGrupo(gg.dataset.rot);
+      const fecha = !gg.classList.contains('fechado');
+      gg.classList.toggle('fechado', fecha);
+      h.setAttribute('aria-expanded', !fecha);
+      if (fecha) gruposFechados.add(k); else gruposFechados.delete(k);
+    };
+    h.onclick = e => { if (!e.target.closest('.gbtn')) alterna(); };
+    h.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(); } };
+  });
   // tocar fala a carta; o balão com a tradução quem abre é o bindTips, pelo data-tip
   $('gradewrap').querySelectorAll('.gcard').forEach(b => b.onclick = () => {
     if (dragClick) return; // acabou de soltar um arrasto: não é um toque pra ouvir
@@ -884,33 +795,8 @@ function renderGrade() {
   if (cfg.radical) pintaRadical(cfg.radical); // depois do innerHTML: SVG precisa do DOM pronto
   if (cfg.tam != null) $('gradewrap').style.setProperty('--gtam', cfg.tam + 'px');
   else $('gradewrap').style.removeProperty('--gtam');
-  // nos extremos o botão correspondente apaga, pra não parecer que ainda dá pra crescer
-  const efet = cfg.tam != null ? cfg.tam : GTAM_BASE;
-  $('grade-tam').querySelector('[data-d="-1"]').disabled = efet <= GTAM_MIN;
-  $('grade-tam').querySelector('[data-d="1"]').disabled = efet >= GTAM_MAX;
-  $('grade-sig').classList.toggle('on', cfg.sig);
-  $('grade-grupo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cfg.grupo = ch.dataset.g; save(K.settings, settings); renderGrade();
-  });
-  $('grade-ordem').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cfg.ordem = ch.dataset.o; save(K.settings, settings); renderGrade();
-  });
-  $('grade-mostrar').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cfg.mostrar[ch.dataset.m] = !cfg.mostrar[ch.dataset.m];
-    save(K.settings, settings); renderGrade();
-  });
-  $('grade-faixas').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    const t = +ch.dataset.t;
-    cfg.faixas[t] = !cfg.faixas[t];
-    save(K.settings, settings); renderGrade();
-  });
-  $('grade-radical').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cfg.radical = ch.dataset.r || null;
-    save(K.settings, settings); renderGrade();
-  });
-  $('grade-radmodo').querySelectorAll('.chip').forEach(ch => ch.onclick = () => {
-    cfg.radModo = ch.dataset.rm;
-    save(K.settings, settings); renderGrade();
-  });
 }
+// Quem mexe no arranjo, no tamanho ou no significado redesenha a lista, que é quem
+// sabe em que visão ela está.
+function renderGrade() { renderList(); }
 
