@@ -1415,6 +1415,9 @@ p.gtexto{margin:0;}
 @media (min-width:900px){
   #view-estudar .fcard,#view-estudar .fcard.draw,#view-estudar .fcard.type,#view-estudar .fcard.ord{
     min-height:max(320px,min(600px,calc(100vh - 260px)));}
+  /* no teclado o conteúdo era colado no topo (no celular a carta é baixa e o teclado do
+     aparelho sobe): na carta quadrada ele fica no meio, na vertical */
+  #view-estudar .fcard.type .face.front{justify-content:center;}
 }
 </style>
 </head>
