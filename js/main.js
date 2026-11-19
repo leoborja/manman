@@ -132,17 +132,6 @@ function bindEvents() {
   });
   $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
-  // A−/A+ mexem no tamanho do cartão. Parte do efetivo (o escolhido, ou a base) e anda
-  // um passo; fica salvo, e vale no celular também (menos/mais colunas).
-  $('grade-tam').querySelectorAll('button').forEach(b => b.onclick = () => {
-    const cfg = gradeCfg();
-    const atual = cfg.tam != null ? cfg.tam : GTAM_BASE;
-    cfg.tam = Math.max(GTAM_MIN, Math.min(GTAM_MAX, atual + (+b.dataset.d) * GTAM_PASSO));
-    save(K.settings, settings); renderGrade();
-  });
-  $('grade-sig').onclick = () => {
-    gradeCfg().sig = !gradeCfg().sig; save(K.settings, settings); renderGrade();
-  };
   $('escopo-toggle').onclick = () => {
     settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
     renderEscopo();

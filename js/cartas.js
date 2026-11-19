@@ -211,6 +211,29 @@ function renderCartasBarra(list) {
   }
   const dir = $('cartas-dir');
   dir.innerHTML = '';
+  // Na Grade, o jeito de ver os quadradinhos mora na barra também: o significado
+  // embaixo do pinyin (liga/desliga, borda verde quando ligado) e o tamanho, A− / A+,
+  // que anda um passo a partir do escolhido (ou da base) e vale no celular também.
+  if (grade) {
+    const gc = gradeCfg();
+    const mudaG = f => { f(gc); save(K.settings, settings); renderList(); };
+    const sig = document.createElement('button');
+    sig.type = 'button'; sig.className = 'ft-quad txt' + (gc.sig ? ' ligado' : '');
+    sig.textContent = 'Significado'; sig.title = 'Mostrar o significado embaixo do pinyin';
+    sig.setAttribute('aria-pressed', gc.sig);
+    sig.onclick = () => mudaG(x => { x.sig = !x.sig; });
+    const efet = gc.tam != null ? gc.tam : GTAM_BASE;
+    const tam = d => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'ft-quad txt';
+      b.textContent = d < 0 ? 'A−' : 'A+';
+      b.title = d < 0 ? 'Cartões menores' : 'Cartões maiores'; b.setAttribute('aria-label', b.title);
+      b.disabled = d < 0 ? efet <= GTAM_MIN : efet >= GTAM_MAX;
+      b.onclick = () => mudaG(x => { x.tam = Math.max(GTAM_MIN, Math.min(GTAM_MAX, efet + d * GTAM_PASSO)); });
+      return b;
+    };
+    dir.append(sig, tam(-1), tam(1));
+  }
   const rot = (l, k) => (l.find(([x]) => x === k) || [, k])[1];
   // o "Meu arranjo" só existe na Grade: é lá que se arrasta uma carta pra um monte
   const grupos = VISTA_GRUPOS.filter(([k]) => k !== 'nada' && (grade || k !== 'meu'));
@@ -290,7 +313,7 @@ function renderList() {
   const grade = v.visao === 'grade';
   $('cartas-tabela').hidden = grade;
   $('cartas-gradebox').hidden = !grade;
-  if (grade) { desenhaGrade(list, base); return; }
+  if (grade) { desenhaGrade(list); return; }
   const vazio = '<p class="dt-vazio">Nenhuma ' + (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
   // Uma tabela só, com o nome de cada coluna em cima; o agrupar vira uma linha de
   // título dentro dela, pra que as colunas fiquem alinhadas do começo ao fim.
@@ -720,16 +743,10 @@ function gradeCorpo(list, vazioVisivel) {
 }
 // A visão Grade da lista: a mesma lista (filtrada, buscada e ordenada) em quadradinhos.
 // O que é só dela: o radical (pintar / agrupar / só essas), o tamanho e o significado.
-function desenhaGrade(list, total) {
+function desenhaGrade(list) {
   const cfg = gradeCfg();
-  const v = vistaCfg();
   // "só essas": some com quem não tem o radical, em vez de só recuar pro fundo
   if (cfg.radical && cfg.radModo === 'so') list = list.filter(c => temRadical(c, cfg.radical));
-  const apr = list.filter(c => aprendida(c.id)).length;
-  const nunca = list.filter(c => !srs[c.id]).length;
-  const nome = cartasTipo === 'frase' ? 'frases' : 'palavras';
-  $('grade-count').innerHTML = [list.length !== total ? list.length + ' de ' + total + ' ' + nome : total + ' ' + nome,
-    apr + ' aprendidas', nunca + ' nunca vistas'].join(' · ');
   const arr = arranjoOn();
   $('gradewrap').classList.toggle('arrastando', arr);
   const grupos = (cfg.radical && cfg.radModo === 'agrupar')
@@ -756,11 +773,6 @@ function desenhaGrade(list, total) {
   if (cfg.radical) pintaRadical(cfg.radical); // depois do innerHTML: SVG precisa do DOM pronto
   if (cfg.tam != null) $('gradewrap').style.setProperty('--gtam', cfg.tam + 'px');
   else $('gradewrap').style.removeProperty('--gtam');
-  // nos extremos o botão correspondente apaga, pra não parecer que ainda dá pra crescer
-  const efet = cfg.tam != null ? cfg.tam : GTAM_BASE;
-  $('grade-tam').querySelector('[data-d="-1"]').disabled = efet <= GTAM_MIN;
-  $('grade-tam').querySelector('[data-d="1"]').disabled = efet >= GTAM_MAX;
-  $('grade-sig').classList.toggle('on', cfg.sig);
 }
 // Quem mexe no arranjo, no tamanho ou no significado redesenha a lista, que é quem
 // sabe em que visão ela está.

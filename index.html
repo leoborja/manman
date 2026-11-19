@@ -519,18 +519,6 @@ font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;}
 .gcard.raddim .gh,.gcard.raddim .gp{opacity:.32;}
 /* a legenda existe porque a codificação é muda: sem ela, "esse aí tá mais claro" não
    quer dizer nada pra quem abriu a tela pela primeira vez */
-.gradelegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;
-color:var(--mut);font-size:11.5px;margin:8px 0 2px;}
-.gradetop{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 10px;}
-.gradetop .counter{margin:0;}
-.gradetam{display:inline-flex;gap:4px;flex:0 0 auto;}
-.gradetam button{border:1px solid var(--line);background:var(--surface);color:var(--txt);
-border-radius:9px;padding:4px 9px;font-size:12px;font-weight:800;cursor:pointer;line-height:1;}
-.gradetam button:active{border-color:var(--red);color:var(--red);}
-.gradetam button:disabled{opacity:.4;cursor:default;}
-.gradetgl{border:1px solid var(--line);background:var(--surface);color:var(--txt);
-border-radius:9px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;line-height:1;}
-.gradetgl.on{background:var(--red);border-color:var(--red);color:#fff;}
 
 /* competição */
 #view-competicao{max-width:1100px;margin:0 auto;}
@@ -577,8 +565,6 @@ font-size:12px;color:var(--mut);}
 .ctonv{font-size:13px;color:var(--mut);}
 .ctonv small{color:var(--soft);}
 .pcol{display:contents;}
-.gradelegend span{display:flex;align-items:center;gap:5px;}
-.gradelegend .escala{display:flex;gap:2px;margin-right:1px;}
 .lg{width:14px;height:14px;border-radius:4px;border:1px solid var(--line);
 background:var(--surface);flex:0 0 auto;}
 .gradegrupo{margin:0 0 16px;}
@@ -899,7 +885,6 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
   /* Grade é a única que quer a largura toda — é a tela do "ver tudo". Só o botão e a
      linha do contador ficam centrados; a grade vai de ponta a ponta. O tamanho do
      cartão parte de um pouco maior no PC, e o A−/A+ ajusta a partir daí. */
-  .gradetop{max-width:600px;margin-left:auto;margin-right:auto;}
   #gradewrap{--gtam:96px;}
 
   /* As folhas param de subir do rodapé — deslocado num monitor — e viram janela central. */
@@ -1342,14 +1327,6 @@ border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}
 background:var(--surface);border:1px solid var(--line);}
 .lgq.e1{background:var(--e1);} .lgq.e2{background:var(--e2);} .lgq.e3{background:var(--e3);} .lgq.e4{background:var(--e4);}
 
-/* Grade: a contagem e a legenda à esquerda, tamanho e significado à direita */
-.gradetop{gap:12px;justify-content:flex-start;flex-wrap:wrap;}
-.gradetop .counter{font-size:12px;color:var(--mut);}
-.gradetop .gradelegend{display:flex;gap:12px;margin:0 auto 0 0;font-size:12px;color:var(--soft);}
-.gradetop .gradelegend span{display:inline-flex;align-items:center;gap:5px;}
-.gradetam button,.gradetgl{height:36px;border-radius:6px;font-size:12px;font-weight:500;box-shadow:none;}
-.gradetgl.on{background:var(--bg);color:var(--txt);border:2px solid var(--add);}
-@media (max-width:640px){.gradetop .gradelegend{display:none;}}
 
 /* <SeletorVisao> (DESIGN_SYSTEM.md 8.10) */
 .ft-visao{display:inline-flex;align-items:center;height:36px;padding:2px;border:1px solid var(--line);border-radius:6px;background:var(--bg);}
@@ -1360,6 +1337,10 @@ color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
 .ft-visao button.on{background:var(--pill);color:var(--txt);font-weight:500;}
 @media (max-width:640px){.ft-visao button span{display:none;}}
 #cartas-gradebox[hidden],#cartas-tabela[hidden]{display:none;}
+
+.ft-quad.txt.ligado{border:2px solid var(--add);padding:0 9px;color:var(--txt);}
+.ft-quad:disabled{opacity:.4;cursor:default;}
+#cartas-gradebox #gradewrap{margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1574,15 +1555,6 @@ color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
   </div>
   <!-- visão Grade: a mesma lista em quadradinhos (era uma aba do menu) -->
   <div id="cartas-gradebox" hidden>
-    <div class="gradetop">
-      <div class="counter" id="grade-count"></div>
-      <div class="gradelegend"><span><i class="lg ok"></i> aprendida</span><span><i class="lg off"></i> fora da rotação</span></div>
-      <div class="gradetam" id="grade-tam">
-        <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
-        <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
-      </div>
-      <button class="gradetgl" id="grade-sig" title="Mostrar o significado embaixo do pinyin">significado</button>
-    </div>
     <div id="gradewrap"></div>
   </div>
 </section>
