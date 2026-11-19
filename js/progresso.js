@@ -133,7 +133,7 @@ function renderHabStats() {
     if (!v.n) return '<div class="habrow vazio"><span class="hnome">' + esc(r.nome) +
       '<small>' + esc(r.dica) + '</small></span><span class="hnum">sem dados</span></div>';
     const pct = Math.round(v.e / v.n * 100);
-    return '<div class="habrow"><span class="hnome">' + esc(r.nome) +
+    return '<div class="habrow abre" data-hab="' + h.k + '" data-g="' + g + '" role="button" tabindex="0"><span class="hnome">' + esc(r.nome) +
       '<small>' + esc(r.dica) + '</small></span>' +
       '<span class="hnum"><b>' + pct + '%</b><small>de erro · ' + v.e + ' de ' + v.n + '</small></span>' +
       '<span class="hbar"><i style="width:' + Math.max(2, pct) + '%"></i></span></div>';
@@ -164,6 +164,7 @@ function renderHabStats() {
       }).join('') + '</div>';
   }
   $('habstats').innerHTML = linhas + cx;
+  ligaLinhas($('habstats'), '.habrow.abre', el => abreHabGaveta(el.dataset.hab, el.dataset.g));
 }
 function renderTurma() {
   if (!logTurma || !logTurma.length) {
@@ -439,7 +440,7 @@ function renderCapStats() {
     // "12 de 34" em vez de "12/34": o segundo lê como fração e este número não é uma
     const detalhe = apr + ' de ' + pool.length + (vis ? ' · ' + vis + ' começada' + (vis > 1 ? 's' : '') : '')
       + (nOff ? ' · ' + nOff + ' 🚫' : '');
-    return '<div class="caprow' + (apr + vis ? '' : ' vazio') + '">' +
+    return '<div class="caprow abre' + (apr + vis ? '' : ' vazio') + '" data-origem="' + esc(o) + '" role="button" tabindex="0">' +
       '<span class="cnome">' + esc(origemLabel(o)) + '<small>' + esc(detalhe) + '</small></span>' +
       '<span class="cnum"><b>' + pct + '%</b><small>aprendido</small></span>' +
       '<span class="cbar">' +
@@ -451,6 +452,8 @@ function renderCapStats() {
     '<div class="capleg"><span><i></i>aprendida (≥' + LEARNED_IVL + 'd)</span>' +
     '<span><i class="vis"></i>começada</span><span><i class="nao"></i>nunca vista</span></div>'
     : '<p class="wempty">O deck ainda não tem carta com capítulo marcado.</p>';
+  ligaLinhas($('capstats'), '.caprow.abre', el => abreRecorteGaveta(origemLabel(el.dataset.origem), 'Capítulo',
+    cards.filter(c => origemDe(c) === el.dataset.origem)));
 }
 
 // ── UI: progresso ───────────────────────────────────────────
@@ -485,7 +488,81 @@ function renderProgress() {
     const learned = pool.filter(c => srs[c.id] && srs[c.id].ivl >= LEARNED_IVL).length;
     const seen = pool.filter(c => srs[c.id]).length;
     const nOff = pool.filter(c => isOff(c.id)).length;
-    return '<div class="deckrow"><b>' + esc(deckLabel(dk)) + '</b><span>' + seen + '/' + pool.length +
+    return '<div class="deckrow abre" data-deck="' + esc(dk) + '" role="button" tabindex="0"><b>' + esc(deckLabel(dk)) + '</b><span>' + seen + '/' + pool.length +
       ' vistas · ' + learned + ' aprendidas' + (nOff ? ' · ' + nOff + ' 🚫' : '') + '</span></div>';
   }).join('');
+  ligaLinhas($('deckstats'), '.deckrow.abre', el => abreRecorteGaveta(deckLabel(el.dataset.deck), 'Tema',
+    cards.filter(c => c.deck === el.dataset.deck)));
+}
+
+// ── Progresso → gaveta ─────────────────────────────────────
+// Clicar numa linha da aba Geral (capítulo, habilidade, tema) abre o recorte na gaveta
+// (DESIGN_SYSTEM.md 11.1): o que você mais erra ali primeiro, depois o que ainda não
+// aprendeu e o que já aprendeu. Cada carta da lista abre a carta na mesma gaveta.
+function ligaLinhas(box, sel, abre) {
+  box.querySelectorAll(sel).forEach(el => {
+    el.onclick = () => abre(el);
+    el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abre(el); } };
+  });
+}
+// uma carta numa linha: 汉字, pinyin e significado, e à direita o número que importa ali
+function linhaCartaGaveta(c, dir, dirSub) {
+  return '<button class="glinha" data-id="' + esc(c.id) + '"><span class="zh" lang="zh-Hans">' + esc(c.hanzi) + '</span>' +
+    '<span class="gl-meio"><b>' + esc(c.pt) + '</b><small>' + pinyinColored(c.pinyin) + '</small></span>' +
+    (dir != null ? '<span class="gl-dir"><b>' + dir + '</b>' + (dirSub ? '<small>' + esc(dirSub) + '</small>' : '') + '</span>' : '') + '</button>';
+}
+function listaGaveta(lista) { return '<div class="glista">' + lista.join('') + '</div>'; }
+function ligaCartasGaveta(corpo) {
+  corpo.querySelectorAll('.glinha[data-id]').forEach(b => b.onclick = () => abreCartaGaveta(b.dataset.id));
+}
+// Um capítulo ou um tema: as cartas dele que estão na rotação, divididas em três
+function abreRecorteGaveta(titulo, tipo, todas) {
+  const pool = todas.filter(c => !isOff(c.id));
+  const nOff = todas.length - pool.length;
+  const apr = pool.filter(c => aprendida(c.id));
+  const nao = pool.filter(c => !aprendida(c.id));
+  const comErro = nao.filter(c => erroCount(c.id) > 0).sort((a, b) => erroCount(b.id) - erroCount(a.id));
+  const resto = nao.filter(c => !erroCount(c.id)).sort((a, b) => dominio(b.id) - dominio(a.id));
+  const corpo = abreGaveta({ titulo });
+  const pct = pool.length ? Math.round(apr.length / pool.length * 100) : 0;
+  let h = '<div class="gcodigo"><span>' + esc(tipo) + '</span>' + (nOff ? '<span class="gtag">' + nOff + ' desligada' + (nOff > 1 ? 's' : '') + '</span>' : '') + '</div>' +
+    '<div class="gkpis">' +
+    '<div class="gkpi"><small>Cartas</small><b>' + pool.length + '</b></div>' +
+    '<div class="gkpi"><small>Aprendidas</small><b>' + apr.length + ' <i>' + pct + '%</i></b></div>' +
+    '<div class="gkpi"><small>Com tropeço</small><b>' + comErro.length + '</b></div>' +
+    '<div class="gkpi"><small>Nunca vistas</small><b>' + pool.filter(c => !srs[c.id]).length + '</b></div></div>';
+  h += secaoGaveta('O que você mais erra', comErro.length, comErro.length
+    ? listaGaveta(comErro.map(c => { const n = erroCount(c.id); return linhaCartaGaveta(c, n, n > 1 ? 'tropeços' : 'tropeço'); }))
+    : '<p class="gvazio">Nenhum tropeço nas que faltam aprender. 🎉</p>');
+  if (resto.length) h += secaoGaveta('Ainda não aprendidas', resto.length,
+    listaGaveta(resto.map(c => linhaCartaGaveta(c, srs[c.id] ? Math.round(dominio(c.id) * 100) + '%' : '—', srs[c.id] ? 'domínio' : 'nunca vista'))));
+  if (apr.length) h += secaoGaveta('Aprendidas', apr.length, listaGaveta(apr.map(c => linhaCartaGaveta(c))));
+  corpo.innerHTML = h;
+  ligaCartasGaveta(corpo);
+}
+// Uma habilidade: as cartas em que ela foi medida, da que você mais erra pra que nunca erra
+function abreHabGaveta(k, g) {
+  const hab = HABS.find(x => x.k === k);
+  const r = (hab.porGrupo && hab.porGrupo[g]) || hab;
+  const medidas = cards.filter(c => (ehFrase(c) ? 'frase' : 'palavra') === g)
+    .map(c => ({ c, v: (stats[c.id] && stats[c.id].hab && stats[c.id].hab[k]) || null }))
+    .filter(x => x.v && x.v.n);
+  const erra = medidas.filter(x => x.v.e).sort((a, b) => b.v.e - a.v.e || (b.v.e / b.v.n) - (a.v.e / a.v.n));
+  const limpas = medidas.filter(x => !x.v.e).sort((a, b) => b.v.n - a.v.n);
+  const n = medidas.reduce((t, x) => t + x.v.n, 0), e = medidas.reduce((t, x) => t + x.v.e, 0);
+  const corpo = abreGaveta({ titulo: r.nome });
+  let h = '<div class="gcodigo"><span>Habilidade · ' + (g === 'frase' ? 'Frases' : 'Palavras') + '</span></div>' +
+    '<p class="gtexto">' + esc(r.dica) + '</p>' +
+    '<div class="gkpis">' +
+    '<div class="gkpi"><small>Erro</small><b>' + (n ? Math.round(e / n * 100) + '%' : '—') + '</b></div>' +
+    '<div class="gkpi"><small>Tentativas</small><b>' + n + '</b></div>' +
+    '<div class="gkpi"><small>Cartas medidas</small><b>' + medidas.length + '</b></div>' +
+    '<div class="gkpi"><small>Com erro</small><b>' + erra.length + '</b></div></div>';
+  h += secaoGaveta('O que você mais erra', erra.length, erra.length
+    ? listaGaveta(erra.map(x => linhaCartaGaveta(x.c, x.v.e + ' de ' + x.v.n, Math.round(x.v.e / x.v.n * 100) + '% de erro')))
+    : '<p class="gvazio">Nenhum erro nesta habilidade ainda.</p>');
+  if (limpas.length) h += secaoGaveta('Sem erro', limpas.length,
+    listaGaveta(limpas.map(x => linhaCartaGaveta(x.c, x.v.n + '×', 'sem errar'))));
+  corpo.innerHTML = h;
+  ligaCartasGaveta(corpo);
 }

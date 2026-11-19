@@ -4,6 +4,18 @@
 // ── navegação e eventos ─────────────────────────────────────
 const TITULOS = { curso: 'Curso', hoje: 'Hoje', estudar: 'Estudar', palavras: 'Palavras', frases: 'Frases',
   grade: 'Grade', competicao: 'Competição', progresso: 'Progresso' };
+// Zerar o progresso: botão do cabeçalho do Progresso (DESIGN_SYSTEM.md 6)
+function zeraProgresso() {
+  if (!confirm('Zerar TODO o seu progresso de estudo (' + nomeDe(settings.user) + ')? As cartas não são apagadas.')) return;
+  srs = {}; log = {}; dirty = []; stats = {}; fav = {}; dirtyFav = false;
+  localStorage.removeItem(uk(K.fav)); localStorage.removeItem(uk(K.dirtyFav));
+  localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log));
+  localStorage.removeItem(uk(K.dirty)); localStorage.removeItem(uk(K.stats));
+  // as provas também: o syncReset leva as linhas prova:capN do banco junto com as outras
+  localStorage.removeItem(uk(K_PROVAS)); localStorage.removeItem(uk(K_PROVAS_DIRTY));
+  syncReset();
+  renderProgress(); startSession();
+}
 // Palavras e Frases são dois itens do menu e uma tela só (a das Cartas), com o tipo trocado.
 function switchView(v) {
   if (v === 'cartas') v = cartasTipo === 'frase' ? 'frases' : 'palavras';
@@ -26,7 +38,11 @@ function switchView(v) {
   $('pageacoes').innerHTML = '';
   document.querySelectorAll('.view').forEach(s => s.classList.toggle('active', s.id === 'view-' + tela));
   v = tela;
-  if (v === 'progresso') renderProgress();
+  if (v === 'progresso') {
+    renderProgress();
+    $('pageacoes').innerHTML = '<button class="pageacao perigo" id="resetbtn">Zerar meu progresso</button>';
+    $('resetbtn').onclick = zeraProgresso;
+  }
   if (v === 'teoria') abreTeoria(); else saiTeoria();
   if (v === 'curso') renderCurso();
   if (v === 'hoje') renderHoje();
@@ -164,7 +180,8 @@ function bindEvents() {
     $('search').value = '';
     renderCartasChips(); renderList();
   });
-  $('credbtn').onclick = () => $('credsheet').classList.add('show');
+  // os créditos abrem pela folha do Perfil: fecha ela e abre a deles
+  $('credbtn').onclick = () => { $('perfilsheet').classList.remove('show'); $('credsheet').classList.add('show'); };
   $('credsheet-bg').onclick = () => $('credsheet').classList.remove('show');
   $('credclose').onclick = () => $('credsheet').classList.remove('show');
   document.querySelectorAll('.modeopt[data-m]').forEach(b => b.onclick = () => {
@@ -298,17 +315,7 @@ function bindEvents() {
   $('search').oninput = renderList;
   // login
   // progresso
-  $('resetbtn').onclick = () => {
-    if (!confirm('Zerar TODO o seu progresso de estudo (' + nomeDe(settings.user) + ')? As cartas não são apagadas.')) return;
-    srs = {}; log = {}; dirty = []; stats = {}; fav = {}; dirtyFav = false;
-    localStorage.removeItem(uk(K.fav)); localStorage.removeItem(uk(K.dirtyFav));
-    localStorage.removeItem(uk(K.srs)); localStorage.removeItem(uk(K.log));
-    localStorage.removeItem(uk(K.dirty)); localStorage.removeItem(uk(K.stats));
-    // as provas também: o syncReset leva as linhas prova:capN do banco junto com as outras
-    localStorage.removeItem(uk(K_PROVAS)); localStorage.removeItem(uk(K_PROVAS_DIRTY));
-    syncReset();
-    renderProgress(); startSession();
-  };
+
   // debug (?debug=1)
   if (new URLSearchParams(location.search).get('debug')) {
     $('debugbar').classList.add('show');

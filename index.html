@@ -1383,6 +1383,35 @@ color:var(--mut);cursor:pointer;white-space:nowrap;}
   #view-progresso .stat.revisoes{grid-column:auto;}
   .pgrade{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
+
+.abas button:focus{outline:none;}
+.abas button:focus-visible{outline:2px solid var(--red);outline-offset:-2px;border-radius:4px;}
+@media (min-width:900px){
+  .cgrade.tres{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .cgrade .cblock.largo{grid-column:1/-1;}
+}
+/* Progresso: as linhas da aba Geral abrem a gaveta */
+.caprow.abre,.habrow.abre,.deckrow.abre{cursor:pointer;border-radius:6px;transition:background-color .15s;}
+.caprow.abre:hover,.habrow.abre:hover,.deckrow.abre:hover{background:var(--hover);}
+.caprow.abre,.habrow.abre,.deckrow.abre{padding-left:8px;padding-right:8px;}
+.pageacao.perigo{color:var(--err);}
+.pageacao.perigo:hover{background:var(--err-bg);color:var(--err);}
+/* lista de cartas dentro da gaveta */
+.glista{border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden;}
+.glinha{display:flex;align-items:center;gap:12px;width:100%;padding:8px 14px;border:0;border-top:1px solid var(--line);
+background:none;font:inherit;text-align:left;color:var(--txt);cursor:pointer;}
+.glinha:first-child{border-top:0;}
+.glinha:hover{background:var(--hover);}
+.glinha > .zh{flex:0 0 auto;min-width:44px;font-size:22px;line-height:1.2;}
+.gl-meio{flex:1;min-width:0;display:flex;flex-direction:column;}
+.gl-meio b{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gl-meio small{font-size:11px;}
+.gl-dir{flex:0 0 auto;text-align:right;display:flex;flex-direction:column;}
+.gl-dir b{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;}
+.gl-dir small{font-size:11px;color:var(--soft);}
+.gkpi b i{font-style:normal;font-size:12px;font-weight:400;color:var(--soft);}
+.gvazio{margin:0;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:12px;color:var(--mut);}
+p.gtexto{margin:0;}
 </style>
 </head>
 <body>
@@ -1628,7 +1657,7 @@ color:var(--mut);cursor:pointer;white-space:nowrap;}
       <div class="card" id="comp-provas"></div>
     </div>
   </div>
-  <div class="cgrade" data-painel="erros" hidden>
+  <div class="cgrade tres" data-painel="erros" hidden>
     <div class="cblock">
       <h3 class="sec">Erro por habilidade</h3>
       <div class="card" id="comp-hab"></div>
@@ -1641,7 +1670,7 @@ color:var(--mut);cursor:pointer;white-space:nowrap;}
       <h3 class="sec">Erro por tema</h3>
       <div class="card" id="comp-tema"></div>
     </div>
-    <div class="cblock">
+    <div class="cblock largo">
       <h3 class="sec">Tons que cada um confunde</h3>
       <div class="card" id="comp-tom"></div>
     </div>
@@ -1688,12 +1717,6 @@ color:var(--mut);cursor:pointer;white-space:nowrap;}
       <div class="card" id="wordstats"></div>
     </div>
   </div>
-  <div style="text-align:center;margin-top:22px">
-    <button class="btn danger" id="resetbtn">Zerar meu progresso</button>
-  </div>
-  <div style="text-align:center">
-    <button class="creditlink" id="credbtn">Créditos e licenças</button>
-  </div>
 </section>
 
 </main>
@@ -1723,6 +1746,8 @@ color:var(--mut);cursor:pointer;white-space:nowrap;}
       <span class="info"><b>Escuro</b><small>pra estudar de noite sem queimar a vista</small></span>
       <span class="check"></span>
     </button>
+    <!-- os créditos moram aqui: as gravações do Commons são CC BY / BY-SA e pedem atribuição -->
+    <button class="creditlink" id="credbtn">Créditos e licenças</button>
   </div>
 </div>
 
