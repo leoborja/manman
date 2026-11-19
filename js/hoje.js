@@ -192,7 +192,7 @@ function abreLicao(l) {
 function trocaDeSessao() {
   licaoAtiva = licaoPendente;
   licaoPendente = null;
-  if (licaoAtiva) $('modescope').textContent = '📅 ' + licaoAtiva.nome;
+  renderEstudoBarra(); // mostra (ou tira) a lição na barra do Estudar
 }
 function concluiLicao() {
   const l = licaoAtiva;

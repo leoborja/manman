@@ -136,19 +136,6 @@ box-shadow:0 0 0 2px var(--surface2);}
 .chipsbar .chips{flex:0 0 auto;overflow:visible;padding:0;}
 
 /* modo de estudo: botão + bottom sheet */
-.modebtn{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 10px;
-background:var(--surface);border:1px solid var(--line);border-radius:14px;
-padding:11px 14px;cursor:pointer;box-shadow:var(--shadow);text-align:left;}
-.modebtn .mlabel{flex:0 0 auto;background:var(--pill);color:var(--pilltx);border-radius:8px;
-padding:3px 9px;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;}
-/* o escopo não vira caixa-alta: cabe "≥5 erros" aí, e o teto de largura é pra que um
-   tema de nome longo não coma o nome do modo, que é o texto principal do botão */
-.modebtn .mscope{flex:0 0 auto;max-width:46%;background:var(--pill);color:var(--pilltx);
-border-radius:8px;padding:3px 9px;font-size:11.5px;font-weight:800;
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.modebtn .mcur{flex:1;font-size:14.5px;font-weight:700;color:var(--txt);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.modebtn .marrow{flex:0 0 auto;color:var(--soft);font-size:11px;}
 .sheetwrap{position:fixed;inset:0;z-index:95;display:none;}
 .sheetwrap.show{display:block;}
 .sheetbg{position:absolute;inset:0;background:rgba(10,11,13,.45);animation:fadein .2s ease;}
@@ -835,7 +822,8 @@ font:12px monospace;padding:8px 12px;z-index:99;gap:10px;align-items:center;}
 
   /* Estudar: a carta não quer ser gigante — ler um flashcard de 1000px é pior. A tela
      fica centrada num tamanho confortável, como no celular. */
-  #view-estudar{max-width:600px;margin:0 auto;}
+  /* a barra ocupa a largura toda; a carta continua num tamanho confortável */
+  #view-estudar > :not(.ft-barra){max-width:600px;margin-left:auto;margin-right:auto;}
 
   /* Cartas: uma LISTA em largura cheia, com cada informação numa coluna alinhada de
      linha em linha — pictograma, pinyin, significado, descrição, categoria, som, o
@@ -1079,8 +1067,6 @@ color:var(--primary-tx);box-shadow:none;}
 .btn.ghost{background:var(--bg);color:var(--txt);border:1px solid var(--line);box-shadow:none;}
 .btn.danger{background:var(--err-bg);color:var(--err);}
 .grades button{border-radius:6px;box-shadow:none;font-weight:600;}
-.modebtn{border-radius:8px;box-shadow:none;}
-.modebtn .mlabel,.modebtn .mscope{border-radius:4px;font-size:11px;font-weight:500;letter-spacing:.3px;}
 .modeopt{border-radius:8px;border-width:1px;}
 .modeopt.active{border-color:var(--red);}
 .escopo-body.open{border-width:1px;border-radius:0 0 8px 8px;}
@@ -1329,7 +1315,7 @@ color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
 .ft-visao button .ico{width:14px;height:14px;}
 .ft-visao button:hover{color:var(--txt);}
 .ft-visao button.on{background:var(--pill);color:var(--txt);font-weight:500;}
-@media (max-width:640px){.ft-visao button span{display:none;}}
+@media (max-width:640px){.ft-visao:not(.texto) button span{display:none;}}
 #cartas-gradebox[hidden],#cartas-tabela[hidden]{display:none;}
 
 .ft-quad.txt.ligado{border:2px solid var(--add);padding:0 9px;color:var(--txt);}
@@ -1412,6 +1398,16 @@ background:none;font:inherit;text-align:left;color:var(--txt);cursor:pointer;}
 .gkpi b i{font-style:normal;font-size:12px;font-weight:400;color:var(--soft);}
 .gvazio{margin:0;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:12px;color:var(--mut);}
 p.gtexto{margin:0;}
+
+/* Estudar: o jogo pede um botão mais largo (o nome do modo é comprido) */
+.ft-btn.largo{width:240px;}
+.ft-btn.curto{width:auto;min-width:72px;}
+.ft-fixo{cursor:default;width:auto;max-width:240px;}
+.ft-segs{display:flex;gap:4px;padding:2px 8px 6px;}
+.ft-segs button{flex:1;height:30px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
+.ft-segs button.on{border:2px solid var(--add);color:var(--txt);}
+.ft-item small{color:var(--soft);margin-left:4px;}
+@media (max-width:640px){.ft-btn.largo{width:100%;}}
 </style>
 </head>
 <body>
@@ -1455,13 +1451,12 @@ p.gtexto{margin:0;}
 
 <!-- ══════ ESTUDAR ══════ -->
 <section class="view active" id="view-estudar">
-  <!-- um botão só resume a sessão inteira: a pílula diz O QUE está na fila, o texto diz
-       COMO a pergunta vem. Os dois se escolhem na mesma folha. -->
-  <button class="modebtn" id="modebtn">
-    <span class="mscope" id="modescope">🏷️ Todos os temas</span>
-    <span class="mcur" id="modecur">汉字 → pinyin + tradução</span>
-    <span class="marrow">▼</span>
-  </button>
+  <!-- a barra de filtros (DESIGN_SYSTEM.md 9): o jogo, o deck e os filtros à esquerda,
+       as Opções à direita (renderEstudoBarra, js/main.js) -->
+  <div class="ft-barra">
+    <div class="ft-esq" id="estudo-filtros"></div>
+    <div class="ft-dir" id="estudo-dir"></div>
+  </div>
   <div class="counter" id="counter"></div>
   <div class="flashrow" id="flashrow">
     <div class="flashbar" id="flashbar"><i id="flashfill"></i></div>

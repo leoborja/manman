@@ -20,6 +20,7 @@ const ICO = {
   cima: '<path d="m18 15-6-6-6 6"/>',
   baixo: '<path d="m6 9 6 6 6-6"/>',
   tabela: '<path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/>',
+  opcoes: '<path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
   grade: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>'
 };
 function icone(nome, cls) {
@@ -222,10 +223,10 @@ function popColunas(el, colunas, ocultas, muda) {
 // opcoes = [[chave, nome, ícone]]; o nome some em tela estreita.
 function seletorVisao(opcoes, valor, muda) {
   const g = document.createElement('div');
-  g.className = 'ft-visao';
+  g.className = 'ft-visao' + (opcoes.some(o => o[2]) ? '' : ' texto'); // sem ícone, o nome nunca some
   g.setAttribute('role', 'group');
   g.innerHTML = opcoes.map(([k, t, ic]) => '<button type="button" data-k="' + k + '" title="' + esc(t) + '"' +
-    (k === valor ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + icone(ic) + '<span>' + esc(t) + '</span></button>').join('');
+    (k === valor ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + (ic ? icone(ic) : '') + '<span>' + esc(t) + '</span></button>').join('');
   g.querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.k !== valor) muda(b.dataset.k); });
   return g;
 }

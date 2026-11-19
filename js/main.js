@@ -77,11 +77,107 @@ function escopoResumo() {
   return { ico, txt: (settings.tipo === 'frase' ? 'Frases · ' : '') + partes.join(' · ') };
 }
 function renderModeUI() {
-  $('modecur').textContent = (flashOn() ? '⚡ ' : '') + (MODE_TITLES[settings.mode] || MODE_TITLES.zh_all);
   const e = escopoResumo();
-  $('modescope').textContent = e.ico + ' ' + e.txt;
   $('escopo-ico').textContent = e.ico;
   $('escopo-atual').textContent = e.txt;
+  renderEstudoBarra();
+}
+// ── a barra do Estudar (DESIGN_SYSTEM.md 9) ─────────────────
+// No lugar do botão grande que abria a folha "Sua sessão": o jogo é um filtro de uma
+// escolha só, o deck (Palavras/Frases) é um seletor, e Tema, Origem e Erros são os
+// mesmos filtros da lista. O que é de UM jogo (o relâmpago e o tempo dele, no 汉字 →
+// pinyin + tradução) só aparece com aquele jogo escolhido. O que vale pra todos (falar,
+// devagar, pronúncia, tema na carta, ideogramas, favoritas) mora no botão Opções.
+// Toda mudança passa pelos mesmos caminhos da folha antiga, que continua no HTML sem
+// botão que a abra — é ela que guarda os interruptores e os handlers.
+const JOGO_ICONE = { mix: '🔀', pt_type: '⌨️', zh_all: '汉', ordenar: '🧩', dialogo: '💬', draw: '✍️', zh_tom: '🎯', tons: '🎧' };
+const JOGO_NOME = { mix: 'Aleatório', pt_type: 'Tradução → teclado', zh_all: '汉字 → pinyin + tradução', ordenar: 'Ordenar as palavras',
+  dialogo: 'Diálogo', draw: 'Desenhar o 汉字', zh_tom: '汉字 → tom', tons: 'Áudio → tom' };
+function escolheJogo(k) {
+  const antes = queueKind();
+  settings.mode = k; save(K.settings, settings);
+  renderModeSheet(); renderModeUI();
+  // quiz e relâmpago montam a fila do seu jeito — trocar de família reconstrói a sessão
+  if (antes !== queueKind()) startSession();
+  else if (current) showCard(current);
+}
+function mudaEscopo(f) {
+  f(); save(K.settings, settings);
+  renderChips(); startSession(); renderModeUI();
+}
+function renderEstudoBarra() {
+  const esq = $('estudo-filtros'), dir = $('estudo-dir');
+  if (!esq) return;
+  esq.innerHTML = ''; dir.innerHTML = '';
+  const modos = modosDoTipo();
+  // o jogo: escolha obrigatória, sem "todos"
+  const jogo = document.createElement('button');
+  jogo.type = 'button'; jogo.className = 'ft-btn cheio largo';
+  jogo.title = 'Jogo: ' + (MODE_TITLES[settings.mode] || '');
+  jogo.innerHTML = '<span>' + esc((JOGO_ICONE[settings.mode] || '') + ' ' + (JOGO_NOME[settings.mode] || '')) + '</span>' + icone('seta', 'ft-seta');
+  jogo.onclick = () => abrePop(jogo, 320, el => popItens(el, 'Jogo', modos.map(k => [k, esc(MODE_TITLES[k])]), settings.mode, k => { if (k) escolheJogo(k); }));
+  esq.append(jogo);
+  if (licaoAtiva) {
+    // a lição do Hoje é rodada fechada: os filtros do deck não valem enquanto ela dura
+    const l = document.createElement('span');
+    l.className = 'ft-btn cheio ft-fixo'; l.title = 'Lição do Hoje — mexer num filtro encerra a lição';
+    l.innerHTML = '<span>📅 ' + esc(licaoAtiva.nome) + '</span>';
+    esq.append(l);
+  }
+  if (temFrases()) esq.append(seletorVisao([['palavra', 'Palavras', 'tabela'], ['frase', 'Frases', 'grade']].map(([k, t]) => [k, t, null]), settings.tipo, tp => {
+    if (tp === settings.tipo) return;
+    mudaEscopo(() => {
+      settings.tipo = tp;
+      settings.decks = []; settings.origens = [];
+      if (!modosDoTipo().includes(settings.mode)) settings.mode = 'zh_all';
+    });
+    renderModeSheet();
+  }));
+  const base = deckAtual();
+  const decks = [...new Set(base.map(c => c.deck))].sort((a, b) => deckLabel(a).localeCompare(deckLabel(b), 'pt')).map(d => [d, esc(deckLabel(d))]);
+  esq.append(filtroMulti('Tema', decks, settings.decks, s => mudaEscopo(() => { settings.decks = s; })));
+  // o diálogo ignora origem e erros (ele monta a conversa inteira): os dois saem da barra
+  if (!dialogoOn()) {
+    const origens = opcoesOrigem().filter(o => o !== 'todas').map(o => [o, esc(origemLabel(o))]);
+    esq.append(filtroMulti('Origem', origens, settings.origens, s => mudaEscopo(() => { settings.origens = s; })));
+    const faixas = faixasErro();
+    esq.append(filtroUnico('Erros', faixas.map(f => [String(f.n), '≥' + f.n + ' erro' + (f.n > 1 ? 's' : '') + ' <small>' + f.qtd + '</small>']),
+      settings.erro ? String(settings.erro) : null, k => mudaEscopo(() => { settings.erro = k ? +k : null; })));
+  }
+  // específico do jogo: o relâmpago só existe no 汉字 → pinyin + tradução
+  if (settings.mode === 'zh_all') {
+    const rel = document.createElement('button');
+    rel.type = 'button'; rel.className = 'ft-quad txt' + (settings.flash ? ' ligado' : '');
+    rel.textContent = '⚡ Relâmpago'; rel.setAttribute('aria-pressed', !!settings.flash);
+    rel.title = 'A carta pisca e some, e você diz se acertou';
+    rel.onclick = () => { $('flash-opt').onclick(); renderEstudoBarra(); };
+    esq.append(rel);
+    if (settings.flash) {
+      const ms = [[1000, '1s'], [2000, '2s'], [3000, '3s']];
+      const t = document.createElement('button');
+      t.type = 'button'; t.className = 'ft-btn cheio curto'; t.title = 'Quanto a carta fica na tela';
+      t.innerHTML = '<span>⏱ ' + ((ms.find(([v]) => v === settings.flashMs) || [, '2s'])[1]) + '</span>' + icone('seta', 'ft-seta');
+      t.onclick = () => abrePop(t, 160, el => popItens(el, 'Tempo do relâmpago', ms.map(([v, x]) => [String(v), x]), String(settings.flashMs),
+        k => { if (k) { const b = $('flashtime').querySelector('[data-ms="' + k + '"]'); if (b) b.onclick(); renderEstudoBarra(); } }));
+      esq.append(t);
+    }
+  }
+  // Opções: as chaves que valem pra qualquer jogo
+  const OPC = [['pron', 'pron-opt', '🗣️ Pronúncia aproximada', () => !!settings.pron], ['ideias', 'ideias-opt', '🧩 De que é feito cada 汉字', () => settings.ideias !== false],
+    ['tag', 'tag-opt', '🏷️ Mostrar o tema na carta', () => !!settings.tag], ['auto', 'autospeak-opt', '🔊 Falar ao revelar', () => !!settings.autoSpeak],
+    ['lento', 'lento-opt', '🐢 Falar devagar', () => !!settings.lento]];
+  const FAV = [[1, 'todas'], [2, '2'], [3, '3'], [5, '5'], [10, '10']];
+  dir.append(botaoQuadrado('opcoes', 'Opções', false, b => abrePop(b, 280, el => {
+    const desenha = () => {
+      el.innerHTML = '<div class="ft-pop-tit">Opções</div>' +
+        OPC.map(([k, , t, on]) => '<button class="ft-item' + (on() ? ' on' : '') + '" data-o="' + k + '"><i class="ft-q"></i><span>' + t + '</span></button>').join('') +
+        '<div class="ft-sep"></div><div class="ft-pop-tit">⭐ Favoritas: uma a cada</div><div class="ft-segs">' +
+        FAV.map(([n, t]) => '<button class="' + (settings.favACada === n ? 'on' : '') + '" data-f="' + n + '">' + t + '</button>').join('') + '</div>';
+      el.querySelectorAll('[data-o]').forEach(x => x.onclick = () => { $(OPC.find(o => o[0] === x.dataset.o)[1]).onclick(); desenha(); });
+      el.querySelectorAll('[data-f]').forEach(x => x.onclick = () => { const bt = $('favtime').querySelector('[data-n="' + x.dataset.f + '"]'); if (bt) bt.onclick(); desenha(); });
+    };
+    desenha();
+  })));
 }
 function renderEscopo() {
   const open = !!settings.escopoOpen;
@@ -146,7 +242,6 @@ function bindEvents() {
   document.querySelectorAll('#perfilsheet [data-t]').forEach(b => b.onclick = () => {
     settings.theme = b.dataset.t; save(K.settings, settings); applyTheme();
   });
-  $('modebtn').onclick = () => { renderModeSheet(); $('modesheet').classList.add('show'); };
   $('modesheet-bg').onclick = () => $('modesheet').classList.remove('show');
   $('escopo-toggle').onclick = () => {
     settings.escopoOpen = !settings.escopoOpen; save(K.settings, settings);
