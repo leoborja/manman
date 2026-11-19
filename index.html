@@ -1350,6 +1350,16 @@ background:var(--surface);border:1px solid var(--line);}
 .gradetam button,.gradetgl{height:36px;border-radius:6px;font-size:12px;font-weight:500;box-shadow:none;}
 .gradetgl.on{background:var(--bg);color:var(--txt);border:2px solid var(--add);}
 @media (max-width:640px){.gradetop .gradelegend{display:none;}}
+
+/* <SeletorVisao> (DESIGN_SYSTEM.md 8.10) */
+.ft-visao{display:inline-flex;align-items:center;height:36px;padding:2px;border:1px solid var(--line);border-radius:6px;background:var(--bg);}
+.ft-visao button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 8px;border:0;border-radius:4px;background:none;
+color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
+.ft-visao button .ico{width:14px;height:14px;}
+.ft-visao button:hover{color:var(--txt);}
+.ft-visao button.on{background:var(--pill);color:var(--txt);font-weight:500;}
+@media (max-width:640px){.ft-visao button span{display:none;}}
+#cartas-gradebox[hidden],#cartas-tabela[hidden]{display:none;}
 </style>
 </head>
 <body>
@@ -1374,7 +1384,6 @@ background:var(--surface);border:1px solid var(--line);}
     <div class="navsec">Cards</div>
     <button class="tab" data-v="palavras"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span>Palavras</span></button>
     <button class="tab" data-v="frases" id="tab-frases"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg><span>Frases</span></button>
-    <button class="tab" data-v="grade"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg><span>Grade</span></button>
     <div class="navsec">Dashboard</div>
     <button class="tab" data-v="competicao"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg><span>Competição</span></button>
     <button class="tab" data-v="progresso"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span>Progresso</span></button>
@@ -1558,31 +1567,24 @@ background:var(--surface);border:1px solid var(--line);}
     <div class="ft-dir" id="cartas-dir"></div>
   </div>
   <div id="bulkbar"></div>
-  <!-- moldura só com linha em cima e embaixo; a contagem é a primeira faixa dela -->
-  <div class="dt-moldura">
+  <!-- visão Tabela: moldura só com linha em cima e embaixo; a contagem é a primeira faixa -->
+  <div class="dt-moldura" id="cartas-tabela">
     <div class="dt-conta" id="cartas-count"></div>
     <div id="cardlist"></div>
   </div>
-</section>
-
-<!-- ══════ GRADE (o deck inteiro numa tela só) ══════ -->
-<section class="view" id="view-grade">
-  <!-- A barra de filtros do Design System (DESIGN_SYSTEM.md 9), a mesma de Palavras:
-       filtros à esquerda, Ordenar e Agrupar por à direita (renderGradeBarra). -->
-  <div class="ft-barra">
-    <div class="ft-esq" id="grade-filtros"></div>
-    <div class="ft-dir" id="grade-dir"></div>
-  </div>
-  <div class="gradetop">
-    <div class="counter" id="grade-count"></div>
-    <div class="gradelegend"><span><i class="lg ok"></i> aprendida</span><span><i class="lg off"></i> fora da rotação</span></div>
-    <div class="gradetam" id="grade-tam">
-      <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
-      <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
+  <!-- visão Grade: a mesma lista em quadradinhos (era uma aba do menu) -->
+  <div id="cartas-gradebox" hidden>
+    <div class="gradetop">
+      <div class="counter" id="grade-count"></div>
+      <div class="gradelegend"><span><i class="lg ok"></i> aprendida</span><span><i class="lg off"></i> fora da rotação</span></div>
+      <div class="gradetam" id="grade-tam">
+        <button data-d="-1" title="Cartões menores" aria-label="Cartões menores">A−</button>
+        <button data-d="1" title="Cartões maiores" aria-label="Cartões maiores">A+</button>
+      </div>
+      <button class="gradetgl" id="grade-sig" title="Mostrar o significado embaixo do pinyin">significado</button>
     </div>
-    <button class="gradetgl" id="grade-sig" title="Mostrar o significado embaixo do pinyin">significado</button>
+    <div id="gradewrap"></div>
   </div>
-  <div id="gradewrap"></div>
 </section>
 
 <!-- ══════ COMPETIÇÃO (comparar os 4) ══════ -->

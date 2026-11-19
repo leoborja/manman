@@ -18,7 +18,9 @@ const ICO = {
   olho: '<path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/>',
   seta: '<path d="m6 9 6 6 6-6"/>',
   cima: '<path d="m18 15-6-6-6 6"/>',
-  baixo: '<path d="m6 9 6 6 6-6"/>'
+  baixo: '<path d="m6 9 6 6 6-6"/>',
+  tabela: '<path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/>',
+  grade: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>'
 };
 function icone(nome, cls) {
   return '<svg class="ico' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + ICO[nome] + '</svg>';
@@ -214,4 +216,16 @@ function popColunas(el, colunas, ocultas, muda) {
     };
   };
   desenha();
+}
+
+// <SeletorVisao> (8.10): jeitos de ver os mesmos dados, no canto direito da barra.
+// opcoes = [[chave, nome, ícone]]; o nome some em tela estreita.
+function seletorVisao(opcoes, valor, muda) {
+  const g = document.createElement('div');
+  g.className = 'ft-visao';
+  g.setAttribute('role', 'group');
+  g.innerHTML = opcoes.map(([k, t, ic]) => '<button type="button" data-k="' + k + '" title="' + esc(t) + '"' +
+    (k === valor ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + icone(ic) + '<span>' + esc(t) + '</span></button>').join('');
+  g.querySelectorAll('button').forEach(b => b.onclick = () => { if (b.dataset.k !== valor) muda(b.dataset.k); });
+  return g;
 }

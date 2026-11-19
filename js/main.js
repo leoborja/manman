@@ -31,7 +31,6 @@ function switchView(v) {
   if (v === 'curso') renderCurso();
   if (v === 'hoje') renderHoje();
   if (v === 'cartas') renderList();
-  if (v === 'grade') renderGrade();
   if (v === 'competicao') {
     renderCompeticao(); renderTurma();
     // busca a cada visita: o colega pode ter estudado agora
@@ -354,7 +353,6 @@ async function init() {
   renderChips();
   renderCartasChips();
   renderList();
-  renderGrade();
   renderProgress();
   renderStreak();
   // Quem estava num dos nomes fixos (sem senha) precisa entrar com a conta: o progresso
@@ -378,7 +376,6 @@ async function init() {
     if (changed && gradedThisSession === 0) startSession();
     renderCartasChips();
     renderList();
-    renderGrade();
     renderProgress();
     renderStreak(); // o syncPull pode ter trazido revisões feitas em outro aparelho
   } else {

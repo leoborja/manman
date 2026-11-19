@@ -247,7 +247,7 @@ async function selectUser(u) {
   gcSrs();
   await syncPull();
   flushDirty();
-  renderChips(); renderCartasChips(); renderList(); renderGrade(); renderProgress();
+  renderChips(); renderCartasChips(); renderList(); renderProgress();
   startSession();
 }
 
