@@ -1135,6 +1135,62 @@ color:var(--primary-tx);box-shadow:none;}
   .profilenome{font-size:12px;font-weight:500;}
   main{margin-left:208px;padding:16px 16px 40px 24px;}
 }
+
+/* ── Palavras / Frases no formato DataTable (DESIGN_SYSTEM.md, seção 8) ── */
+.dt-barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:4px 0;margin:0 0 8px;}
+.dt-busca{display:flex;align-items:center;gap:8px;height:36px;width:240px;max-width:100%;
+border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:0 10px;color:var(--soft);}
+.dt-busca:focus-within{border-color:var(--txt2);}
+.dt-busca .ico{width:14px;height:14px;flex-basis:14px;}
+.dt-busca input{flex:1;min-width:0;border:0;background:none;outline:none;font:inherit;font-size:12px;color:var(--txt);}
+.dt-busca input::placeholder{color:var(--soft);}
+#cartas-grupobar{flex:1;justify-content:flex-end;margin:0;gap:8px;min-width:0;}
+.vista-resumo{order:-1;flex:1;min-width:0;font-size:12px;color:var(--mut);text-align:right;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vista-btn.cortada{border-color:var(--red);color:var(--txt);}
+.vista-btn.cortada::after{display:none;}
+.dt-moldura{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg);overflow-x:auto;}
+.dt-conta{border-bottom:1px solid var(--line);padding:8px 16px;font-size:12px;color:var(--mut);}
+.dt-conta b{font-weight:400;color:var(--mut);}
+.cartas-tab{border:0;border-radius:0;box-shadow:none;background:var(--bg);font-size:12px;}
+.cartas-tab th{height:44px;background:var(--surface2);font-size:11px;font-weight:600;letter-spacing:.06em;
+color:var(--txt2);padding:10px 12px;}
+.cartas-tab td{padding:8px 12px;color:var(--txt);}
+.cartas-tab tr.cl td{transition:background-color .15s;}
+.cartas-tab tr.cl:hover td{background:var(--hover);}
+.cartas-tab .c-py{font-size:12px;font-weight:500;}
+.cartas-tab .c-py .pron{font-size:11px;font-weight:400;color:var(--soft);}
+.cartas-tab .c-pt{font-size:12px;font-weight:500;}
+.cartas-tab .c-nota{font-size:12px;color:var(--txt2);}
+.cartas-tab .c-tema .pill{display:inline-flex;align-items:center;height:20px;border-radius:4px;padding:0 6px;
+font-size:11px;font-weight:500;background:var(--pill);color:var(--mut);}
+/* linha de grupo: fundo próprio, caixa-alta, contagem verde entre parênteses */
+.cartas-tab tr.cl-grupo td{background:#E5E3DC;padding:8px 16px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--txt2);}
+.cartas-tab tr.cl-grupo:hover td{background:#DBD9D2;}
+html[data-theme="dark"] .cartas-tab tr.cl-grupo td{background:#2A2924;}
+html[data-theme="dark"] .cartas-tab tr.cl-grupo:hover td{background:#33312B;}
+.cartas-tab tr.cl-grupo span{color:var(--add);font-weight:600;margin-left:6px;}
+.cartas-tab tr.cl-grupo span:before{content:"(";} .cartas-tab tr.cl-grupo span:after{content:")";}
+.cartas-tab tr.cl-ideias td{background:var(--surface2);}
+.bulkbtn{border-radius:6px;font-size:12px;}
+@media (max-width:640px){
+  .dt-busca{width:100%;}
+  .dt-moldura{margin:0 -16px;}
+  /* No celular a tabela era fixa (table-layout:fixed) e o Significado ficava com ~25px,
+     uma letra por linha. Automática, cada coluna pega o que o conteúdo pede; o que
+     abre espaço é a pronúncia quebrar no hífen e os botões perderem o respiro. */
+  .cartas-tab{table-layout:auto;}
+  .cartas-tab th.c-hz,.cartas-tab th.c-py{width:auto;}
+  .cartas-tab .c-hz{white-space:nowrap;}
+  .cartas-tab .c-py .pron{white-space:normal;}
+  .cartas-tab .c-pt{overflow-wrap:anywhere;}
+  .cartas-tab td,.cartas-tab th{padding-left:5px;padding-right:5px;}
+  .cartas-tab .c-som,.cartas-tab .c-fav{padding-left:2px;padding-right:2px;}
+  .cartas-tab .c-on{padding-left:2px;padding-right:4px;}
+  .cartas-tab td.c-hz{padding-right:3px;}
+  .cartas-tab th{font-size:10px;letter-spacing:.3px;}
+  .cartas-tab tr.cl-grupo td{padding-left:12px;}
+}
 </style>
 </head>
 <body>
@@ -1331,13 +1387,20 @@ color:var(--primary-tx);box-shadow:none;}
     <button class="chip filtro tipo active" data-tp="palavra"><span class="zh">汉</span> Palavras</button>
     <button class="chip filtro tipo" data-tp="frase">💬 Frases</button>
   </div>
-  <input class="search" id="search" placeholder="🔍 buscar hanzi, pinyin ou tradução…" autocomplete="off">
-  <!-- o botão Configurar: filtrar, agrupar, ordenar, isolar e mostrar moram na folha
-       (como na aba Cartas do iPhone); aqui fica só a busca e o resumo do que vale -->
-  <div class="grupobar" id="cartas-grupobar"></div>
-  <div class="counter" id="cartas-count"></div>
+  <!-- Barra do DataTable (DESIGN_SYSTEM.md, 8.1): busca à esquerda, Configurar à direita.
+       O Configurar é o "Agrupar por" daqui: filtrar, agrupar, ordenar, isolar e mostrar
+       moram na folha (como na aba Cartas do iPhone). -->
+  <div class="dt-barra">
+    <label class="dt-busca"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" placeholder="Buscar hanzi, pinyin ou tradução" autocomplete="off"></label>
+    <div class="grupobar" id="cartas-grupobar"></div>
+  </div>
   <div id="bulkbar"></div>
-  <div id="cardlist"></div>
+  <!-- moldura só com linha em cima e embaixo; a contagem é a primeira faixa dela -->
+  <div class="dt-moldura">
+    <div class="dt-conta" id="cartas-count"></div>
+    <div id="cardlist"></div>
+  </div>
 </section>
 
 <!-- ══════ GRADE (o deck inteiro numa tela só) ══════ -->
