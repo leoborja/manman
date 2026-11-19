@@ -1419,6 +1419,22 @@ p.gtexto{margin:0;}
      aparelho sobe): na carta quadrada ele fica no meio, na vertical */
   #view-estudar .fcard.type .face.front{justify-content:center;}
 }
+
+/* gráfico de evolução na gaveta do Progresso */
+.gevo{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:12px 14px;}
+.gevo svg{display:block;width:100%;height:auto;overflow:visible;}
+.gevo-g{stroke:var(--line);stroke-width:1;}
+.gevo-t{font-size:10px;fill:var(--soft);font-family:inherit;}
+.gevo-la{fill:none;stroke:var(--ok);stroke-width:2;}
+.gevo-le{fill:none;stroke:var(--red);stroke-width:1.5;stroke-dasharray:4 3;}
+.gevo-pe{fill:var(--red);}
+.gevo-leg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:8px;font-size:12px;color:var(--mut);}
+.gevo-leg i{display:inline-block;width:14px;height:0;margin-right:5px;vertical-align:middle;border-top:2px solid var(--ok);}
+.gevo-leg i.e{border-top:2px dashed var(--red);}
+.gevo-leg > span:last-child:not(:has(i)){margin-left:auto;font-weight:500;color:var(--txt);}
+.gevo-ok{color:var(--ok) !important;} .gevo-mal{color:var(--err) !important;}
+.gevo.vazio{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut);}
+.gevo.vazio b{font-size:13px;font-weight:600;color:var(--txt);}
 </style>
 </head>
 <body>
