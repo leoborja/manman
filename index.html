@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#c8102e">
+<meta name="theme-color" content="#F9F7F4">
 <title>Mànmàn 慢慢 — Flashcards de Mandarim</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -12,22 +12,28 @@
 <meta name="apple-mobile-web-app-title" content="Mànmàn">
 <style>
 :root{
---red:#c8102e;--red-d:#a30d26;--gold:#e8b34b;
---ok:#2e9e5b;--ok-bg:#e6f5ec;--warn:#d98a00;--warn-bg:#fdf3e0;--err:#c8102e;--err-bg:#fbe9ec;
---bg:#f4f5f7;--surface:#ffffff;--surface2:#f7f8fa;
---line:#e7e9ee;--txt:#1b1d21;--mut:#6b7078;--soft:#8b9098;
---pill:#eef0f4;--pilltx:#4a4f57;
---shadow:0 1px 2px rgba(20,22,28,.05),0 6px 18px rgba(20,22,28,.06);
---radius:18px;
---e1:rgba(200,16,46,.09);--e2:rgba(200,16,46,.19);--e3:rgba(200,16,46,.3);--e4:rgba(200,16,46,.42);
+/* Paleta do Design System RAIZ (DESIGN_SYSTEM.md, seção 2): neutros quentes mn-* e o
+   laranja mn-accent no lugar do vermelho. Os nomes antigos ficam (--red, --surface…)
+   porque o JS lê alguns deles (corVar('--red') no traçado); só os valores mudaram. */
+--red:#BE5B37;--red-d:#9E4C2E;--gold:#e8b34b;
+--add:#22C55D;--primary:#1A1612;--primary-tx:#FEFCF9;
+--ok:#15803d;--ok-bg:#dcfce7;--warn:#b45309;--warn-bg:#fef3c7;--err:#b91c1c;--err-bg:#fee2e2;
+--bg:#F9F7F4;--surface:#FEFCF9;--surface2:#F5F3F0;--hover:#F1EEEB;
+--line:#E5E1D9;--txt:#1A1612;--mut:#6B6662;--soft:#959088;--txt2:#3D3936;
+--pill:#E5E3DC;--pilltx:#3D3936;
+--shadow:0 1px 2px rgba(26,22,18,.04);
+--radius:8px;
+--e1:rgba(190,91,55,.09);--e2:rgba(190,91,55,.19);--e3:rgba(190,91,55,.3);--e4:rgba(190,91,55,.42);
 --rad:#2563eb;}
 html[data-theme="dark"]{
---rad:#6aa4ff;
---bg:#0c0d0f;--surface:#17181c;--surface2:#1c1e23;
---line:#2a2d33;--txt:#eceef2;--mut:#9a9ea6;--soft:#7c828b;
---pill:#25272d;--pilltx:#c9ccd3;
---ok-bg:#12291b;--warn-bg:#2c2214;--err-bg:#2c1216;
---shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);}
+--rad:#6aa4ff;--red:#C86541;--red-d:#BE5B37;
+--primary:#F8F7F1;--primary-tx:#20201E;
+--bg:#20201E;--surface:#2A2A27;--surface2:#252522;--hover:#2A2A27;
+--line:#302F2C;--txt:#F8F7F1;--mut:#A4A198;--soft:#817D74;--txt2:#CDCAC1;
+--pill:#353431;--pilltx:#CDCAC1;
+--ok:#86efac;--warn:#fcd34d;--err:#fca5a5;
+--ok-bg:rgba(20,83,45,.4);--warn-bg:rgba(120,53,15,.4);--err-bg:rgba(127,29,29,.4);
+--shadow:0 1px 2px rgba(0,0,0,.3);}
 /* AR PL UKai CN (subset) — 楷书 clássico de pincel, igual à escrita à mão do professor */
 @font-face{font-family:'HanziKai';src:url('./fonts/hanzi.woff2') format('woff2');font-display:swap;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -450,7 +456,7 @@ font-weight:800;font-size:15px;box-shadow:var(--shadow);}
 .g-hard{background:var(--warn-bg);color:var(--warn);}
 .g-good{background:var(--ok-bg);color:var(--ok);}
 .nextbtn{display:none;width:100%;border:none;border-radius:16px;padding:14px;cursor:pointer;
-font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.35);}
+font-weight:800;font-size:15px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(190,91,55,.35);}
 .nextbtn.show{display:block;}
 .offbtn{display:block;margin:14px auto 0;background:none;border:none;color:var(--soft);
 font-size:12.5px;font-weight:600;cursor:pointer;padding:6px 10px;}
@@ -462,7 +468,7 @@ font-size:12.5px;font-weight:600;cursor:pointer;padding:6px 10px;}
 .done h2{margin:0 0 6px;font-size:22px;letter-spacing:-.3px;}
 .done p{color:var(--mut);font-size:14px;margin:0 0 18px;}
 .btn{display:inline-block;border:none;border-radius:14px;padding:12px 22px;cursor:pointer;
-font-weight:800;font-size:14.5px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(200,16,46,.3);}
+font-weight:800;font-size:14.5px;background:var(--red);color:#fff;box-shadow:0 6px 16px rgba(190,91,55,.3);}
 .btn.ghost{background:var(--surface);color:var(--txt);border:1px solid var(--line);box-shadow:var(--shadow);}
 .btn.danger{background:var(--err-bg);color:var(--err);box-shadow:none;}
 
@@ -626,11 +632,11 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 /* As quatro faixas do filtro 🔥 (1, 3, 5, 8 tropeços). Camada de cor POR CIMA do
    --surface em vez de cor sólida: o mesmo vermelho serve nos dois temas. */
 .gcard.e1,.lg.e1{background:linear-gradient(var(--e1),var(--e1)),var(--surface);
-border-color:rgba(200,16,46,.26);}
+border-color:rgba(190,91,55,.26);}
 .gcard.e2,.lg.e2{background:linear-gradient(var(--e2),var(--e2)),var(--surface);
-border-color:rgba(200,16,46,.4);}
+border-color:rgba(190,91,55,.4);}
 .gcard.e3,.lg.e3{background:linear-gradient(var(--e3),var(--e3)),var(--surface);
-border-color:rgba(200,16,46,.56);}
+border-color:rgba(190,91,55,.56);}
 .gcard.e4,.lg.e4{background:linear-gradient(var(--e4),var(--e4)),var(--surface);
 border-color:var(--red);}
 /* Aprendida sai da escala do vermelho: fundo branco e borda verde. Não é "o degrau
@@ -1055,6 +1061,79 @@ table.sons td{padding:3px;text-align:center;}
   .cartas-tab .c-pt{font-size:13.5px;}
   .cartas-tab .spk-row,.cartas-tab .fav-row{width:30px;height:30px;font-size:13px;}
   .cartas-tab th{font-size:10px;letter-spacing:.3px;}
+}
+
+/* ════ Design System RAIZ (DESIGN_SYSTEM.md · ref. Group OS) ════
+   A casca do app (menu, cabeçalho, abas, filtros, botões) segue o padrão de todos os
+   sistemas da pasta. O que é ESTUDO (a carta, o hanzi, o pinyin, a área de desenho)
+   mantém o tamanho próprio: 12px é a base da interface, não do 汉字 que se lê. */
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
+.brand{font-size:14px;font-weight:600;}
+.brand span{color:var(--red);}
+
+/* menu do celular = <Abas>: sem pílula, texto 12px, sublinhado laranja colado na linha */
+.nav{background:var(--surface2);border-bottom:1px solid var(--line);padding:8px 16px 0;}
+.navitens{gap:0;}
+.tab{position:relative;border-radius:0;padding:8px 14px 10px;font-size:12px;font-weight:500;
+color:var(--mut);transition:color .075s;}
+.tab:hover{color:var(--txt);}
+.tab .ico{width:16px;height:16px;flex-basis:16px;stroke-width:1.75;}
+.tab.active{background:none;color:var(--txt);box-shadow:none;}
+.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--red);}
+.profileini{width:28px;height:28px;font-size:11px;font-weight:600;box-shadow:none;background:var(--pill);border:0;}
+.profileini .ico{width:14px;height:14px;}
+
+/* cabeçalho da página: título text-sm font-medium, sem subtítulo; ações = BotaoSecundario */
+.pagecab{min-height:36px;margin:0 0 16px;}
+.pagecab h1{font-size:14px;font-weight:500;letter-spacing:0;color:var(--txt);}
+.pageacao{height:36px;border-radius:6px;border:1px solid var(--line);background:var(--hover);
+color:var(--mut);padding:0 10px;font-size:11px;font-weight:500;box-shadow:none;}
+.pageacao:hover{background:var(--pill);color:var(--txt);}
+.pageacao .ico{width:14px;height:14px;}
+
+.painel{border-radius:8px;box-shadow:none;}
+
+/* filtros: h-9, text-xs, raio 6px; o escolhido ganha a borda VERDE de 2px (filtro
+   preenchido), não fundo colorido */
+.chip{border-radius:6px;padding:0 12px;height:36px;display:inline-flex;align-items:center;
+background:var(--bg);color:var(--mut);font-size:12px;font-weight:500;}
+.chip.active{background:var(--bg);color:var(--txt);border:2px solid var(--add);padding:0 11px;}
+.chip.filtro{font-size:15px;line-height:1;padding:0 10px;}
+.chip.filtro.active{background:var(--pill);border:1px solid var(--line);padding:0 10px;}
+.chip.filtro.tipo{font-size:12px;padding:0 12px;}
+.chip.filtro.filtrando:after{background:var(--add);}
+.search{border-radius:6px;font-size:12px;}
+
+/* botões: principal quase preto (default), secundário com borda, sem sombra colorida */
+.btn,.nextbtn{border-radius:6px;font-weight:500;font-size:13px;background:var(--primary);
+color:var(--primary-tx);box-shadow:none;}
+.btn.ghost{background:var(--bg);color:var(--txt);border:1px solid var(--line);box-shadow:none;}
+.btn.danger{background:var(--err-bg);color:var(--err);}
+.grades button{border-radius:6px;box-shadow:none;font-weight:600;}
+.modebtn{border-radius:8px;box-shadow:none;}
+.modebtn .mlabel,.modebtn .mscope{border-radius:4px;font-size:11px;font-weight:500;letter-spacing:.3px;}
+.modeopt{border-radius:8px;border-width:1px;}
+.modeopt.active{border-color:var(--red);}
+.escopo-body.open{border-width:1px;border-radius:0 0 8px 8px;}
+.sheet{border-radius:12px 12px 0 0;}
+.sheet h3{font-size:14px;font-weight:500;}
+
+@media (min-width:900px){
+  /* menu lateral = submenu do Group OS: w-52, bg-mn-bg-menu, itens h-9 12px, ativo em
+     bg-mn-bg-300 com a barrinha laranja à esquerda */
+  .nav{width:208px;background:var(--surface2);padding:12px 8px 8px;}
+  .navtopo{padding:0 8px 12px;}
+  .navsec{height:28px;padding:8px 8px 0;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--txt2);}
+  .navsec:first-child{padding-top:0;}
+  .navitens{gap:1px;}
+  .tab{height:36px;gap:10px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;}
+  .tab .ico{width:18px;height:18px;flex-basis:18px;}
+  .tab:not(.active):hover{background:var(--hover);}
+  .tab.active{background:var(--pill);}
+  .tab.active:after{left:0;right:auto;top:50%;bottom:auto;width:2px;height:20px;transform:translateY(-50%);border-radius:0 2px 2px 0;}
+  .navperfil{padding:10px 8px 0;}
+  .profilenome{font-size:12px;font-weight:500;}
+  main{margin-left:208px;padding:16px 16px 40px 24px;}
 }
 </style>
 </head>

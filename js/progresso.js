@@ -260,7 +260,7 @@ function compUsuarios() {
 // uma célula da matriz: o vermelho cresce com o valor (erro é o que se quer achar), e a
 // coluna do próprio usuário fica marcada. `frac` (0–1) = intensidade; null = sem dado.
 function compCel(txt, frac, eu) {
-  const bg = frac == null ? '' : 'background:rgba(200,16,46,' + (0.08 + 0.5 * frac).toFixed(2) + ')';
+  const bg = frac == null ? '' : 'background:rgba(190,91,55,' + (0.08 + 0.5 * frac).toFixed(2) + ')';
   return '<span class="cmcel' + (eu ? ' eu' : '') + '" style="' + bg + '">' +
     (txt == null ? '<i>–</i>' : txt) + '</span>';
 }
