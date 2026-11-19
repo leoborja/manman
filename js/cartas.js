@@ -103,6 +103,11 @@ function vistaCfg() {
   v.ocultas = (Array.isArray(v.ocultas) ? v.ocultas : []).filter(k => CARTAS_OCULTAVEIS.some(([x]) => x === k));
   return v;
 }
+// Grupos recolhidos (linha de grupo da Tabela, título da Grade): guardados por
+// agrupamento + rótulo, pra sobreviverem ao redesenho (A+, favoritar, filtrar) e valerem
+// nas duas visões. Só nesta abertura do app — reabrir mostra tudo de novo.
+const gruposFechados = new Set();
+function chaveGrupo(rot) { return vistaCfg().agrupar + ':' + (rot || ''); }
 function salvaVista(v) { save(K_VISTA, { visao: v.visao, agrupar: v.agrupar, ordem: v.ordem, situacao: v.situacao, tropecos: v.tropecos, ocultas: v.ocultas }); }
 function vistaFiltra(list) {
   const v = vistaCfg();
@@ -323,8 +328,8 @@ function renderList() {
     '<th class="c-pt">Significado</th><th class="c-nota">Nota</th><th class="c-tema">Tema</th>' +
     '<th class="c-fav" title="Favorita">⭐</th><th class="c-on">Ativa</th></tr></thead><tbody>' +
     cartasGrupos(list).map(g =>
-      (g.rot ? '<tr class="cl-grupo"><td colspan="' + CARTAS_COLUNAS + '">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></td></tr>' : '') +
-      g.cards.map(cartaLinha).join('')).join('') + '</tbody></table>' : vazio;
+      (g.rot ? '<tr class="cl-grupo' + (gruposFechados.has(chaveGrupo(g.rot)) ? ' fechado' : '') + '" data-rot="' + esc(g.rot) + '"><td colspan="' + CARTAS_COLUNAS + '">' + esc(g.rot) + ' <span>' + g.cards.length + '</span></td></tr>' : '') +
+      g.cards.map(c => g.rot && gruposFechados.has(chaveGrupo(g.rot)) ? cartaLinha(c).replace('<tr ', '<tr hidden ') : cartaLinha(c)).join('')).join('') + '</tbody></table>' : vazio;
   // Clicar na linha abre a carta na gaveta (DESIGN_SYSTEM.md 11.1). Os controles da
   // própria linha (ouvir, estrela, interruptor) continuam fazendo só o que fazem.
   $('cardlist').querySelectorAll('tr.cl').forEach(tr => tr.onclick = e => {
@@ -335,6 +340,7 @@ function renderList() {
   $('cardlist').querySelectorAll('tr.cl-grupo').forEach(tr => tr.onclick = () => {
     const fecha = !tr.classList.contains('fechado');
     tr.classList.toggle('fechado', fecha);
+    if (fecha) gruposFechados.add(chaveGrupo(tr.dataset.rot)); else gruposFechados.delete(chaveGrupo(tr.dataset.rot));
     for (let n = tr.nextElementSibling; n && !n.classList.contains('cl-grupo'); n = n.nextElementSibling) n.hidden = fecha;
   });
   $('cardlist').querySelectorAll('.spk-row').forEach(bt => bt.onclick = () => {
@@ -756,14 +762,27 @@ function desenhaGrade(list) {
     // o "+ novo monte" vem antes do Sem monte, não depois de tudo: com 161 cartas no
     // fim da lista, um botão embaixo delas é um botão que ninguém acha
     (arr && gr.sem ? '<button class="gnovo" id="gnovo">+ novo monte</button>' : '') +
-    '<div class="gradegrupo"' + (gr.grupo ? ' data-g="' + esc(gr.grupo.id) + '"' : '') + '>' +
-    (gr.rot ? '<h3>' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span>' +
+    '<div class="gradegrupo' + (gr.rot && gruposFechados.has(chaveGrupo(gr.rot)) ? ' fechado' : '') + '"' +
+      (gr.grupo ? ' data-g="' + esc(gr.grupo.id) + '"' : '') + (gr.rot ? ' data-rot="' + esc(gr.rot) + '"' : '') + '>' +
+    (gr.rot ? '<h3 role="button" tabindex="0" aria-expanded="' + !gruposFechados.has(chaveGrupo(gr.rot)) + '">' + esc(gr.rot) + ' <span>' + gr.cards.length + '</span>' +
       (arr && gr.grupo ? '<button class="gbtn" data-ren="' + esc(gr.grupo.id) + '" title="Renomear">✏️</button>' +
         '<button class="gbtn" data-del="' + esc(gr.grupo.id) + '" title="Desfazer o monte">✕</button>' : '') +
       '</h3>' : '') +
     gradeCorpo(gr.cards, arr && gr.grupo) + '</div>').join('') ||
     '<p class="dt-vazio">Nenhuma ' + (cartasTipo === 'frase' ? 'frase' : 'palavra') + ' encontrada.</p>';
   if (arr) bindArranjo(); else $('gradewrap').onpointerdown = null;
+  // o título do grupo recolhe/abre os quadradinhos dele (os botões ✏️ ✕ do arranjo não)
+  $('gradewrap').querySelectorAll('.gradegrupo[data-rot] > h3').forEach(h => {
+    const alterna = () => {
+      const gg = h.parentElement, k = chaveGrupo(gg.dataset.rot);
+      const fecha = !gg.classList.contains('fechado');
+      gg.classList.toggle('fechado', fecha);
+      h.setAttribute('aria-expanded', !fecha);
+      if (fecha) gruposFechados.add(k); else gruposFechados.delete(k);
+    };
+    h.onclick = e => { if (!e.target.closest('.gbtn')) alterna(); };
+    h.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(); } };
+  });
   // tocar fala a carta; o balão com a tradução quem abre é o bindTips, pelo data-tip
   $('gradewrap').querySelectorAll('.gcard').forEach(b => b.onclick = () => {
     if (dragClick) return; // acabou de soltar um arrasto: não é um toque pra ouvir

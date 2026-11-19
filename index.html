@@ -1341,6 +1341,14 @@ color:var(--mut);font:inherit;font-size:12px;cursor:pointer;}
 .ft-quad.txt.ligado{border:2px solid var(--add);padding:0 9px;color:var(--txt);}
 .ft-quad:disabled{opacity:.4;cursor:default;}
 #cartas-gradebox #gradewrap{margin-top:8px;}
+
+/* Grade: o título do grupo recolhe os quadradinhos, com a mesma setinha da Tabela */
+.gradegrupo > h3{cursor:pointer;user-select:none;align-items:center;}
+.gradegrupo > h3:before{content:"";display:inline-block;width:6px;height:6px;margin:0 4px 2px 2px;
+border:solid var(--txt2);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);transition:transform .15s;}
+.gradegrupo.fechado > h3:before{transform:rotate(-45deg);}
+.gradegrupo.fechado > h3{margin-bottom:0;}
+.gradegrupo.fechado > :not(h3){display:none;}
 </style>
 </head>
 <body>
